@@ -1,0 +1,18 @@
+.containerImage {
+  width: 100%;
+  position: relative;
+}
+
+.cardRating {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+.cardImage {
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  left: 0;
+  object-fit: cover;
+}

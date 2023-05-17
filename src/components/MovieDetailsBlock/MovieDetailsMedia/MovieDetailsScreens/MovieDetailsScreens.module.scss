@@ -1,0 +1,7 @@
+.mediaPanel {
+  [role="tablist"] {
+    &::before {
+      display: none;
+    }
+  }
+}

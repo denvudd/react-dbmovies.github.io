@@ -1,0 +1,28 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  padding: 9px 20px;
+  font-size: 1.1em;
+  color: #fff;
+  border-color: rgba(31.5, 31.5, 73.5, 1);
+  background-color: rgba(31.5, 31.5, 73.5, 1);
+  text-transform: uppercase;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #000;
+    border-color: #000 !important;
+  }
+
+  a {
+    font-size: 1em;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  &.rounded {
+    border: 2px solid #fff;
+    transition: linear .1s;
+    border-radius: 20px;
+  }
+}
