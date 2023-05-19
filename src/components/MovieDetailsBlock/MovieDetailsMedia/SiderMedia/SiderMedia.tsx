@@ -94,8 +94,8 @@ const SiderMedia: React.FC<SliderMediaProps> = ({
             <h3>Ключові слова</h3>
             <ul className={styles.keywordsList}>
               {!isKeywordsLoading && keywords && keywords.length !== 0
-                ? keywords.map((keyword) => (
-                    <li>
+                ? keywords.map((keyword, index) => (
+                    <li key={index}>
                       <a href="">{keyword.name}</a>
                     </li>
                   ))

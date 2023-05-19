@@ -36,7 +36,7 @@ const CastCard: React.FC<CastCardProps> = ({id, profile_path, name, character}) 
             {name}
           </Title>
         </Link>
-        <Paragraph>{character}</Paragraph>
+        <Paragraph ellipsis={{rows: 2}}>{character}</Paragraph>
       </Card>
     </div>
   );

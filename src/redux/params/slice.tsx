@@ -1,15 +1,22 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { ParamsState } from "./types";
 
-const initialState = {
-  params: {},
-  loading: true,
+const initialState: ParamsState = {
+  params: {
+    sortData: {
+      sortBy: ''
+    },
+    additionalSortData: {
+      additionalSortBy: '',
+    }
+  },
 };
 
 const paramsSlice = createSlice({
   name: "params",
   initialState,
   reducers: {
-    setParams(state, action) {
+    setParams(state, action: PayloadAction<ParamsState["params"]>) {
       state.params = action.payload;
     },
   },

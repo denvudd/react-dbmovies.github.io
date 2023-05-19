@@ -9,6 +9,8 @@ import SkeletonLoader from "@/components/UI/SkeletonLoader/SkeletonLoader";
 import FilterMenu from "@/components/FilterMenu/FilterMenu";
 import { useSelector } from "react-redux";
 import React from "react";
+import { selectParams } from "@/redux/params/selectors";
+import { isSortParamsEmpty } from "@/utils/isSortParamsEmpty";
 
 interface MovieCard {
   id: number;
@@ -20,25 +22,27 @@ interface MovieCard {
 }
 
 export const Home = () => {
-  const queryParams = useSelector((state) => state.paramsSlice.params);
-  const { data: moviesDefault } =
-    useGetMoviesQuery({
-      typeList: "popular",
-      params: "language=uk-UA&page=1",
-    });
-  const [getSortMovies, { data: sortMovies }] =
-    useLazyGetMovieDiscoverQuery();
+  const queryParams = useSelector(selectParams);
+  const { data: moviesDefault } = useGetMoviesQuery({
+    typeList: "popular",
+    params: "language=uk-UA&page=1",
+  });
+  const [getSortMovies, { data: sortMovies }] = useLazyGetMovieDiscoverQuery();
   const [data, setData] = React.useState<MovieCard[]>([]);
-  const [isLoading, setIsLoading] = React.useState(true); 
+  const [isLoading, setIsLoading] = React.useState(true);
 
   React.useEffect(() => {
-    if (Object.keys(queryParams).length === 0) {
+    const isAllParamsEmpty = isSortParamsEmpty(queryParams);
+
+    console.log(isAllParamsEmpty);
+
+    if (isAllParamsEmpty) {
       if (moviesDefault && moviesDefault.length > 0) {
         setData(moviesDefault);
-        setIsLoading(false); 
+        setIsLoading(false);
       }
     } else {
-      setIsLoading(true); 
+      setIsLoading(true);
       getSortMovies(
         `language=uk-UA&page=1&sort_by=${queryParams.sortData.sortBy}`
       )
@@ -49,7 +53,7 @@ export const Home = () => {
           }
         })
         .finally(() => {
-          setIsLoading(false); 
+          setIsLoading(false);
         });
     }
   }, [queryParams, moviesDefault]);
@@ -77,12 +81,17 @@ export const Home = () => {
                   <MovieList
                     gutter={16}
                     dataSource={data}
-                    renderItem={(movie: MovieCard) => (
+                    renderItem={(movie: MovieCard, index: number) => (
                       <MovieCard
                         id={movie.id}
+                        index={index}
                         key={movie.id}
                         title={movie.title}
-                        imgUrl={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+                        imgUrl={
+                          movie.poster_path
+                            ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
+                            : `https://placehold.co/260x390/png/?text=No+Image`
+                        }
                         description={movie.overview}
                         voteAverage={movie.vote_average}
                         release={movie.release_date}

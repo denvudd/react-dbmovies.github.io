@@ -4,7 +4,7 @@ import styles from "./MovieList.module.scss";
 interface MovieListProps<T> {
   gutter: number;
   dataSource: T[];
-  renderItem: (item: T) => React.ReactNode;
+  renderItem: (item: T, index: number) => React.ReactNode;
 }
 
 const MovieList = <T,>({
@@ -15,7 +15,7 @@ const MovieList = <T,>({
   return (
     <div style={{ gap: gutter }} className={styles.listWrapper}>
       {dataSource.map((item, index) => {
-        return renderItem(item)
+        return renderItem(item, index)
       })}
     </div>
   );

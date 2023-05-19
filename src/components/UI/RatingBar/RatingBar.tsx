@@ -19,13 +19,13 @@ const RatingBar: React.FC<RatingBarProps> = ({ rating, size }) => {
     }
   };
 
-  const formattedRating = formatRating(rating);
+  const formattedRating = rating !== 0 ? formatRating(rating) : 0;
 
   return (
     <Progress
       type="circle"
       percent={formattedRating}
-      format={(percent) => percent}
+      format={(percent) => <span>{percent !== 0 ? percent : "NR"}</span>}
       size={size}
       strokeColor={getColor(formattedRating)}
       trailColor="#f5f5f5"

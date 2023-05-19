@@ -1,4 +1,3 @@
-import { useLazyGetMovieImagesQuery } from "@/redux/movies/slice";
 import React from "react";
 import styles from "./MovieDetailsMedia.module.scss";
 import { Layout } from "antd";
@@ -6,7 +5,7 @@ import { Layout } from "antd";
 import MovieDetailsCast from "./MovieDetailsCast/MovieDetailsCast";
 import MovieDetailsScreens from "./MovieDetailsScreens/MovieDetailsScreens";
 import MovieDetailsCollection from "./MovieDetailsCollection/MovieDetailsCollection";
-import { Collection } from "@/redux/movies/types/MovieDetailsType";
+import { Collection } from "@/redux/api/movies/types/MovieDetailsType";
 import MovieDetailsRecs from "./MovieDetailsRecs/MovieDetailsRecs";
 import SiderMedia from "./SiderMedia/SiderMedia";
 

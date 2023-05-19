@@ -1,13 +1,14 @@
 import React from "react";
 import { Card, Typography } from "antd";
-import { DateTime } from "luxon";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./MovieCard.module.scss";
 import RatingBar from "../UI/RatingBar/RatingBar";
+import { formatReleaseDate } from "@/utils/formatReleaseDate";
 
 interface MovieCardProps {
   id: number;
+  index: number;
   title: string;
   imgUrl: string;
   description: string;
@@ -17,6 +18,7 @@ interface MovieCardProps {
 
 const MovieCard: React.FC<MovieCardProps> = ({
   id,
+  index,
   title,
   imgUrl,
   description,
@@ -24,10 +26,6 @@ const MovieCard: React.FC<MovieCardProps> = ({
   release,
 }) => {
   const { Title, Paragraph } = Typography;
-
-  const formattedReleaseDate = DateTime.fromISO(release)
-    .setLocale("uk-UA")
-    .toFormat("dd LLLL yyyy");
 
   return (
     <Card
@@ -41,12 +39,13 @@ const MovieCard: React.FC<MovieCardProps> = ({
               width={300}
               height={400}
               src={imgUrl}
+              priority={index < 10} // first 10 images priority = true, the rest will not
             />
           </div>
         </Link>
       }
     >
-      <p>{formattedReleaseDate}</p>
+      <p>{formatReleaseDate(release, "uk-UA", "dd LLLL yyyy")}</p>
       <Link href={`${id}`}>
         <Title ellipsis={{ rows: 1 }} level={5}>
           {title}

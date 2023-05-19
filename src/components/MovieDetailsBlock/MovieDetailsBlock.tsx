@@ -16,34 +16,32 @@ const MovieDetailsBlock: React.FC<MovieDetailsBlockProps> = ({ id }) => {
 
   return (
     <>
-      {isLoading ? (
-        <Spin></Spin>
-      ) : (
-        movie && (
-          <>
-            <MovieDetailsHead
-              id={id}
-              poster_path={movie.poster_path}
-              backdrop_path={movie.backdrop_path}
-              release_date={movie.release_date}
-              title={movie.title}
-              genres={movie.genres}
-              runtime={movie.runtime}
-              tagline={movie.tagline}
-              overview={movie.overview}
-              vote_average={movie.vote_average}
-            />
-            <MovieDetailsMedia
-              id={id}
-              collectionData={movie.belongs_to_collection ? movie.belongs_to_collection : null}
-              original_title={movie.original_title}
-              original_language={movie.original_language}
-              status={movie.status}
-              budget={movie.budget}
-              revenue={movie.revenue}
-            />
-          </>
-        )
+      {!isLoading && movie && (
+        <>
+          <MovieDetailsHead
+            id={id}
+            poster_path={movie.poster_path}
+            backdrop_path={movie.backdrop_path}
+            release_date={movie.release_date}
+            title={movie.title}
+            genres={movie.genres}
+            runtime={movie.runtime}
+            tagline={movie.tagline}
+            overview={movie.overview}
+            vote_average={movie.vote_average}
+          />
+          <MovieDetailsMedia
+            id={id}
+            collectionData={
+              movie.belongs_to_collection ? movie.belongs_to_collection : null
+            }
+            original_title={movie.original_title}
+            original_language={movie.original_language}
+            status={movie.status}
+            budget={movie.budget}
+            revenue={movie.revenue}
+          />
+        </>
       )}
     </>
   );
