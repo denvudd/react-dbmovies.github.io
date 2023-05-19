@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./MovieDetailsCollection.module.scss";
 import ButtonPrimary from "@/components/UI/ButtonPrimary/ButtonPrimary";
-import { Collection } from "@/redux/movies/types/MovieDetailsType";
+import { Collection } from "@/redux/api/movies/types/MovieDetailsType";
 
 interface MovieDetailsCollectionProps {
   collectionData: Collection;
