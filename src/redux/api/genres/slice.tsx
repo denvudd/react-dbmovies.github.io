@@ -10,8 +10,8 @@ export const genresApi = createApi({
   }),
   endpoints: (builder) => ({
     getMovieListGenre: builder.query({
-      query: (params) => `/genre/movie/list?${tmdbApiKey}&${params}`,
-      transformResponse: (response: MovieGenresResponseApi) => response,
+      query: (params) => `/genre/movie/list?${tmdbApiKey}&$${params ? params : ""}`,
+      transformResponse: (response: MovieGenresResponseApi) => response.genres,
     }),
   }),
 });

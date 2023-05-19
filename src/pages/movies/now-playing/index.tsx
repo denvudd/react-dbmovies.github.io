@@ -2,7 +2,7 @@ import Head from "next/head";
 import { Typography } from "antd";
 import MovieCard from "@/components/MovieCard/MovieCard";
 import { useGetMoviesQuery } from "@/redux/api/movies/slice";
-import ListLayout from "@/components/layouts/ListLayout";
+import ListLayout from "@/layouts/ListLayout";
 import MovieList from "@/components/UI/MovieList/MovieList";
 import SkeletonLoader from "@/components/UI/SkeletonLoader/SkeletonLoader";
 import FilterMenu from "@/components/FilterMenu/FilterMenu";
@@ -43,8 +43,9 @@ export const Home = () => {
                 <MovieList
                   gutter={16}
                   dataSource={movies}
-                  renderItem={(movie: MovieCard) => (
+                  renderItem={(movie: MovieCard, index) => (
                     <MovieCard
+                      index={index}
                       id={movie.id}
                       key={movie.id}
                       title={movie.title}

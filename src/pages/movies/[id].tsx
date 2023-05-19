@@ -1,5 +1,5 @@
 import React from "react";
-import DetailLayout from "@/components/layouts/DetailsLayout";
+import DetailLayout from "@/layouts/DetailsLayout";
 import { GetServerSidePropsContext } from 'next';
 import MovieDetailsBlock from "@/components/MovieDetailsBlock/MovieDetailsBlock";
 

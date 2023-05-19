@@ -12,7 +12,6 @@ const SortMenu: React.FC<SortMenuProps> = ({ onSortChange }) => {
     onSortChange(sortBy);
   };
   
-
   const menuItems: MenuProps["items"] = [
     {
       key: "sub1",

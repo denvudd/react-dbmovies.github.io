@@ -3,7 +3,7 @@ import { Typography } from "antd";
 import MovieCard from "@/components/MovieCard/MovieCard";
 import { useGetMoviesQuery } from "@/redux/api/movies/slice";
 import { useLazyGetMovieDiscoverQuery } from "@/redux/api/discover/slice";
-import ListLayout from "@/components/layouts/ListLayout";
+import ListLayout from "@/layouts/ListLayout";
 import MovieList from "@/components/UI/MovieList/MovieList";
 import SkeletonLoader from "@/components/UI/SkeletonLoader/SkeletonLoader";
 import FilterMenu from "@/components/FilterMenu/FilterMenu";
@@ -34,7 +34,7 @@ export const Home = () => {
   React.useEffect(() => {
     const isAllParamsEmpty = isSortParamsEmpty(queryParams);
 
-    console.log(isAllParamsEmpty);
+    // console.log(isAllParamsEmpty);
 
     if (isAllParamsEmpty) {
       if (moviesDefault && moviesDefault.length > 0) {
