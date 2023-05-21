@@ -3,7 +3,6 @@ import {
   Menu,
   MenuProps,
   DatePicker,
-  DatePickerProps,
   Select,
   Slider,
 } from "antd";
@@ -13,6 +12,7 @@ import styles from "./AdditionalSortMenu.module.scss";
 import { useGetConfigurationLanguagesQuery } from "@/redux/api/configuration/slice";
 import { useLazyGetSearchKeywordsQuery } from "@/redux/api/search/slice";
 import { Keyword } from "@/redux/api/search/types/SearchKeywordType";
+import type { RangePickerProps } from 'antd/es/date-picker';
 
 interface AdditionalSortMenuProps {
   onAdditionalSortChange: (additionalSortBy: string) => void;
@@ -40,11 +40,11 @@ const AdditionalSortMenu: React.FC<AdditionalSortMenuProps> = ({
       label: language.english_name,
     }));
 
-  const handleDateChange: DatePickerProps["onChange"] = (
-    date: Dayjs | null,
-    dateString: [string, string]
-  ): void => {
-    console.log(selectedDates);
+  const handleDateChange: RangePickerProps["onChange"] = (
+    values: RangePickerProps['value'],
+    formatString: [string, string]
+  ): void | undefined => {
+    console.log(formatString);
   };
 
   const handleLanguageChange = (key: string) => {
