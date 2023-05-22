@@ -19,7 +19,7 @@ export const moviesApi = createApi({
     getMovies: builder.query({
       query: ({ typeList, params }) =>
         `/movie/${typeList}?${tmdbApiKey}&${params ? params : ""}`,
-      transformResponse: (response: ListMoviesApiResponse) => response.results,
+      transformResponse: (response: ListMoviesApiResponse) => response,
     }),
 
     getMovieDetails: builder.query({
@@ -102,6 +102,7 @@ export const moviesApi = createApi({
 
 export const {
   useGetMoviesQuery,
+  useLazyGetMoviesQuery,
   useGetMovieDetailsQuery,
   useGetMovieReleaseDatesQuery,
   useGetMovieCreditsCastQuery,

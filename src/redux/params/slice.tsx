@@ -4,11 +4,29 @@ import { ParamsState } from "./types";
 const initialState: ParamsState = {
   params: {
     sortData: {
-      sortBy: ''
+      sortBy: "",
     },
     additionalSortData: {
-      additionalSortBy: '',
-    }
+      releaseDates: {
+        date_gte: null,
+        date_lte: null,
+      },
+      genres: null,
+      language: null,
+      voteAverage: {
+        voteAverage_gte: null,
+        voteAverage_lte: null,
+      },
+      voteCount: {
+        voteCount_gte: null,
+        voteCount_lte: null,
+      },
+      runtime: {
+        runtime_gte: null,
+        runtime_lte: null,
+      },
+      keywords: null,
+    },
   },
 };
 

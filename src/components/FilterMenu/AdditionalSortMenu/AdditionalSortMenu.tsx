@@ -1,99 +1,192 @@
 import React from "react";
-import {
-  Menu,
-  MenuProps,
-  DatePicker,
-  Select,
-  Slider,
-} from "antd";
-import { Dayjs } from "dayjs";
+import { Menu, MenuProps, DatePicker, Select, Slider, Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 import { useGetMovieListGenreQuery } from "@/redux/api/genres/slice";
-import styles from "./AdditionalSortMenu.module.scss";
 import { useGetConfigurationLanguagesQuery } from "@/redux/api/configuration/slice";
 import { useLazyGetSearchKeywordsQuery } from "@/redux/api/search/slice";
+import { useDebounce } from "@/hooks/useDebounce";
+
+import type { RangePickerProps } from "antd/es/date-picker";
+import { AdditionalSortDataState } from "../FilterMenu";
 import { Keyword } from "@/redux/api/search/types/SearchKeywordType";
-import type { RangePickerProps } from 'antd/es/date-picker';
+
+import dayjs from "dayjs";
+import "dayjs/locale/uk.js";
+import locale from 'antd/lib/date-picker/locale/uk_UA';
+
+import styles from "./AdditionalSortMenu.module.scss";
 
 interface AdditionalSortMenuProps {
-  onAdditionalSortChange: (additionalSortBy: string) => void;
+  onAdditionalSortChange: (additionalSortBy: AdditionalSortDataState) => void;
 }
 
 const AdditionalSortMenu: React.FC<AdditionalSortMenuProps> = ({
   onAdditionalSortChange,
 }) => {
-  const [selectedDates, setSelectedDates] = React.useState<string[]>([]);
   const [inputText, setInputText] = React.useState<string>("");
-  const [selectedKeys, setSelectedKeys] = React.useState<string[] | null>([]);
+  const [isTipVisible, setIsTipVisible] = React.useState(false);
+  const [selectedKeys, setSelectedKeys] = React.useState<string[] | null>(null);
+  const [selectedDates, setSelectedDates] = React.useState<string[] | null>(
+    null
+  );
+  const [selectedGenres, setSelectedGenres] = React.useState<string[] | null>(
+    []
+  );
+  const [selectedLanguage, setSelectedLanguage] = React.useState<string | null>(
+    null
+  );
+  const [selectedVoteAverage, setSelectedVoteAverage] = React.useState<
+    number[] | null
+  >(null);
+  const [selectedVoteCount, setSelectedVoteCount] = React.useState<
+    number[] | null
+  >(null);
+  const [selectedRuntime, setSelectedRuntime] = React.useState<number[] | null>(
+    null
+  );
   const [keywordOptions, setKeywordOptions] = React.useState<Keyword[]>([]);
   const { data: genres, isLoading: isGenresLoading } =
     useGetMovieListGenreQuery("&language=uk-UA");
   const { data: languages, isLoading: isLanguagesLoading } =
     useGetConfigurationLanguagesQuery({});
-  const [fetchKeywords, { data: keywords, isLoading: isKeywordsLoading }] =
+  const [fetchKeywords, { isLoading: isKeywordsLoading }] =
     useLazyGetSearchKeywordsQuery();
-  const formattedLanguageArray =
-    !isLanguagesLoading &&
-    languages &&
-    languages.length !== 0 &&
-    languages.map((language) => ({
-      value: language.iso_639_1,
-      label: language.english_name,
-    }));
+  const [additionalSortData, setAdditionalSortData] =
+    React.useState<AdditionalSortDataState>({
+      additionalSortData: {
+        releaseDates: {
+          date_gte: null,
+          date_lte: null,
+        },
+        genres: null,
+        language: null,
+        voteAverage: {
+          voteAverage_gte: null,
+          voteAverage_lte: null,
+        },
+        voteCount: {
+          voteCount_gte: null,
+          voteCount_lte: null,
+        },
+        runtime: {
+          runtime_gte: null,
+          runtime_lte: null,
+        },
+        keywords: null,
+      },
+    });
 
   const handleDateChange: RangePickerProps["onChange"] = (
-    values: RangePickerProps['value'],
+    values: RangePickerProps["value"],
     formatString: [string, string]
   ): void | undefined => {
-    console.log(formatString);
+    setSelectedDates(formatString);
   };
 
-  const handleLanguageChange = (key: string) => {
-    const sortBy = key;
-    console.log(sortBy);
+  const handleLanguageChange = (lang: string) => {
+    setSelectedLanguage(lang);
   };
-
-  // console.log(inputText);
 
   const handleGenreChange = (
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
-    key: number
+    key: string
   ) => {
     event.preventDefault();
+
+    if (selectedGenres === null) {
+      setSelectedGenres([key]);
+      return;
+    }
+
+    const genreIndex = selectedGenres.indexOf(key);
+
+    if (genreIndex === -1) {
+      setSelectedGenres([...selectedGenres, key]);
+    } else {
+      const updatedGenres = [...selectedGenres];
+      updatedGenres.splice(genreIndex, 1);
+      setSelectedGenres(updatedGenres);
+    }
   };
 
-  const handleAverageVoteHandle = (value: [number, number]): void => {};
-
-  const handleSearchChange = (value: string): void => {
-    setInputText(value || ""); // Обновить введенный текст
+  const handleAverageVote = (value: [number, number]): void => {
+    setSelectedVoteAverage(value);
   };
+
+  const handleAverageVoteCount = (value: [number, number]): void => {
+    setSelectedVoteCount(value);
+  };
+
+  const handleRuntime = (value: [number, number]): void => {
+    setSelectedRuntime(value);
+  };
+
+  const handleDebouncedSearchChange = useDebounce((value: string) => {
+    setInputText(value || "");
+  }, 300);
 
   const handleSelectChange = (selectedValues: string[]) => {
-    const selectedFilter = keywordOptions.filter((keyword) =>
-      selectedValues.includes(keyword.name)
-    ).map(keyword => keyword.id.toString());
-    console.log(selectedFilter);
-  };
-
-  const handleAdditionalSortChange = (key: string) => {
-    const additionalSortBy = key;
-    onAdditionalSortChange(additionalSortBy);
+    const selectedFilter = keywordOptions
+      .filter((keyword) => selectedValues.includes(keyword.name))
+      .map((keyword) => keyword.id.toString());
+    setSelectedKeys(selectedFilter);
   };
 
   React.useEffect(() => {
-    // Выполнить запрос только если введенный текст не пустой
+    // if search is not empty
     if (inputText.trim() !== "") {
       fetchKeywords(`${inputText}`, true)
         .unwrap()
         .then((result) => {
-          if (result && result.length > 0) {
+          if (result && result.length !== 0) {
             setKeywordOptions(result);
           }
         })
         .finally(() => {});
     } else {
-      setKeywordOptions([]); // Сбросить список ключевых слов, если введенный текст пустой
+      setKeywordOptions([]);
     }
   }, [inputText]);
+
+  React.useEffect(() => {
+    setAdditionalSortData({
+      additionalSortData: {
+        releaseDates: {
+          date_gte: selectedDates && selectedDates[0],
+          date_lte: selectedDates && selectedDates[1],
+        },
+        genres: selectedGenres,
+        language: selectedLanguage,
+        voteAverage: {
+          voteAverage_gte:
+            selectedVoteAverage && selectedVoteAverage[0].toString(),
+          voteAverage_lte:
+            selectedVoteAverage && selectedVoteAverage[1].toString(),
+        },
+        voteCount: {
+          voteCount_gte: selectedVoteCount && selectedVoteCount[0].toString(),
+          voteCount_lte: selectedVoteCount && selectedVoteCount[1].toString(),
+        },
+        runtime: {
+          runtime_gte: selectedRuntime && selectedRuntime[0].toString(),
+          runtime_lte: selectedRuntime && selectedRuntime[1].toString(),
+        },
+        keywords: selectedKeys,
+      },
+    });
+  }, [
+    selectedGenres,
+    selectedDates,
+    selectedLanguage,
+    selectedVoteAverage,
+    selectedVoteCount,
+    selectedRuntime,
+    selectedKeys,
+  ]);
+
+  React.useEffect(() => {
+    onAdditionalSortChange(additionalSortData);
+  }, [additionalSortData]);
 
   const menuItems: MenuProps["items"] = [
     {
@@ -108,17 +201,28 @@ const AdditionalSortMenu: React.FC<AdditionalSortMenuProps> = ({
             {
               key: "datepicker",
               label: (
-                // changed:
-                // onChange?: (values: Dayjs | null, formatString: string) => void; AND onChange?: (value: DateType | null, dateString: string) => void;
-                // on
-                // onChange?: (values: RangeValue<DateType>, formatString: [string, string]) => void;
-                // in DatePickerProps and RangePickerSharedProp because of bug type
-                // links issue:
-                // #1 https://stackoverflow.com/questions/64328461/type-definition-of-rangepicker-onchange-date-paramater,
-                // # https://github.com/ant-design/ant-design/issues/41355
                 <DatePicker.RangePicker
                   onChange={handleDateChange}
-                  size="small"
+                  placeholder={["Початок", "Кінець"]}
+                  presets={[
+                    {
+                      label: "Останні 7 днів",
+                      value: [dayjs().add(-7, "d"), dayjs()],
+                    },
+                    {
+                      label: "Останні 14 днів",
+                      value: [dayjs().add(-14, "d"), dayjs()],
+                    },
+                    {
+                      label: "Останній 30 днів",
+                      value: [dayjs().add(-30, "d"), dayjs()],
+                    },
+                    {
+                      label: "Останній 90 днів",
+                      value: [dayjs().add(-90, "d"), dayjs()],
+                    },
+                  ]}
+                  locale={locale}
                 />
               ),
               type: "group",
@@ -134,21 +238,39 @@ const AdditionalSortMenu: React.FC<AdditionalSortMenuProps> = ({
               key: "genrePicker",
               label: (
                 <ul className={styles.genresList}>
+                  {isGenresLoading && (
+                    <div className={styles.loadingWrapper}>
+                      <Spin
+                        indicator={
+                          <LoadingOutlined style={{ fontSize: 24 }} spin />
+                        }
+                      />
+                    </div>
+                  )}
                   {!isGenresLoading &&
                     genres &&
                     genres.length !== 0 &&
-                    genres.map((genre) => (
-                      <li key={genre.id} className={styles.genre}>
-                        <a
-                          href=""
-                          onClick={(event) =>
-                            handleGenreChange(event, genre.id)
-                          }
-                        >
-                          {genre.name}
-                        </a>
-                      </li>
-                    ))}
+                    genres.map((genre) => {
+                      const isSelected = selectedGenres?.includes(
+                        genre.id.toString()
+                      );
+                      const genreClassName = isSelected
+                        ? styles.selectedGenre
+                        : styles.genre;
+
+                      return (
+                        <li key={genre.id} className={genreClassName}>
+                          <a
+                            href=""
+                            onClick={(event) =>
+                              handleGenreChange(event, genre.id.toString())
+                            }
+                          >
+                            {genre.name}
+                          </a>
+                        </li>
+                      );
+                    })}
                 </ul>
               ),
               type: "group",
@@ -175,7 +297,13 @@ const AdditionalSortMenu: React.FC<AdditionalSortMenuProps> = ({
                   onChange={handleLanguageChange}
                   loading={isLanguagesLoading}
                   options={
-                    formattedLanguageArray ? formattedLanguageArray : undefined
+                    (!isLanguagesLoading &&
+                    languages &&
+                    languages.length !== 0 ) ?
+                    languages.map((language) => ({
+                      value: language.iso_639_1,
+                      label: language.english_name,
+                    })) : undefined
                   }
                 />
               ),
@@ -207,7 +335,7 @@ const AdditionalSortMenu: React.FC<AdditionalSortMenuProps> = ({
                     formatter: (value) => <span>Оцінка {value}</span>,
                     placement: "top",
                   }}
-                  onChange={handleAverageVoteHandle}
+                  onChange={handleAverageVote}
                 />
               ),
               type: "group",
@@ -242,7 +370,7 @@ const AdditionalSortMenu: React.FC<AdditionalSortMenuProps> = ({
                     formatter: (value) => <span>Голосів {value}</span>,
                     placement: "top",
                   }}
-                  onChange={handleAverageVoteHandle}
+                  onChange={handleAverageVoteCount}
                 />
               ),
               type: "group",
@@ -275,7 +403,7 @@ const AdditionalSortMenu: React.FC<AdditionalSortMenuProps> = ({
                     formatter: (value) => <span>Тривалість {value}</span>,
                     placement: "top",
                   }}
-                  onChange={handleAverageVoteHandle}
+                  onChange={handleRuntime}
                 />
               ),
               type: "group",
@@ -304,7 +432,7 @@ const AdditionalSortMenu: React.FC<AdditionalSortMenuProps> = ({
                         .localeCompare((optionB?.label ?? "").toLowerCase())
                     }
                     style={{ width: "100%" }}
-                    onSearch={handleSearchChange}
+                    onSearch={handleDebouncedSearchChange}
                     loading={isKeywordsLoading}
                     options={keywordOptions.map((keyword) => ({
                       value: keyword.name,
@@ -313,10 +441,16 @@ const AdditionalSortMenu: React.FC<AdditionalSortMenuProps> = ({
                     onChange={handleSelectChange}
                     showArrow={false}
                     notFoundContent={null}
+                    tokenSeparators={[","]}
+                    allowClear
+                    onFocus={() => setIsTipVisible(true)}
+                    onBlur={() => setIsTipVisible(false)}
                   />
-                  <span className={styles.keywordsWarn}>
-                    *будь ласка, оберайте варіанти із списку
-                  </span>
+                  {isTipVisible && (
+                    <span className={styles.keywordsWarn}>
+                      *будь ласка, оберайте варіанти із списку
+                    </span>
+                  )}
                 </>
               ),
               type: "group",

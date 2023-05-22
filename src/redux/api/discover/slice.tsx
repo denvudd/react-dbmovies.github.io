@@ -11,7 +11,7 @@ export const discoverApi = createApi({
   endpoints: (builder) => ({
     getMovieDiscover: builder.query({
       query: (params) => `/discover/movie?${tmdbApiKey}&${params}`,
-      transformResponse: (response: MovieDiscoverApiResponse) => response.results,
+      transformResponse: (response: MovieDiscoverApiResponse) => response,
     }),
   }),
 });

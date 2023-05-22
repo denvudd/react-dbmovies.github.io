@@ -3,6 +3,11 @@
   border-top: 1px px solid #eee;
   padding: 4px 6px 6px 6px;
 
+  .loadingWrapper {
+    display: flex;
+    justify-content: center;
+  }
+
   .genresList {
     margin-top: -8px;
 
@@ -15,16 +20,27 @@
       margin-right: 6px;
       margin-top: 8px;
       transition: 0.1s ease;
-  
-      &.selection {
-        color: #fff;
-        background-color: rgba(1, 180, 228, 1);
-      }
-  
+
       &:hover {
         background-color: rgba(1, 180, 228, 1);
       }
-  
+
+      a {
+        color: #fff;
+      }
+    }
+
+    .selectedGenre {
+      display: inline-flex;
+      border: 1px solid #9e9e9e;
+      border-radius: 14px;
+      padding: 4px 12px;
+      font-size: 0.9em;
+      margin-right: 6px;
+      margin-top: 8px;
+      transition: 0.1s ease;
+      background-color: rgba(1, 180, 228, 1);
+
       a {
         color: #fff;
       }
@@ -44,4 +60,15 @@
   color: #ffffff;
   margin-top: 8px;
   display: flex;
+  animation: animate 0.3s;
+
+  @keyframes animate {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 0.4;
+    }
+  }
 }

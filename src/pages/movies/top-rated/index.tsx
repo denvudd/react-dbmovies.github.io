@@ -39,10 +39,10 @@ export const Home = () => {
                 Фільми з найвищими рейтингами
               </Typography.Title>
               {isLoading && <SkeletonLoader count={10} gutter={16} />}
-              {!isLoading && movies && movies.length !== 0 && (
+              {!isLoading && movies && movies.results.length !== 0 && (
                 <MovieList
                   gutter={16}
-                  dataSource={movies}
+                  dataSource={movies.results}
                   renderItem={(movie: MovieCard, index) => (
                     <MovieCard
                       index={index}

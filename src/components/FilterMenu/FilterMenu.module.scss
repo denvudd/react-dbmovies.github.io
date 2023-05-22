@@ -6,7 +6,6 @@
 .menu {
   width: 100%;
   border-top: 1px px solid #eee;
-  padding: 4px 6px 6px 6px;
 
   h3 {
     display: inline-flex;
@@ -19,19 +18,6 @@
 }
 
 .apply {
-  display: flex;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  border-radius: 0;
-  z-index: 5;
-  height: 50px;
-  width: 100%;
-  background: #001529;
-  cursor: pointer;
-}
-
-.submit {
   display: inline-flex;
   align-content: center;
   align-items: center;
@@ -39,7 +25,71 @@
   height: 100%;
   margin: 0;
   padding: 0;
-  background: #001529;
+  border: none;
+  outline: none;
+  background: transparent;
+  margin-top: 20px;
+  background: rgba(1, 180, 228);
+  cursor: pointer;
+  transition: 0.1s ease;
+
+  &:disabled {
+    background: rgb(117, 117, 117);
+    cursor: not-allowed;
+
+    &:hover {
+      background: rgb(117, 117, 117);
+    }
+  }
+
+  &:hover {
+    background: rgb(33, 200, 247);
+  }
+
+  &Wide {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    border-radius: 0;
+    z-index: 5;
+    width: 100%;
+    height: 50px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgb(1, 180, 228);
+    cursor: pointer;
+    transition: 0.1s ease;
+    animation: animate 0.1s;
+
+    &:hover {
+      background: rgba(3, 37, 65, 1);
+    }
+
+    @keyframes animate {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.submit {
+  color: #fff;
+  font-size: 1.1em;
+  line-height: 1;
+  font-weight: 600;
+  width: 100%;
+  height: 100%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
 
   span {
     color: #fff;
@@ -51,5 +101,27 @@
     display: inline-flex;
     justify-content: center;
     align-items: center;
+  }
+
+  &Wide {
+    display: inline-flex;
+    align-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+
+    span {
+      color: #fff;
+      font-size: 1.2em;
+      line-height: 1;
+      font-weight: 600;
+      width: 100%;
+      height: 100%;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
 }

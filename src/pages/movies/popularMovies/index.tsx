@@ -1,7 +1,10 @@
 import Head from "next/head";
-import { Typography } from "antd";
+import { Pagination, Typography } from "antd";
 import MovieCard from "@/components/MovieCard/MovieCard";
-import { useGetMoviesQuery } from "@/redux/api/movies/slice";
+import {
+  useGetMoviesQuery,
+  useLazyGetMoviesQuery,
+} from "@/redux/api/movies/slice";
 import { useLazyGetMovieDiscoverQuery } from "@/redux/api/discover/slice";
 import ListLayout from "@/layouts/ListLayout";
 import MovieList from "@/components/UI/MovieList/MovieList";
@@ -11,6 +14,7 @@ import { useSelector } from "react-redux";
 import React from "react";
 import { selectParams } from "@/redux/params/selectors";
 import { isSortParamsEmpty } from "@/utils/isSortParamsEmpty";
+import { ListMoviesApiResponse } from "@/redux/api/movies/types/ListMovieType";
 
 interface MovieCard {
   id: number;
@@ -22,41 +26,97 @@ interface MovieCard {
 }
 
 export const Home = () => {
-  const queryParams = useSelector(selectParams);
-  const { data: moviesDefault } = useGetMoviesQuery({
-    typeList: "popular",
-    params: "language=uk-UA&page=1",
-  });
-  const [getSortMovies, { data: sortMovies }] = useLazyGetMovieDiscoverQuery();
-  const [data, setData] = React.useState<MovieCard[]>([]);
-  const [isLoading, setIsLoading] = React.useState(true);
+  const params = useSelector(selectParams);
+  const [currentPage, setCurrentPage] = React.useState(1);
+  // const { data: moviesDefault, refetch } = useGetMoviesQuery({
+  //   typeList: "popular",
+  //   params: `language=uk-UA&page=${currentPage}`,
+  // });
+  const [getDefaultMovies, { isLoading: isDefaultMoviesLoading }] =
+    useLazyGetMoviesQuery();
+  const [getSortMovies, { isLoading: isSortMoviesLoading }] =
+    useLazyGetMovieDiscoverQuery();
+  const [data, setData] = React.useState<ListMoviesApiResponse | undefined>(
+    undefined
+  );
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
 
   React.useEffect(() => {
-    const isAllParamsEmpty = isSortParamsEmpty(queryParams);
+    window.scrollTo(0, 0);
+    const {
+      language,
+      releaseDates,
+      voteAverage,
+      voteCount,
+      runtime,
+      genres,
+      keywords,
+    } = params.additionalSortData;
 
-    // console.log(isAllParamsEmpty);
+    const queryParameters = {
+      language: language ? `&with_original_language=${language}` : "",
+      releaseDateGte: releaseDates?.date_gte
+        ? `&release_date.gte=${releaseDates.date_gte}`
+        : "",
+      releaseDateLte: releaseDates?.date_lte
+        ? `&release_date.lte=${releaseDates.date_lte}`
+        : "",
+      voteAverageGte: voteAverage?.voteAverage_gte
+        ? `&vote_average.gte=${voteAverage.voteAverage_gte}`
+        : "",
+      voteAverageLte: voteAverage?.voteAverage_lte
+        ? `&vote_average.lte=${voteAverage.voteAverage_lte}`
+        : "",
+      voteCountGte: voteCount?.voteCount_gte
+        ? `&vote_count.gte=${voteCount.voteCount_gte}`
+        : "",
+      voteCountLte: voteCount?.voteCount_lte
+        ? `&vote_count.lte=${voteCount.voteCount_lte}`
+        : "",
+      runtimeGte: runtime?.runtime_gte
+        ? `&with_runtime.gte=${runtime.runtime_gte}`
+        : "",
+      runtimeLte: runtime?.runtime_lte
+        ? `&with_runtime.lte=${runtime.runtime_lte}`
+        : "",
+      genres: genres ? `&with_genres=${genres.join(",")}` : "",
+      keywords: keywords ? `&with_keywords=${keywords.join(",")}` : "",
+    };
 
-    if (isAllParamsEmpty) {
-      if (moviesDefault && moviesDefault.length > 0) {
-        setData(moviesDefault);
-        setIsLoading(false);
-      }
-    } else {
-      setIsLoading(true);
-      getSortMovies(
-        `language=uk-UA&page=1&sort_by=${queryParams.sortData.sortBy}`
+    const queryString = Object.values(queryParameters).join("");
+
+    if (isSortParamsEmpty(params)) {
+      getDefaultMovies(
+        {
+          typeList: "popular",
+          params: `language=uk-UA&page=${currentPage}`,
+        },
+        true
       )
         .unwrap()
-        .then((result) => {
-          if (result && result.length > 0) {
-            setData(result);
+        .then((data) => {
+          if (data && data.results.length > 0) {
+            setData(data);
+            setCurrentPage(data.page);
           }
-        })
-        .finally(() => {
-          setIsLoading(false);
+        });
+    } else {
+      getSortMovies(
+        `language=uk-UA&page=${currentPage}&sort_by=${params.sortData.sortBy}${queryString}`,
+        true
+      )
+        .unwrap()
+        .then((data) => {
+          if (data && data.results.length > 0) {
+            setData(data);
+            setCurrentPage(data.page);
+          }
         });
     }
-  }, [queryParams, moviesDefault]);
+  }, [params, currentPage]);
 
   return (
     <>
@@ -74,30 +134,48 @@ export const Home = () => {
               <Typography.Title className="list-title" level={2}>
                 Популярні фільми
               </Typography.Title>
-              {isLoading && <SkeletonLoader count={10} gutter={16} />}
-              {!isLoading &&
-                ((moviesDefault && moviesDefault.length !== 0) ||
-                  (sortMovies && sortMovies.length !== 0)) && (
-                  <MovieList
-                    gutter={16}
-                    dataSource={data}
-                    renderItem={(movie: MovieCard, index: number) => (
-                      <MovieCard
-                        id={movie.id}
-                        index={index}
-                        key={movie.id}
-                        title={movie.title}
-                        imgUrl={
-                          movie.poster_path
-                            ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
-                            : `https://placehold.co/260x390/png/?text=No+Image`
-                        }
-                        description={movie.overview}
-                        voteAverage={movie.vote_average}
-                        release={movie.release_date}
+              {(isDefaultMoviesLoading || isSortMoviesLoading) && !data && (
+                <SkeletonLoader count={10} gutter={16} />
+              )}
+              {!isDefaultMoviesLoading &&
+                !isSortMoviesLoading &&
+                data &&
+                data.results.length !== 0 && (
+                  <>
+                    <MovieList
+                      gutter={16}
+                      dataSource={data.results}
+                      renderItem={(movie: MovieCard, index: number) => (
+                        <MovieCard
+                          id={movie.id}
+                          index={index}
+                          key={movie.id}
+                          title={movie.title}
+                          imgUrl={
+                            movie.poster_path
+                              ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
+                              : `https://placehold.co/260x390/png/?text=No+Image`
+                          }
+                          description={movie.overview}
+                          voteAverage={movie.vote_average}
+                          release={movie.release_date}
+                        />
+                      )}
+                    />
+                    <div className="pagination-wrapper">
+                      <Pagination
+                        defaultCurrent={1}
+                        current={data.page}
+                        onChange={handlePageChange}
+                        total={data.total_pages}
+                        showSizeChanger={false}
+                        className="pagination"
                       />
-                    )}
-                  />
+                      <span className="pagination-total">
+                        Всього фільмів знайдено: {data.total_results}
+                      </span>
+                    </div>
+                  </>
                 )}
             </>
           ),
