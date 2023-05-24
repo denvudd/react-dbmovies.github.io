@@ -1,4 +1,6 @@
 import { MiddlewareArray, configureStore } from "@reduxjs/toolkit";
+import { authApi } from "./api/authentication/slice";
+import { accountApi } from "./api/account/slice";
 import { moviesApi } from "./api/movies/slice";
 import { discoverApi } from "./api/discover/slice";
 import { genresApi } from "./api/genres/slice";
@@ -9,6 +11,8 @@ import { useDispatch } from "react-redux";
 
 const store = configureStore({
   reducer: {
+    authApi: authApi.reducer,
+    accountApi: accountApi.reducer,
     moviesApi: moviesApi.reducer,
     genresApi: genresApi.reducer,
     discoverApi: discoverApi.reducer,
@@ -18,6 +22,8 @@ const store = configureStore({
   },
   middleware: (getDefaultMiddleware) =>
     (getDefaultMiddleware() /* as MiddlewareArray<any> */).concat([
+      authApi.middleware,
+      accountApi.middleware,
       moviesApi.middleware,
       genresApi.middleware,
       discoverApi.middleware,

@@ -1,5 +1,3 @@
-import { ParamsState } from "@/redux/params/types";
-
 export const isSortParamsEmpty = (params: any): boolean => {
   const isParamsEmpty = Object.values(params).every((value) => {
     if (typeof value === "object" && value !== null) {

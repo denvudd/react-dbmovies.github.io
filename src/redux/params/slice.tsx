@@ -1,10 +1,10 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { ParamsState } from "./types";
+import { ParamsState, SortValue } from "./types/types";
 
 const initialState: ParamsState = {
   params: {
     sortData: {
-      sortBy: "",
+      sortBy: SortValue.None,
     },
     additionalSortData: {
       releaseDates: {

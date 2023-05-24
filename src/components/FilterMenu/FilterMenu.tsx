@@ -3,13 +3,9 @@ import SortMenu from "./SortMenu/SortMenu";
 import AdditionalSortMenu from "./AdditionalSortMenu/AdditionalSortMenu";
 import { setParams } from "@/redux/params/slice";
 import { useAppDispatch } from "@/redux/store";
-import { AdditionalSortData } from "@/redux/params/types";
+import { AdditionalSortData, SortData, SortValue } from "@/redux/params/types/types";
 import styles from "./FilterMenu.module.scss";
 import { isSortParamsEmpty } from "@/utils/isSortParamsEmpty";
-
-interface SortData {
-  sortBy: string;
-}
 
 export interface AdditionalSortDataState {
   additionalSortData: AdditionalSortData;
@@ -17,7 +13,7 @@ export interface AdditionalSortDataState {
 
 const FilterMenu: React.FC = () => {
   const [sortData, setSortData] = React.useState<SortData>({
-    sortBy: "",
+    sortBy: SortValue.None,
   });
   const dispatch = useAppDispatch();
   const [isDisabled, setIsDisabled] = React.useState(true);
@@ -56,7 +52,7 @@ const FilterMenu: React.FC = () => {
     );
   };
 
-  const handleSortChange = (sortBy: string) => {
+  const handleSortChange = (sortBy: SortValue) => {
     setSortData({ sortBy });
   };
 
@@ -67,14 +63,18 @@ const FilterMenu: React.FC = () => {
       additionalSortData: additionalSortData.additionalSortData,
     });
   };
+  
 
   React.useEffect(() => {
-    if (isSortParamsEmpty(additionalSortData)) {
+    if (
+      isSortParamsEmpty(additionalSortData) &&
+      isSortParamsEmpty(sortData)
+    ) {
       setIsDisabled(true);
     } else {
       setIsDisabled(false);
     }
-  }, [additionalSortData]);
+  }, [additionalSortData, sortData]);
 
   return (
     <div className={styles.container}>

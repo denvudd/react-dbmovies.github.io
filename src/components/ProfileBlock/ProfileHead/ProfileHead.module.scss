@@ -1,0 +1,77 @@
+.bgImage {
+  position: relative;
+  width: 100%;
+  background-position: center top;
+  background-size: cover;
+}
+
+.bgGradient {
+  width: 100%;
+  z-index: 0;
+  background-image: radial-gradient(at 30% top, #20284a 0%, rgba(3, 37, 65, 1) 70%);
+}
+
+.innerContent {
+  background-image: url('https://www.themoviedb.org/assets/2/v4/account_pipes/purple-63b164a075461641b7ef444ea97d9787adf45a9552fe215e20063e3ff02491a8.svg');
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: center -250px;
+  position: relative;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  padding: 0;
+}
+
+.content {
+  padding: 40px;
+  display: flex;
+  flex-wrap: nowrap;
+  color: #fff;
+  width: 100%;
+}
+
+.avatar {
+  min-width: 150px;
+  width: 150px;
+  height: 150px;
+
+  a {
+    display: block;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  img {
+    border-radius: 50%;
+  }
+}
+
+.text {
+  width: 100%;
+  padding-left: 40px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.about {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  h2 {
+    font-weight: 700;
+    font-size: 2em;
+
+    span {
+      opacity: 0.65;
+      font-weight: 400;
+      cursor: pointer;
+    }
+  }
+}

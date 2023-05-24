@@ -1,5 +1,17 @@
+export enum SortValue {
+  None = "",
+  PopularityDesc = "popularity.desc",
+  PopularityAsc = "popularity.asc",
+  VoteAverageDesc = "vote_average.desc",
+  VoteAverageAsc = "vote_average.asc",
+  ReleaseDateDesc = "primary_release_date.desc",
+  ReleaseDateAsc = "primary_release_date.asc",
+  RevenueDesc = "revenue.desc",
+  RevenueAsc = "revenue.asc",
+}
+
 export interface SortData {
-  sortBy: string;
+  sortBy: SortValue;
 }
 
 export interface AdditionalSortData {

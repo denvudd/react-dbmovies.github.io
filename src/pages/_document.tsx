@@ -2,7 +2,7 @@ import Document, { Html, Head, Main, NextScript } from "next/document";
 import { StyleProvider, createCache, extractStyle } from '@ant-design/cssinjs';
 
 /* 
-  Issue Flash of unstyled content for first load:
+  Issue #16037 "Flash of unstyled content for first load":
   https://github.com/ant-design/ant-design/issues/16037#issuecomment-483140458 
   ant-design flash of unstyled content fixed
 */

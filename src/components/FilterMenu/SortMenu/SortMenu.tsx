@@ -1,15 +1,15 @@
 import React from "react";
 import { MenuProps, Select, Menu } from "antd";
 import styles from "./SortMenu.module.scss";
+import { SortValue } from "@/redux/params/types/types";
 
 interface SortMenuProps {
-  onSortChange: (sortBy: string) => void;
+  onSortChange: (sortBy: SortValue) => void;
 }
 
 const SortMenu: React.FC<SortMenuProps> = ({ onSortChange }) => {
-  const handleSortChange = (key: string) => {
-    const sortBy = key;
-    onSortChange(sortBy);
+  const handleSortChange = (key: SortValue) => {
+    onSortChange(key);
   };
   
   const menuItems: MenuProps["items"] = [
@@ -23,18 +23,18 @@ const SortMenu: React.FC<SortMenuProps> = ({ onSortChange }) => {
             <div className={styles.menu}>
               <h3>Сортувати результати за</h3>
               <Select
-                defaultValue="popularity.desc"
+                defaultValue={SortValue.PopularityDesc}
                 style={{ width: "100%" }}
                 onChange={handleSortChange}
                 options={[
-                  { value: "popularity.desc", label: "Популярне" },
-                  { value: "popularity.asc", label: "Непопулярні" },
-                  { value: "vote_average.desc", label: "Рейтинг високий" },
-                  { value: "vote_average.asc", label: "Рейтинг низький" },
-                  { value: "primary_release_date.desc", label: "Реліз свіжий" },
-                  { value: "primary_release_date.asc", label: "Реліз давній" },
-                  { value: "revenue.desc", label: "Бюджет високий" },
-                  { value: "revenue.asc", label: "Бюджет низький" },
+                  { value: SortValue.PopularityDesc, label: "Популярне" },
+                  { value: SortValue.PopularityAsc, label: "Непопулярні" },
+                  { value: SortValue.VoteAverageDesc, label: "Рейтинг високий" },
+                  { value: SortValue.VoteAverageAsc, label: "Рейтинг низький" },
+                  { value: SortValue.ReleaseDateDesc, label: "Реліз свіжий" },
+                  { value: SortValue.ReleaseDateAsc, label: "Реліз давній" },
+                  { value: SortValue.RevenueDesc, label: "Бюджет високий" },
+                  { value: SortValue.RevenueAsc, label: "Бюджет низький" },
                 ]}
               />
             </div>

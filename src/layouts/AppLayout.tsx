@@ -10,9 +10,9 @@ interface Props {
 const AppLayout: React.FC<Props> = ({ children }) => {
   return (
     <Layout>
-        <Header />
+      <Header />
       {children}
-        <Footer />
+      <Footer />
     </Layout>
   );
 };

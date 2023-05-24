@@ -1,10 +1,7 @@
 import Head from "next/head";
 import { Pagination, Typography } from "antd";
 import MovieCard from "@/components/MovieCard/MovieCard";
-import {
-  useGetMoviesQuery,
-  useLazyGetMoviesQuery,
-} from "@/redux/api/movies/slice";
+import { useLazyGetMoviesQuery } from "@/redux/api/movies/slice";
 import { useLazyGetMovieDiscoverQuery } from "@/redux/api/discover/slice";
 import ListLayout from "@/layouts/ListLayout";
 import MovieList from "@/components/UI/MovieList/MovieList";
@@ -27,11 +24,8 @@ interface MovieCard {
 
 export const Home = () => {
   const params = useSelector(selectParams);
-  const [currentPage, setCurrentPage] = React.useState(1);
-  // const { data: moviesDefault, refetch } = useGetMoviesQuery({
-  //   typeList: "popular",
-  //   params: `language=uk-UA&page=${currentPage}`,
-  // });
+  const [currentPageDefault, setCurrentPageDefault] = React.useState(1);
+  const [currentPageSort, setCurrentPageSort] = React.useState(1);
   const [getDefaultMovies, { isLoading: isDefaultMoviesLoading }] =
     useLazyGetMoviesQuery();
   const [getSortMovies, { isLoading: isSortMoviesLoading }] =
@@ -40,12 +34,19 @@ export const Home = () => {
     undefined
   );
 
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
+  // getDefaultMovies
+  const handlePageChangeDefault = (page: number) => {
+    setCurrentPageDefault(page);
+  };
+
+  // getSortMovies
+  const handlePageChangeSort = (page: number) => {
+    setCurrentPageSort(page);
   };
 
   React.useEffect(() => {
     window.scrollTo(0, 0);
+    const { sortBy } = params.sortData;
     const {
       language,
       releaseDates,
@@ -82,8 +83,12 @@ export const Home = () => {
       runtimeLte: runtime?.runtime_lte
         ? `&with_runtime.lte=${runtime.runtime_lte}`
         : "",
-      genres: genres ? `&with_genres=${genres.join(",")}` : "",
-      keywords: keywords ? `&with_keywords=${keywords.join(",")}` : "",
+      genres:
+        genres && genres.length !== 0 ? `&with_genres=${genres.join(",")}` : "",
+      keywords:
+        keywords && keywords.length !== 0
+          ? `&with_keywords=${keywords.join(",")}`
+          : "",
     };
 
     const queryString = Object.values(queryParameters).join("");
@@ -92,7 +97,7 @@ export const Home = () => {
       getDefaultMovies(
         {
           typeList: "popular",
-          params: `language=uk-UA&page=${currentPage}`,
+          params: `language=uk-UA&page=${currentPageDefault}`,
         },
         true
       )
@@ -100,23 +105,25 @@ export const Home = () => {
         .then((data) => {
           if (data && data.results.length > 0) {
             setData(data);
-            setCurrentPage(data.page);
+            setCurrentPageDefault(data.page);
           }
         });
     } else {
       getSortMovies(
-        `language=uk-UA&page=${currentPage}&sort_by=${params.sortData.sortBy}${queryString}`,
+        `language=uk-UA&page=${currentPageSort}&sort_by=${
+          sortBy === "" ? "popularity.desc" : sortBy
+        }${queryString}`,
         true
       )
         .unwrap()
         .then((data) => {
           if (data && data.results.length > 0) {
             setData(data);
-            setCurrentPage(data.page);
+            setCurrentPageSort(data.page);
           }
         });
     }
-  }, [params, currentPage]);
+  }, [params, currentPageDefault, currentPageSort]);
 
   return (
     <>
@@ -166,7 +173,11 @@ export const Home = () => {
                       <Pagination
                         defaultCurrent={1}
                         current={data.page}
-                        onChange={handlePageChange}
+                        onChange={
+                          isSortParamsEmpty(params)
+                            ? handlePageChangeDefault
+                            : handlePageChangeSort
+                        }
                         total={data.total_pages}
                         showSizeChanger={false}
                         className="pagination"

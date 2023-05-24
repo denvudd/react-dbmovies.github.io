@@ -110,6 +110,9 @@ button {
   margin-top: 20px;
 }
 
+.ant-menu-dark {
+  color: #fff !important;
+}
 
 @media (max-width: 1200px) {
   .app-container {
