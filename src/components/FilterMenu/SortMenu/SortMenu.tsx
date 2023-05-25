@@ -7,7 +7,7 @@ interface SortMenuProps {
   onSortChange: (sortBy: SortValue) => void;
 }
 
-const SortMenu: React.FC<SortMenuProps> = ({ onSortChange }) => {
+const SortMenu: React.FC<SortMenuProps> = React.memo(({ onSortChange }) => {
   const handleSortChange = (key: SortValue) => {
     onSortChange(key);
   };
@@ -55,6 +55,6 @@ const SortMenu: React.FC<SortMenuProps> = ({ onSortChange }) => {
       />
     </form>
   );
-};
+});
 
 export default SortMenu;

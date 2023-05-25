@@ -1,10 +1,10 @@
 import React from "react";
+import Image from "next/image";
 import {
   useLazyGetMovieImagesQuery,
   useLazyGetMovieVideosQuery,
 } from "@/redux/api/movies/slice";
 import { TabsProps, Tabs, Skeleton, List } from "antd";
-import Image from "next/image";
 import VideoCard from "@/components/VideoCard/VideoCard";
 
 import styles from "./MovieDetailsScreens.module.scss";
@@ -13,24 +13,29 @@ interface MovieDetailsScreensProps {
   id: number;
 }
 
+enum TabValues {
+  POSTERS = "posters",
+  BACKDROPS = "backdrops",
+  VIDEOS = "videos",
+};
+
 const MovieDetailsScreens: React.FC<MovieDetailsScreensProps> = ({ id }) => {
   const [getImages, { data: images, isLoading: isImagesLoading }] =
     useLazyGetMovieImagesQuery();
   const [getVideos, { data: videos, isLoading: isVideosLoading }] =
     useLazyGetMovieVideosQuery();
-  const [tabKey, setTabKey] = React.useState('videos');
-  
+  const [tabKey, setTabKey] = React.useState<TabValues | string>(TabValues.VIDEOS);
 
   const handleTabChange = (key: string) => {
     setTabKey(key);
     switch (tabKey) {
-      case "posters":
+      case TabValues.POSTERS:
         getImages({ id }, true);
         break;
-      case "backdrops":
+      case TabValues.BACKDROPS:
         getImages({ id }, true);
         break;
-      case "videos":
+      case TabValues.VIDEOS:
         getVideos({ id, params: "language=uk-UA" }, true);
         break;
       default:
@@ -44,7 +49,7 @@ const MovieDetailsScreens: React.FC<MovieDetailsScreensProps> = ({ id }) => {
 
   const tabs: TabsProps["items"] = [
     {
-      key: "videos",
+      key: TabValues.VIDEOS,
       label: `Відеоролики`,
       children: (
         <div>
@@ -69,7 +74,9 @@ const MovieDetailsScreens: React.FC<MovieDetailsScreensProps> = ({ id }) => {
                 }}
                 locale={{
                   emptyText: (
-                    <p className="empty-text--default">Нам не вдалося знайти медіа по цьому запиту 😕</p>
+                    <p className="empty-text--default">
+                      Нам не вдалося знайти медіа по цьому запиту 😕
+                    </p>
                   ),
                 }}
                 renderItem={(video) => (
@@ -84,7 +91,7 @@ const MovieDetailsScreens: React.FC<MovieDetailsScreensProps> = ({ id }) => {
       ),
     },
     {
-      key: "posters",
+      key: TabValues.POSTERS,
       label: `Світлини`,
       children: (
         <div>
@@ -109,7 +116,9 @@ const MovieDetailsScreens: React.FC<MovieDetailsScreensProps> = ({ id }) => {
                 }}
                 locale={{
                   emptyText: (
-                    <p className="empty-text--default">Нам не вдалося знайти медіа по цьому запиту 😕</p>
+                    <p className="empty-text--default">
+                      Нам не вдалося знайти медіа по цьому запиту 😕
+                    </p>
                   ),
                 }}
                 renderItem={(image) => (
@@ -129,7 +138,7 @@ const MovieDetailsScreens: React.FC<MovieDetailsScreensProps> = ({ id }) => {
       ),
     },
     {
-      key: "backdrops",
+      key: TabValues.BACKDROPS,
       label: `Постери`,
       children: (
         <div>
@@ -153,7 +162,9 @@ const MovieDetailsScreens: React.FC<MovieDetailsScreensProps> = ({ id }) => {
               }}
               locale={{
                 emptyText: (
-                  <p className="empty-text--default">Нам не вдалося знайти медіа по цьому запиту 😕</p>
+                  <p className="empty-text--default">
+                    Нам не вдалося знайти медіа по цьому запиту 😕
+                  </p>
                 ),
               }}
               renderItem={(image) => (
@@ -179,7 +190,7 @@ const MovieDetailsScreens: React.FC<MovieDetailsScreensProps> = ({ id }) => {
         tabBarExtraContent={{ left: <h3>Медіа</h3> }}
         onChange={handleTabChange}
         activeKey={tabKey}
-        tabBarStyle={{fontWeight: "700", fontSize: "1.1em"}}
+        tabBarStyle={{ fontWeight: "700", fontSize: "1.1em" }}
         items={tabs}
       ></Tabs>
     </section>

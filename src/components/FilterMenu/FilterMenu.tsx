@@ -3,7 +3,11 @@ import SortMenu from "./SortMenu/SortMenu";
 import AdditionalSortMenu from "./AdditionalSortMenu/AdditionalSortMenu";
 import { setParams } from "@/redux/params/slice";
 import { useAppDispatch } from "@/redux/store";
-import { AdditionalSortData, SortData, SortValue } from "@/redux/params/types/types";
+import {
+  AdditionalSortData,
+  SortData,
+  SortValue,
+} from "@/redux/params/types/types";
 import styles from "./FilterMenu.module.scss";
 import { isSortParamsEmpty } from "@/utils/isSortParamsEmpty";
 
@@ -11,7 +15,7 @@ export interface AdditionalSortDataState {
   additionalSortData: AdditionalSortData;
 }
 
-const FilterMenu: React.FC = () => {
+const FilterMenu: React.FC = React.memo(() => {
   const [sortData, setSortData] = React.useState<SortData>({
     sortBy: SortValue.None,
   });
@@ -63,13 +67,9 @@ const FilterMenu: React.FC = () => {
       additionalSortData: additionalSortData.additionalSortData,
     });
   };
-  
 
   React.useEffect(() => {
-    if (
-      isSortParamsEmpty(additionalSortData) &&
-      isSortParamsEmpty(sortData)
-    ) {
+    if (isSortParamsEmpty(additionalSortData) && isSortParamsEmpty(sortData)) {
       setIsDisabled(true);
     } else {
       setIsDisabled(false);
@@ -103,6 +103,6 @@ const FilterMenu: React.FC = () => {
       )}
     </div>
   );
-};
+});
 
 export default FilterMenu;

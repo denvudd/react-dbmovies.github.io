@@ -1,27 +1,33 @@
 import React from "react";
 import DetailLayout from "@/layouts/DetailsLayout";
-import { GetServerSidePropsContext } from "next";
-import MovieDetailsBlock from "@/components/MovieDetailsBlock/MovieDetailsBlock";
 import { useLazyGetAccountDetailsQuery } from "@/redux/api/account/slice";
 import ProfileHead from "@/components/ProfileBlock/ProfileHead/ProfileHead";
+import ProfileMeta from "@/components/ProfileBlock/ProfileMeta/ProfileMeta";
 
 const MovideDetails: React.FC = () => {
+  const [sessionId, setSessionId] = React.useState<string | null>(null);
   const [
     getAccountDetails,
     { data: accountDetails, isLoading: isAccountDetailsLoading },
   ] = useLazyGetAccountDetailsQuery();
 
   React.useEffect(() => {
-    const session_id = localStorage.getItem("session_id");
-    getAccountDetails({ session_id }, true)
+    const storedSessionId = localStorage.getItem("session_id");
+    
+    getAccountDetails({ session_id: storedSessionId }, true)
       .unwrap()
-      .then((data) => console.log(data));
+      .then((data) => setSessionId(storedSessionId));
   }, []);
 
   return (
     <>
       <DetailLayout>
-        {!isAccountDetailsLoading && accountDetails && <ProfileHead {...accountDetails}/>}
+        {!isAccountDetailsLoading && accountDetails && (
+          <ProfileHead {...accountDetails} />
+        )}
+        {!isAccountDetailsLoading && accountDetails && sessionId && (
+          <ProfileMeta accountId={accountDetails.id} sessionId={sessionId} />
+        )}
       </DetailLayout>
     </>
   );
