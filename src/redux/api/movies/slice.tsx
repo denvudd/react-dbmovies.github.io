@@ -1,4 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { HYDRATE } from "next-redux-wrapper";
+
 import { ListMoviesApiResponse } from "./types/ListMovieType";
 import { MovieDetailsApiResponse } from "./types/MovieDetailsType";
 import { MovieReleaseDatesApiResponse } from "./types/MovieReleaseDates";
@@ -15,6 +17,11 @@ export const moviesApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "https://api.themoviedb.org/3",
   }),
+  extractRehydrationInfo(action, { reducerPath }) {
+    if (action.type === HYDRATE) {
+      return action.payload[reducerPath];
+    }
+  },
   endpoints: (builder) => ({
     getMovies: builder.query({
       query: ({ typeList, params }) =>
@@ -99,15 +106,19 @@ export const moviesApi = createApi({
   }),
 });
 
-
+// Export hooks for usage in functional components
 export const {
   useGetMoviesQuery,
-  useLazyGetMoviesQuery,
   useGetMovieDetailsQuery,
   useGetMovieReleaseDatesQuery,
   useGetMovieCreditsCastQuery,
   useGetMovieRecsQuery,
   useGetMovieKeywordsQuery,
+  useLazyGetMoviesQuery,
   useLazyGetMovieImagesQuery,
   useLazyGetMovieVideosQuery,
+  util: { getRunningQueriesThunk },
 } = moviesApi;
+
+// export endpoints for use in SSR
+export const { getMovieDetails } = moviesApi.endpoints;

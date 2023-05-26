@@ -1,4 +1,5 @@
 import React from "react";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import { Popover, message } from "antd";
 import { AccountDetailsApiResponse } from "@/redux/api/account/types/AccountDetailsType";
 import styles from "./ProfileHead.module.scss";
@@ -11,17 +12,14 @@ const ProfileHead: React.FC<ProfileHeadProps> = ({
   avatar,
   iso_3166_1,
 }) => {
-  const [copied, setCopied] = React.useState(false);
+  const [value, copy] = useCopyToClipboard();
   const [messageApi, contextHolder] = message.useMessage();
 
-  const handleCopyToClipboard = (): void => {
-    setCopied(true);
-    navigator.clipboard.writeText(`${id}`);
-    messageApi.success(`Текст скопійовано: ${id}`);
-
-    setTimeout(() => {
-      setCopied(false);
-    }, 2000);
+  const handleClickCopy = (value: string) => {
+    copy(value);
+    if (value !== null) {
+      messageApi.success(`Текст скопійовано: ${value}`);
+    }
   };
 
   return (
@@ -44,16 +42,16 @@ const ProfileHead: React.FC<ProfileHeadProps> = ({
                   <h2>
                     {username}{" "}
                     <Popover
-                      color={copied ? `green` : ""}
+                      color={value !== null ? `green` : ""}
                       content={
-                        copied ? (
-                          <span style={{color: '#fff'}}>Скопійовано!</span>
+                        value !== null ? (
+                          <span style={{ color: "#fff" }}>Скопійовано!</span>
                         ) : (
                           <span>Скопіювати</span>
                         )
                       }
                     >
-                      <span onClick={handleCopyToClipboard}>#{id}</span>
+                      <span onClick={() => handleClickCopy(`${id}`)}>#{id}</span>
                     </Popover>
                   </h2>
                   <p>Країна: {iso_3166_1}</p>

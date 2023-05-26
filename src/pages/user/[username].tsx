@@ -4,7 +4,7 @@ import { useLazyGetAccountDetailsQuery } from "@/redux/api/account/slice";
 import ProfileHead from "@/components/ProfileBlock/ProfileHead/ProfileHead";
 import ProfileMeta from "@/components/ProfileBlock/ProfileMeta/ProfileMeta";
 
-const MovideDetails: React.FC = () => {
+const UserPage: React.FC = () => {
   const [sessionId, setSessionId] = React.useState<string | null>(null);
   const [
     getAccountDetails,
@@ -16,7 +16,7 @@ const MovideDetails: React.FC = () => {
     
     getAccountDetails({ session_id: storedSessionId }, true)
       .unwrap()
-      .then((data) => setSessionId(storedSessionId));
+      .then(() => setSessionId(storedSessionId));
   }, []);
 
   return (
@@ -33,4 +33,4 @@ const MovideDetails: React.FC = () => {
   );
 };
 
-export default MovideDetails;
+export default UserPage;

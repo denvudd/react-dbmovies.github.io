@@ -1,0 +1,71 @@
+import React from "react";
+import { ListMovie } from "@/redux/api/movies/types/ListMovieType";
+import {
+  CaretRightFilled,
+  UnorderedListOutlined,
+  HeartFilled,
+  PushpinFilled,
+  StarFilled,
+} from "@ant-design/icons";
+import Link from "next/link";
+import Image from "next/image";
+
+import styles from "./ListDetailsBody.module.scss";
+import ListMovieCard from "@/components/UI/ListMovieCard/ListMovieCard";
+
+interface ListDetailsBodyProps {
+  favorite_count: number;
+  items: ListMovie[];
+  item_count: number;
+}
+
+const ListDetailsBody: React.FC<ListDetailsBodyProps> = ({
+  favorite_count,
+  items,
+  item_count,
+}) => {
+  return (
+    <div>
+      <section className={styles.info}>
+        <div className="app-container">
+          <ul className={styles.infoList}>
+            <li>
+              <span>
+                <em>{item_count}</em>
+              </span>
+              <br />
+              позицій в цьому переліку
+            </li>
+            <li>
+              <span>
+                <em>{item_count}</em>
+              </span>
+              <br />
+              усереднений рейтинг
+            </li>
+            <li>
+              <span>
+                <em>{item_count}</em>
+              </span>
+              <br />
+              усереднена кількість оцінок
+            </li>
+          </ul>
+        </div>
+      </section>
+      <section className={styles.results}>
+        <div className="app-container">
+          <ul className={styles.listResults}>
+            {items.map((movie, index) => (
+              <li key={movie.id} className={styles.item}>
+                <ListMovieCard movie={movie} index={index} />
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    </div>
+  );
+};
+
+export default ListDetailsBody;

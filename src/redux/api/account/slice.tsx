@@ -27,5 +27,8 @@ export const accountApi = createApi({
   }),
 });
 
-export const { useLazyGetAccountDetailsQuery, useLazyGetAccountListsQuery } =
-  accountApi;
+export const {
+  useGetAccountDetailsQuery,
+  useLazyGetAccountDetailsQuery,
+  useLazyGetAccountListsQuery,
+} = accountApi;

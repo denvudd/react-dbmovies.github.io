@@ -1,0 +1,68 @@
+.head {
+  background-image: linear-gradient(to right, rgba(3, 37, 65, 0.85) 0%, rgba(3, 37, 65, 0.9) 70%);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center top;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.content {
+  color: #fff;
+
+  h2 {
+    font-size: 2.4em;
+    font-weight: 700;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+
+    span {
+      opacity: 0.65;
+      font-weight: 400;
+      cursor: pointer;
+    }
+  }
+
+  h4 {
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+
+  h3 {
+    margin-top: 20px;
+    font-size: 1.3em;
+  }
+}
+
+.account {
+  display: flex;
+  align-items: center;
+
+  a {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+
+    img {
+      border-radius: 50%;
+    }
+  }
+
+  p {
+    font-weight: 600;
+    font-size: 1.3em;
+    line-height: 1.1em;
+  }
+}
+
+.description {
+  max-height: 106px;
+  overflow-y: auto;
+
+  p {
+    margin-bottom: 16px;
+  }
+}

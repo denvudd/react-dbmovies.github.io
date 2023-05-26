@@ -4,6 +4,7 @@ import { Button, Tabs, TabsProps } from "antd";
 import { formatFirstLetterToUppercase } from "@/utils/formatFirstLetterToUppercase";
 
 import styles from "./ProfileMeta.module.scss";
+import Link from "next/link";
 
 interface ProfileMetaProps {
   accountId: number;
@@ -42,7 +43,7 @@ const ProfileMeta: React.FC<ProfileMetaProps> = ({ accountId, sessionId }) => {
                   </div>
                   <div className={styles.listDetails}>
                     <h2>
-                      <a href="">{list.name}</a>
+                      <Link href={`/lists/${list.id}`}>{list.name}</Link>
                     </h2>
                     <div className={styles.listMeta}>
                       <span>{list.item_count} елементів</span>

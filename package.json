@@ -21,6 +21,7 @@
     "dayjs": "^1.11.7",
     "lodash.debounce": "^4.0.8",
     "next": "13.4.2",
+    "next-redux-wrapper": "^8.1.0",
     "numeral": "^2.0.6",
     "react": "18.2.0",
     "react-content-loader": "^6.2.1",

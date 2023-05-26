@@ -1,45 +1,41 @@
 import React from "react";
 import MovieDetailsHead from "./MovieDetailsHead/MovieDetailsHead";
 import MovieDetailsMedia from "./MovieDetailsMedia/MovieDetailsMedia";
-import { useGetMovieDetailsQuery } from "@/redux/api/movies/slice";
-import { Spin } from "antd";
+import { MovieDetails } from "@/redux/api/movies/types/MovieDetailsType";
 
 type MovieDetailsBlockProps = {
   id: number;
+  data: MovieDetails;
 };
 
-const MovieDetailsBlock: React.FC<MovieDetailsBlockProps> = ({ id }) => {
-  const { data: movie, isLoading } = useGetMovieDetailsQuery({
-    id: id,
-    params: "language=uk-UA&page=1",
-  });
+const MovieDetailsBlock: React.FC<MovieDetailsBlockProps> = ({ id, data }) => {
 
   return (
     <>
-      {!isLoading && movie && (
+      {data && (
         <>
           <MovieDetailsHead
-            id={id}
-            poster_path={movie.poster_path}
-            backdrop_path={movie.backdrop_path}
-            release_date={movie.release_date}
-            title={movie.title}
-            genres={movie.genres}
-            runtime={movie.runtime}
-            tagline={movie.tagline}
-            overview={movie.overview}
-            vote_average={movie.vote_average}
+            id={data.id}
+            poster_path={data.poster_path}
+            backdrop_path={data.backdrop_path}
+            release_date={data.release_date}
+            title={data.title}
+            genres={data.genres}
+            runtime={data.runtime}
+            tagline={data.tagline}
+            overview={data.overview}
+            vote_average={data.vote_average}
           />
           <MovieDetailsMedia
             id={id}
             collectionData={
-              movie.belongs_to_collection ? movie.belongs_to_collection : null
+              data.belongs_to_collection ? data.belongs_to_collection : null
             }
-            original_title={movie.original_title}
-            original_language={movie.original_language}
-            status={movie.status}
-            budget={movie.budget}
-            revenue={movie.revenue}
+            original_title={data.original_title}
+            original_language={data.original_language}
+            status={data.status}
+            budget={data.budget}
+            revenue={data.revenue}
           />
         </>
       )}
