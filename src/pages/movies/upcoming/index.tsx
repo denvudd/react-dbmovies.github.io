@@ -33,6 +33,7 @@ export const Home = () => {
   const [data, setData] = React.useState<ListMoviesApiResponse | undefined>(
     undefined
   );
+  
 
   // getDefaultMovies
   const handlePageChangeDefault = (page: number) => {
@@ -123,6 +124,7 @@ export const Home = () => {
           }
         });
     }
+
   }, [params, currentPageDefault, currentPageSort]);
 
   return (
@@ -173,12 +175,13 @@ export const Home = () => {
                       <Pagination
                         defaultCurrent={1}
                         current={data.page}
+                        pageSize={20}
                         onChange={
                           isSortParamsEmpty(params)
                             ? handlePageChangeDefault
                             : handlePageChangeSort
                         }
-                        total={data.total_pages}
+                        total={data.total_results}
                         showSizeChanger={false}
                         className="pagination"
                       />
