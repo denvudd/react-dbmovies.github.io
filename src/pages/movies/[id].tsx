@@ -6,9 +6,12 @@ import {
   getRunningQueriesThunk,
 } from "@/redux/api/movies/slice";
 import { wrapper } from "@/redux/store";
+import { Spin } from "antd";
+import { MovieDetails } from "@/redux/api/movies/types/MovieDetailsType";
 
-interface MovieDetails {
+interface MovieDetailsPageProps {
   id: number;
+  data: MovieDetails;
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
@@ -21,20 +24,20 @@ export const getServerSideProps = wrapper.getServerSideProps(
       );
     }
 
+    const { data } = getMovieDetails.select({
+      id,
+      params: "language=uk-UA&page=1",
+    })(store.getState());
+
     await Promise.all(store.dispatch(getRunningQueriesThunk()));
 
     return {
-      props: { id: id },
+      props: { id, data },
     };
   }
 );
 
-const MovideDetails: React.FC<MovieDetails> = ({ id }) => {
-  const { data } = getMovieDetails.useQuery({
-    id,
-    params: "language=uk-UA&page=1",
-  });
-
+const MovideDetailsPage: React.FC<MovieDetailsPageProps> = ({ id, data }) => {
   return (
     <>
       <DetailLayout>
@@ -44,4 +47,4 @@ const MovideDetails: React.FC<MovieDetails> = ({ id }) => {
   );
 };
 
-export default MovideDetails;
+export default MovideDetailsPage;
