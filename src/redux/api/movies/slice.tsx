@@ -1,6 +1,3 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { HYDRATE } from "next-redux-wrapper";
-
 import { ListMoviesApiResponse } from "./types/ListMovieType";
 import { MovieDetailsApiResponse } from "./types/MovieDetailsType";
 import { MovieReleaseDatesApiResponse } from "./types/MovieReleaseDates";
@@ -9,19 +6,12 @@ import { MovieImagesApiResponse } from "./types/MovieImagesType";
 import { MovieVideosApiResponse } from "./types/MovieVideosType";
 import { MovieRecsApiResponse } from "./types/MovieRecsType";
 import { MovieKeywordApiResponse } from "./types/MovieKeywordsType";
+import { baseApi } from "../baseApi/slice";
 
 const tmdbApiKey = "api_key=684e3f73d1ca0e692a3016c028aabf72";
 
-export const moviesApi = createApi({
-  reducerPath: "moviesApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: "https://api.themoviedb.org/3",
-  }),
-  extractRehydrationInfo(action, { reducerPath }) {
-    if (action.type === HYDRATE) {
-      return action.payload[reducerPath];
-    }
-  },
+export const moviesApi = baseApi.injectEndpoints({
+  
   endpoints: (builder) => ({
     getMovies: builder.query({
       query: ({ typeList, params }) =>
