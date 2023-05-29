@@ -1,14 +1,6 @@
 import React from "react";
 import { ListMovie } from "@/redux/api/movies/types/ListMovieType";
-import {
-  CaretRightFilled,
-  UnorderedListOutlined,
-  HeartFilled,
-  PushpinFilled,
-  StarFilled,
-} from "@ant-design/icons";
-import Link from "next/link";
-import Image from "next/image";
+import { calcAverageInObject } from "@/utils/calcAverageInObject";
 
 import styles from "./ListDetailsBody.module.scss";
 import ListMovieCard from "@/components/UI/ListMovieCard/ListMovieCard";
@@ -38,14 +30,21 @@ const ListDetailsBody: React.FC<ListDetailsBodyProps> = ({
             </li>
             <li>
               <span>
-                <em>{item_count}</em>
+                <em>{favorite_count}</em>
+              </span>
+              <br />
+              кількість улюблених позицій
+            </li>
+            <li>
+              <span>
+                <em>{calcAverageInObject(items, "vote_average")}</em>
               </span>
               <br />
               усереднений рейтинг
             </li>
             <li>
               <span>
-                <em>{item_count}</em>
+                <em>{calcAverageInObject(items, "vote_count")}</em>
               </span>
               <br />
               усереднена кількість оцінок

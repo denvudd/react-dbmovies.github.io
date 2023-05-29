@@ -8,6 +8,7 @@ import { discoverApi } from "./api/discover/slice";
 import { genresApi } from "./api/genres/slice";
 import { searchApi } from "./api/search/slice";
 import { configurationApi } from "./api/configuration/slice";
+import { apiSlice } from "./api/baseApi/slice";
 import paramsSlice from "./params/slice";
 
 import { createWrapper } from "next-redux-wrapper";
@@ -17,6 +18,7 @@ const store = () =>
   configureStore({
     reducer: {
       authApi: authApi.reducer,
+      [apiSlice.reducerPath]:apiSlice.reducer,
       accountApi: accountApi.reducer,
       listsApi: listsApi.reducer,
       moviesApi: moviesApi.reducer,
@@ -29,6 +31,7 @@ const store = () =>
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware() /* as MiddlewareArray<any> */
         .concat([
+          apiSlice.middleware,
           authApi.middleware,
           accountApi.middleware,
           listsApi.middleware,

@@ -37,9 +37,27 @@
   }
 }
 
+.menu {
+  display: flex;
+  align-items: center;
+
+  li {
+    margin-right: 20px;
+
+    &:first-child {
+      margin-right: 0;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
 .account {
   display: flex;
   align-items: center;
+  margin-right: 40px !important;
 
   a {
     width: 50px;

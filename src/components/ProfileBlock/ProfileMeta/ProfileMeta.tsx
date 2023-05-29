@@ -28,33 +28,39 @@ const ProfileMeta: React.FC<ProfileMetaProps> = ({ accountId, sessionId }) => {
     {
       key: "lists",
       label: `Списки`,
-      children: !isListsLoading && lists && lists.results.length !== 0 && (
+      children: !isListsLoading && lists && (
         <div className={styles.lists}>
           <div className={styles.listsHeader}>
             <h2>Мої списки</h2>
-            <Button>Створити список</Button>
+            <Button>
+              <Link href={`/lists/new`}>Створити список</Link>
+            </Button>
           </div>
           <div className={styles.listsWrapper}>
             <div className={styles.listsCards}>
-              {lists.results.map((list) => (
-                <div key={list.id} className={styles.listCard}>
-                  <div className={styles.listImage}>
-                    <div className={styles.image}></div>
-                  </div>
-                  <div className={styles.listDetails}>
-                    <h2>
-                      <Link href={`/lists/${list.id}`}>{list.name}</Link>
-                    </h2>
-                    <div className={styles.listMeta}>
-                      <span>{list.item_count} елементів</span>
-                      <span>
-                        {formatFirstLetterToUppercase(list.list_type)}
-                      </span>
+              {lists.results.length === 0 && (
+                <div>Списків для цього аккаунта не знайдено.</div>
+              )}
+              {lists.results.length !== 0 &&
+                lists.results.map((list) => (
+                  <div key={list.id} className={styles.listCard}>
+                    <div className={styles.listImage}>
+                      <div className={styles.image}></div>
                     </div>
-                    <p>Мова: {list.iso_639_1.toUpperCase()}</p>
+                    <div className={styles.listDetails}>
+                      <h2>
+                        <Link href={`/lists/${list.id}`}>{list.name}</Link>
+                      </h2>
+                      <div className={styles.listMeta}>
+                        <span>{list.item_count} елементів</span>
+                        <span>
+                          {formatFirstLetterToUppercase(list.list_type)}
+                        </span>
+                      </div>
+                      <p>Мова: {list.iso_639_1.toUpperCase()}</p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
             </div>
           </div>
         </div>

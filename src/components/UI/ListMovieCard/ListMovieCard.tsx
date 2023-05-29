@@ -35,7 +35,7 @@ const ListMovieCard: React.FC<ListMovieCardProps> = ({ movie, index }) => {
             <span>{index + 1}</span>
           </div>
           <div className={styles.meta}>
-            <Typography.Paragraph ellipsis={{rows: 1}}>
+            <Typography.Paragraph className={styles.title} ellipsis={{rows: 1}}>
               <Link href={`/movies/${movie.id}`}>{movie.title}</Link>
             </Typography.Paragraph>
           </div>
