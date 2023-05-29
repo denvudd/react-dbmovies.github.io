@@ -19,6 +19,7 @@ export const accountApi = baseApi.injectEndpoints({
           account_id ? account_id : "account_id"
         }/lists?page=1&session_id=${session_id}&${tmdbApiKey}`,
       transformResponse: (response: AccountListsApiResponse) => response,
+      providesTags: ['Lists'],
     }),
   })
 });

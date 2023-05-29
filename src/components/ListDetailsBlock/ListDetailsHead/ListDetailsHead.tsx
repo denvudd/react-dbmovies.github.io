@@ -6,7 +6,11 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 
 import styles from "./ListDetailsHead.module.scss";
-import { useDeleteListMutation } from "@/redux/api/lists/slice";
+import {
+  useDeleteListMutation,
+  usePostClearListMutation,
+} from "@/redux/api/lists/slice";
+import { ExclamationCircleFilled } from "@ant-design/icons";
 
 interface ListDetailsHeadProps {
   name: string;
@@ -14,6 +18,7 @@ interface ListDetailsHeadProps {
   description: string;
   id: string;
   iso_639_1: string;
+  isEmpty: boolean;
 }
 
 const ListDetailsHead: React.FC<ListDetailsHeadProps> = ({
@@ -22,6 +27,7 @@ const ListDetailsHead: React.FC<ListDetailsHeadProps> = ({
   description,
   id,
   iso_639_1,
+  isEmpty,
 }) => {
   const router = useRouter();
   const [sessionId, setSessionId] = React.useState<string | null>("");
@@ -31,13 +37,14 @@ const ListDetailsHead: React.FC<ListDetailsHeadProps> = ({
       avatar: data?.avatar.tmdb ? data?.avatar.tmdb : data?.avatar.gravatar,
     }),
   });
-  const [deleteList, { data, isLoading }] = useDeleteListMutation();
-  
+  const [deleteList] = useDeleteListMutation();
+  const [clearList] = usePostClearListMutation();
 
-  const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [isClearConfirm, setIsClearConfirm] = React.useState(false);
   const [value, copy] = useCopyToClipboard();
   const [messageApi, contextMessageHolder] = message.useMessage();
   const [modal, contextModalHolder] = Modal.useModal();
+  const { confirm } = Modal;
 
   const handleClickCopy = (value: string) => {
     copy(value);
@@ -46,23 +53,46 @@ const ListDetailsHead: React.FC<ListDetailsHeadProps> = ({
     }
   };
 
-  const onDelete = () => {
-    deleteList({ session_id: sessionId, list_id: id });
-    router.back();
+  const showDeleteConfirm = () => {
+    confirm({
+      title: "Видалити список?",
+      icon: <ExclamationCircleFilled />,
+      content: <p>Ви впевенні що хочете видалити список "{name}"? Повернути видалені дані буде неможливо.</p>,
+      okText: "Так",
+      okType: "danger",
+      cancelText: "Ні",
+      onOk() {
+        deleteList({ session_id: sessionId, list_id: id });
+        router.back();
+      },
+      closable: true
+    });
   };
 
-  const onConfirmModal = () => {
-    setIsModalOpen(false);
-    onDelete();
-  };
-
-  const onCancelModal = () => {
-    setIsModalOpen(false);
+  const showClearConfirm = () => {
+    confirm({
+      title: "Очистити список?",
+      icon: <ExclamationCircleFilled />,
+      content: <p>Ви впевнені що хочете очистити список "{name}"?</p>,
+      okText: "Так",
+      okType: "danger",
+      cancelText: "Ні",
+      onOk() {
+        setIsClearConfirm(true);
+      },
+      closable: true
+    });
   };
 
   React.useEffect(() => {
     setSessionId(localStorage.getItem("session_id"));
   }, []);
+
+  React.useEffect(() => {
+    if (isClearConfirm) {
+      clearList({ session_id: sessionId, list_id: id, confirm: isClearConfirm });
+    }
+  }, [isClearConfirm]);
 
   return (
     <div className={styles.head}>
@@ -101,12 +131,19 @@ const ListDetailsHead: React.FC<ListDetailsHeadProps> = ({
               </p>
             </li>
             <li>
-              <Button onClick={() => setIsModalOpen(true)} size="large">
+              <Button onClick={showDeleteConfirm} size="large">
                 Видалити
               </Button>
             </li>
             <li>
-              <Button size="large">Очистити</Button>
+              <Button
+                size="large"
+                disabled={isEmpty}
+                title={isEmpty ? "У списку немає елементів" : undefined}
+                onClick={showClearConfirm}
+              >
+                Очистити
+              </Button>
             </li>
           </ul>
           <h3>Про цей список</h3>
@@ -115,16 +152,6 @@ const ListDetailsHead: React.FC<ListDetailsHeadProps> = ({
           </div>
         </div>
       </section>
-      <Modal
-        title="Modal"
-        open={isModalOpen}
-        onOk={onConfirmModal}
-        onCancel={onCancelModal}
-        okText="Так"
-        cancelText="Ні"
-      >
-        <p>Ви впевенні що хочете видалити список "{name}"?</p>
-      </Modal>
     </div>
   );
 };

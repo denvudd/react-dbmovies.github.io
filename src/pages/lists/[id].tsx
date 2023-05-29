@@ -33,6 +33,7 @@ const ListDetailsPage: React.FC<ListDetailsPageProps> = ({ id }) => {
             created_by={list.created_by}
             description={list.description}
             iso_639_1={list.iso_639_1}
+            isEmpty={list.items.length === 0}
           />
         )}
         {!isListsLoading && list && (

@@ -10,6 +10,7 @@ export const listsApi = baseApi.injectEndpoints({
       query: ({ id, params }) =>
         `/list/${id}?${tmdbApiKey}&${params ? params : ""}`,
       transformResponse: (response: ListDetailsApiResponse) => response,
+      providesTags: ["Lists"],
     }),
     postCreateList: builder.mutation({
       query: ({ session_id, name, description }) => ({
@@ -18,6 +19,24 @@ export const listsApi = baseApi.injectEndpoints({
         body: { name: name, description: description },
       }),
       transformResponse: (response: ListCreateApiResponse) => response,
+      invalidatesTags: ["Lists"],
+    }),
+    postAddMovieToList: builder.mutation({
+      query: ({ session_id, list_id }) => ({
+        url: `/list/${list_id}/add_item?session_id=${session_id}&${tmdbApiKey}`,
+        method: "POST",
+        // body: { name: name, description: description },
+      }),
+      transformResponse: (response: ListCreateApiResponse) => response,
+      invalidatesTags: ["Lists"],
+    }),
+    postClearList: builder.mutation({
+      query: ({ session_id, list_id, confirm }) => ({
+        url: `/list/${list_id}/clear?confirm=${confirm}&session_id=${session_id}&${tmdbApiKey}`,
+        method: "POST",
+      }),
+      transformResponse: (response: ListCreateApiResponse) => response,
+      invalidatesTags: ["Lists"],
     }),
     deleteList: builder.mutation({
       query: ({ session_id, list_id }) => ({
@@ -25,6 +44,7 @@ export const listsApi = baseApi.injectEndpoints({
         method: "DELETE",
       }),
       transformResponse: (response: ListCreateApiResponse) => response,
+      invalidatesTags: ["Lists"],
     }),
   }),
 });
@@ -33,4 +53,5 @@ export const {
   useGetListDetailsQuery,
   usePostCreateListMutation,
   useDeleteListMutation,
+  usePostClearListMutation
 } = listsApi;
