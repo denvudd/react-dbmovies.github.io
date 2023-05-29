@@ -2,12 +2,16 @@ import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import AppLayout from "@/layouts/AppLayout";
 import { wrapper } from "@/redux/store";
+import { Provider } from "react-redux";
 
-export function App({ Component, pageProps }: AppProps) {
+export function App({ Component, ...rest }: AppProps) {
+  const { store, props } = wrapper.useWrappedStore(rest);
   return (
-    <AppLayout>
-      <Component {...pageProps} />
-    </AppLayout>
+    <Provider store={store}>
+      <AppLayout>
+        <Component {...props.pageProps} />
+      </AppLayout>
+    </Provider>
   );
 }
 

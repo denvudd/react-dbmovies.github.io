@@ -1,14 +1,10 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { AuthTokenApiResponse } from "./types/AuthTokenType";
 import { AuthSessionApiResponse } from "./types/AuthSessionType";
+import { baseApi } from "../baseApi/slice";
 
 const tmdbApiKey = "api_key=684e3f73d1ca0e692a3016c028aabf72";
 
-export const authApi = createApi({
-  reducerPath: "authApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: "https://api.themoviedb.org/3",
-  }),
+export const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAuthToken: builder.query({
       query: () => `/authentication/token/new?${tmdbApiKey}`,

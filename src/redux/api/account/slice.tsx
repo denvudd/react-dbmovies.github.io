@@ -1,11 +1,10 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { AccountDetailsApiResponse } from "./types/AccountDetailsType";
 import { AccountListsApiResponse } from "./types/AcountListsType";
-import { apiSlice } from "../baseApi/slice";
+import { baseApi } from "../baseApi/slice";
 
 const tmdbApiKey = "api_key=684e3f73d1ca0e692a3016c028aabf72";
 
-export const accountApi = apiSlice.injectEndpoints({
+export const accountApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAccountDetails: builder.query({
       query: ({ session_id, account_id }) =>
