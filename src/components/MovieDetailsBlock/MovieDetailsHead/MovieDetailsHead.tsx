@@ -1,6 +1,8 @@
 import React from "react";
 import styles from "./MovieDetailsHead.module.scss";
 import { useGetMovieReleaseDatesQuery } from "@/redux/api/movies/slice";
+import { usePostAddMovieToListMutation } from "@/redux/api/lists/slice";
+import { useLazyGetAccountListsQuery } from "@/redux/api/account/slice";
 import { formatTime } from "@/utils/formatTime";
 import {
   CaretRightFilled,
@@ -10,7 +12,7 @@ import {
   StarFilled,
 } from "@ant-design/icons";
 import RatingBar from "@/components/UI/RatingBar/RatingBar";
-import { Image, Popover } from "antd";
+import { Image, Popover, Modal, Select, message } from "antd";
 import { Genre } from "@/redux/api/genres/types/MovieListGenreType";
 
 interface MovieDetailsHeadProps {
@@ -38,9 +40,106 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
   overview,
   vote_average,
 }) => {
+  const [sessionId, setSessionId] = React.useState<string | null>("");
+  const [isFetch, setIsFetch] = React.useState(false);
+  const [listId, setListId] = React.useState<string>("");
   const { data: certificate } = useGetMovieReleaseDatesQuery(id);
+  const [addMovieToList, { data: movieList, isLoading }] =
+    usePostAddMovieToListMutation();
+  const [
+    fetchAccountLists,
+    { data: accountLists, isLoading: isAccountListsLoading },
+  ] = useLazyGetAccountListsQuery();
+  const [messageApi, contextMessageHolder] = message.useMessage();
+  const [modal, contextModalHolder] = Modal.useModal();
 
   const releaseYear = release_date?.split("-")[0]; // by first "-"
+
+  const onClickAddMovieToList = () => {
+    const listModal = modal.info({
+      title: `Додати "${title}" до списку?`,
+    });
+
+    if (sessionId !== "") {
+      const onChangeList = (value: string) => {
+        if (value !== "" && value) {
+          setListId(value);
+          listModal.update({
+            okText: "Підтвердити",
+            okButtonProps: { disabled: false },
+          });
+        }
+      };
+
+      fetchAccountLists({ session_id: sessionId }, true)
+        .unwrap()
+        .then((data) => {
+          listModal.update({
+            title: `Додати "${title}" до списку?`,
+            content: (
+              <div>
+                <p>Додати до існуючих списків:</p>
+                <Select
+                  style={{ width: "100%" }}
+                  onChange={onChangeList}
+                  loading={isAccountListsLoading}
+                  options={
+                    !isAccountListsLoading &&
+                    data.results &&
+                    data.results.length !== 0
+                      ? data.results.map((list) => ({
+                          value: list.id,
+                          label: list.name,
+                        }))
+                      : undefined
+                  }
+                ></Select>
+              </div>
+            ),
+            onOk() {
+              setIsFetch(true);
+            },
+            onCancel() {},
+            okText: "Оберіть список",
+            okButtonProps: { disabled: true },
+            closable: true,
+          });
+        });
+    }
+  };
+
+  React.useEffect(() => {
+    setSessionId(localStorage.getItem("session_id"));
+  }, []);
+
+  React.useEffect(() => {
+    if (isFetch) {
+      Modal.destroyAll();
+      if (isFetch && sessionId) {
+        addMovieToList({
+          session_id: sessionId,
+          list_id: listId,
+          media_id: id,
+        })
+          .unwrap()
+          .then((data) => {
+            if (data.success) {
+              messageApi.success(` ${data.status_message}`);
+            }
+          })
+          .catch((error) => {
+            if (error && error.data.status_code === 8) {
+              messageApi.error(`Сталась помилка. Елемент "${title}" вже існує в списку #${listId}`, 3);
+            }
+            console.log(error);
+            
+          })
+          .finally(() => setIsFetch(false));
+      }
+    } else {
+      return;
+    }
+  }, [isFetch]);
 
   return (
     <div
@@ -113,11 +212,11 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
                       placement="bottom"
                     >
                       <li className={styles.tooltip}>
-                        <a href="">
+                        <button onClick={onClickAddMovieToList}>
                           <span>
                             <UnorderedListOutlined />
                           </span>
-                        </a>
+                        </button>
                       </li>
                     </Popover>
                     <Popover
@@ -125,11 +224,11 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
                       placement="bottom"
                     >
                       <li className={styles.tooltip}>
-                        <a href="">
+                        <button>
                           <span>
                             <HeartFilled />
                           </span>
-                        </a>
+                        </button>
                       </li>
                     </Popover>
                     <Popover
@@ -137,20 +236,20 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
                       placement="bottom"
                     >
                       <li className={styles.tooltip}>
-                        <a href="">
+                        <button>
                           <span>
                             <PushpinFilled />
                           </span>
-                        </a>
+                        </button>
                       </li>
                     </Popover>
                     <Popover content={<span>Оцінити!</span>} placement="bottom">
                       <li className={styles.tooltip}>
-                        <a href="">
+                        <button>
                           <span>
                             <StarFilled />
                           </span>
-                        </a>
+                        </button>
                       </li>
                     </Popover>
                     <li className={styles.video}>
@@ -181,6 +280,8 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
           </div>
         </div>
       </div>
+      {contextMessageHolder}
+      {contextModalHolder}
     </div>
   );
 };

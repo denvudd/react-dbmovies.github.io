@@ -79,6 +79,18 @@ button {
   margin-top: 20px;
 }
 
+.scroller-with-overflow::after  {
+  content: '';
+  width: 60px;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgb(245, 245, 245) 100%);
+  will-change: opacity;
+  pointer-events: none;
+}
+
 .panel:first-of-type {
   border-top: 0;
   padding-top: 0;

@@ -37,14 +37,14 @@ const ListDetailsBody: React.FC<ListDetailsBodyProps> = ({
             </li>
             <li>
               <span>
-                <em>{calcAverageInObject(items, "vote_average")}</em>
+                <em>{calcAverageInObject(items, "vote_average", "to2")}</em>
               </span>
               <br />
               усереднений рейтинг
             </li>
             <li>
               <span>
-                <em>{calcAverageInObject(items, "vote_count")}</em>
+                <em>{calcAverageInObject(items, "vote_count", "to0")}</em>
               </span>
               <br />
               усереднена кількість оцінок

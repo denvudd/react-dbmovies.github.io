@@ -18,7 +18,7 @@ const MovieDetailsRecs: React.FC<MovieDetailsRecsProps> = ({ id }) => {
     <section className={styles.recs + " panel"}>
       <div className={styles.recsWaypoint}>
         <h3>Рекомендації</h3>
-        <div className="scroller-wrapper">
+        <div className="scroller-wrapper scroller-with-overflow">
           {isRecsLoading && (
             <>
               {[...new Array(6)].map((_, i) => (

@@ -4,7 +4,7 @@ import AppLayout from "@/layouts/AppLayout";
 import { wrapper } from "@/redux/store";
 import { Provider } from "react-redux";
 
-export function App({ Component, ...rest }: AppProps) {
+const App = ({ Component, ...rest }: AppProps) => {
   const { store, props } = wrapper.useWrappedStore(rest);
   return (
     <Provider store={store}>
@@ -15,4 +15,4 @@ export function App({ Component, ...rest }: AppProps) {
   );
 }
 
-export default wrapper.withRedux(App);
+export default App;

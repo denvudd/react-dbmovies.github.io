@@ -1,6 +1,9 @@
 import { ListDetailsApiResponse } from "./types/ListDetailsType";
 import { ListCreateApiResponse } from "./types/ListCreateType";
 import { baseApi } from "../baseApi/slice";
+import { ListAddMovieApiResponse } from "./types/ListAddMovieType";
+import { ListClearApiResponse } from "./types/ListClearType";
+import { ListDelteApiResponse } from "./types/ListDeleteType";
 
 const tmdbApiKey = "api_key=684e3f73d1ca0e692a3016c028aabf72";
 
@@ -22,12 +25,12 @@ export const listsApi = baseApi.injectEndpoints({
       invalidatesTags: ["Lists"],
     }),
     postAddMovieToList: builder.mutation({
-      query: ({ session_id, list_id }) => ({
+      query: ({ session_id, list_id, media_id }) => ({
         url: `/list/${list_id}/add_item?session_id=${session_id}&${tmdbApiKey}`,
         method: "POST",
-        // body: { name: name, description: description },
+        body: { media_id: media_id },
       }),
-      transformResponse: (response: ListCreateApiResponse) => response,
+      transformResponse: (response: ListAddMovieApiResponse) => response,
       invalidatesTags: ["Lists"],
     }),
     postClearList: builder.mutation({
@@ -35,7 +38,7 @@ export const listsApi = baseApi.injectEndpoints({
         url: `/list/${list_id}/clear?confirm=${confirm}&session_id=${session_id}&${tmdbApiKey}`,
         method: "POST",
       }),
-      transformResponse: (response: ListCreateApiResponse) => response,
+      transformResponse: (response: ListClearApiResponse) => response,
       invalidatesTags: ["Lists"],
     }),
     deleteList: builder.mutation({
@@ -43,7 +46,7 @@ export const listsApi = baseApi.injectEndpoints({
         url: `/list/${list_id}?session_id=${session_id}&${tmdbApiKey}`,
         method: "DELETE",
       }),
-      transformResponse: (response: ListCreateApiResponse) => response,
+      transformResponse: (response: ListDelteApiResponse) => response,
       invalidatesTags: ["Lists"],
     }),
   }),
@@ -52,6 +55,7 @@ export const listsApi = baseApi.injectEndpoints({
 export const {
   useGetListDetailsQuery,
   usePostCreateListMutation,
+  usePostClearListMutation,
+  usePostAddMovieToListMutation,
   useDeleteListMutation,
-  usePostClearListMutation
 } = listsApi;

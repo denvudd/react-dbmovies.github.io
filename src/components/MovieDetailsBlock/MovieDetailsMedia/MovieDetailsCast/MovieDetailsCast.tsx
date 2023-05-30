@@ -16,7 +16,7 @@ const MovieDetailsCast: React.FC<MovieDetailsCastProps> = ({ id }) => {
   return (
     <section className={styles.cast + " panel"}>
       <Typography.Title level={4}>В головних ролях</Typography.Title>
-      <div className={"scroller-wrapper"}>
+      <div className={"scroller-wrapper scroller-with-overflow"}>
         <List
           itemLayout="horizontal"
           className={"scroller"}

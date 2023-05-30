@@ -6,7 +6,6 @@ import {
   getRunningQueriesThunk,
 } from "@/redux/api/movies/slice";
 import { wrapper } from "@/redux/store";
-import { Spin } from "antd";
 import { MovieDetails } from "@/redux/api/movies/types/MovieDetailsType";
 
 interface MovieDetailsPageProps {

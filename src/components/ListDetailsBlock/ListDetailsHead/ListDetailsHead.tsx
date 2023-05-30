@@ -57,7 +57,12 @@ const ListDetailsHead: React.FC<ListDetailsHeadProps> = ({
     confirm({
       title: "Видалити список?",
       icon: <ExclamationCircleFilled />,
-      content: <p>Ви впевенні що хочете видалити список "{name}"? Повернути видалені дані буде неможливо.</p>,
+      content: (
+        <p>
+          Ви впевенні що хочете видалити список "{name}"? Повернути видалені
+          дані буде неможливо.
+        </p>
+      ),
       okText: "Так",
       okType: "danger",
       cancelText: "Ні",
@@ -65,7 +70,7 @@ const ListDetailsHead: React.FC<ListDetailsHeadProps> = ({
         deleteList({ session_id: sessionId, list_id: id });
         router.back();
       },
-      closable: true
+      closable: true,
     });
   };
 
@@ -80,7 +85,7 @@ const ListDetailsHead: React.FC<ListDetailsHeadProps> = ({
       onOk() {
         setIsClearConfirm(true);
       },
-      closable: true
+      closable: true,
     });
   };
 
@@ -90,14 +95,16 @@ const ListDetailsHead: React.FC<ListDetailsHeadProps> = ({
 
   React.useEffect(() => {
     if (isClearConfirm) {
-      clearList({ session_id: sessionId, list_id: id, confirm: isClearConfirm });
+      clearList({
+        session_id: sessionId,
+        list_id: id,
+        confirm: isClearConfirm,
+      });
     }
   }, [isClearConfirm]);
 
   return (
     <div className={styles.head}>
-      {contextMessageHolder}
-      {contextModalHolder}
       <section className="app-container">
         <div className={styles.content}>
           <h2>
@@ -152,6 +159,8 @@ const ListDetailsHead: React.FC<ListDetailsHeadProps> = ({
           </div>
         </div>
       </section>
+      {contextMessageHolder}
+      {contextModalHolder}
     </div>
   );
 };
