@@ -1,5 +1,4 @@
 import React from "react";
-import styles from "./MovieDetailsHead.module.scss";
 import { useGetMovieReleaseDatesQuery } from "@/redux/api/movies/slice";
 import { usePostAddMovieToListMutation } from "@/redux/api/lists/slice";
 import { useLazyGetAccountListsQuery } from "@/redux/api/account/slice";
@@ -10,10 +9,21 @@ import {
   HeartFilled,
   PushpinFilled,
   StarFilled,
+  EyeOutlined,
 } from "@ant-design/icons";
 import RatingBar from "@/components/UI/RatingBar/RatingBar";
-import { Image, Popover, Modal, Select, message } from "antd";
+import {
+  Image as ANTDImage,
+  Popover,
+  Modal,
+  Select,
+  message,
+  Button,
+} from "antd";
+import Image from "next/image";
 import { Genre } from "@/redux/api/genres/types/MovieListGenreType";
+import Link from "next/link";
+import styles from "./MovieDetailsHead.module.scss";
 
 interface MovieDetailsHeadProps {
   id: number;
@@ -50,8 +60,10 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
     fetchAccountLists,
     { data: accountLists, isLoading: isAccountListsLoading },
   ] = useLazyGetAccountListsQuery();
+
   const [messageApi, contextMessageHolder] = message.useMessage();
   const [modal, contextModalHolder] = Modal.useModal();
+  const [isGalleryVisible, setIsGalleryVisible] = React.useState(false);
 
   const releaseYear = release_date?.split("-")[0]; // by first "-"
 
@@ -78,9 +90,10 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
             title: `Додати "${title}" до списку?`,
             content: (
               <div>
-                <p>Додати до існуючих списків:</p>
+                <p className={styles.listLabel}>Додати до існуючих списків:</p>
                 <Select
                   style={{ width: "100%" }}
+                  placeholder={"Оберіть список"}
                   onChange={onChangeList}
                   loading={isAccountListsLoading}
                   options={
@@ -93,7 +106,12 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
                         }))
                       : undefined
                   }
-                ></Select>
+                  notFoundContent={"Не знайдено жодного списка"}
+                />
+                <p className={styles.listLabel}>Або:</p>
+                <Button type="primary">
+                  <Link href={`/lists/new`}>Створити новий список</Link>
+                </Button>
               </div>
             ),
             onOk() {
@@ -101,7 +119,10 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
             },
             onCancel() {},
             okText: "Оберіть список",
-            okButtonProps: { disabled: true },
+            okButtonProps: {
+              disabled: true,
+              title: "Оберіть список щоб продовжити",
+            },
             closable: true,
           });
         });
@@ -129,10 +150,12 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
           })
           .catch((error) => {
             if (error && error.data.status_code === 8) {
-              messageApi.error(`Сталась помилка. Елемент "${title}" вже існує в списку #${listId}`, 3);
+              messageApi.error(
+                `Сталась помилка. Елемент "${title}" вже існує в списку #${listId}`,
+                3
+              );
             }
             console.log(error);
-            
           })
           .finally(() => setIsFetch(false));
       }
@@ -155,12 +178,34 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
               <div className={styles.posterWrapper}>
                 <div className={styles.poster}>
                   {poster_path && (
-                    <Image
-                      className={styles.posterImg}
-                      src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
-                      alt=""
-                    />
+                    <>
+                      <Image
+                        className={styles.posterImg}
+                        src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
+                        width={300}
+                        height={450}
+                        priority
+                        alt={`${title}`}
+                        onClick={() => setIsGalleryVisible(true)}
+                      />
+                      <ANTDImage
+                        width={200}
+                        style={{ display: "none" }}
+                        src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
+                        preview={{
+                          visible: isGalleryVisible,
+                          src: `https://image.tmdb.org/t/p/w500/${poster_path}`,
+                          onVisibleChange: (value) => {
+                            setIsGalleryVisible(value);
+                          },
+                        }}
+                      />
+                    </>
                   )}
+                  <div className={styles.previewText}>
+                    <EyeOutlined />
+                    <span>Попередній перегляд</span>
+                  </div>
                 </div>
               </div>
               <div className={styles.headerWrapper}>

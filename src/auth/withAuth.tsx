@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 
-const withAuth = <P extends object>(
+export const withAuth = <P extends object>(
   WrappedComponent: React.ComponentType<P>
 ): React.ComponentType<P> => {
   const Wrapper: React.FC<P> = (props) => {
@@ -22,4 +22,3 @@ const withAuth = <P extends object>(
   return Wrapper;
 };
 
-export default withAuth;

@@ -5,7 +5,7 @@ export interface AccountListsApiResponse {
   total_results: number;
 }
 
-interface ListItem {
+export interface ListItem {
   description: string;
   favorite_count: number;
   id: number;

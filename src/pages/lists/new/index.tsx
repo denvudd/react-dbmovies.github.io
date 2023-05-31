@@ -1,16 +1,16 @@
-import DetailLayout from "@/layouts/DetailsLayout";
 import React from "react";
-import { Steps } from "antd";
+import DetailLayout from "@/layouts/DetailsLayout";
 import ListNewBlock from "@/components/ListNewBlock/ListNewBlock";
+import { withAuth } from "@/auth/withAuth";
 
 const ListNewPage: React.FC = () => {
   return (
     <DetailLayout>
       <div className="app-container">
-        <ListNewBlock/>
+        <ListNewBlock />
       </div>
     </DetailLayout>
   );
 };
 
-export default ListNewPage;
+export default withAuth(ListNewPage);
