@@ -8,7 +8,7 @@ import {
 } from "@/redux/api/authentication/slice";
 import { useRouter } from "next/router";
 
-export const Home = () => {
+export const LoginPage = () => {
   const [getAuthToken, { isLoading: isAuthTokenLoading }] =
     useLazyGetAuthTokenQuery();
   const [createSession, { isLoading: isCreateSessionLoading }] =
@@ -38,6 +38,7 @@ export const Home = () => {
           .then((data) => {
             if (data.success) {
               localStorage.setItem("session_id", data.session_id);
+              router.push('/')
             }
           });
       } catch (error) {
@@ -45,6 +46,14 @@ export const Home = () => {
       }
     }
   }, [request_token, approved]);
+
+  React.useEffect(() => {
+    const token = localStorage.getItem("session_id");
+
+    if (token !== null) {
+      router.push('/');
+    }
+  }, [])
 
   return (
     <>
@@ -75,4 +84,4 @@ export const Home = () => {
   );
 };
 
-export default Home;
+export default LoginPage;

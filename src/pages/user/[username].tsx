@@ -3,6 +3,7 @@ import DetailLayout from "@/layouts/DetailsLayout";
 import { useLazyGetAccountDetailsQuery } from "@/redux/api/account/slice";
 import ProfileHead from "@/components/ProfileBlock/ProfileHead/ProfileHead";
 import ProfileMeta from "@/components/ProfileBlock/ProfileMeta/ProfileMeta";
+import withAuth from "@/auth/withAuth";
 
 const UserPage: React.FC = () => {
   const [sessionId, setSessionId] = React.useState<string | null>(null);
@@ -33,4 +34,4 @@ const UserPage: React.FC = () => {
   );
 };
 
-export default UserPage;
+export default withAuth(UserPage);
