@@ -1,14 +1,13 @@
 import React from "react";
 import { Layout, Menu, MenuProps } from "antd";
-import styles from "./Header.module.scss";
 import Link from "next/link";
 import UserOutlined from "@ant-design/icons/lib/icons/UserOutlined";
 import SearchOutlined from "@ant-design/icons/lib/icons/SearchOutlined";
 import { useLazyGetAccountDetailsQuery } from "@/redux/api/account/slice";
-import { useRouter } from "next/router";
+
+import styles from "./Header.module.scss";
 
 const Header: React.FC = () => {
-  const router = useRouter();
   const [
     getAccountDetails,
     { data: accountDetails, isLoading: isAccountDetailsLoading },
@@ -17,12 +16,9 @@ const Header: React.FC = () => {
   React.useEffect(() => {
     const session_id = localStorage.getItem("session_id");
 
-    // if it's not user page
-    if (router.route !== "/user/[username]") {
-      getAccountDetails({ session_id }, true)
-        .unwrap()
-        .then((data) => console.log(data));
-    }
+    getAccountDetails({ session_id }, true)
+      .unwrap()
+      .then((data) => console.log(data));
   }, []);
 
   const leftMenuItems: MenuProps["items"] = [
@@ -139,8 +135,11 @@ const Header: React.FC = () => {
       children: [
         {
           key: "head",
-          label: !isAccountDetailsLoading && accountDetails && (
-            <Link href={`/user/${accountDetails.username}`} className={styles.link}>
+          label: !isAccountDetailsLoading && accountDetails ? (
+            <Link
+              href={`/user/${accountDetails.username}`}
+              className={styles.link}
+            >
               <div className={styles.profileHead}>
                 <img
                   src={`https://secure.gravatar.com/avatar/${accountDetails.avatar.gravatar.hash}.jpg?s=32`}
@@ -151,7 +150,7 @@ const Header: React.FC = () => {
                 <p>Мій профіль</p>
               </div>
             </Link>
-          ),
+          ) : <Link href={`/login`} className={styles.link}>Увійти</Link>,
           type: "group",
         },
         {

@@ -31,6 +31,7 @@ const MovieCard: React.FC<MovieCardProps> = ({
   return (
     <Card
       hoverable
+      size="small"
       cover={
         <Link href={`${id}`}>
           <div className={styles.containerImage}>
