@@ -1,5 +1,8 @@
 import React from "react";
-import { useGetMovieReleaseDatesQuery } from "@/redux/api/movies/slice";
+import {
+  useGetMovieReleaseDatesQuery,
+  usePostAddMovieRatingMutation,
+} from "@/redux/api/movies/slice";
 import { usePostAddMovieToListMutation } from "@/redux/api/lists/slice";
 import { useLazyGetAccountListsQuery } from "@/redux/api/account/slice";
 import { formatTime } from "@/utils/formatTime";
@@ -19,10 +22,12 @@ import {
   Select,
   message,
   Button,
+  Rate,
 } from "antd";
 import Image from "next/image";
 import { Genre } from "@/redux/api/genres/types/MovieListGenreType";
 import Link from "next/link";
+
 import styles from "./MovieDetailsHead.module.scss";
 
 interface MovieDetailsHeadProps {
@@ -51,11 +56,17 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
   vote_average,
 }) => {
   const [sessionId, setSessionId] = React.useState<string | null>("");
-  const [isFetch, setIsFetch] = React.useState(false);
+  const [isListSubmit, setIsListSubmit] = React.useState(false);
+  const [isRateSubmit, setIsRateSubmit] = React.useState(false);
   const [listId, setListId] = React.useState<string>("");
+  const [rate, setRate] = React.useState<number>(0);
   const { data: certificate } = useGetMovieReleaseDatesQuery(id);
   const [addMovieToList, { data: movieList, isLoading }] =
     usePostAddMovieToListMutation();
+  const [
+    rateMovie,
+    { data: rateMovieResult, isLoading: isRateMovieResultLoading },
+  ] = usePostAddMovieRatingMutation();
   const [
     fetchAccountLists,
     { data: accountLists, isLoading: isAccountListsLoading },
@@ -114,8 +125,9 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
                 </Button>
               </div>
             ),
+            icon: <UnorderedListOutlined />,
             onOk() {
-              setIsFetch(true);
+              setIsListSubmit(true);
             },
             onCancel() {},
             okText: "Оберіть список",
@@ -129,14 +141,57 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
     }
   };
 
+  const onClickRateMovie = () => {
+    const rateModal = modal.info({
+      title: `Оцінити "${title}"?`,
+    });
+
+    if (sessionId !== "") {
+      const onChangeRate = (value: number) => {
+        if (value) {
+          setRate(value);
+          rateModal.update({
+            okText: "Підтвердити",
+            okButtonProps: { disabled: false },
+          });
+        }
+      };
+
+      fetchAccountLists({ session_id: sessionId }, true)
+        .unwrap()
+        .then((data) => {
+          rateModal.update({
+            title: `Оцінити "${title}"?`,
+            content: (
+              <div>
+                <p className={styles.listLabel}>Оберіть вашу оцінку:</p>
+                <Rate allowClear={false} defaultValue={5} count={10} onChange={onChangeRate} />
+              </div>
+            ),
+            onOk() {
+              setIsRateSubmit(true);
+            },
+            icon: <StarFilled />,
+            onCancel() {},
+            okText: "Оберіть оцінку",
+            okButtonProps: {
+              disabled: true,
+              title: "Оберіть оцінку щоб продовжити",
+            },
+            closable: true,
+          });
+        });
+    }
+  };
+
   React.useEffect(() => {
     setSessionId(localStorage.getItem("session_id"));
   }, []);
 
   React.useEffect(() => {
-    if (isFetch) {
+    if (isListSubmit) {
       Modal.destroyAll();
-      if (isFetch && sessionId) {
+      if (sessionId) {
         addMovieToList({
           session_id: sessionId,
           list_id: listId,
@@ -144,25 +199,58 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
         })
           .unwrap()
           .then((data) => {
-            if (data.success) {
-              messageApi.success(` ${data.status_message}`);
+            if (data.success && data.status_code === 12) {
+              messageApi.success(
+                `"${title}" був успішно доданий до списку #${listId}!`,
+                3
+              );
+            } else {
+              messageApi.success(`${data.status_message}`, 3);
             }
           })
           .catch((error) => {
             if (error && error.data.status_code === 8) {
               messageApi.error(
-                `Сталась помилка. Елемент "${title}" вже існує в списку #${listId}`,
-                3
+                `Сталась помилка! Елемент "${title}" вже існує в списку #${listId}`,
+                5
+              );
+            } else {
+              messageApi.error(
+                `Сталась помилка! Код помилки: ${error.data.status_code}`,
+                5
               );
             }
-            console.log(error);
           })
-          .finally(() => setIsFetch(false));
+          .finally(() => setIsListSubmit(false));
       }
     } else {
       return;
     }
-  }, [isFetch]);
+  }, [isListSubmit]);
+
+  React.useEffect(() => {
+    if (isRateSubmit) {
+      Modal.destroyAll();
+      if (sessionId) {
+        rateMovie({ session_id: sessionId, movie_id: id, rating: rate })
+          .unwrap()
+          .then((data) => {
+            if (data.success && data.status_code === 12) {
+              messageApi.success(`"${title}" був успішно оцінений!`, 3);
+            } else {
+              messageApi.success(`${data.status_message}`, 3);
+            }
+          })
+          .catch((error) => {
+            messageApi.error(
+              `Сталась помилка! Код помилки: ${error.data.status_code}, теекст помилки: ${error.data.status_message}`,
+              5
+            );
+          })
+          .finally(() => setIsRateSubmit(false));
+      }
+    }
+  }, [isRateSubmit]);
 
   return (
     <div
@@ -290,7 +378,7 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
                     </Popover>
                     <Popover content={<span>Оцінити!</span>} placement="bottom">
                       <li className={styles.tooltip}>
-                        <button>
+                        <button onClick={onClickRateMovie}>
                           <span>
                             <StarFilled />
                           </span>

@@ -28,7 +28,7 @@ export const accountApi = baseApi.injectEndpoints({
           account_id ? account_id : "account_id"
         }/rated/movies?session_id=${session_id}&${tmdbApiKey}&page=1&${params}`,
       transformResponse: (response: AccountRatedListApiResponse) => response,
-      providesTags: ["Lists"],
+      providesTags: ["Rates"],
     }),
   }),
 });

@@ -5,3 +5,96 @@
 .content {
   margin-top: 20px;
 }
+
+.selectLoading {
+  display: flex;
+  justify-content: center;
+  margin: 30px auto;
+}
+
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.card {
+  width: 100%;
+  display: flex;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(var(--lightGrey), 1);
+  background-color: #fff;
+}
+
+.image {
+  width: calc(200px / 1.5);
+  min-width: calc(200px / 1.5);
+  height: 200px;
+  box-sizing: border-box;
+}
+
+.poster {
+  width: 100%;
+  height: 100%;
+
+  img {
+    width: calc(200px / 1.5);
+    min-width: calc(200px / 1.5);
+    height: 200px;
+    display: block;
+  }
+}
+
+.details {
+  width: 100%;
+  padding: 10px 15px;
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  align-items: center;
+
+  &Main {
+    width: 100%;
+  }
+
+  &Head {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+}
+
+.title {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  overflow: hidden;
+  margin-left: 10px;
+
+  h2 {
+    font-size: 1.2em;
+    line-height: 1.2em;
+    margin-bottom: 0;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    color: #000;
+  }
+}
+
+.release {
+  width: 100%;
+  white-space: nowrap;
+  color: #999;
+}
+
+.overview {
+  margin-top: 20px;
+}

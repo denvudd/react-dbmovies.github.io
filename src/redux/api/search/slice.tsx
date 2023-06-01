@@ -1,15 +1,39 @@
 import { SearchKeywordApiResponse } from "./types/SearchKeywordType";
 import { baseApi } from "../baseApi/slice";
+import { SearchMultiApiResponse } from "./types/SearchMultiType";
+import { SearchMovieApiResponse } from "./types/SearchMovieType";
 
 const tmdbApiKey = "api_key=684e3f73d1ca0e692a3016c028aabf72";
 
 export const searchApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
+    getSearchMulti: builder.query({
+      query: ({ query, params }) =>
+        `/search/multi?${tmdbApiKey}&${params ? params : ""}&query=${
+          query ? query : ""
+        }`,
+      transformResponse: (response: SearchMultiApiResponse) => response,
+    }),
+
+    getSearchMovie: builder.query({
+      query: ({ query, params }) =>
+        `/search/movie?${tmdbApiKey}&${params ? params : ""}&query=${
+          query ? query : ""
+        }`,
+      transformResponse: (response: SearchMovieApiResponse) => response,
+    }),
+
     getSearchKeywords: builder.query({
-      query: (query) => `/search/keyword?${tmdbApiKey}&query=${query ? query : ""}`,
-      transformResponse: (response: SearchKeywordApiResponse) => response.results,
+      query: (query) =>
+        `/search/keyword?${tmdbApiKey}&query=${query ? query : ""}`,
+      transformResponse: (response: SearchKeywordApiResponse) =>
+        response.results,
     }),
   }),
 });
 
-export const { useLazyGetSearchKeywordsQuery } = searchApi;
+export const {
+  useLazyGetSearchMultiQuery,
+  useLazyGetSearchMovieQuery,
+  useLazyGetSearchKeywordsQuery,
+} = searchApi;

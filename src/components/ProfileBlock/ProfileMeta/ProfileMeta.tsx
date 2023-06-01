@@ -3,13 +3,13 @@ import {
   useLazyGetAccountListsQuery,
   useLazyGetAccountRatedMoviesQuery,
 } from "@/redux/api/account/slice";
-import { Button, Select, Tabs, TabsProps, Spin } from "antd";
+import { Button, Select, Tabs, TabsProps, Spin, Modal } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import ProfileListGrid from "./ProfileListGrid/ProfileListGrid";
 import RatedMovieCard from "@/components/UI/RatedMovieCard/RatedMovieCard";
 
 import styles from "./ProfileMeta.module.scss";
-import { LoadingOutlined } from "@ant-design/icons";
 interface ProfileMetaProps {
   accountId: number;
   sessionId: string;
@@ -23,6 +23,7 @@ const ProfileMeta: React.FC<ProfileMetaProps> = ({ accountId, sessionId }) => {
     getRated,
     { data: rated, isLoading: isRatedLoading, isFetching: isRatedFetching },
   ] = useLazyGetAccountRatedMoviesQuery();
+
   const [sortBy, setSortBy] = React.useState<"asc" | "desc">("desc");
   const sortByRef = React.useRef<"asc" | "desc">(sortBy);
 
@@ -143,6 +144,7 @@ const ProfileMeta: React.FC<ProfileMetaProps> = ({ accountId, sessionId }) => {
                       {rated.results.map((movie) => (
                         <RatedMovieCard
                           id={movie.id}
+                          sessionId={sessionId}
                           title={movie.title}
                           overview={movie.overview}
                           vote_average={movie.vote_average}

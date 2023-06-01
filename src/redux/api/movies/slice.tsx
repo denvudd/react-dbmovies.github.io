@@ -7,11 +7,11 @@ import { MovieVideosApiResponse } from "./types/MovieVideosType";
 import { MovieRecsApiResponse } from "./types/MovieRecsType";
 import { MovieKeywordApiResponse } from "./types/MovieKeywordsType";
 import { baseApi } from "../baseApi/slice";
+import { AddMovieRatinApiResponse } from "./types/AddMovieRatingType";
 
 const tmdbApiKey = "api_key=684e3f73d1ca0e692a3016c028aabf72";
 
 export const moviesApi = baseApi.injectEndpoints({
-  
   endpoints: (builder) => ({
     getMovies: builder.query({
       query: ({ typeList, params }) =>
@@ -91,7 +91,20 @@ export const moviesApi = baseApi.injectEndpoints({
     getMovieKeywords: builder.query({
       query: ({ id, params }) =>
         `/movie/${id}/keywords?${tmdbApiKey}&${params ? params : ""}`,
-      transformResponse: (response: MovieKeywordApiResponse) => response.keywords,
+      transformResponse: (response: MovieKeywordApiResponse) =>
+        response.keywords,
+    }),
+
+    postAddMovieRating: builder.mutation({
+      query: ({ session_id, movie_id, rating }) => ({
+        url: `/movie/${movie_id}/rating?session_id=${session_id}&${tmdbApiKey}&`,
+        method: "POST",
+        body: {
+          value: rating,
+        },
+      }),
+      transformResponse: (response: AddMovieRatinApiResponse) => response,
+      invalidatesTags: ["Rates"]
     }),
   }),
 });
@@ -104,6 +117,7 @@ export const {
   useGetMovieCreditsCastQuery,
   useGetMovieRecsQuery,
   useGetMovieKeywordsQuery,
+  usePostAddMovieRatingMutation,
   useLazyGetMoviesQuery,
   useLazyGetMovieImagesQuery,
   useLazyGetMovieVideosQuery,

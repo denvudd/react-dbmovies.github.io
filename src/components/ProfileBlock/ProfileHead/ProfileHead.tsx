@@ -24,7 +24,6 @@ const ProfileHead: React.FC<ProfileHeadProps> = ({
 
   return (
     <div className={styles.bgImage}>
-      {contextHolder}
       <div className={styles.bgGradient}>
         <div className={styles.innerContent}>
           <div className="app-container">
@@ -51,7 +50,9 @@ const ProfileHead: React.FC<ProfileHeadProps> = ({
                         )
                       }
                     >
-                      <span onClick={() => handleClickCopy(`${id}`)}>#{id}</span>
+                      <span onClick={() => handleClickCopy(`${id}`)}>
+                        #{id}
+                      </span>
                     </Popover>
                   </h2>
                   <p>Країна: {iso_3166_1}</p>
@@ -61,6 +62,7 @@ const ProfileHead: React.FC<ProfileHeadProps> = ({
           </div>
         </div>
       </div>
+      {contextHolder}
     </div>
   );
 };
