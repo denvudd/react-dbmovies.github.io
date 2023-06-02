@@ -1,3 +1,5 @@
+@import '@/styles/variables';
+
 * {
   box-sizing: border-box;
   padding: 0;
@@ -11,6 +13,7 @@ body {
 
 body {
   margin: 0px 0px !important;
+  color: $primaryColor;
 }
 
 ol,
@@ -57,12 +60,14 @@ button {
 .panel {
   width: 100%;
   padding: 30px 0;
-  border-top: 1px solid #d7d7d7;
+  border-top: 1px solid $darkerGrey;
 }
 
-.panel h3 {
-  font-size: 1.4em;
-  margin-right: 50px;
+.panel {
+  h3 {
+    font-size: 1.4em;
+    margin-right: 50px;
+  }
 }
 
 .scroller {
@@ -72,8 +77,10 @@ button {
   padding-bottom: 10px;
 }
 
-.scroller div {
-  flex-flow: nowrap;
+.scroller {
+  div {
+    flex-flow: nowrap;
+  }
 }
 
 .scroller-wrapper {
@@ -83,21 +90,25 @@ button {
   margin-top: 20px;
 }
 
-.scroller-with-overflow::after  {
-  content: '';
-  width: 60px;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  right: 0;
-  background-image: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgb(245, 245, 245) 100%);
-  will-change: opacity;
-  pointer-events: none;
+.scroller-with-overflow {
+  &::after {
+    content: '';
+    width: 60px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgb(245, 245, 245) 100%);
+    will-change: opacity;
+    pointer-events: none;
+  }
 }
 
-.panel:first-of-type {
-  border-top: 0;
-  padding-top: 0;
+.panel {
+  &:first-of-type {
+    border-top: 0;
+    padding-top: 0;
+  }
 }
 
 .auto {
@@ -115,7 +126,7 @@ button {
 }
 
 .empty-text--default {
-  color: #000;
+  color: $primaryColorContrast;
 }
 
 .pagination-wrapper {
@@ -128,11 +139,17 @@ button {
 
 .ant-menu-dark {
   color: #fff !important;
+
+  &:disabled {
+    color: rgba(255, 255, 255, 0.65);
+    border-color: rgba(255, 255, 255, 0.65);
+  }
 }
 
-.ant-btn-default:disabled {
-  color: rgba(255, 255, 255, 0.65);
-  border-color: rgba(255, 255, 255, 0.65);
+.ant-spin-container::after {
+  &::after {
+    background: transparent !important;
+  }
 }
 
 @media (max-width: 1200px) {
@@ -158,8 +175,4 @@ button {
   .app-container {
     max-width: 576px;
   }
-}
-
-.ant-spin-container::after {
-  background: transparent !important;
 }

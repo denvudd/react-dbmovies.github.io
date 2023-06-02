@@ -1,17 +1,19 @@
+@import '@/styles/variables';
+
 .button {
   display: inline-flex;
   align-items: center;
   padding: 9px 20px;
   font-size: 1.1em;
   color: #fff;
-  border-color: rgba(31.5, 31.5, 73.5, 1);
-  background-color: rgba(31.5, 31.5, 73.5, 1);
+  border-color: $tmdbDarkBlue;
+  background-color: $tmdbDarkBlue;
   text-transform: uppercase;
   cursor: pointer;
 
   &:hover {
-    background-color: #000;
-    border-color: #000 !important;
+    background-color: $primaryColorContrast;
+    border-color: $primaryColorContrast !important;
   }
 
   a {

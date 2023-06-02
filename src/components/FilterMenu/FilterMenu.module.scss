@@ -1,3 +1,5 @@
+@import '@/styles/variables';
+
 .container {
   padding-top: 20px;
   padding-bottom: 20px;
@@ -5,7 +7,6 @@
 
 .menu {
   width: 100%;
-  border-top: 1px px solid #eee;
 
   h3 {
     display: inline-flex;
@@ -29,16 +30,16 @@
   outline: none;
   background: transparent;
   margin-top: 20px;
-  background: rgba(1, 180, 228);
+  background: $tmdbLightBlue;
   cursor: pointer;
   transition: 0.1s ease;
 
   &:disabled {
-    background: rgb(117, 117, 117);
+    background: $darkerGrey;
     cursor: not-allowed;
 
     &:hover {
-      background: rgb(117, 117, 117);
+      background: $darkerGrey;
     }
   }
 
@@ -58,13 +59,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: rgb(1, 180, 228);
+    background: $tmdbLightBlue;
     cursor: pointer;
     transition: 0.1s ease;
     animation: animate 0.1s;
 
     &:hover {
-      background: rgba(3, 37, 65, 1);
+      background: $tmdbDarkBlue;
     }
 
     @keyframes animate {

@@ -1,0 +1,38 @@
+.wrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 6px 0;
+}
+
+.poster {
+  height: calc(45px * 1.5);
+
+  img {
+    border-radius: 2px;
+  }
+}
+
+.details {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100%;
+  width: 100%;
+  font-size: 0.9em;
+}
+
+.title {
+  width: 100%;
+}
+
+.release {
+  width: 100%;
+  color: #8b8b8b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-top: 2px;
+}

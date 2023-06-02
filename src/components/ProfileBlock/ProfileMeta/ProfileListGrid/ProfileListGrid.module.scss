@@ -1,3 +1,5 @@
+@import '@/styles/variables';
+
 .card {
   width: calc((100vw - 100px) / 2);
   max-width: calc((1440px - 100px) / 2);
@@ -26,7 +28,8 @@
   gap: 8px;
   flex-wrap: wrap;
   padding: 20px 40px;
-  background-color: rgba(3, 37, 65, 0.8);
+  background-color: $tmdbDarkBlue;
+  opacity: 0.80;
 
   h2 {
     font-size: 2em;
@@ -47,7 +50,8 @@
 
   p {
     font-size: 1em;
-    color: rgba(255, 255, 255, 0.5);
+    color: $darkerGrey;
+    opacity: 0.65;
   }
 
   .meta {
@@ -62,7 +66,7 @@
       font-style: italic;
 
       &:last-of-type {
-        color: rgba(255, 255, 255, 0.8);
+        color: $lightGrey;
         background-color: rgba(255, 255, 255, 0.4);
         -webkit-backdrop-filter: blur(20px);
         backdrop-filter: blur(20px);

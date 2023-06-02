@@ -1,7 +1,7 @@
 import React from "react";
 import { UnorderedListOutlined } from "@ant-design/icons";
 import Link from "next/link";
-import RatingBar from "../UI/RatingBar/RatingBar";
+import RatingBar from "../RatingBar/RatingBar";
 import styles from "./RecomendationCard.module.scss";
 import Image from "next/image";
 
@@ -20,7 +20,6 @@ const RecomendationCard: React.FC<RecomendationCardProps> = ({
   title,
   vote_average,
 }) => {
-  
   return (
     <div className={styles.card}>
       <div className={styles.imageContent}>

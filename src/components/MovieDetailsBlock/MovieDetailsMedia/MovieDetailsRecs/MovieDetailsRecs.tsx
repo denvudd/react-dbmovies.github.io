@@ -1,9 +1,9 @@
 import React from "react";
-import styles from "./MovieDetailsRecs.module.scss";
-import { List, Skeleton } from "antd";
-import RecomendationCard from "@/components/RecomendationCard/RecomendationCard";
 import { useGetMovieRecsQuery } from "@/redux/api/movies/slice";
+import { List, Skeleton } from "antd";
+import RecomendationCard from "@/components/UI/RecomendationCard/RecomendationCard";
 
+import styles from "./MovieDetailsRecs.module.scss";
 interface MovieDetailsRecsProps {
   id: number;
 }

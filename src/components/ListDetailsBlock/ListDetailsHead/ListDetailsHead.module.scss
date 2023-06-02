@@ -1,5 +1,7 @@
+@import '@/styles/variables';
+
 .head {
-  background-image: linear-gradient(to right, rgba(3, 37, 65, 0.85) 0%, rgba(3, 37, 65, 0.9) 70%);
+  background-color: $tmdbDarkBlue;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center top;

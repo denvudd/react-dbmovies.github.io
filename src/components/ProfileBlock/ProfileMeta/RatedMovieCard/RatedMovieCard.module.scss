@@ -1,10 +1,12 @@
+@import '@/styles/variables';
+
 .card {
   width: 100%;
   display: flex;
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(var(--lightGrey), 1);
+  border: 1px solid $lightGrey;
   background-color: #fff;
 }
 
@@ -85,30 +87,3 @@
   margin-top: 20px;
 }
 
-.panel {
-  margin-top: 20px;
-  width: 100%;
-  box-sizing: border-box;
-  display: flex;
-  align-items: flex-start;
-
-  .panelList {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-
-    .option {
-      color: #959595;
-      display: flex;
-      align-items: center;
-
-      button {
-        margin-right: 10px;
-      }
-
-      ul {
-        margin-left: 10px;
-      }
-    }
-  }
-}

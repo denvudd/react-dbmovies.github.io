@@ -1,9 +1,9 @@
+@import '@/styles/variables';
+
 .container {
   
   background-color: transparent;
 }
-
-.column {}
 
 .info {
   margin-top: 20px;
@@ -22,7 +22,7 @@
 }
 
 .keywords {
-  border-bottom: 1px solid #d7d7d7;
+  border-bottom: 1px solid $lightGrey;
   margin-bottom: 30px;
   padding-bottom: 30px;
 
@@ -49,8 +49,8 @@
 
       a {
         background-color: rgba(0, 0, 0, 0.1);
-        border: 1px solid #d7d7d7;
-        color: #000;
+        border: 1px solid $lightGrey;
+        color: $primaryColorContrast;
         padding: 4px 10px;
         border-radius: 4px;
         transition: 0.1s ease-in-out;

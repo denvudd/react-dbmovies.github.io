@@ -55,26 +55,23 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
   overview,
   vote_average,
 }) => {
-  const [sessionId, setSessionId] = React.useState<string | null>("");
-  const [isListSubmit, setIsListSubmit] = React.useState(false);
-  const [isRateSubmit, setIsRateSubmit] = React.useState(false);
-  const [listId, setListId] = React.useState<string>("");
-  const [rate, setRate] = React.useState<number>(0);
-  const { data: certificate } = useGetMovieReleaseDatesQuery(id);
   const [addMovieToList, { data: movieList, isLoading }] =
     usePostAddMovieToListMutation();
   const [
     rateMovie,
     { data: rateMovieResult, isLoading: isRateMovieResultLoading },
   ] = usePostAddMovieRatingMutation();
-  const [
-    fetchAccountLists,
-    { data: accountLists, isLoading: isAccountListsLoading },
-  ] = useLazyGetAccountListsQuery();
+  const [fetchAccountLists] = useLazyGetAccountListsQuery();
+  const [sessionId, setSessionId] = React.useState<string | null>("");
+  const [listId, setListId] = React.useState<string>("");
+  const [isListSubmit, setIsListSubmit] = React.useState(false);
+  const [isRateSubmit, setIsRateSubmit] = React.useState(false);
+  const [isGalleryVisible, setIsGalleryVisible] = React.useState(false);
+  const [rate, setRate] = React.useState<number>(0);
+  const { data: certificate } = useGetMovieReleaseDatesQuery(id);
 
   const [messageApi, contextMessageHolder] = message.useMessage();
   const [modal, contextModalHolder] = Modal.useModal();
-  const [isGalleryVisible, setIsGalleryVisible] = React.useState(false);
 
   const releaseYear = release_date?.split("-")[0]; // by first "-"
 
@@ -106,11 +103,8 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
                   style={{ width: "100%" }}
                   placeholder={"Оберіть список"}
                   onChange={onChangeList}
-                  loading={isAccountListsLoading}
                   options={
-                    !isAccountListsLoading &&
-                    data.results &&
-                    data.results.length !== 0
+                    data.results && data.results.length !== 0
                       ? data.results.map((list) => ({
                           value: list.id,
                           label: list.name,
@@ -165,7 +159,12 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
             content: (
               <div>
                 <p className={styles.listLabel}>Оберіть вашу оцінку:</p>
-                <Rate allowClear={false} defaultValue={5} count={10} onChange={onChangeRate} />
+                <Rate
+                  allowClear={false}
+                  defaultValue={5}
+                  count={10}
+                  onChange={onChangeRate}
+                />
               </div>
             ),
             onOk() {

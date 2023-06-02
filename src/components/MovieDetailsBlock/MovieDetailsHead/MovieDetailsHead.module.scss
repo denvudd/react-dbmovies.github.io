@@ -1,5 +1,7 @@
+@import '@/styles/variables';
+
 .header {
-  border-bottom: 1px solid var(--primaryColor);
+  border-bottom: 1px solid $primaryColor;
   background-position: left calc((50vw - 170px) - 340px) top;
   background-size: cover;
   background-repeat: no-repeat;

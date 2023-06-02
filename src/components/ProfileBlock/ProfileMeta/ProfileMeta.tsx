@@ -7,7 +7,7 @@ import { Button, Select, Tabs, TabsProps, Spin, Modal } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import ProfileListGrid from "./ProfileListGrid/ProfileListGrid";
-import RatedMovieCard from "@/components/UI/RatedMovieCard/RatedMovieCard";
+import RatedMovieCard from "@/components/ProfileBlock/ProfileMeta/RatedMovieCard/RatedMovieCard";
 
 import styles from "./ProfileMeta.module.scss";
 interface ProfileMetaProps {
@@ -163,9 +163,6 @@ const ProfileMeta: React.FC<ProfileMetaProps> = ({ accountId, sessionId }) => {
               </div>
             )}
           </Spin>
-          {/* {!isRatedLoading && rated && (
-            
-          )} */}
         </>
       ),
     },

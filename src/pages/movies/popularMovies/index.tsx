@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { Pagination, Typography } from "antd";
-import MovieCard from "@/components/MovieCard/MovieCard";
+import MovieCard from "@/components/UI/MovieCard/MovieCard";
 import { useLazyGetMoviesQuery } from "@/redux/api/movies/slice";
 import { useLazyGetMovieDiscoverQuery } from "@/redux/api/discover/slice";
 import ListLayout from "@/layouts/ListLayout";

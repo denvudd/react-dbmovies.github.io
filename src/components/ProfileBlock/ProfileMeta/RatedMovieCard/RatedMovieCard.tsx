@@ -2,11 +2,8 @@ import React from "react";
 import { useLazyGetAccountListsQuery } from "@/redux/api/account/slice";
 import { usePostAddMovieToListMutation } from "@/redux/api/lists/slice";
 import Link from "next/link";
-import Image from "next/image";
-import RatingBar from "../RatingBar/RatingBar";
-import { Button, Modal, Rate, Select, Typography, message } from "antd";
-import { UnorderedListOutlined } from "@ant-design/icons";
-import { formatReleaseDate } from "@/utils/formatReleaseDate";
+import { Button, Modal, Select, message } from "antd";
+import WideMovieCard from "../../../UI/WideMovieCard/WideMovieCard";
 
 import styles from "./RatedMovieCard.module.scss";
 interface RatedMovieCardProps {
@@ -116,7 +113,12 @@ const RatedMovieCard: React.FC<RatedMovieCardProps> = ({
           .unwrap()
           .then((data) => {
             if (data.success) {
-              messageApi.success(` ${data.status_message}`);
+              messageApi.success(
+                ` "${title}" був успішно доданий до списку #${listId}!`,
+                3
+              );
+            } else {
+              messageApi.success(`${data.status_message}`, 3);
             }
           })
           .catch((error) => {
@@ -136,57 +138,24 @@ const RatedMovieCard: React.FC<RatedMovieCardProps> = ({
   }, [isFetch]);
 
   return (
-    <div className={styles.card}>
-      <div className={styles.image}>
-        <div className={styles.poster}>
-          <Link href={`/movies/${id}`}>
-            <Image width={150} height={225} alt={``} src={poster_path} />
-          </Link>
-        </div>
-      </div>
-      <div className={styles.details}>
-        <div className={styles.detailsMain}>
-          <div className={styles.detailsHead}>
-            <RatingBar size={38} rating={vote_average} />
-            <div className={styles.title}>
-              <div>
-                <Link href={`/movies/${id}`}>
-                  <h2>{title}</h2>
-                </Link>
-              </div>
-              <span className={styles.release}>
-                {formatReleaseDate(release_date)}
-              </span>
-            </div>
-          </div>
-          <div className={styles.overview}>
-            <Typography.Paragraph ellipsis={{ rows: 2 }}>
-              {overview}
-            </Typography.Paragraph>
-          </div>
-        </div>
-        <div className={styles.panel}>
-          <ul className={styles.panelList}>
-            <li className={styles.option}>
-              Ваша оцінка:
-              <Rate
-                value={rating}
-                count={10}
-                disabled
-                style={{ marginTop: "-5px" }}
-              />
-            </li>
-            <li className={styles.option}>
-              <Button
-                shape="circle"
-                onClick={onClickAddMovieToList}
-                icon={<UnorderedListOutlined />}
-              ></Button>
-              Додати до списку
-            </li>
-          </ul>
-        </div>
-      </div>
+    <div>
+      <WideMovieCard
+        id={id}
+        title={title}
+        overview={overview}
+        vote_average={vote_average}
+        release_date={release_date}
+        rating={rating}
+        poster_path={
+          poster_path
+            ? `https://image.tmdb.org/t/p/w150_and_h225_bestv2${poster_path}`
+            : "https://placehold.co/150x225/png/?text=Not+Found"
+        }
+        isShowPanel
+        isShowAddMovie
+        isShowRate
+        onClickAddMovieToList={onClickAddMovieToList}
+      />
       {contextMessageHolder}
       {contextModalHolder}
     </div>

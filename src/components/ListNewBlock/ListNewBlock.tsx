@@ -1,16 +1,39 @@
 import React from "react";
-import { usePostCreateListMutation } from "@/redux/api/lists/slice";
+import {
+  usePostCreateListMutation,
+  usePostAddMovieToListMutation,
+  usePostRemoveMovieFromListMutation,
+} from "@/redux/api/lists/slice";
 import { useLazyGetMovieDiscoverQuery } from "@/redux/api/discover/slice";
 import { useDebounce } from "@/hooks/useDebounce";
-import { Button, Checkbox, Form, Input, Select, Spin, Steps, Typography } from "antd";
+import {
+  Button,
+  Checkbox,
+  Form,
+  Input,
+  Result,
+  Select,
+  Spin,
+  Steps,
+  Typography,
+  message,
+} from "antd";
 import { ListMovie } from "@/redux/api/movies/types/ListMovieType";
-import { LoadingOutlined } from "@ant-design/icons";
-
-import styles from "./ListNewBlock.module.scss";
 import Link from "next/link";
 import Image from "next/image";
-import { formatReleaseDate } from "@/utils/formatReleaseDate";
 import RatingBar from "../UI/RatingBar/RatingBar";
+import OptionElement from "../UI/OptionElement/OptionElement";
+import { LoadingOutlined, CloseOutlined } from "@ant-design/icons";
+import { formatReleaseDate } from "@/utils/formatReleaseDate";
+
+import styles from "./ListNewBlock.module.scss";
+import WideMovieCard from "../UI/WideMovieCard/WideMovieCard";
+interface NewList {
+  name: string;
+  description: string;
+  private: true | undefined;
+  id: number;
+}
 
 const ListNewBlock = () => {
   const [createList, { data, isLoading }] = usePostCreateListMutation();
@@ -18,26 +41,42 @@ const ListNewBlock = () => {
     searchMulti,
     { data: searchMovieData, isFetching: isSearchMovieFetching },
   ] = useLazyGetMovieDiscoverQuery();
+  const [
+    addMovieToList,
+    { data: addMovieToListResult, isLoading: isAddMovieToListLoading },
+  ] = usePostAddMovieToListMutation();
+  const [
+    removeMovieFromList,
+    {
+      data: removeMovieFromlistResult,
+      isLoading: isRemoveMovieFromListLoading,
+    },
+  ] = usePostRemoveMovieFromListMutation();
+
+  const [sessionId, setSessionId] = React.useState<string | null>("");
+  const [newList, setNewList] = React.useState<NewList | null>(null);
   const [inputText, setInputText] = React.useState<string>("");
   const [selectedElements, setSelectedElements] = React.useState<ListMovie[]>();
   const [elementsOptions, setElementsOptions] = React.useState<ListMovie[]>([]);
-  const [sessionId, setSessionId] = React.useState<string | null>("");
   const [current, setCurrent] = React.useState(0);
+
   const [formStep1] = Form.useForm();
   const [formStep2] = Form.useForm();
+  const [messageApi, contextMessageHolder] = message.useMessage();
 
   const onClickFinishStep1 = (values: any) => {
-    console.log(values);
     createList({
       session_id: sessionId,
       name: values.name,
       description: values.description,
-    });
+    })
+      .unwrap()
+      .then((data) => setNewList({ ...values, id: data.list_id }));
+
     onClickNext();
   };
 
   const onClickFinishStep2 = (values: any) => {
-    console.log(values);
     createList({
       session_id: sessionId,
       name: values.name,
@@ -63,13 +102,85 @@ const ListNewBlock = () => {
       const filteredOptions = elementsOptions.filter(
         (element) => element.id.toString() === selectedValues.value
       );
-      // if prevSelectedElements exists, add the new elements to the array else it doesn't exist, simply add them
-      setSelectedElements((prevSelectedElements) => [
-        ...(prevSelectedElements || []),
-        ...filteredOptions,
-      ]);
+
+      addMovieToList({
+        session_id: sessionId,
+        list_id: newList?.id,
+        media_id: filteredOptions[0].id, // because is always only 1 element by id in array
+      })
+        .unwrap()
+        .then((data) => {
+          if (data.success) {
+            // if prevSelectedElements exists, add the new elements to the array else it doesn't exist, simply add them
+            setSelectedElements((prevSelectedElements) => [
+              ...(prevSelectedElements || []),
+              ...filteredOptions,
+            ]);
+            messageApi.success(
+              `"${filteredOptions[0].title}" був успішно доданий до списку #${newList?.id}!`,
+              3
+            );
+          } else {
+            messageApi.error(`${data.status_message}`, 3);
+          }
+        })
+        .catch((error) => {
+          if (error && error.data.status_code === 8) {
+            messageApi.error(
+              `Сталась помилка! Елемент "${filteredOptions[0].title}" вже існує в списку #${newList?.id}`,
+              5
+            );
+          } else {
+            messageApi.error(
+              `Сталась помилка! Код помилки: ${error.data.status_code}`,
+              5
+            );
+          }
+        });
     },
     [elementsOptions]
+  );
+
+  const onClickElementDelete = React.useCallback(
+    (movieId: number, title: string) => {
+      removeMovieFromList({
+        session_id: sessionId,
+        list_id: newList?.id,
+        media_id: movieId, // because is always only 1 element by id in array
+      })
+        .unwrap()
+        .then((data) => {
+          if (data.success) {
+            if (selectedElements !== undefined) {
+              const filteredOptions = selectedElements.filter(
+                (movie) => movie.id !== movieId
+              );
+
+              setSelectedElements(filteredOptions);
+            }
+            messageApi.success(
+              `"${title}" був успішно видалений зі списку #${newList?.id}!`,
+              3
+            );
+          } else {
+            messageApi.success(`${data.status_message}`, 3);
+          }
+        })
+        .catch((error) => {
+          if (error && error.data.status_code === 21) {
+            messageApi.error(
+              `Сталась помилка! Елемента "${title}" не існує в списку #${newList?.id}`,
+              5
+            );
+          } else {
+            messageApi.error(
+              `Сталась помилка! Код помилки: ${error.data.status_code}`,
+              5
+            );
+          }
+        });
+    },
+    [selectedElements]
   );
 
   React.useEffect(() => {
@@ -166,7 +277,6 @@ const ListNewBlock = () => {
               <Select
                 showSearch
                 optionFilterProp="label"
-                loading={isSearchMovieFetching}
                 onSearch={handleDebouncedSearchChange}
                 onChange={handleSelectChange}
                 placeholder="Почніть вводити назву елементу..."
@@ -182,67 +292,52 @@ const ListNewBlock = () => {
                   ) : null
                 }
                 labelInValue={true}
-                showArrow={true}
-                allowClear
+                showArrow={false}
+                value={null}
                 size="large"
               >
-                {elementsOptions.map((element) => (
+                {elementsOptions.map((element, index) => (
                   <Select.Option
                     key={element.id}
                     value={element.id.toString()}
                     label={element.title}
                   >
-                    <div>{element.title}</div>
+                    <OptionElement
+                      index={index}
+                      title={element.title}
+                      poster_path={
+                        element.poster_path
+                          ? `https://image.tmdb.org/t/p/w45_and_h67_bestv2/${element.poster_path}`
+                          : "https://placehold.co/45x/png/?text=Not+Found"
+                      }
+                      release_date={element.release_date}
+                    />
                   </Select.Option>
                 ))}
               </Select>
             </Form.Item>
             <div className={styles.cards}>
-              {selectedElements &&
-                selectedElements.length !== 0 &&
-                selectedElements.map((movie) => (
-                  <div className={styles.card}>
-                    <div className={styles.image}>
-                      <div className={styles.poster}>
-                        <Link href={`/movies/${movie.id}`}>
-                          <Image
-                            width={150}
-                            height={225}
-                            alt={`${movie.title}`}
-                            src={
-                              movie.poster_path
-                                ? `https://image.tmdb.org/t/p/w150_and_h225_bestv2${movie.poster_path}`
-                                : "https://placehold.co/150x225/png/?text=Not+Found"
-                            }
-                          />
-                        </Link>
-                      </div>
-                    </div>
-                    <div className={styles.details}>
-                      <div className={styles.detailsMain}>
-                        <div className={styles.detailsHead}>
-                          <RatingBar size={38} rating={movie.vote_average} />
-                          <div className={styles.title}>
-                            <div>
-                              <Link href={`/movies/${movie.id}`}>
-                                <h2>{movie.title}</h2>
-                              </Link>
-                            </div>
-                            <span className={styles.release}>
-                              {formatReleaseDate(movie.release_date)}
-                            </span>
-                          </div>
-                        </div>
-                        <div className={styles.overview}>
-                          <Typography.Paragraph ellipsis={{ rows: 2 }}>
-                            {movie.overview}
-                          </Typography.Paragraph>
-                        </div>
-                      </div>
-                      
-                    </div>
-                  </div>
-                ))}
+              {selectedElements && selectedElements.length !== 0 && (
+                <>
+                  <h3>Додані елементи:</h3>
+                  {selectedElements.map((movie) => (
+                    <WideMovieCard
+                      id={movie.id}
+                      title={movie.title}
+                      vote_average={movie.vote_average}
+                      release_date={movie.release_date}
+                      overview={movie.overview}
+                      poster_path={
+                        movie.poster_path
+                          ? `https://image.tmdb.org/t/p/w150_and_h225_bestv2${movie.poster_path}`
+                          : "https://placehold.co/150x225/png/?text=Not+Found"
+                      }
+                      isShowDelete
+                      onClickElementDelete={(id, title) => {onClickElementDelete(id, title)}}
+                    />
+                  ))}
+                </>
+              )}
             </div>
             <Button htmlType="submit" type="primary">
               Продовжити
@@ -253,7 +348,23 @@ const ListNewBlock = () => {
     },
     {
       title: "Готово!",
-      content: "Last-content",
+      content: (
+        <div className={styles.content}>
+          {newList && (
+            <Result
+              status="success"
+              title={`Список "${newList.name}" був успішно створений!`}
+              subTitle="Бажаєте перейти до нього або створити новий список?"
+              extra={[
+                <Button type="primary" key="console">
+                  <Link href={`/lists/${newList.id}`}>Перейти до списку</Link>
+                </Button>,
+                <Button href={`/lists/new`}>Створити новий список</Button>,
+              ]}
+            />
+          )}
+        </div>
+      ),
     },
   ];
 
@@ -264,13 +375,13 @@ const ListNewBlock = () => {
       <Steps current={current} items={items} />
       <div>{steps[current].content}</div>
       <div style={{ marginTop: 24 }}>
-        {current === steps.length - 1 && <Button type="primary">Done</Button>}
         {current > 0 && (
           <Button style={{ margin: "0 8px" }} onClick={() => onClickPrev()}>
             Повернутись назад
           </Button>
         )}
       </div>
+      {contextMessageHolder}
     </div>
   );
 };
