@@ -29,6 +29,7 @@ const ListDetailsPage: React.FC<ListDetailsPageProps> = ({ id }) => {
         {!isListsLoading && list && (
           <ListDetailsHead
             id={list.id}
+            listUsername={list.created_by}
             name={list.name}
             created_by={list.created_by}
             description={list.description}

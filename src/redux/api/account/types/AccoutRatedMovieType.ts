@@ -1,6 +1,6 @@
 import { ListMovie } from "../../movies/types/ListMovieType";
 
-export interface AccountRatedListApiResponse {
+export interface AccountRatedMovieListApiResponse {
   page: number;
   results: ListRatedItem[];
   total_pages: number;

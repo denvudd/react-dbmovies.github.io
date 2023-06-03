@@ -9,9 +9,9 @@ import {
 import { useRouter } from "next/router";
 
 export const LoginPage = () => {
-  const [getAuthToken, { isLoading: isAuthTokenLoading }] =
+  const [getAuthToken,] =
     useLazyGetAuthTokenQuery();
-  const [createSession, { isLoading: isCreateSessionLoading }] =
+  const [createSession] =
     usePostCreateSessionMutation();
   const router = useRouter();
   const { request_token, approved } = router.query;

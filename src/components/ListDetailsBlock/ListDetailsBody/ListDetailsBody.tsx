@@ -1,9 +1,9 @@
 import React from "react";
 import { ListMovie } from "@/redux/api/movies/types/ListMovieType";
 import { calcAverageInObject } from "@/utils/calcAverageInObject";
+import ListMovieCard from "@/components/UI/ListMovieCard/ListMovieCard";
 
 import styles from "./ListDetailsBody.module.scss";
-import ListMovieCard from "@/components/UI/ListMovieCard/ListMovieCard";
 
 interface ListDetailsBodyProps {
   favorite_count: number;

@@ -320,9 +320,10 @@ const ListNewBlock = () => {
               {selectedElements && selectedElements.length !== 0 && (
                 <>
                   <h3>Додані елементи:</h3>
-                  {selectedElements.map((movie) => (
+                  {selectedElements.map((movie, index) => (
                     <WideMovieCard
                       id={movie.id}
+                      priorityIndex={index}
                       title={movie.title}
                       vote_average={movie.vote_average}
                       release_date={movie.release_date}

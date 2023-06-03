@@ -104,7 +104,7 @@ export const moviesApi = baseApi.injectEndpoints({
         },
       }),
       transformResponse: (response: AddMovieRatinApiResponse) => response,
-      invalidatesTags: ["Rates"]
+      invalidatesTags: ["Rates", "Watchlist"]
     }),
   }),
 });

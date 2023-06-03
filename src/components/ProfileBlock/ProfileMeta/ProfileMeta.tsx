@@ -2,12 +2,14 @@ import React from "react";
 import {
   useLazyGetAccountListsQuery,
   useLazyGetAccountRatedMoviesQuery,
+  useLazyGetAccountWatchlistMoviesQuery,
 } from "@/redux/api/account/slice";
 import { Button, Select, Tabs, TabsProps, Spin, Modal } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import ProfileListGrid from "./ProfileListGrid/ProfileListGrid";
 import RatedMovieCard from "@/components/ProfileBlock/ProfileMeta/RatedMovieCard/RatedMovieCard";
+import WatchlistMovieCard from "./WatchlitMovieCard/WatchlistMovieCard";
 
 import styles from "./ProfileMeta.module.scss";
 interface ProfileMetaProps {
@@ -20,12 +22,26 @@ const ProfileMeta: React.FC<ProfileMetaProps> = ({ accountId, sessionId }) => {
   const [getLists, { data: lists, isLoading: isListsLoading }] =
     useLazyGetAccountListsQuery();
   const [
-    getRated,
-    { data: rated, isLoading: isRatedLoading, isFetching: isRatedFetching },
+    getRatedMovies,
+    {
+      data: ratedMovies,
+      isLoading: isRatedMoviesLoading,
+      isFetching: isRatedMoviesFetching,
+    },
   ] = useLazyGetAccountRatedMoviesQuery();
+  const [
+    getWatchlistMovies,
+    {
+      data: watchlistMovies,
+      isLoading: isWatchlistMoviesLoading,
+      isFetching: isWatchlistMoviesFetching,
+    },
+  ] = useLazyGetAccountWatchlistMoviesQuery();
 
-  const [sortBy, setSortBy] = React.useState<"asc" | "desc">("desc");
-  const sortByRef = React.useRef<"asc" | "desc">(sortBy);
+  const [ratesSortBy, setRatesSortBy] = React.useState<"asc" | "desc">("desc");
+  const [watchlistSortBy, setWatchlistSortBy] = React.useState<"asc" | "desc">("desc");
+  const ratesSortByRef = React.useRef<"asc" | "desc">(ratesSortBy);
+  const watchlistSortByRef = React.useRef<"asc" | "desc">(watchlistSortBy);
 
   const handleTabChange = (key: string) => {
     setTabKey(key);
@@ -34,7 +50,7 @@ const ProfileMeta: React.FC<ProfileMetaProps> = ({ accountId, sessionId }) => {
         getLists({ session_id: sessionId, account_id: accountId }, true);
         break;
       case "rates":
-        getRated(
+        getRatedMovies(
           {
             session_id: sessionId,
             account_id: accountId,
@@ -43,28 +59,63 @@ const ProfileMeta: React.FC<ProfileMetaProps> = ({ accountId, sessionId }) => {
           true
         );
         break;
+      case "watchlist":
+        getWatchlistMovies(
+          {
+            session_id: sessionId,
+            account_id: accountId,
+            params: `language=uk-UA&sort_by=created_at.desc`,
+          },
+          true
+        );
+        
+        break;
     }
   };
 
-  const onSortChange = (value: string) => {
+  if (watchlistMovies) {
+    console.log(watchlistMovies.total_results);
+  }
+
+  const onRatesSortChange = (value: string) => {
     if (value === "asc" || value === "desc") {
-      setSortBy(value);
+      setRatesSortBy(value);
+    }
+  };
+
+  const onSortWatchlist = (value: string) => {
+    if (value === "asc" || value === "desc") {
+      setWatchlistSortBy(value);
     }
   };
 
   React.useEffect(() => {
-    if (sortByRef.current !== sortBy) {
-      getRated(
+    if (ratesSortByRef.current !== ratesSortBy) {
+      getRatedMovies(
         {
           session_id: sessionId,
           account_id: accountId,
-          params: `language=uk-UA&sort_by=created_at.${sortBy}`,
+          params: `language=uk-UA&sort_by=created_at.${ratesSortBy}`,
         },
         true
       );
-      sortByRef.current = sortBy;
+      ratesSortByRef.current = ratesSortBy;
     }
-  }, [sortBy]);
+  }, [ratesSortBy]);
+
+  React.useEffect(() => {
+    if (watchlistSortByRef.current !== watchlistSortBy) {
+      getWatchlistMovies(
+        {
+          session_id: sessionId,
+          account_id: accountId,
+          params: `language=uk-UA&sort_by=created_at.${watchlistSortBy}`,
+        },
+        true
+      );
+      watchlistSortByRef.current = watchlistSortBy;
+    }
+  }, [watchlistSortBy]);
 
   const items: TabsProps["items"] = [
     {
@@ -105,7 +156,7 @@ const ProfileMeta: React.FC<ProfileMetaProps> = ({ accountId, sessionId }) => {
       label: `Оцінки`,
       children: (
         <>
-          {isRatedLoading && (
+          {isRatedMoviesLoading && (
             <div className={styles.loading}>
               <Spin
                 indicator={<LoadingOutlined style={{ fontSize: 30 }} spin />}
@@ -113,16 +164,16 @@ const ProfileMeta: React.FC<ProfileMetaProps> = ({ accountId, sessionId }) => {
             </div>
           )}
           <Spin
-            spinning={!isRatedLoading && isRatedFetching}
+            spinning={!isRatedMoviesLoading && isRatedMoviesFetching}
             indicator={<LoadingOutlined style={{ fontSize: 30 }} spin />}
           >
-            {rated && rated.results.length && (
-              <div className={styles.rates}>
-                <div className={styles.ratesHeader}>
-                  <h2 className={styles.ratesTitle}>Мої оцінки</h2>
-                  <div className={styles.ratesSort}>
+            {ratedMovies && ratedMovies.results && (
+              <div className={styles.sortable}>
+                <div className={styles.sortableHeader}>
+                  <h2 className={styles.sortableTitle}>Мої оцінки</h2>
+                  <div className={styles.sortableSort}>
                     <div className={styles.sortGroup}>
-                      <span className={styles.ratesSortTitle}>Порядок:</span>
+                      <span className={styles.sortableSortTitle}>Порядок:</span>
                       <Select
                         defaultValue={"desc"}
                         style={{ width: "100%" }}
@@ -130,20 +181,22 @@ const ProfileMeta: React.FC<ProfileMetaProps> = ({ accountId, sessionId }) => {
                           { value: "desc", label: "Оцінені нещодавно" },
                           { value: "asc", label: "Оцінені давно" },
                         ]}
-                        onChange={onSortChange}
+                        onChange={onRatesSortChange}
                       />
                     </div>
                   </div>
                 </div>
-                <div className={styles.ratesCards}>
-                  {rated.results.length === 0 && (
+                <div className={styles.sortableCards}>
+                  {ratedMovies.results.length === 0 && (
                     <div>Списків для цього аккаунта не знайдено.</div>
                   )}
-                  {rated.results.length !== 0 && (
+                  {ratedMovies.results.length !== 0 && (
                     <>
-                      {rated.results.map((movie) => (
+                      {ratedMovies.results.map((movie, index) => (
                         <RatedMovieCard
                           id={movie.id}
+                          key={movie.id}
+                          priorityIndex={index}
                           sessionId={sessionId}
                           title={movie.title}
                           overview={movie.overview}
@@ -167,9 +220,71 @@ const ProfileMeta: React.FC<ProfileMetaProps> = ({ accountId, sessionId }) => {
       ),
     },
     {
-      key: "watchLater",
+      key: "watchlist",
       label: `Переглянути пізніше`,
-      children: `Content of Tab Pane 3`,
+      children: (
+        <>
+          {isWatchlistMoviesLoading && (
+            <div className={styles.loading}>
+              <Spin
+                indicator={<LoadingOutlined style={{ fontSize: 30 }} spin />}
+              />
+            </div>
+          )}
+          <Spin
+            spinning={!isWatchlistMoviesLoading && isWatchlistMoviesFetching}
+            indicator={<LoadingOutlined style={{ fontSize: 30 }} spin />}
+          >
+            {watchlistMovies && watchlistMovies.results && (
+              <div className={styles.sortable}>
+                <div className={styles.sortableHeader}>
+                  <h2 className={styles.sortableTitle}>Мій список перегляду</h2>
+                  <div className={styles.sortableSort}>
+                    <div className={styles.sortGroup}>
+                      <span className={styles.sortableSortTitle}>Порядок:</span>
+                      <Select
+                        defaultValue={"desc"}
+                        style={{ width: "100%" }}
+                        options={[
+                          { value: "desc", label: "Оцінені нещодавно" },
+                          { value: "asc", label: "Оцінені давно" },
+                        ]}
+                        onChange={onSortWatchlist}
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className={styles.sortableCards}>
+                  {watchlistMovies.results.length === 0 && (
+                    <div>Списків для цього аккаунта не знайдено.</div>
+                  )}
+                  {watchlistMovies.results.length !== 0 && (
+                    <>
+                      {watchlistMovies.results.map((movie, index) => (
+                        <WatchlistMovieCard
+                          id={movie.id}
+                          key={movie.id}
+                          priorityIndex={index}
+                          sessionId={sessionId}
+                          title={movie.title}
+                          overview={movie.overview}
+                          vote_average={movie.vote_average}
+                          release_date={movie.release_date}
+                          poster_path={
+                            movie.poster_path
+                              ? `https://image.tmdb.org/t/p/w150_and_h225_bestv2${movie.poster_path}`
+                              : "https://placehold.co/150x225/png/?text=Not+Found"
+                          }
+                        />
+                      ))}
+                    </>
+                  )}
+                </div>
+              </div>
+            )}
+          </Spin>
+        </>
+      ),
     },
   ];
 

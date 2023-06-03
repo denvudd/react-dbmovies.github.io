@@ -67,7 +67,7 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
   const [isListSubmit, setIsListSubmit] = React.useState(false);
   const [isRateSubmit, setIsRateSubmit] = React.useState(false);
   const [isGalleryVisible, setIsGalleryVisible] = React.useState(false);
-  const [rate, setRate] = React.useState<number>(0);
+  const [rate, setRate] = React.useState<number>(1);
   const { data: certificate } = useGetMovieReleaseDatesQuery(id);
 
   const [messageApi, contextMessageHolder] = message.useMessage();

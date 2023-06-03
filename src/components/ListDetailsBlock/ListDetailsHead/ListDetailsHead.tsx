@@ -14,6 +14,7 @@ import { ExclamationCircleFilled } from "@ant-design/icons";
 
 interface ListDetailsHeadProps {
   name: string;
+  listUsername: string;
   created_by: string;
   description: string;
   id: string;
@@ -23,6 +24,7 @@ interface ListDetailsHeadProps {
 
 const ListDetailsHead: React.FC<ListDetailsHeadProps> = ({
   name,
+  listUsername,
   created_by,
   description,
   id,
@@ -32,11 +34,8 @@ const ListDetailsHead: React.FC<ListDetailsHeadProps> = ({
   const router = useRouter();
   const [sessionId, setSessionId] = React.useState<string | null>("");
 
-  const { avatar } = useGetAccountDetailsQuery(undefined, {
-    selectFromResult: ({ data }) => ({
-      avatar: data?.avatar.tmdb ? data?.avatar.tmdb : data?.avatar.gravatar,
-    }),
-  });
+  const { data: accountDetails, isLoading: isAccountUsernameLoading } =
+    useGetAccountDetailsQuery({ session_id: sessionId });
   const [deleteList] = useDeleteListMutation();
   const [clearList] = usePostClearListMutation();
 
@@ -68,7 +67,7 @@ const ListDetailsHead: React.FC<ListDetailsHeadProps> = ({
       cancelText: "Ні",
       onOk() {
         deleteList({ session_id: sessionId, list_id: id });
-        router.back();
+        router.push(`/user/${accountDetails?.username}`);
       },
       closable: true,
     });
@@ -123,36 +122,43 @@ const ListDetailsHead: React.FC<ListDetailsHeadProps> = ({
             </Popover>
           </h2>
           <h4>Мова списку: {iso_639_1.toUpperCase()}</h4>
-          <ul className={styles.menu}>
-            <li className={styles.account}>
-              <Link href={`/user/${created_by}`}>
-                <img
-                  src={`https://secure.gravatar.com/avatar/${avatar}.jpg?s=50`}
-                  alt=""
-                />
-              </Link>
-              <p>
-                Лист користувача
-                <br />
-                <Link href={`/user/${created_by}`}>{created_by}</Link>
-              </p>
-            </li>
-            <li>
-              <Button onClick={showDeleteConfirm} size="large">
-                Видалити
-              </Button>
-            </li>
-            <li>
-              <Button
-                size="large"
-                disabled={isEmpty}
-                title={isEmpty ? "У списку немає елементів" : undefined}
-                onClick={showClearConfirm}
-              >
-                Очистити
-              </Button>
-            </li>
-          </ul>
+          {!isAccountUsernameLoading && accountDetails && (
+            <ul className={styles.menu}>
+              <li className={styles.account}>
+                <Link href={`/user/${created_by}`}>
+                  <img
+                    src={`https://secure.gravatar.com/avatar/${accountDetails.avatar}.jpg?s=50`}
+                    alt=""
+                  />
+                </Link>
+                <p>
+                  Лист користувача
+                  <br />
+                  <Link href={`/user/${created_by}`}>{created_by}</Link>
+                </p>
+              </li>
+              {!isAccountUsernameLoading &&
+                listUsername === accountDetails?.username && (
+                  <>
+                    <li>
+                      <Button onClick={showDeleteConfirm} size="large">
+                        Видалити
+                      </Button>
+                    </li>
+                    <li>
+                      <Button
+                        size="large"
+                        disabled={isEmpty}
+                        title={isEmpty ? "У списку немає елементів" : undefined}
+                        onClick={showClearConfirm}
+                      >
+                        Очистити
+                      </Button>
+                    </li>
+                  </>
+                )}
+            </ul>
+          )}
           <h3>Про цей список</h3>
           <div className={styles.description}>
             <p>{description}</p>

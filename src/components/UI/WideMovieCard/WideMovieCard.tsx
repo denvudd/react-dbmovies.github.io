@@ -10,22 +10,28 @@ import styles from "./WideMovieCard.module.scss";
 
 interface WideMovieCardProps {
   id: number;
+  priorityIndex?: number,
   title: string;
   vote_average: number;
   release_date: string;
   poster_path: string;
   overview: string;
   rating?: number;
+
   isShowPanel?: boolean;
   isShowRate?: boolean;
+  isRateReadonly?: boolean;
   isShowAddMovie?: boolean;
   isShowDelete?: boolean;
+
   onClickElementDelete?: (movieId: number, title: string) => void;
   onClickAddMovieToList?: (...args: any) => void;
+  onChangeMovieRate?: (...args: any) => void;
 }
 
 const WideMovieCard: React.FC<WideMovieCardProps> = ({
   id,
+  priorityIndex,
   title,
   vote_average,
   release_date,
@@ -35,22 +41,12 @@ const WideMovieCard: React.FC<WideMovieCardProps> = ({
   isShowPanel,
   isShowAddMovie,
   isShowRate,
+  isRateReadonly = true,
   isShowDelete,
   onClickElementDelete,
   onClickAddMovieToList,
+  onChangeMovieRate
 }) => {
-  const handleDeleteClick = (id: number, title: string) => {
-    if (onClickElementDelete) {
-      onClickElementDelete(id, title);
-    }
-  };
-
-  const handleRateClick = () => {
-    if (onClickAddMovieToList) {
-      onClickAddMovieToList();
-    }
-  };
-
   return (
     <div key={id} className={styles.card}>
       <div className={styles.image}>
@@ -61,6 +57,7 @@ const WideMovieCard: React.FC<WideMovieCardProps> = ({
               height={225}
               alt={`${title}`}
               src={poster_path}
+              priority={priorityIndex ? priorityIndex < 3 : undefined}
             />
           </Link>
         </div>
@@ -95,8 +92,9 @@ const WideMovieCard: React.FC<WideMovieCardProps> = ({
                   <Rate
                     value={rating}
                     count={10}
-                    disabled
+                    disabled={isRateReadonly}
                     style={{ marginTop: "-5px" }}
+                    onChange={onChangeMovieRate}
                   />
                 </li>
               ) : undefined}
@@ -118,10 +116,10 @@ const WideMovieCard: React.FC<WideMovieCardProps> = ({
           </div>
         )}
       </div>
-      {isShowDelete && (
+      {isShowDelete && onClickElementDelete && (
         <button
           type="button"
-          onClick={() => handleDeleteClick(id, title)}
+          onClick={() => onClickElementDelete(id, title)}
           className={styles.cardDeleteIcon}
         >
           <CloseOutlined />

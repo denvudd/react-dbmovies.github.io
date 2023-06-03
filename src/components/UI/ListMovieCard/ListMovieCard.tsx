@@ -1,12 +1,11 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Typography } from "antd";
 import { ListMovie } from "@/redux/api/movies/types/ListMovieType";
 import RatingBar from "../RatingBar/RatingBar";
+import { truncateString } from "@/utils/truncateString";
 
 import styles from "./ListMovieCard.module.scss";
-
 interface ListMovieCardProps {
   movie: ListMovie;
   index: number;
@@ -35,14 +34,16 @@ const ListMovieCard: React.FC<ListMovieCardProps> = ({ movie, index }) => {
             <span>{index + 1}</span>
           </div>
           <div className={styles.meta}>
-            <Typography.Paragraph className={styles.title} ellipsis={{rows: 1}}>
-              <Link href={`/movies/${movie.id}`}>{movie.title}</Link>
-            </Typography.Paragraph>
+            <p className={styles.title}>
+              <Link href={`/movies/${movie.id}`}>
+                {truncateString(movie.title, 20)}
+              </Link>
+            </p>
           </div>
         </div>
         <div className={styles.rating}>
-        <RatingBar rating={movie.vote_average} size={33}/>
-      </div>
+          <RatingBar rating={movie.vote_average} size={33} />
+        </div>
       </div>
     </div>
   );

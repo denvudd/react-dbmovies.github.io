@@ -34,6 +34,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  overflow: hidden;
 }
 
 .number {
@@ -41,17 +42,17 @@
   font-weight: 600;
   color: $tmdbLightBlue;
   font-size: 1.1em;
+  margin-right: 10px;
 }
 
 .meta {
-  display: inline-flex;
-  line-height: 0px;
-
   .title {
     margin-bottom: 0px;
+    
 
     a {
       line-height: 0px;
+
     }
   }
 }
