@@ -1,14 +1,6 @@
 import React from "react";
-import DetailLayout from "@/layouts/DetailsLayout";
-import MovieDetailsBlock from "@/components/MovieDetailsBlock/MovieDetailsBlock";
-import {
-  getMovieDetails,
-  getRunningQueriesThunk,
-} from "@/redux/api/movies/slice";
-import { wrapper } from "@/redux/store";
 import { MovieDetails } from "@/redux/api/movies/types/MovieDetailsType";
-import { useGetMovieDetailsQuery } from "@/redux/api/movies/slice";
-import { useRouter } from "next/router";
+
 import { GetServerSideProps } from "next";
 
 interface MovieDetailsPageProps {
