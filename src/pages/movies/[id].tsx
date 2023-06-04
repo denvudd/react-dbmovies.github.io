@@ -7,6 +7,8 @@ import {
 } from "@/redux/api/movies/slice";
 import { wrapper } from "@/redux/store";
 import { MovieDetails } from "@/redux/api/movies/types/MovieDetailsType";
+import { useGetMovieDetailsQuery } from "@/redux/api/movies/slice";
+import { useRouter } from "next/router";
 
 interface MovieDetailsPageProps {
   id: number;
@@ -23,23 +25,20 @@ export const getServerSideProps = wrapper.getServerSideProps(
       );
     }
 
-    const { data } = getMovieDetails.select({
-      id,
-      params: "language=uk-UA&page=1",
-    })(store.getState());
-
     await Promise.all(store.dispatch(getRunningQueriesThunk()));
 
     return {
-      props: { id: data?.id, data },
+      props: { },
     };
   }
 );
 
-const MovideDetailsPage: React.FC<MovieDetailsPageProps> = ({ data }) => {
+const MovideDetailsPage: React.FC<MovieDetailsPageProps> = ({  }) => {
+  const router = useRouter();
+  const {data} = useGetMovieDetailsQuery({id: router.query.id});
   return (
     <>
-      <div style={{ color: "#000" }}>{data.id}</div>
+      <div style={{ color: "#000" }}>{data?.id}</div>
     </>
   );
 };
