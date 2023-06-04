@@ -2,6 +2,7 @@ import React from "react";
 import SortMenu from "./SortMenu/SortMenu";
 import AdditionalSortMenu from "./AdditionalSortMenu/AdditionalSortMenu";
 import { setParams } from "@/redux/params/slice";
+import { useAppDispatch } from "@/redux/store";
 import {
   AdditionalSortData,
   SortData,
@@ -9,7 +10,6 @@ import {
 } from "@/redux/params/types/types";
 import styles from "./FilterMenu.module.scss";
 import { isSortParamsEmpty } from "@/utils/isSortParamsEmpty";
-import { useDispatch } from "react-redux";
 
 export interface AdditionalSortDataState {
   additionalSortData: AdditionalSortData;
@@ -19,7 +19,7 @@ const FilterMenu: React.FC = React.memo(() => {
   const [sortData, setSortData] = React.useState<SortData>({
     sortBy: SortValue.None,
   });
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [isDisabled, setIsDisabled] = React.useState(true);
 
   const [additionalSortData, setAdditionalSortData] =

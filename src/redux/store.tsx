@@ -6,7 +6,7 @@ import paramsSlice from "./params/slice";
 import { createWrapper } from "next-redux-wrapper";
 import { useDispatch } from "react-redux";
 
-const store = 
+const store = () =>
   configureStore({
     reducer: {
       baseApi: baseApi.reducer,
@@ -19,8 +19,8 @@ const store =
 
 export default store;
 
-// export type AppStore = ReturnType<typeof store>;
-// export type RootState = ReturnType<AppStore["getState"]>;
-// // export type AppDispatch = AppStore["dispatch"];
-export type RootState = ReturnType<typeof store.getState>
-// export const wrapper = createWrapper<AppStore>(store, { debug: true });
+export type AppStore = ReturnType<typeof store>;
+export type RootState = ReturnType<AppStore["getState"]>;
+export type AppDispatch = AppStore["dispatch"];
+export const useAppDispatch = () => useDispatch<AppDispatch>();
+export const wrapper = createWrapper<AppStore>(store, { debug: true });

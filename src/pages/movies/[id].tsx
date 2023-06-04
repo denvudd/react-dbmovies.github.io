@@ -5,24 +5,41 @@ import {
   getMovieDetails,
   getRunningQueriesThunk,
 } from "@/redux/api/movies/slice";
-
+import { wrapper } from "@/redux/store";
 import { MovieDetails } from "@/redux/api/movies/types/MovieDetailsType";
-import { GetServerSideProps } from "next";
+
 interface MovieDetailsPageProps {
   id: number;
   data: MovieDetails;
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { id } = context.query;
-  return { props: { id }};
-};
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) => async (context) => {
+    const { id } = context.query;
 
+    if (typeof id === "string") {
+      await store.dispatch(
+        getMovieDetails.initiate({ id, params: "language=uk-UA&page=1" })
+      );
+    }
 
-const MovideDetailsPage: React.FC<MovieDetailsPageProps> = ({ id, data }) => {
+    const { data } = getMovieDetails.select({
+      id,
+      params: "language=uk-UA&page=1",
+    })(store.getState());
+
+    await Promise.all(store.dispatch(getRunningQueriesThunk()));
+
+    return {
+      props: { id: data?.id, data },
+    };
+  }
+);
+
+const MovideDetailsPage: React.FC<MovieDetailsPageProps> = ({ data }) => {
   return (
     <>
-      <div style={{color: "#000"}}>{id}</div>
+      <div style={{ color: "#000" }}>{data.id}</div>
     </>
   );
 };
