@@ -22,5 +22,5 @@ export default store;
 // export type AppStore = ReturnType<typeof store>;
 // export type RootState = ReturnType<AppStore["getState"]>;
 // // export type AppDispatch = AppStore["dispatch"];
-// export const useAppDispatch = () => useDispatch<AppDispatch>();
+export type RootState = ReturnType<typeof store.getState>
 // export const wrapper = createWrapper<AppStore>(store, { debug: true });
