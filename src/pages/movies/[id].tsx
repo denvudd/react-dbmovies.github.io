@@ -5,7 +5,7 @@ import {
   getMovieDetails,
   getRunningQueriesThunk,
 } from "@/redux/api/movies/slice";
-import { wrapper } from "@/redux/store";
+
 import { MovieDetails } from "@/redux/api/movies/types/MovieDetailsType";
 import { GetServerSideProps } from "next";
 interface MovieDetailsPageProps {
