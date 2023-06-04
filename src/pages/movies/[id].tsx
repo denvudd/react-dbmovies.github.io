@@ -9,33 +9,21 @@ import { wrapper } from "@/redux/store";
 import { MovieDetails } from "@/redux/api/movies/types/MovieDetailsType";
 import { useGetMovieDetailsQuery } from "@/redux/api/movies/slice";
 import { useRouter } from "next/router";
+import { GetServerSideProps } from "next";
 
 interface MovieDetailsPageProps {
   id: number;
   data: MovieDetails;
 }
 
-export const getServerSideProps = wrapper.getServerSideProps(
-  (store) => async (context) => {
-    const { id } = context.query;
+export const getServerSideProps: GetServerSideProps = async () => {
+  const res = await fetch('https://api.github.com/repos/vercel/next.js');
+  const repo = await res.json();
+  return { props: { data: repo } };
+};
 
-    if (typeof id === "string") {
-      await store.dispatch(
-        getMovieDetails.initiate({ id, params: "language=uk-UA&page=1" })
-      );
-    }
-
-    await Promise.all(store.dispatch(getRunningQueriesThunk()));
-
-    return {
-      props: { },
-    };
-  }
-);
-
-const MovideDetailsPage: React.FC<MovieDetailsPageProps> = ({  }) => {
-  const router = useRouter();
-  const {data} = useGetMovieDetailsQuery({id: router.query.id});
+const MovideDetailsPage: React.FC<MovieDetailsPageProps> = ({ data }) => {
+  
   return (
     <>
       <div style={{ color: "#000" }}>{data?.id}</div>
