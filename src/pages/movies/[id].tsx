@@ -7,39 +7,24 @@ import {
 } from "@/redux/api/movies/slice";
 import { wrapper } from "@/redux/store";
 import { MovieDetails } from "@/redux/api/movies/types/MovieDetailsType";
-
+import { GetServerSideProps } from "next";
 interface MovieDetailsPageProps {
   id: number;
   data: MovieDetails;
 }
 
-export const getServerSideProps = wrapper.getServerSideProps(
-  (store) => async (context) => {
-    const { id } = context.query;
+export const getServerSideProps: GetServerSideProps<{
+  id
+}> = async (context) => {
+  const { id } = context.query;
+  return { props: { id }};
+};
 
-    if (typeof id === "string") {
-      await store.dispatch(
-        getMovieDetails.initiate({ id, params: "language=uk-UA&page=1" })
-      );
-    }
-
-    const { data } = getMovieDetails.select({
-      id,
-      params: "language=uk-UA&page=1",
-    })(store.getState());
-
-    await Promise.all(store.dispatch(getRunningQueriesThunk()));
-
-    return {
-      props: { id, data },
-    };
-  }
-);
 
 const MovideDetailsPage: React.FC<MovieDetailsPageProps> = ({ id, data }) => {
   return (
     <>
-      {id}
+      <div style={{color: "#000"}}>{id}</div>
     </>
   );
 };
