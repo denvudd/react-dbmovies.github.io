@@ -39,9 +39,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
 const MovideDetailsPage: React.FC<MovieDetailsPageProps> = ({ id, data }) => {
   return (
     <>
-      <DetailLayout>
-        {data && <MovieDetailsBlock id={id} data={data} />}
-      </DetailLayout>
+      {id}
     </>
   );
 };
