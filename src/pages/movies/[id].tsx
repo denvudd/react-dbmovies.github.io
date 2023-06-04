@@ -13,9 +13,7 @@ interface MovieDetailsPageProps {
   data: MovieDetails;
 }
 
-export const getServerSideProps: GetServerSideProps<{
-  id
-}> = async (context) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.query;
   return { props: { id }};
 };
