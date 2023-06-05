@@ -8,6 +8,7 @@ import { MovieRecsApiResponse } from "./types/MovieRecsType";
 import { MovieKeywordApiResponse } from "./types/MovieKeywordsType";
 import { baseApi } from "../baseApi/slice";
 import { AddMovieRatinApiResponse } from "./types/AddMovieRatingType";
+import { MovieAccountStatesApiResponse } from "./types/MovieAccountStatesType";
 
 const tmdbApiKey = "api_key=684e3f73d1ca0e692a3016c028aabf72";
 
@@ -23,6 +24,15 @@ export const moviesApi = baseApi.injectEndpoints({
       query: ({ id, params }) =>
         `/movie/${id}?${tmdbApiKey}&${params ? params : ""}`,
       transformResponse: (response: MovieDetailsApiResponse) => response,
+    }),
+
+    getMovieAccoutStates: builder.query({
+      query: ({ movie_id, session_id }) =>
+        `/movie/${movie_id}/account_states?${tmdbApiKey}&session_id=${
+          session_id ? session_id : ""
+        }`,
+      transformResponse: (response: MovieAccountStatesApiResponse) => response,
+      providesTags: ["Watchlist", "Rates"],
     }),
 
     getMovieGenre: builder.query({
@@ -104,7 +114,13 @@ export const moviesApi = baseApi.injectEndpoints({
         },
       }),
       transformResponse: (response: AddMovieRatinApiResponse) => response,
-      invalidatesTags: ["Rates", "Watchlist"]
+      // manual cache update because the API doesn't always manage to process the mutation in time
+      async onQueryStarted(props, { dispatch, queryFulfilled }) {
+        await queryFulfilled;
+        setTimeout(() => {
+          dispatch(baseApi.util.invalidateTags(["Rates", "Watchlist"]));
+        }, 500);
+      },
     }),
   }),
 });
@@ -118,6 +134,7 @@ export const {
   useGetMovieRecsQuery,
   useGetMovieKeywordsQuery,
   usePostAddMovieRatingMutation,
+  useLazyGetMovieAccoutStatesQuery,
   useLazyGetMoviesQuery,
   useLazyGetMovieImagesQuery,
   useLazyGetMovieVideosQuery,

@@ -35,14 +35,20 @@ const MovieCard: React.FC<MovieCardProps> = ({
       cover={
         <Link href={`${id}`}>
           <div className={styles.containerImage}>
-            <Image
-              className={styles.cardImage}
-              alt="alt"
-              width={300}
-              height={400}
-              src={imgUrl}
-              priority={index < 10} // first 10 images priority = true, the rest will not
-            />
+            <div className={styles.wrapperImage}>
+              <div className={styles.aspectRatioWrapper}>
+                <div className={styles.aspectRatioContent}>
+                  <Image
+                    className={styles.cardImage}
+                    alt="alt"
+                    width={300}
+                    height={400}
+                    src={imgUrl}
+                    priority={index < 10} // first 10 images priority = true, the rest will not
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         </Link>
       }
@@ -55,7 +61,7 @@ const MovieCard: React.FC<MovieCardProps> = ({
       </Link>
       <Paragraph ellipsis={{ rows: 2 }}>{description}</Paragraph>
       <div className={styles.cardRating}>
-        <RatingBar rating={voteAverage} size={40}/>
+        <RatingBar rating={voteAverage} size={40} />
       </div>
     </Card>
   );

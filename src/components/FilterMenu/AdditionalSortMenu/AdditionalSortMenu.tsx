@@ -1,6 +1,6 @@
 import React from "react";
 import { Menu, MenuProps, DatePicker, Select, Slider, Spin } from "antd";
-import { LoadingOutlined } from "@ant-design/icons";
+import { default as LoadingOutlined } from "@ant-design/icons/lib/icons/LoadingOutlined";
 import { useGetMovieListGenreQuery } from "@/redux/api/genres/slice";
 import { useGetConfigurationLanguagesQuery } from "@/redux/api/configuration/slice";
 import { useLazyGetSearchKeywordsQuery } from "@/redux/api/search/slice";

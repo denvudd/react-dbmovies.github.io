@@ -5,7 +5,7 @@ import {
   useLazyGetAccountWatchlistMoviesQuery,
 } from "@/redux/api/account/slice";
 import { Button, Select, Tabs, TabsProps, Spin, Modal } from "antd";
-import { LoadingOutlined } from "@ant-design/icons";
+import LoadingOutlined from "@ant-design/icons/lib/icons/LoadingOutlined";
 import Link from "next/link";
 import ProfileListGrid from "./ProfileListGrid/ProfileListGrid";
 import RatedMovieCard from "@/components/ProfileBlock/ProfileMeta/RatedMovieCard/RatedMovieCard";
@@ -39,7 +39,9 @@ const ProfileMeta: React.FC<ProfileMetaProps> = ({ accountId, sessionId }) => {
   ] = useLazyGetAccountWatchlistMoviesQuery();
 
   const [ratesSortBy, setRatesSortBy] = React.useState<"asc" | "desc">("desc");
-  const [watchlistSortBy, setWatchlistSortBy] = React.useState<"asc" | "desc">("desc");
+  const [watchlistSortBy, setWatchlistSortBy] = React.useState<"asc" | "desc">(
+    "desc"
+  );
   const ratesSortByRef = React.useRef<"asc" | "desc">(ratesSortBy);
   const watchlistSortByRef = React.useRef<"asc" | "desc">(watchlistSortBy);
 
@@ -68,7 +70,7 @@ const ProfileMeta: React.FC<ProfileMetaProps> = ({ accountId, sessionId }) => {
           },
           true
         );
-        
+
         break;
     }
   };

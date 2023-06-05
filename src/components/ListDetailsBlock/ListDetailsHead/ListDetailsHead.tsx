@@ -5,13 +5,13 @@ import { Button, Popover, message, Modal } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-import styles from "./ListDetailsHead.module.scss";
 import {
   useDeleteListMutation,
   usePostClearListMutation,
 } from "@/redux/api/lists/slice";
-import { ExclamationCircleFilled } from "@ant-design/icons";
+import ExclamationCircleFilled  from "@ant-design/icons/lib/icons/ExclamationCircleFilled";
 
+import styles from "./ListDetailsHead.module.scss";
 interface ListDetailsHeadProps {
   name: string;
   listUsername: string;

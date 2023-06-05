@@ -60,7 +60,13 @@ export const accountApi = baseApi.injectEndpoints({
       }),
       transformResponse: (response: AccountAddToWatchlistType) =>
         response,
-      invalidatesTags: ["Watchlist"],
+      // manual cache update because the API doesn't always manage to process the mutation in time
+      async onQueryStarted(props, { dispatch, queryFulfilled }) {
+        await queryFulfilled;
+        setTimeout(() => {
+          dispatch(baseApi.util.invalidateTags(["Watchlist"]));
+        }, 500);
+      },
     }),
   }),
 });

@@ -3,7 +3,8 @@ import Link from "next/link";
 import Image from "next/image";
 import RatingBar from "../RatingBar/RatingBar";
 import { Button, Rate, Typography } from "antd";
-import { CloseOutlined, UnorderedListOutlined } from "@ant-design/icons";
+import CloseOutlined from '@ant-design/icons/lib/icons/CloseOutlined'
+import UnorderedListOutlined from "@ant-design/icons/lib/icons/UnorderedListOutlined";
 import { formatReleaseDate } from "@/utils/formatReleaseDate";
 
 import styles from "./WideMovieCard.module.scss";

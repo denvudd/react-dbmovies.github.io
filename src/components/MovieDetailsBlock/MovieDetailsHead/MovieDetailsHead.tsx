@@ -1,19 +1,22 @@
 import React from "react";
 import {
   useGetMovieReleaseDatesQuery,
+  useLazyGetMovieAccoutStatesQuery,
   usePostAddMovieRatingMutation,
 } from "@/redux/api/movies/slice";
 import { usePostAddMovieToListMutation } from "@/redux/api/lists/slice";
-import { useLazyGetAccountListsQuery } from "@/redux/api/account/slice";
-import { formatTime } from "@/utils/formatTime";
 import {
-  CaretRightFilled,
-  UnorderedListOutlined,
-  HeartFilled,
-  PushpinFilled,
-  StarFilled,
-  EyeOutlined,
-} from "@ant-design/icons";
+  useLazyGetAccountListsQuery,
+  usePostAddToWatchlistMutation,
+} from "@/redux/api/account/slice";
+
+import CaretRightFilled from "@ant-design/icons/lib/icons/CaretRightFilled";
+import UnorderedListOutlined from "@ant-design/icons/lib/icons/UnorderedListOutlined";
+import HeartFilled from "@ant-design/icons/lib/icons/HeartFilled";
+import PushpinFilled from "@ant-design/icons/lib/icons/PushpinFilled";
+import StarFilled from "@ant-design/icons/lib/icons/StarFilled";
+import EyeOutlined from "@ant-design/icons/lib/icons/EyeOutlined";
+
 import RatingBar from "@/components/UI/RatingBar/RatingBar";
 import {
   Image as ANTDImage,
@@ -25,8 +28,10 @@ import {
   Rate,
 } from "antd";
 import Image from "next/image";
-import { Genre } from "@/redux/api/genres/types/MovieListGenreType";
 import Link from "next/link";
+import type { Genre } from "@/redux/api/genres/types/MovieListGenreType";
+import classNames from "classnames";
+import { formatTime } from "@/utils/formatTime";
 
 import styles from "./MovieDetailsHead.module.scss";
 
@@ -58,14 +63,20 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
   const [addMovieToList, { data: movieList, isLoading }] =
     usePostAddMovieToListMutation();
   const [
+    getAccountStates,
+    { data: accountStates, isLoading: isAccountStatesLoading },
+  ] = useLazyGetMovieAccoutStatesQuery();
+  const [addToWatchlist] = usePostAddToWatchlistMutation();
+  const [
     rateMovie,
     { data: rateMovieResult, isLoading: isRateMovieResultLoading },
   ] = usePostAddMovieRatingMutation();
   const [fetchAccountLists] = useLazyGetAccountListsQuery();
-  const [sessionId, setSessionId] = React.useState<string | null>("");
+  const [sessionId, setSessionId] = React.useState<string | null>(null);
   const [listId, setListId] = React.useState<string>("");
   const [isListSubmit, setIsListSubmit] = React.useState(false);
   const [isRateSubmit, setIsRateSubmit] = React.useState(false);
+  const [isWatchlistSubmit, setIsWatchlistSubmit] = React.useState(false);
   const [isGalleryVisible, setIsGalleryVisible] = React.useState(false);
   const [rate, setRate] = React.useState<number>(1);
   const { data: certificate } = useGetMovieReleaseDatesQuery(id);
@@ -135,6 +146,10 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
     }
   };
 
+  const onClickAddMovieToWatchlist = () => {
+    setIsWatchlistSubmit(true);
+  };
+
   const onClickRateMovie = () => {
     const rateModal = modal.info({
       title: `Оцінити "${title}"?`,
@@ -151,41 +166,43 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
         }
       };
 
-      fetchAccountLists({ session_id: sessionId }, true)
-        .unwrap()
-        .then((data) => {
-          rateModal.update({
-            title: `Оцінити "${title}"?`,
-            content: (
-              <div>
-                <p className={styles.listLabel}>Оберіть вашу оцінку:</p>
-                <Rate
-                  allowClear={false}
-                  defaultValue={5}
-                  count={10}
-                  onChange={onChangeRate}
-                />
-              </div>
-            ),
-            onOk() {
-              setIsRateSubmit(true);
-            },
-            icon: <StarFilled />,
-            onCancel() {},
-            okText: "Оберіть оцінку",
-            okButtonProps: {
-              disabled: true,
-              title: "Оберіть оцінку щоб продовжити",
-            },
-            closable: true,
-          });
-        });
+      rateModal.update({
+        title: `Оцінити "${title}"?`,
+        content: (
+          <div>
+            <p className={styles.listLabel}>Оберіть вашу оцінку:</p>
+            <Rate
+              allowClear={false}
+              defaultValue={5}
+              count={10}
+              onChange={onChangeRate}
+            />
+          </div>
+        ),
+        onOk() {
+          setIsRateSubmit(true);
+        },
+        icon: <StarFilled />,
+        onCancel() {},
+        okText: "Оберіть оцінку",
+        okButtonProps: {
+          disabled: true,
+          title: "Оберіть оцінку щоб продовжити",
+        },
+        closable: true,
+      });
     }
   };
 
   React.useEffect(() => {
     setSessionId(localStorage.getItem("session_id"));
   }, []);
+
+  React.useEffect(() => {
+    if (sessionId) {
+      getAccountStates({ movie_id: id, session_id: sessionId });
+    }
+  }, [sessionId]);
 
   React.useEffect(() => {
     if (isListSubmit) {
@@ -228,6 +245,37 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
   }, [isListSubmit]);
 
   React.useEffect(() => {
+    if (isWatchlistSubmit) {
+      if (sessionId) {
+        addToWatchlist({
+          session_id: sessionId,
+          media_type: "movie",
+          media_id: id,
+          watchlist: true,
+        })
+          .unwrap()
+          .then((data) => {
+            if (data.success) {
+              messageApi.success(
+                `"${title}" був успішно доданий до списку "Переглянути пізніше"!`,
+                3
+              );
+            } else {
+              messageApi.success(`${data.status_message}`, 3);
+            }
+          })
+          .catch((error) => {
+            messageApi.error(
+              `Сталась помилка! Код помилки: ${error.data.status_code}, текст помилки: ${error.data.status_message}`,
+              5
+            );
+          })
+          .finally(() => setIsWatchlistSubmit(false));
+      }
+    }
+  }, [isWatchlistSubmit]);
+
+  React.useEffect(() => {
     if (isRateSubmit) {
       Modal.destroyAll();
       if (sessionId) {
@@ -242,7 +290,7 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
           })
           .catch((error) => {
             messageApi.error(
-              `Сталась помилка! Код помилки: ${error.data.status_code}, теекст помилки: ${error.data.status_message}`,
+              `Сталась помилка! Код помилки: ${error.data.status_code}, текст помилки: ${error.data.status_message}`,
               5
             );
           })
@@ -352,11 +400,21 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
                       </li>
                     </Popover>
                     <Popover
-                      content={<span>Додати в обране</span>}
+                      content={
+                        <span>
+                          {accountStates?.watchlist
+                            ? `Додано в обране`
+                            : "Додати в обране"}
+                        </span>
+                      }
                       placement="bottom"
                     >
                       <li className={styles.tooltip}>
-                        <button>
+                        <button
+                          className={classNames({
+                            [styles.favorited]: accountStates?.favorite,
+                          })}
+                        >
                           <span>
                             <HeartFilled />
                           </span>
@@ -364,20 +422,45 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
                       </li>
                     </Popover>
                     <Popover
-                      content={<span>Додати до списку відстеження</span>}
+                      content={
+                        <span>
+                          {accountStates?.watchlist
+                            ? `Додано до списку відстежень`
+                            : "Додати до списку відстежень"}
+                        </span>
+                      }
                       placement="bottom"
                     >
                       <li className={styles.tooltip}>
-                        <button>
+                        <button
+                          onClick={onClickAddMovieToWatchlist}
+                          className={classNames({
+                            [styles.watchlist]: accountStates?.watchlist,
+                          })}
+                        >
                           <span>
                             <PushpinFilled />
                           </span>
                         </button>
                       </li>
                     </Popover>
-                    <Popover content={<span>Оцінити!</span>} placement="bottom">
+                    <Popover
+                      content={
+                        <span>
+                          {accountStates?.rated
+                            ? `Оцінено ${accountStates?.rated.value}.0`
+                            : "Оцінити!"}
+                        </span>
+                      }
+                      placement="bottom"
+                    >
                       <li className={styles.tooltip}>
-                        <button onClick={onClickRateMovie}>
+                        <button
+                          onClick={onClickRateMovie}
+                          className={classNames({
+                            [styles.rated]: accountStates?.rated,
+                          })}
+                        >
                           <span>
                             <StarFilled />
                           </span>

@@ -1,9 +1,8 @@
 import React from "react";
 import { Modal } from "antd";
-import { CaretRightFilled } from "@ant-design/icons";
+import CaretRightFilled from "@ant-design/icons/lib/icons/CaretRightFilled";
 import YouTube from "react-youtube";
 import styles from "./VideoCard.module.scss";
-
 interface VideoCardProps {
   videoKey: string;
 }

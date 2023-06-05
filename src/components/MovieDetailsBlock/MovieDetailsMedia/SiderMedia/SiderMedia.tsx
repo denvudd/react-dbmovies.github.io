@@ -1,15 +1,14 @@
 import React from "react";
 import { Typography, Space, Popover } from "antd";
-import {
-  FacebookFilled,
-  TwitterSquareFilled,
-  InstagramFilled,
-} from "@ant-design/icons";
-import styles from "./SideMedia.module.scss";
+
+import FacebookFilled from "@ant-design/icons/lib/icons/FacebookFilled";
+import TwitterSquareFilled from "@ant-design/icons/lib/icons/TwitterSquareFilled";
+import InstagramFilled from "@ant-design/icons/lib/icons/InstagramFilled";
+
 import { useGetMovieKeywordsQuery } from "@/redux/api/movies/slice";
 import { formatBudget } from "@/utils/formatBudget";
 import { formatFirstLetterToUppercase } from "@/utils/formatFirstLetterToUppercase";
-
+import styles from "./SideMedia.module.scss";
 interface SliderMediaProps {
   id: number;
   original_title: string;

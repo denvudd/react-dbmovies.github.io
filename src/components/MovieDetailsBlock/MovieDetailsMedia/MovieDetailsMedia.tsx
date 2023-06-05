@@ -1,13 +1,14 @@
 import React from "react";
-import styles from "./MovieDetailsMedia.module.scss";
 import { Layout } from "antd";
 
 import MovieDetailsCast from "./MovieDetailsCast/MovieDetailsCast";
 import MovieDetailsScreens from "./MovieDetailsScreens/MovieDetailsScreens";
 import MovieDetailsCollection from "./MovieDetailsCollection/MovieDetailsCollection";
-import { Collection } from "@/redux/api/movies/types/MovieDetailsType";
 import MovieDetailsRecs from "./MovieDetailsRecs/MovieDetailsRecs";
 import SiderMedia from "./SiderMedia/SiderMedia";
+import type { Collection } from "@/redux/api/movies/types/MovieDetailsType";
+
+import styles from "./MovieDetailsMedia.module.scss";
 
 interface MovieDetailsMediaProps {
   id: number;
@@ -37,28 +38,26 @@ const MovieDetailsMedia: React.FC<MovieDetailsMediaProps> = ({
   const { Sider } = Layout;
   return (
     <div className={styles.media}>
-      <Layout>
-        <div className="app-container content-with-aside">
-          <div className="media-content">
-            <MovieDetailsCast id={id} />
-            <MovieDetailsScreens id={id} />
-            {collectionData && (
-              <MovieDetailsCollection collectionData={collectionData} />
-            )}
-            <MovieDetailsRecs id={id} />
-          </div>
-          <Sider theme="light" className={styles.sider}>
-            <SiderMedia
-              id={id}
-              original_title={original_title}
-              original_language={original_language}
-              status={status}
-              budget={budget}
-              revenue={revenue}
-            />
-          </Sider>
+      <div className="app-container content-with-aside">
+        <div className="media-content">
+          <MovieDetailsCast id={id} />
+          <MovieDetailsScreens id={id} />
+          {collectionData && (
+            <MovieDetailsCollection collectionData={collectionData} />
+          )}
+          <MovieDetailsRecs id={id} />
         </div>
-      </Layout>
+        <Sider theme="light" className={styles.sider}>
+          <SiderMedia
+            id={id}
+            original_title={original_title}
+            original_language={original_language}
+            status={status}
+            budget={budget}
+            revenue={revenue}
+          />
+        </Sider>
+      </div>
     </div>
   );
 };

@@ -15,19 +15,15 @@ import {
   Select,
   Spin,
   Steps,
-  Typography,
   message,
 } from "antd";
 import { ListMovie } from "@/redux/api/movies/types/ListMovieType";
 import Link from "next/link";
-import Image from "next/image";
-import RatingBar from "../UI/RatingBar/RatingBar";
 import OptionElement from "../UI/OptionElement/OptionElement";
-import { LoadingOutlined, CloseOutlined } from "@ant-design/icons";
-import { formatReleaseDate } from "@/utils/formatReleaseDate";
+import LoadingOutlined  from "@ant-design/icons/lib/icons/LoadingOutlined";
+import WideMovieCard from "../UI/WideMovieCard/WideMovieCard";
 
 import styles from "./ListNewBlock.module.scss";
-import WideMovieCard from "../UI/WideMovieCard/WideMovieCard";
 interface NewList {
   name: string;
   description: string;
