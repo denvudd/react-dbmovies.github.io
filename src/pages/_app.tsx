@@ -8,9 +8,7 @@ const App = ({ Component, ...rest }: AppProps) => {
   const { store, props } = wrapper.useWrappedStore(rest);
   return (
     <Provider store={store}>
-      <AppLayout>
         <Component {...props.pageProps} />
-      </AppLayout>
     </Provider>
   );
 }
