@@ -3,7 +3,8 @@ import { AccountListsApiResponse } from "./types/AcountListsType";
 import { baseApi } from "../baseApi/slice";
 import { AccountRatedMovieListApiResponse } from "./types/AccoutRatedMovieType";
 import { AccountWatchlistMoviesApiResponse } from "./types/AccoutWatchlistMovieType";
-import { AccountAddToWatchlistType } from "./types/AccountAddToWatchlistType";
+import { AccountAddToWatchlistApiResponse } from "./types/AccountAddToWatchlistType";
+import { AccountAddToFavoriteApiResponse } from "./types/AccountAddToFavoriteType";
 
 const tmdbApiKey = "api_key=684e3f73d1ca0e692a3016c028aabf72";
 
@@ -55,16 +56,38 @@ export const accountApi = baseApi.injectEndpoints({
         body: {
           media_type: media_type,
           media_id: media_id,
-          watchlist: watchlist
-        }
+          watchlist: watchlist,
+        },
       }),
-      transformResponse: (response: AccountAddToWatchlistType) =>
+      transformResponse: (response: AccountAddToWatchlistApiResponse) =>
         response,
       // manual cache update because the API doesn't always manage to process the mutation in time
       async onQueryStarted(props, { dispatch, queryFulfilled }) {
         await queryFulfilled;
         setTimeout(() => {
           dispatch(baseApi.util.invalidateTags(["Watchlist"]));
+        }, 500);
+      },
+    }),
+
+    postAddToFavorite: builder.mutation({
+      query: ({ session_id, account_id, media_type, media_id, favorite }) => ({
+        url: `/account/${
+          account_id ? account_id : "account_id"
+        }/favorite?session_id=${session_id}&${tmdbApiKey}`,
+        method: "POST",
+        body: {
+          media_type: media_type,
+          media_id: media_id,
+          favorite: favorite,
+        },
+      }),
+      transformResponse: (response: AccountAddToFavoriteApiResponse) => response,
+      // manual cache update because the API doesn't always manage to process the mutation in time
+      async onQueryStarted(props, { dispatch, queryFulfilled }) {
+        await queryFulfilled;
+        setTimeout(() => {
+          dispatch(baseApi.util.invalidateTags(["Favorite"]));
         }, 500);
       },
     }),
@@ -75,6 +98,7 @@ export const {
   useGetAccountDetailsQuery,
   useGetAccountListsQuery,
   usePostAddToWatchlistMutation,
+  usePostAddToFavoriteMutation,
   useLazyGetAccountDetailsQuery,
   useLazyGetAccountListsQuery,
   useLazyGetAccountRatedMoviesQuery,

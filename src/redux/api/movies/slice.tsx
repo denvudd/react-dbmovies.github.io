@@ -32,7 +32,7 @@ export const moviesApi = baseApi.injectEndpoints({
           session_id ? session_id : ""
         }`,
       transformResponse: (response: MovieAccountStatesApiResponse) => response,
-      providesTags: ["Watchlist", "Rates"],
+      providesTags: ["Watchlist", "Rates", "Favorite"],
     }),
 
     getMovieGenre: builder.query({

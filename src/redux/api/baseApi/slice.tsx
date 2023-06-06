@@ -11,6 +11,6 @@ export const baseApi = createApi({
       return action.payload[reducerPath];
     }
   },
-  tagTypes: ["Lists", "Rates", "Watchlist"],
+  tagTypes: ["Lists", "Rates", "Watchlist", "Favorite"],
   endpoints: (builder) => ({}),
 });

@@ -7,6 +7,7 @@ import {
 import { usePostAddMovieToListMutation } from "@/redux/api/lists/slice";
 import {
   useLazyGetAccountListsQuery,
+  usePostAddToFavoriteMutation,
   usePostAddToWatchlistMutation,
 } from "@/redux/api/account/slice";
 
@@ -32,9 +33,9 @@ import Link from "next/link";
 import type { Genre } from "@/redux/api/genres/types/MovieListGenreType";
 import classNames from "classnames";
 import { formatTime } from "@/utils/formatTime";
+import { usePalette } from '@lauriys/react-palette'
 
 import styles from "./MovieDetailsHead.module.scss";
-
 interface MovieDetailsHeadProps {
   id: number;
   poster_path: string | null;
@@ -67,6 +68,7 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
     { data: accountStates, isLoading: isAccountStatesLoading },
   ] = useLazyGetMovieAccoutStatesQuery();
   const [addToWatchlist] = usePostAddToWatchlistMutation();
+  const [addToFavorite] = usePostAddToFavoriteMutation();
   const [
     rateMovie,
     { data: rateMovieResult, isLoading: isRateMovieResultLoading },
@@ -77,21 +79,23 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
   const [isListSubmit, setIsListSubmit] = React.useState(false);
   const [isRateSubmit, setIsRateSubmit] = React.useState(false);
   const [isWatchlistSubmit, setIsWatchlistSubmit] = React.useState(false);
+  const [isFavoriteSubmit, setIsFavoriteSubmit] = React.useState(false);
   const [isGalleryVisible, setIsGalleryVisible] = React.useState(false);
   const [rate, setRate] = React.useState<number>(1);
   const { data: certificate } = useGetMovieReleaseDatesQuery(id);
 
   const [messageApi, contextMessageHolder] = message.useMessage();
   const [modal, contextModalHolder] = Modal.useModal();
+  
 
   const releaseYear = release_date?.split("-")[0]; // by first "-"
 
-  const onClickAddMovieToList = () => {
-    const listModal = modal.info({
-      title: `Додати "${title}" до списку?`,
-    });
+  const onClickAddMovieToList = React.useCallback(() => {
+    if (sessionId) {
+      const listModal = modal.info({
+        title: `Додати "${title}" до списку?`,
+      });
 
-    if (sessionId !== "") {
       const onChangeList = (value: string) => {
         if (value !== "" && value) {
           setListId(value);
@@ -144,18 +148,36 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
           });
         });
     }
-  };
+
+    if (!sessionId) {
+      return;
+    }
+  }, [sessionId]);
 
   const onClickAddMovieToWatchlist = () => {
-    setIsWatchlistSubmit(true);
+    if (sessionId) {
+      setIsWatchlistSubmit(true);
+    }
+    if (!sessionId) {
+      return;
+    }
   };
 
-  const onClickRateMovie = () => {
-    const rateModal = modal.info({
-      title: `Оцінити "${title}"?`,
-    });
+  const onClickAddMovieToFavorite = () => {
+    if (sessionId) {
+      setIsFavoriteSubmit(true);
+    }
+    if (!sessionId) {
+      return;
+    }
+  };
 
-    if (sessionId !== "") {
+  const onClickRateMovie = React.useCallback(() => {
+    if (sessionId) {
+      const rateModal = modal.info({
+        title: `Оцінити "${title}"?`,
+      });
+
       const onChangeRate = (value: number) => {
         if (value) {
           setRate(value);
@@ -192,17 +214,21 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
         closable: true,
       });
     }
-  };
+
+    if (!sessionId) {
+      return;
+    }
+  }, [sessionId]);
 
   React.useEffect(() => {
     setSessionId(localStorage.getItem("session_id"));
-  }, []);
+  }, [id]);
 
   React.useEffect(() => {
     if (sessionId) {
       getAccountStates({ movie_id: id, session_id: sessionId });
     }
-  }, [sessionId]);
+  }, [sessionId, id]);
 
   React.useEffect(() => {
     if (isListSubmit) {
@@ -245,32 +271,121 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
   }, [isListSubmit]);
 
   React.useEffect(() => {
+    if (isFavoriteSubmit) {
+      if (sessionId) {
+        if (accountStates && accountStates.favorite) {
+          // delete from watchlist
+          addToFavorite({
+            session_id: sessionId,
+            media_type: "movie",
+            media_id: id,
+            favorite: false,
+          })
+            .unwrap()
+            .then((data) => {
+              if (data.success) {
+                messageApi.success(
+                  `"${title}" був успішно видалений зі списку уподобань!`,
+                  3
+                );
+              } else {
+                messageApi.success(`${data.status_message}`, 3);
+              }
+            })
+            .catch((error) => {
+              messageApi.error(
+                `Сталась помилка! Код помилки: ${error.data.status_code}, текст помилки: ${error.data.status_message}`,
+                5
+              );
+            })
+            .finally(() => setIsFavoriteSubmit(false));
+        } else {
+          // add to watchlist
+          addToFavorite({
+            session_id: sessionId,
+            media_type: "movie",
+            media_id: id,
+            favorite: true,
+          })
+            .unwrap()
+            .then((data) => {
+              if (data.success) {
+                messageApi.success(
+                  `"${title}" був успішно доданий до списку уподобань!`,
+                  3
+                );
+              } else {
+                messageApi.success(`${data.status_message}`, 3);
+              }
+            })
+            .catch((error) => {
+              messageApi.error(
+                `Сталась помилка! Код помилки: ${error.data.status_code}, текст помилки: ${error.data.status_message}`,
+                5
+              );
+            })
+            .finally(() => setIsFavoriteSubmit(false));
+        }
+      }
+    }
+  }, [isFavoriteSubmit]);
+
+  React.useEffect(() => {
     if (isWatchlistSubmit) {
       if (sessionId) {
-        addToWatchlist({
-          session_id: sessionId,
-          media_type: "movie",
-          media_id: id,
-          watchlist: true,
-        })
-          .unwrap()
-          .then((data) => {
-            if (data.success) {
-              messageApi.success(
-                `"${title}" був успішно доданий до списку "Переглянути пізніше"!`,
-                3
+        if (accountStates && accountStates.watchlist) {
+          // delete from watchlist
+          addToWatchlist({
+            session_id: sessionId,
+            media_type: "movie",
+            media_id: id,
+            watchlist: false,
+          })
+            .unwrap()
+            .then((data) => {
+              if (data.success) {
+                messageApi.success(
+                  `"${title}" був успішно видалений зі списку "Переглянути пізніше"!`,
+                  3
+                );
+              } else {
+                messageApi.success(`${data.status_message}`, 3);
+              }
+            })
+            .catch((error) => {
+              messageApi.error(
+                `Сталась помилка! Код помилки: ${error.data.status_code}, текст помилки: ${error.data.status_message}`,
+                5
               );
-            } else {
-              messageApi.success(`${data.status_message}`, 3);
-            }
+            })
+            .finally(() => setIsWatchlistSubmit(false));
+        } else {
+          // add to watchlist
+          addToWatchlist({
+            session_id: sessionId,
+            media_type: "movie",
+            media_id: id,
+            watchlist: true,
           })
-          .catch((error) => {
-            messageApi.error(
-              `Сталась помилка! Код помилки: ${error.data.status_code}, текст помилки: ${error.data.status_message}`,
-              5
-            );
-          })
-          .finally(() => setIsWatchlistSubmit(false));
+            .unwrap()
+            .then((data) => {
+              if (data.success) {
+                messageApi.success(
+                  `"${title}" був успішно доданий до списку "Переглянути пізніше"!`,
+                  3
+                );
+              } else {
+                messageApi.success(`${data.status_message}`, 3);
+              }
+            })
+            .catch((error) => {
+              messageApi.error(
+                `Сталась помилка! Код помилки: ${error.data.status_code}, текст помилки: ${error.data.status_message}`,
+                5
+              );
+            })
+            .finally(() => setIsWatchlistSubmit(false));
+        }
       }
     }
   }, [isWatchlistSubmit]);
@@ -388,7 +503,13 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
                       <span>Рейтинг</span>
                     </li>
                     <Popover
-                      content={<span>Додати до списку</span>}
+                      content={
+                        <span>
+                          {!sessionId &&
+                            "Увійдіть, щоби створювати та керувати власними списками"}
+                          {sessionId && `Додати до списку`}
+                        </span>
+                      }
                       placement="bottom"
                     >
                       <li className={styles.tooltip}>
@@ -402,9 +523,14 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
                     <Popover
                       content={
                         <span>
-                          {accountStates?.watchlist
-                            ? `Додано в обране`
-                            : "Додати в обране"}
+                          {!sessionId &&
+                            "Увійдіть, щоб додати цей фільм до списку вподобань"}
+                          {accountStates?.favorite &&
+                            sessionId &&
+                            `Додано в обране`}
+                          {accountStates?.favorite === false &&
+                            sessionId &&
+                            "Додати в обране"}
                         </span>
                       }
                       placement="bottom"
@@ -414,6 +540,7 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
                           className={classNames({
                             [styles.favorited]: accountStates?.favorite,
                           })}
+                          onClick={onClickAddMovieToFavorite}
                         >
                           <span>
                             <HeartFilled />
@@ -424,9 +551,14 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
                     <Popover
                       content={
                         <span>
-                          {accountStates?.watchlist
-                            ? `Додано до списку відстежень`
-                            : "Додати до списку відстежень"}
+                          {!sessionId &&
+                            "Увійдіть, щоб додати цей фільм до списку перегляду"}
+                          {accountStates?.watchlist &&
+                            sessionId &&
+                            `Додано до списку відстежень`}
+                          {accountStates?.watchlist === false &&
+                            sessionId &&
+                            "Додати до списку відстежень"}
                         </span>
                       }
                       placement="bottom"
@@ -447,9 +579,13 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
                     <Popover
                       content={
                         <span>
-                          {accountStates?.rated
-                            ? `Оцінено ${accountStates?.rated.value}.0`
-                            : "Оцінити!"}
+                          {!sessionId && "Увійдіть, щоб оцінити цей фільм"}
+                          {accountStates?.rated &&
+                            sessionId &&
+                            `Оцінено ${accountStates.rated.value}.0`}
+                          {accountStates?.rated === false &&
+                            sessionId &&
+                            "Оцінити!"}
                         </span>
                       }
                       placement="bottom"
