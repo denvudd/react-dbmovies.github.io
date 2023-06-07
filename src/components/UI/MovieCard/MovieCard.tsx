@@ -48,7 +48,7 @@ const MovieCard: React.FC<MovieCardProps> = ({
       }
     >
       <p>{formatReleaseDate(release)}</p>
-      <Link href={`${id}`}>
+      <Link href={`/raw/movies/${id}`}>
         <Title ellipsis={{ rows: 1 }} level={5}>
           {title}
         </Title>
