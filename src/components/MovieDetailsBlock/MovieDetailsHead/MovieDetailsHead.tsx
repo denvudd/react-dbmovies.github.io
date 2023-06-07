@@ -33,9 +33,11 @@ import Link from "next/link";
 import type { Genre } from "@/redux/api/genres/types/MovieListGenreType";
 import classNames from "classnames";
 import { formatTime } from "@/utils/formatTime";
-import { usePalette } from '@lauriys/react-palette'
+import { FastAverageColor } from "fast-average-color";
+import type { FastAverageColorResult } from "fast-average-color";
 
 import styles from "./MovieDetailsHead.module.scss";
+import { createRgbaString } from "@/utils/createRgbaString";
 interface MovieDetailsHeadProps {
   id: number;
   poster_path: string | null;
@@ -81,12 +83,17 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
   const [isWatchlistSubmit, setIsWatchlistSubmit] = React.useState(false);
   const [isFavoriteSubmit, setIsFavoriteSubmit] = React.useState(false);
   const [isGalleryVisible, setIsGalleryVisible] = React.useState(false);
+  const [backdropColor, setBackdropColor] = React.useState<number[] | null>(
+    null
+  );
+  const [isBackdropLight, setIsBackdropLight] = React.useState(false);
   const [rate, setRate] = React.useState<number>(1);
   const { data: certificate } = useGetMovieReleaseDatesQuery(id);
 
   const [messageApi, contextMessageHolder] = message.useMessage();
   const [modal, contextModalHolder] = Modal.useModal();
-  
+
+  console.log(backdropColor);
 
   const releaseYear = release_date?.split("-")[0]; // by first "-"
 
@@ -222,6 +229,23 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
 
   React.useEffect(() => {
     setSessionId(localStorage.getItem("session_id"));
+    // get dominant color by backdrop
+    const fac = new FastAverageColor();
+    if (backdrop_path) {
+      fac
+        .getColorAsync(
+          `https://image.tmdb.org/t/p/w220_and_h330_face${backdrop_path}`,
+          { algorithm: "dominant", crossOrigin: "anonymous" }
+        )
+        .then((result: FastAverageColorResult) => {
+          console.log(result);
+          setIsBackdropLight(result.isLight);
+          setBackdropColor(result.value);
+        })
+        .catch((error) => {
+          console.error("Ошибка при получении среднего цвета:", error);
+        });
+    }
   }, [id]);
 
   React.useEffect(() => {
@@ -421,7 +445,24 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
         backgroundImage: `url(https://image.tmdb.org/t/p/w1920_and_h800_multi_faces${backdrop_path})`,
       }}
     >
-      <div className={styles.backdrop}>
+      <div
+        className={styles.backdrop}
+        style={
+          backdropColor && backdrop_path && !isBackdropLight
+            ? {
+                backgroundImage: `linear-gradient(to right, ${createRgbaString(
+                  backdropColor,
+                  "1"
+                )} calc((50vw - 170px) - 340px), ${createRgbaString(
+                  backdropColor,
+                  "0.74"
+                )}  50%, ${createRgbaString(backdropColor, "0.74")} 100%)`,
+              }
+            : {
+                backgroundImage: `linear-gradient(to right, rgba(31.5, 31.5, 31.5, 1) calc((50vw - 170px) - 340px), rgba(31.5, 31.5, 31.5, 0.84) 50%, rgba(31.5, 31.5, 31.5, 0.84) 100%)`,
+              }
+        }
+      >
         <div className={styles.singleColumn}>
           <div className="app-container">
             <section className={styles.detailsHeader}>
