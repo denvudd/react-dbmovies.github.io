@@ -27,7 +27,11 @@ const UserPage: React.FC = () => {
           <ProfileHead {...accountDetails} />
         )}
         {!isAccountDetailsLoading && accountDetails && sessionId && (
-          <ProfileMeta accountId={accountDetails.id} sessionId={sessionId} />
+          <ProfileMeta
+            accountId={accountDetails.id}
+            sessionId={sessionId}
+            accountUsername={accountDetails.username}
+          />
         )}
       </DetailLayout>
     </>

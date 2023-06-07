@@ -156,7 +156,7 @@ const Header: React.FC = () => {
         {
           key: "1",
           label: (
-            <Link href={`/movies/popularMovies`} className={styles.link}>
+            <Link href={`/user/${accountDetails?.username}/lists`} className={styles.link}>
               Списки
             </Link>
           ),
@@ -165,7 +165,7 @@ const Header: React.FC = () => {
         {
           key: "2",
           label: (
-            <Link href={`/movies/popularMovies`} className={styles.link}>
+            <Link href={`/user/${accountDetails?.username}/rated`} className={styles.link}>
               Оцінки
             </Link>
           ),
@@ -174,7 +174,7 @@ const Header: React.FC = () => {
         {
           key: "3",
           label: (
-            <Link href={`/movies/popularMovies`} className={styles.link}>
+            <Link href={`/user/${accountDetails?.username}/watchlist`} className={styles.link}>
               Переглянути пізніше
             </Link>
           ),

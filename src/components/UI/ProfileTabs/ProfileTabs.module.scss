@@ -1,0 +1,56 @@
+@import '@/styles/variables';
+
+.tabs {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  &Wrapper {
+    background-color: #fff;
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &Inner {
+    border-bottom: 1px solid $lightGrey;
+    width: 100%;
+    height: 46px;
+    display: flex;
+    justify-content: center;
+  }
+
+  &List {
+    height: 100%;
+    background-color: #fff;
+    font-weight: 600;
+    flex-wrap: nowrap;
+    border-width: 0;
+    border-style: solid;
+    font-size: 1rem;
+    line-height: 1.5;
+    display: flex;
+    align-items: stretch;
+    position: relative;
+    gap: 40px;
+  }
+
+  .tab {
+    padding: 8px 0 4px 0;
+    border-bottom: 4px solid #fff;
+
+    font-weight: 400;
+
+    &Link {
+      font-weight: 400;
+      line-height: 1.5;
+      color: $primaryColorContrast;
+    }
+  }
+
+  .tabActive {
+    border-bottom: 4px solid $tmdbLightBlue;
+  }
+}
