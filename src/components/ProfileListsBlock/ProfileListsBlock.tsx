@@ -28,9 +28,10 @@ const ProfileListsBlock: React.FC<ProfileListsBlockProps> = ({
   return (
     <>
       <ProfileTabs
-        activeTabIndex={1}
+        activeTabIndex={2}
         tabs={[
           { label: "Огляд", link: `/user/${accountUsername}` },
+          { label: "Уподобання", link: `/user/${accountUsername}/favorite` },
           { label: "Списки", link: `/user/${accountUsername}/lists` },
           { label: "Оцінки", link: `/user/${accountUsername}/rated` },
           {

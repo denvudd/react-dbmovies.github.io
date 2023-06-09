@@ -1,41 +1,45 @@
 import React from "react";
-import { useLazyGetAccountRatedMoviesQuery } from "@/redux/api/account/slice";
+import { useLazyGetAccountFavoriteMoviesQuery } from "@/redux/api/account/slice";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin, Select } from "antd";
-import RatedMovieCard from "./RatedMovieCard/RatedMovieCard";
+import WatchlistMovieCard from "../ProfileWatchlistBlock/WatchlitMovieCard/WatchlistMovieCard";
 import ProfileTabs from "../UI/ProfileTabs/ProfileTabs";
 
-import styles from "./ProfileRatedBlock.module.scss";
-interface ProfileRatedBlockProps {
+import styles from './ProfileFavoriteBlock.module.scss';
+import ProfileFavoriteCard from "./ProfileFavoriteCard/ProfileFavoriteCard";
+
+interface ProfileFavoriteBlockProps {
   account_id: number;
   session_id: string;
   accountUsername: string;
 }
 
-const ProfileRatedBlock: React.FC<ProfileRatedBlockProps> = ({
+const ProfileFavoriteBlock: React.FC<ProfileFavoriteBlockProps> = ({
   account_id,
   session_id,
   accountUsername,
 }) => {
   const [
-    getRatedMovies,
+    getFavoriteMovies,
     {
-      data: ratedMovies,
-      isLoading: isRatedMoviesLoading,
-      isFetching: isRatedMoviesFetching,
+      data: favoriteMovies,
+      isLoading: isFavoriteMoviesLoading,
+      isFetching: isFavoriteMoviesFetching,
     },
-  ] = useLazyGetAccountRatedMoviesQuery();
-  const [ratesSortBy, setRatesSortBy] = React.useState<"asc" | "desc">("desc");
-  const ratesSortByRef = React.useRef<"asc" | "desc">(ratesSortBy);
+  ] = useLazyGetAccountFavoriteMoviesQuery();
+  const [watchlistSortBy, setWatchlistSortBy] = React.useState<"asc" | "desc">(
+    "desc"
+  );
+  const watchlistSortByRef = React.useRef<"asc" | "desc">(watchlistSortBy);
 
-  const onRatesSortChange = (value: string) => {
+  const onSortWatchlist = (value: string) => {
     if (value === "asc" || value === "desc") {
-      setRatesSortBy(value);
+      setWatchlistSortBy(value);
     }
   };
 
   React.useEffect(() => {
-    getRatedMovies(
+    getFavoriteMovies(
       {
         session_id: session_id,
         account_id: account_id,
@@ -46,22 +50,23 @@ const ProfileRatedBlock: React.FC<ProfileRatedBlockProps> = ({
   }, []);
 
   React.useEffect(() => {
-    if (ratesSortByRef.current !== ratesSortBy) {
-      getRatedMovies(
+    if (watchlistSortByRef.current !== watchlistSortBy) {
+      getFavoriteMovies(
         {
           session_id: session_id,
           account_id: account_id,
-          params: `language=uk-UA&sort_by=created_at.${ratesSortBy}`,
+          params: `language=uk-UA&sort_by=created_at.${watchlistSortBy}`,
         },
         true
       );
-      ratesSortByRef.current = ratesSortBy;
+      watchlistSortByRef.current = watchlistSortBy;
     }
-  }, [ratesSortBy]);
+  }, [watchlistSortBy]);
+
   return (
     <>
       <ProfileTabs
-        activeTabIndex={3}
+        activeTabIndex={1}
         tabs={[
           { label: "Огляд", link: `/user/${accountUsername}` },
           { label: "Уподобання", link: `/user/${accountUsername}/favorite` },
@@ -75,7 +80,7 @@ const ProfileRatedBlock: React.FC<ProfileRatedBlockProps> = ({
       />
       <div className={styles.page}>
         <div className="app-container">
-          {isRatedMoviesLoading && (
+          {isFavoriteMoviesLoading && (
             <div className={styles.loading}>
               <Spin
                 indicator={<LoadingOutlined style={{ fontSize: 30 }} spin />}
@@ -83,13 +88,13 @@ const ProfileRatedBlock: React.FC<ProfileRatedBlockProps> = ({
             </div>
           )}
           <Spin
-            spinning={!isRatedMoviesLoading && isRatedMoviesFetching}
+            spinning={!isFavoriteMoviesLoading && isFavoriteMoviesFetching}
             indicator={<LoadingOutlined style={{ fontSize: 30 }} spin />}
           >
-            {ratedMovies && ratedMovies.results && (
+            {favoriteMovies && favoriteMovies.results && (
               <div className={styles.sortable}>
                 <div className={styles.sortableHeader}>
-                  <h2 className={styles.sortableTitle}>Мої оцінки</h2>
+                  <h2 className={styles.sortableTitle}>Мої вподобання</h2>
                   <div className={styles.sortableSort}>
                     <div className={styles.sortGroup}>
                       <span className={styles.sortableSortTitle}>Порядок:</span>
@@ -97,22 +102,22 @@ const ProfileRatedBlock: React.FC<ProfileRatedBlockProps> = ({
                         defaultValue={"desc"}
                         style={{ width: "100%" }}
                         options={[
-                          { value: "desc", label: "Оцінені нещодавно" },
-                          { value: "asc", label: "Оцінені давно" },
+                          { value: "desc", label: "Додані нещодавно" },
+                          { value: "asc", label: "Додані давно" },
                         ]}
-                        onChange={onRatesSortChange}
+                        onChange={onSortWatchlist}
                       />
                     </div>
                   </div>
                 </div>
                 <div className={styles.sortableCards}>
-                  {ratedMovies.results.length === 0 && (
+                  {favoriteMovies.results.length === 0 && (
                     <div>Списків для цього аккаунта не знайдено.</div>
                   )}
-                  {ratedMovies.results.length !== 0 && (
+                  {favoriteMovies.results.length !== 0 && (
                     <>
-                      {ratedMovies.results.map((movie, index) => (
-                        <RatedMovieCard
+                      {favoriteMovies.results.map((movie, index) => (
+                        <ProfileFavoriteCard
                           id={movie.id}
                           key={movie.id}
                           priorityIndex={index}
@@ -121,7 +126,6 @@ const ProfileRatedBlock: React.FC<ProfileRatedBlockProps> = ({
                           overview={movie.overview}
                           vote_average={movie.vote_average}
                           release_date={movie.release_date}
-                          rating={movie.rating}
                           poster_path={
                             movie.poster_path
                               ? `https://image.tmdb.org/t/p/w150_and_h225_bestv2${movie.poster_path}`
@@ -141,4 +145,4 @@ const ProfileRatedBlock: React.FC<ProfileRatedBlockProps> = ({
   );
 };
 
-export default ProfileRatedBlock;
+export default ProfileFavoriteBlock;

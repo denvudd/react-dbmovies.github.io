@@ -162,7 +162,7 @@ export const Home = () => {
                           title={movie.title}
                           imgUrl={
                             movie.poster_path
-                              ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
+                              ? `https://image.tmdb.org/t/p/w300/${movie.poster_path}`
                               : `https://placehold.co/260x390/png/?text=No+Image`
                           }
                           description={movie.overview}

@@ -137,8 +137,22 @@ button {
   margin-top: 20px;
 }
 
+.list-label {
+  margin: 5px 0px;
+
+  &:first-of-type {
+    margin-top: 0;
+  }
+}
+
 .ant-menu-dark {
   color: #fff !important;
+
+  .ant-menu-item {
+    &-selected {
+      background: transparent !important;
+    }
+  }
 
   &:disabled {
     color: rgba(255, 255, 255, 0.65);

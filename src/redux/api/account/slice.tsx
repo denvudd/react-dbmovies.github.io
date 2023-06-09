@@ -1,6 +1,6 @@
+import { baseApi } from "../baseApi/slice";
 import { AccountDetailsApiResponse } from "./types/AccountDetailsType";
 import { AccountListsApiResponse } from "./types/AcountListsType";
-import { baseApi } from "../baseApi/slice";
 import { AccountRatedMovieListApiResponse } from "./types/AccoutRatedMovieType";
 import { AccountWatchlistMoviesApiResponse } from "./types/AccoutWatchlistMovieType";
 import { AccountAddToWatchlistApiResponse } from "./types/AccountAddToWatchlistType";
@@ -45,6 +45,16 @@ export const accountApi = baseApi.injectEndpoints({
       transformResponse: (response: AccountWatchlistMoviesApiResponse) =>
         response,
       providesTags: ["Watchlist", "Rates"],
+    }),
+
+    getAccountFavoriteMovies: builder.query({
+      query: ({ session_id, account_id, params }) =>
+        `/account/${
+          account_id ? account_id : "account_id"
+        }/favorite/movies?session_id=${session_id}&${tmdbApiKey}&page=1&${params}`,
+      transformResponse: (response: AccountWatchlistMoviesApiResponse) =>
+        response,
+      providesTags: ["Favorite"],
     }),
 
     postAddToWatchlist: builder.mutation({
@@ -103,4 +113,5 @@ export const {
   useLazyGetAccountListsQuery,
   useLazyGetAccountRatedMoviesQuery,
   useLazyGetAccountWatchlistMoviesQuery,
+  useLazyGetAccountFavoriteMoviesQuery,
 } = accountApi;

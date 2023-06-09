@@ -53,11 +53,16 @@
 }
 
 .rightMenu {
-  min-width: 125px !important;
+  min-width: 170px !important;
   display: flex;
   align-items: center;
   justify-content: center;
   flex: 0 1 auto !important;
+}
+
+.boldIcon {
+  stroke: $primaryColor;
+  stroke-width: 40;
 }
 
 .menuWrapper {
@@ -100,4 +105,12 @@
   height: 32px;
   line-height: 0;
   margin: 0 auto;
+
+  &Outside {
+    width: 32px;
+    height: 32px;
+    line-height: 0;
+    margin-bottom: -10px;
+    border-radius: 50%;
+  }
 }

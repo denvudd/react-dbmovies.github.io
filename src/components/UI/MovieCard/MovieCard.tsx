@@ -53,13 +53,15 @@ const MovieCard: React.FC<MovieCardProps> = ({
         </Link>
       }
     >
-      <p>{formatReleaseDate(release)}</p>
+      <p className={styles.release}>{formatReleaseDate(release)}</p>
       <Link href={`${id}`}>
-        <Title ellipsis={{ rows: 1 }} level={5}>
+        <Title className={styles.title} ellipsis={{ rows: 1 }} level={5}>
           {title}
         </Title>
       </Link>
-      <Paragraph ellipsis={{ rows: 2 }}>{description}</Paragraph>
+      <Paragraph ellipsis={{ rows: 2 }}>
+        {description}
+      </Paragraph>
       <div className={styles.cardRating}>
         <RatingBar rating={voteAverage} size={40} />
       </div>

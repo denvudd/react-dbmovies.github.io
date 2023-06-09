@@ -1,12 +1,16 @@
 import React from "react";
-import { useLazyGetAccountListsQuery } from "@/redux/api/account/slice";
+import {
+  useLazyGetAccountListsQuery,
+  usePostAddToFavoriteMutation,
+} from "@/redux/api/account/slice";
 import { usePostAddMovieToListMutation } from "@/redux/api/lists/slice";
+import { message, Modal, Select, Button } from "antd";
 import Link from "next/link";
-import { Button, Modal, Select, message } from "antd";
-import WideMovieCard from "../../../UI/WideMovieCard/WideMovieCard";
 
-import styles from "./RatedMovieCard.module.scss";
-interface RatedMovieCardProps {
+import WideMovieCard from "@/components/UI/WideMovieCard/WideMovieCard";
+import { usePostAddMovieRatingMutation } from "@/redux/api/movies/slice";
+
+interface WatchlistMovieCardProps {
   id: number;
   priorityIndex?: number;
   sessionId: string;
@@ -15,10 +19,9 @@ interface RatedMovieCardProps {
   title: string;
   release_date: string;
   overview: string;
-  rating: number;
 }
 
-const RatedMovieCard: React.FC<RatedMovieCardProps> = ({
+const WatchlistMovieCard: React.FC<WatchlistMovieCardProps> = ({
   id,
   priorityIndex,
   sessionId,
@@ -27,19 +30,62 @@ const RatedMovieCard: React.FC<RatedMovieCardProps> = ({
   title,
   release_date,
   overview,
-  rating,
 }) => {
   const [isFetch, setIsFetch] = React.useState(false);
+  const [isRateSubmit, setIsRateSubmit] = React.useState(false);
   const [listId, setListId] = React.useState<string>("");
+  const [rate, setRate] = React.useState<number>(1);
   const [
     fetchAccountLists,
     { data: accountLists, isLoading: isAccountListsLoading },
   ] = useLazyGetAccountListsQuery();
   const [addMovieToList, { data: movieList, isLoading }] =
     usePostAddMovieToListMutation();
+  const [
+    removeFromFavorite,
+    {
+      data: removeFromWatchlistResult,
+      isLoading: isRemoveFromWatchlistLoading,
+    },
+  ] = usePostAddToFavoriteMutation();
+  const [
+    rateMovie,
+    { data: rateMovieResult, isLoading: isRateMovieResultLoading },
+  ] = usePostAddMovieRatingMutation();
 
   const [messageApi, contextMessageHolder] = message.useMessage();
   const [modal, contextModalHolder] = Modal.useModal();
+
+  const onClickElementDelete = React.useCallback(
+    (movieId: number, title: string) => {
+      removeFromFavorite({
+        session_id: sessionId,
+        media_type: "movie",
+        media_id: movieId,
+        watchlist: false,
+      })
+        .unwrap()
+        .then((data) => {
+          if (data.success) {
+            messageApi.success(
+              `"${title}" був успішно видалений зі списку вподобань!`,
+              3
+            );
+          } else {
+            messageApi.success(`${data.status_message}`, 3);
+          }
+        })
+        .catch((error) => {
+          if (error) {
+            messageApi.error(
+              `Сталась помилка! Елемента "${title}" не існує в списку вподобань!`,
+              5
+            );
+          }
+        });
+    },
+    []
+  );
 
   const onClickAddMovieToList = () => {
     const listModal = modal.info({
@@ -64,7 +110,7 @@ const RatedMovieCard: React.FC<RatedMovieCardProps> = ({
             title: `Додати "${title}" до списку?`,
             content: (
               <div>
-                <p className={styles.listLabel}>Додати до існуючих списків:</p>
+                <p className="list-label">Додати до існуючих списків:</p>
                 <Select
                   style={{ width: "100%" }}
                   placeholder={"Оберіть список"}
@@ -82,7 +128,7 @@ const RatedMovieCard: React.FC<RatedMovieCardProps> = ({
                   }
                   notFoundContent={"Не знайдено жодного списка"}
                 />
-                <p className={styles.listLabel}>Або:</p>
+                <p className="list-label">Або:</p>
                 <Button type="primary">
                   <Link href={`/lists/new`}>Створити новий список</Link>
                 </Button>
@@ -102,6 +148,41 @@ const RatedMovieCard: React.FC<RatedMovieCardProps> = ({
         });
     }
   };
+
+  const onClickRateMovie = (value: number) => {
+    if (sessionId !== "") {
+      if (value) {
+        setRate(value);
+        setIsRateSubmit(true);
+      }
+    }
+  };
+
+  React.useEffect(() => {
+    if (isRateSubmit) {
+      if (sessionId) {
+        rateMovie({ session_id: sessionId, movie_id: id, rating: rate })
+          .unwrap()
+          .then((data) => {
+            if (data.success && data.status_code === 12) {
+              messageApi.success(
+                `"${title}" був успішно оцінений!`,
+                6
+              );
+            } else {
+              messageApi.success(`${data.status_message}`, 3);
+            }
+          })
+          .catch((error) => {
+            messageApi.error(
+              `Сталась помилка! Код помилки: ${error.data.status_code}, текст помилки: ${error.data.status_message}`,
+              5
+            );
+          })
+          .finally(() => setIsRateSubmit(false));
+      }
+    }
+  }, [isRateSubmit]);
 
   React.useEffect(() => {
     if (isFetch) {
@@ -148,7 +229,6 @@ const RatedMovieCard: React.FC<RatedMovieCardProps> = ({
         overview={overview}
         vote_average={vote_average}
         release_date={release_date}
-        rating={rating}
         poster_path={
           poster_path
             ? `https://image.tmdb.org/t/p/w150_and_h225_bestv2${poster_path}`
@@ -156,8 +236,14 @@ const RatedMovieCard: React.FC<RatedMovieCardProps> = ({
         }
         isShowPanel
         isShowAddMovie
+        isShowDelete
         isShowRate
+        isRateReadonly={false}
+        onClickElementDelete={() => {
+          onClickElementDelete(id, title);
+        }}
         onClickAddMovieToList={onClickAddMovieToList}
+        onChangeMovieRate={onClickRateMovie}
       />
       {contextMessageHolder}
       {contextModalHolder}
@@ -165,4 +251,4 @@ const RatedMovieCard: React.FC<RatedMovieCardProps> = ({
   );
 };
 
-export default RatedMovieCard;
+export default WatchlistMovieCard;

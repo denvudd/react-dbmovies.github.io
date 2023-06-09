@@ -7,8 +7,9 @@ import { MovieVideosApiResponse } from "./types/MovieVideosType";
 import { MovieRecsApiResponse } from "./types/MovieRecsType";
 import { MovieKeywordApiResponse } from "./types/MovieKeywordsType";
 import { baseApi } from "../baseApi/slice";
-import { AddMovieRatinApiResponse } from "./types/AddMovieRatingType";
+import { AddMovieRatingApiResponse } from "./types/AddMovieRatingType";
 import { MovieAccountStatesApiResponse } from "./types/MovieAccountStatesType";
+import { DeleteMovieRatingApiResponse } from "./types/DeleteMovieRatingType";
 
 const tmdbApiKey = "api_key=684e3f73d1ca0e692a3016c028aabf72";
 
@@ -107,13 +108,28 @@ export const moviesApi = baseApi.injectEndpoints({
 
     postAddMovieRating: builder.mutation({
       query: ({ session_id, movie_id, rating }) => ({
-        url: `/movie/${movie_id}/rating?session_id=${session_id}&${tmdbApiKey}&`,
+        url: `/movie/${movie_id}/rating?session_id=${session_id}&${tmdbApiKey}`,
         method: "POST",
         body: {
           value: rating,
         },
       }),
-      transformResponse: (response: AddMovieRatinApiResponse) => response,
+      transformResponse: (response: AddMovieRatingApiResponse) => response,
+      // manual cache update because the API doesn't always manage to process the mutation in time
+      async onQueryStarted(props, { dispatch, queryFulfilled }) {
+        await queryFulfilled;
+        setTimeout(() => {
+          dispatch(baseApi.util.invalidateTags(["Rates", "Watchlist"]));
+        }, 500);
+      },
+    }),
+
+    deleteMovieRating: builder.mutation({
+      query: ({ session_id, movie_id }) => ({
+        url: `/movie/${movie_id}/rating?session_id=${session_id}&${tmdbApiKey}`,
+        method: "DELETE",
+      }),
+      transformResponse: (response: DeleteMovieRatingApiResponse) => response,
       // manual cache update because the API doesn't always manage to process the mutation in time
       async onQueryStarted(props, { dispatch, queryFulfilled }) {
         await queryFulfilled;
@@ -134,6 +150,7 @@ export const {
   useGetMovieRecsQuery,
   useGetMovieKeywordsQuery,
   usePostAddMovieRatingMutation,
+  useDeleteMovieRatingMutation,
   useLazyGetMovieAccoutStatesQuery,
   useLazyGetMoviesQuery,
   useLazyGetMovieImagesQuery,

@@ -3,7 +3,7 @@ import { useLazyGetAccountWatchlistMoviesQuery } from "@/redux/api/account/slice
 import ProfileTabs from "../UI/ProfileTabs/ProfileTabs";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin, Select } from "antd";
-import WatchlistMovieCard from "../ProfileBlock/ProfileMeta/WatchlitMovieCard/WatchlistMovieCard";
+import WatchlistMovieCard from "./WatchlitMovieCard/WatchlistMovieCard";
 
 import styles from './ProfileWatchlistBlock.module.scss'
 
@@ -64,9 +64,10 @@ const ProfileWatchlistBlock: React.FC<ProfileWatchlistBlockProps> = ({
   return (
     <>
       <ProfileTabs
-        activeTabIndex={3}
+        activeTabIndex={4}
         tabs={[
           { label: "Огляд", link: `/user/${accountUsername}` },
+          { label: "Уподобання", link: `/user/${accountUsername}/favorite` },
           { label: "Списки", link: `/user/${accountUsername}/lists` },
           { label: "Оцінки", link: `/user/${accountUsername}/rated` },
           {

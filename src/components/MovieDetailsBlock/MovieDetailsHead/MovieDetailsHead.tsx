@@ -93,8 +93,6 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
   const [messageApi, contextMessageHolder] = message.useMessage();
   const [modal, contextModalHolder] = Modal.useModal();
 
-  console.log(backdropColor);
-
   const releaseYear = release_date?.split("-")[0]; // by first "-"
 
   const onClickAddMovieToList = React.useCallback(() => {
@@ -120,7 +118,7 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
             title: `Додати "${title}" до списку?`,
             content: (
               <div>
-                <p className={styles.listLabel}>Додати до існуючих списків:</p>
+                <p className="list-label">Додати до існуючих списків:</p>
                 <Select
                   style={{ width: "100%" }}
                   placeholder={"Оберіть список"}
@@ -135,7 +133,7 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
                   }
                   notFoundContent={"Не знайдено жодного списка"}
                 />
-                <p className={styles.listLabel}>Або:</p>
+                <p className="list-label">Або:</p>
                 <Button type="primary">
                   <Link href={`/lists/new`}>Створити новий список</Link>
                 </Button>
@@ -199,7 +197,7 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
         title: `Оцінити "${title}"?`,
         content: (
           <div>
-            <p className={styles.listLabel}>Оберіть вашу оцінку:</p>
+            <p className="list-label">Оберіть вашу оцінку:</p>
             <Rate
               allowClear={false}
               defaultValue={5}
@@ -238,7 +236,6 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
           { algorithm: "dominant", crossOrigin: "anonymous" }
         )
         .then((result: FastAverageColorResult) => {
-          console.log(result);
           setIsBackdropLight(result.isLight);
           setBackdropColor(result.value);
         })
@@ -298,7 +295,7 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
     if (isFavoriteSubmit) {
       if (sessionId) {
         if (accountStates && accountStates.favorite) {
-          // delete from watchlist
+          // delete from favorite
           addToFavorite({
             session_id: sessionId,
             media_type: "movie",
@@ -324,7 +321,7 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
             })
             .finally(() => setIsFavoriteSubmit(false));
         } else {
-          // add to watchlist
+          // add to favorite
           addToFavorite({
             session_id: sessionId,
             media_type: "movie",

@@ -15,6 +15,7 @@ const ProfileMeta: React.FC<ProfileMetaProps> = ({ accountId, sessionId, account
         activeTabIndex={0}
         tabs={[
           { label: "Огляд", link: `/user/${accountUsername}` },
+          { label: "Уподобання", link: `/user/${accountUsername}/favorite` },
           { label: "Списки", link: `/user/${accountUsername}/lists` },
           { label: "Оцінки", link: `/user/${accountUsername}/rated` },
           {

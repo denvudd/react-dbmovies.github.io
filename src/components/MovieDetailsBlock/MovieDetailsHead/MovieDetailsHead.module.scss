@@ -11,14 +11,6 @@
   z-index: 1;
 }
 
-.listLabel {
-  margin: 5px 0px;
-
-  &:first-of-type {
-    margin-top: 0;
-  }
-}
-
 .backdrop {
   background-image: linear-gradient(to right, rgba(31.5, 31.5, 31.5, 1) calc((50vw - 170px) - 340px), rgba(31.5, 31.5, 31.5, 0.84) 50%, rgba(31.5, 31.5, 31.5, 0.84) 100%);
   display: flex;

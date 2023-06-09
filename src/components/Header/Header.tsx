@@ -2,10 +2,13 @@ import React from "react";
 import { Layout, Menu, MenuProps } from "antd";
 import Link from "next/link";
 import UserOutlined from "@ant-design/icons/lib/icons/UserOutlined";
-import SearchOutlined from "@ant-design/icons/lib/icons/SearchOutlined";
 import { useLazyGetAccountDetailsQuery } from "@/redux/api/account/slice";
+import PlusOutlined from "@ant-design/icons/lib/icons/PlusOutlined";
 
 import styles from "./Header.module.scss";
+import dynamic from "next/dynamic";
+
+const DynamicSearchBar = dynamic(() => import('../SearchBar/SearchBar'));
 
 const Header: React.FC = () => {
   const [
@@ -126,55 +129,116 @@ const Header: React.FC = () => {
 
   const rightMenuItems: MenuProps["items"] = [
     {
+      key: "add-new-element",
+      label: <PlusOutlined style={{ fontSize: "1.4em" }} className={styles.boldIcon} />,
+      children: [
+        {
+          key: "add-new-movie",
+          label: (
+            <a
+              href={"https://www.themoviedb.org/movie/new"}
+              className={styles.link}
+              target="_blank"
+            >
+              Додати новий фільм
+            </a>
+          ),
+          type: "group",
+        },
+        {
+          key: "add-new-tv",
+          label: (
+            <a
+            href={"https://www.themoviedb.org/tv/new"}
+            className={styles.link}
+            target="_blank"
+            >
+              Додати новий серіал
+            </a>
+          ),
+          type: "group",
+        },
+      ],
+    },
+    {
       key: "account",
       label: (
         <Link href={`/login`} className={styles.link}>
-          <UserOutlined style={{ fontSize: "1.3em" }} />
+          {!isAccountDetailsLoading && accountDetails ? (
+            <img
+              src={`https://secure.gravatar.com/avatar/${accountDetails.avatar.gravatar.hash}.jpg?s=32`}
+              alt={accountDetails.username + "logo"}
+              className={styles.profileAvatarOutside}
+            />
+          ) : (
+            <UserOutlined style={{ fontSize: "1.3em" }} />
+          )}
         </Link>
       ),
       children: [
         {
           key: "head",
-          label: !isAccountDetailsLoading && accountDetails ? (
-            <Link
-              href={`/user/${accountDetails.username}`}
-              className={styles.link}
-            >
-              <div className={styles.profileHead}>
-                <img
-                  src={`https://secure.gravatar.com/avatar/${accountDetails.avatar.gravatar.hash}.jpg?s=32`}
-                  alt={accountDetails.username + "logo"}
-                  className={styles.profileAvatar}
-                />
-                <h2>{accountDetails.username}</h2>
-                <p>Мій профіль</p>
-              </div>
-            </Link>
-          ) : <Link href={`/login`} className={styles.link}>Увійти</Link>,
+          label:
+            !isAccountDetailsLoading && accountDetails ? (
+              <Link
+                href={`/user/${accountDetails.username}`}
+                className={styles.link}
+              >
+                <div className={styles.profileHead}>
+                  <h2>{accountDetails.username}</h2>
+                  <p>Мій профіль</p>
+                </div>
+              </Link>
+            ) : (
+              <Link href={`/login`} className={styles.link}>
+                Увійти
+              </Link>
+            ),
           type: "group",
         },
         {
-          key: "1",
+          key: "favorite",
           label: (
-            <Link href={`/user/${accountDetails?.username}/lists`} className={styles.link}>
+            <Link
+              href={`/user/${accountDetails?.username}/favorite`}
+              className={styles.link}
+            >
+              Уподобання
+            </Link>
+          ),
+          type: "group",
+        },
+        {
+          key: "lists",
+          label: (
+            <Link
+              href={`/user/${accountDetails?.username}/lists`}
+              className={styles.link}
+            >
               Списки
             </Link>
           ),
           type: "group",
         },
         {
-          key: "2",
+          key: "rated",
           label: (
-            <Link href={`/user/${accountDetails?.username}/rated`} className={styles.link}>
+            <Link
+              href={`/user/${accountDetails?.username}/rated`}
+              className={styles.link}
+            >
               Оцінки
             </Link>
           ),
           type: "group",
         },
         {
-          key: "3",
+          key: "watchlist",
           label: (
-            <Link href={`/user/${accountDetails?.username}/watchlist`} className={styles.link}>
+            <Link
+              href={`/user/${accountDetails?.username}/watchlist`}
+              className={styles.link}
+            >
               Переглянути пізніше
             </Link>
           ),
@@ -183,12 +247,8 @@ const Header: React.FC = () => {
       ],
     },
     {
-      key: "movies",
-      label: (
-        <Link href={`/movies/popularMovies`} className={styles.link}>
-          <SearchOutlined style={{ fontSize: "1.3em" }} />
-        </Link>
-      ),
+      key: "search",
+      label: <DynamicSearchBar />,
     },
   ];
 
@@ -214,6 +274,7 @@ const Header: React.FC = () => {
                 items={rightMenuItems}
                 className={styles.rightMenu}
                 style={{ minWidth: 0, flex: "auto" }}
+                selectable={false}
               />
             </div>
           </div>
