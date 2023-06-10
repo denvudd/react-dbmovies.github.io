@@ -103,6 +103,55 @@ button {
   }
 }
 
+.tooltip {
+  margin-right: 20px;
+
+  button {
+    background: #001529;
+    color: $tmdbLightBlue;
+    box-sizing: border-box;
+    border-radius: 50%;
+    width: 46px;
+    height: 46px;
+    padding: 13px 15px;
+    outline: none;
+    cursor: pointer;
+    transition: color 0.3s;
+
+    &.rated {
+      color: $tmdbLogoOrange;
+    }
+    
+    &.watchlist {
+      color: $tmdbLogoRed;
+    }
+
+    &.favorited {
+      color: $tmdbLogoPink;
+    }
+    
+
+    &:hover {
+      color: #047bfa;
+    }
+  }
+}
+
+.video {
+  background: transparent;
+  width: auto;
+  height: auto;
+  font-weight: 600;
+  will-change: opacity;
+  transition: linear .1s;
+
+  a {
+    font-weight: 600;
+    color: #fff;
+  }
+}
+
+
 .scroller-wrapper {
   position: relative;
   top: 0;

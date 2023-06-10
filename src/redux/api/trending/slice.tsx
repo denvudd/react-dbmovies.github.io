@@ -14,5 +14,6 @@ export const trendingApi = baseApi.injectEndpoints({
 });
 
 export const {
-  useGetTrendingAllQuery
+  useGetTrendingAllQuery,
+  useLazyGetTrendingAllQuery
 } = trendingApi;
