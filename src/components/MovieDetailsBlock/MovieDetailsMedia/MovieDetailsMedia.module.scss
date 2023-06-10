@@ -7,3 +7,14 @@
   width: 260px;
   background-color: transparent !important;
 }
+
+.observer {
+  background: tranparent;
+  height: 0;
+  width: 0;
+  z-index: -10;
+}
+
+.skeletonLoader {
+  padding: 30px 0px;
+}

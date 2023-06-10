@@ -4,7 +4,7 @@ import SearchOutlined from "@ant-design/icons/lib/icons/SearchOutlined";
 import RiseOutlined from "@ant-design/icons/lib/icons/RiseOutlined";
 import { Select } from "antd";
 import { useLazyGetSearchMultiQuery } from "@/redux/api/search/slice";
-import { useGetTrendingAllQuery } from "@/redux/api/trending/slice";
+import { useLazyGetTrendingAllQuery } from "@/redux/api/trending/slice";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useClickAway } from "ahooks";
 import ReactDOM from "react-dom";
@@ -19,8 +19,10 @@ import Link from "next/link";
 const SearchBar: React.FC = () => {
   const [searchMulti, { data: searchData, isLoading: isSearchDataLoading }] =
     useLazyGetSearchMultiQuery();
-  const { data: trendingAll, isLoading: isTrendingAllLoading } =
-    useGetTrendingAllQuery({ time_window: "week", params: "language=uk-UA" });
+  const [
+    getTrendingAll,
+    { data: trendingAll, isLoading: isTrendingAllLoading },
+  ] = useLazyGetTrendingAllQuery();
   const [isBarActive, setIsBarActive] = React.useState(false);
   const [isIconClicked, setIsIconClicked] = React.useState(false);
   const searchBarRef = React.useRef<HTMLDivElement | null>(null);
@@ -29,6 +31,12 @@ const SearchBar: React.FC = () => {
     setIsBarActive(!isBarActive);
     setIsIconClicked(true);
   };
+
+  React.useEffect(() => {
+    if (isBarActive) {
+      getTrendingAll({ time_window: "week", params: "language=uk-UA" }, true);
+    }
+  }, [isBarActive]);
 
   useClickAway(() => {
     if (!isIconClicked) {
