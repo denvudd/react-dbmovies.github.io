@@ -13,6 +13,7 @@ const MovieDetailsCast: React.FC<MovieDetailsCastProps> = ({ id }) => {
     id,
     params: "language=uk-UA&page=1",
   });
+  
   return (
     <section className={styles.cast + " panel"}>
       <Typography.Title level={4}>В головних ролях</Typography.Title>

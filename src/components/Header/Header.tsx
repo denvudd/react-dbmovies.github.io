@@ -4,11 +4,11 @@ import Link from "next/link";
 import UserOutlined from "@ant-design/icons/lib/icons/UserOutlined";
 import { useLazyGetAccountDetailsQuery } from "@/redux/api/account/slice";
 import PlusOutlined from "@ant-design/icons/lib/icons/PlusOutlined";
-
-import styles from "./Header.module.scss";
 import dynamic from "next/dynamic";
 
-const DynamicSearchBar = dynamic(() => import('../SearchBar/SearchBar'));
+import styles from "./Header.module.scss";
+
+const DynamicSearchBar = dynamic(() => import("../SearchBar/SearchBar"));
 
 const Header: React.FC = () => {
   const [
@@ -130,7 +130,12 @@ const Header: React.FC = () => {
   const rightMenuItems: MenuProps["items"] = [
     {
       key: "add-new-element",
-      label: <PlusOutlined style={{ fontSize: "1.4em" }} className={styles.boldIcon} />,
+      label: (
+        <PlusOutlined
+          style={{ fontSize: "1.4em" }}
+          className={styles.boldIcon}
+        />
+      ),
       children: [
         {
           key: "add-new-movie",
@@ -149,9 +154,9 @@ const Header: React.FC = () => {
           key: "add-new-tv",
           label: (
             <a
-            href={"https://www.themoviedb.org/tv/new"}
-            className={styles.link}
-            target="_blank"
+              href={"https://www.themoviedb.org/tv/new"}
+              className={styles.link}
+              target="_blank"
             >
               Додати новий серіал
             </a>
@@ -240,6 +245,18 @@ const Header: React.FC = () => {
               className={styles.link}
             >
               Переглянути пізніше
+            </Link>
+          ),
+          type: "group",
+        },
+        {
+          key: "logout",
+          label: !isAccountDetailsLoading && accountDetails && (
+            <Link
+              href={`/logout`}
+              className={styles.link + " " + styles.footer}
+            >
+              Вийти
             </Link>
           ),
           type: "group",

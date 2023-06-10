@@ -3,17 +3,20 @@
 .button {
   display: inline-flex;
   align-items: center;
+  color: #fff;
   padding: 9px 20px;
   font-size: 1.1em;
-  color: #fff;
-  border-color: $tmdbDarkBlue;
-  background-color: $tmdbDarkBlue;
   text-transform: uppercase;
   cursor: pointer;
 
   &:hover {
-    background-color: $primaryColorContrast;
-    border-color: $primaryColorContrast !important;
+    opacity: 0.65;
+  }
+
+  &:disabled {
+    background-color: $darkerGrey;
+    border-color: $darkerGrey !important;
+    cursor: not-allowed;
   }
 
   a {

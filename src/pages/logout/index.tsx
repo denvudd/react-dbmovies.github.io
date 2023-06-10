@@ -1,6 +1,7 @@
 import React from "react";
 import Head from "next/head";
-import LoginBlock from "@/auth/LoginBlock/LoginBlock";
+import LogoutBlock from "@/auth/LogoutBlock/LogoutBlock";
+import { withAuth } from "@/auth/withAuth";
 
 export const LoginPage = () => {
   return (
@@ -11,9 +12,9 @@ export const LoginPage = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <LoginBlock/>
+      <LogoutBlock/>
     </>
   );
 };
 
-export default LoginPage;
+export default withAuth(LoginPage);

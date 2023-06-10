@@ -32,6 +32,26 @@ button {
   padding: 0 1.5rem;
 }
 
+.button-primary {
+  border-color: $tmdbDarkBlue;
+  background-color: $tmdbDarkBlue;
+}
+
+.button-secondary {
+  border-color: $tmdbDarkBlue;
+  background-color: $tmdbLightBlue;
+}
+
+.button-success {
+  border-color: $tmdbDarkBlue;
+  background-color: $tmdbLogoGreen;
+}
+
+.button-failure {
+  border-color: $tmdbDarkBlue;
+  background-color: $tmdbLogoRed;
+}
+
 .detail-head {
   display: flex;
   flex-wrap: wrap;

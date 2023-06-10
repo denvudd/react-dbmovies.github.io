@@ -1,5 +1,5 @@
 import React from "react";
-import ButtonPrimary from "@/components/UI/ButtonPrimary/ButtonPrimary";
+import ButtonTMDB from "@/components/UI/ButtonTMDB/ButtonTMDB";
 import { Collection } from "@/redux/api/movies/types/MovieDetailsType";
 import styles from "./MovieDetailsCollection.module.scss";
 
@@ -22,9 +22,9 @@ const MovieDetailsCollection: React.FC<MovieDetailsCollectionProps> = ({
         >
           <div className={styles.head}>
             <h2 className={styles.title}>Частина зібрання {name}</h2>
-            <ButtonPrimary rounded>
+            <ButtonTMDB type="primary" rounded>
               <a href="">Переглянути колекцію</a>
-            </ButtonPrimary>
+            </ButtonTMDB>
           </div>
           <div className={styles.poster}>
             <img src={`https://image.tmdb.org/t/p/w185/${poster_path}`} alt="Poster collection" />

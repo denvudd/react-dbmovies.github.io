@@ -132,7 +132,9 @@ const SearchBar: React.FC = () => {
                               <span>
                                 <SearchOutlined />
                               </span>
-                              <span>{SearchResultTitleTypeChecker(element)}</span>
+                              <span>
+                                {SearchResultTitleTypeChecker(element)}
+                              </span>
                             </div>
                           </Link>
                         </Select.Option>
@@ -145,12 +147,14 @@ const SearchBar: React.FC = () => {
                       value={element.id.toString()}
                       label={SearchResultTitleTypeChecker(element)}
                     >
-                      <div className={styles.option}>
-                        <span>
-                          <SearchOutlined />
-                        </span>
-                        <span>{SearchResultTitleTypeChecker(element)}</span>
-                      </div>
+                      <Link href={SearchResultLinkTypeChecker(element)}>
+                        <div className={styles.option}>
+                          <span>
+                            <SearchOutlined />
+                          </span>
+                          <span>{SearchResultTitleTypeChecker(element)}</span>
+                        </div>
+                      </Link>
                     </Select.Option>
                   ))}
                 </>

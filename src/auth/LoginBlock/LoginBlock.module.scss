@@ -1,0 +1,35 @@
+@import '@/styles/variables';
+
+.wrapper {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.container {
+  max-width: 760px;
+  width: 100%;
+  margin: 0 auto;
+  color: $primaryColorContrast;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.title {
+  font-size: 1.9em;
+  font-weight: 700;
+  margin-bottom: 10px;
+
+  span {
+    margin-right: 5px;
+  }
+}
+
+.text {
+  font-size: 1.1em;
+  line-height: normal;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+}

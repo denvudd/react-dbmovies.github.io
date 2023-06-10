@@ -1,8 +1,9 @@
+import React from "react";
+import { withAuth } from "@/auth/withAuth";
+import { useLazyGetAccountDetailsQuery } from "@/redux/api/account/slice";
 import ProfileHead from "@/components/ProfileBlock/ProfileHead/ProfileHead";
 import ProfileRatedBlock from "@/components/ProfileRatedBlock/ProfileRatedBlock";
 import DetailLayout from "@/layouts/DetailsLayout";
-import { useLazyGetAccountDetailsQuery } from "@/redux/api/account/slice";
-import React from "react";
 
 const ProfileRatedPage = () => {
   const [sessionId, setSessionId] = React.useState<string | null>(null);
@@ -36,4 +37,4 @@ const ProfileRatedPage = () => {
   );
 };
 
-export default ProfileRatedPage;
+export default withAuth(ProfileRatedPage);
