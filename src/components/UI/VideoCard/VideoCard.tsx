@@ -1,6 +1,7 @@
 import React from "react";
 import { Modal } from "antd";
 import { CaretRightFilled } from "@ant-design/icons";
+import YouTube from "react-youtube";
 import styles from "./VideoCard.module.scss";
 
 interface VideoCardProps {
@@ -44,6 +45,7 @@ const VideoCard: React.FC<VideoCardProps> = ({ videoKey }) => {
         width={"auto"}
         bodyStyle={{ padding: "0px", marginTop: "30px", minWidth: "600px" }}
       >
+        <YouTube videoId={videoKey} className={styles.videoPlayer} />
       </Modal>
     </>
   );
