@@ -15,9 +15,11 @@ const UserPage: React.FC = () => {
   React.useEffect(() => {
     const storedSessionId = localStorage.getItem("session_id");
 
-    getAccountDetails({ session_id: storedSessionId }, true)
-      .unwrap()
-      .then(() => setSessionId(storedSessionId));
+    if (storedSessionId) {
+      getAccountDetails({ session_id: storedSessionId }, true)
+        .unwrap()
+        .then(() => setSessionId(storedSessionId));
+    }
   }, []);
 
   return (

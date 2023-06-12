@@ -30,7 +30,7 @@ const RatedMovieCard: React.FC<RatedMovieCardProps> = ({
   rating,
 }) => {
   const [isFetch, setIsFetch] = React.useState(false);
-  const [listId, setListId] = React.useState<string>("");
+  const [listId, setListId] = React.useState<number>(0);
   const [
     fetchAccountLists,
     { data: accountLists, isLoading: isAccountListsLoading },
@@ -71,7 +71,7 @@ const RatedMovieCard: React.FC<RatedMovieCardProps> = ({
     if (sessionId !== "") {
       const onChangeList = (value: string) => {
         if (value !== "" && value) {
-          setListId(value);
+          setListId(Number(value));
           listModal.update({
             okText: "Підтвердити",
             okButtonProps: { disabled: false },

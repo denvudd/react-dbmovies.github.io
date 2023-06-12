@@ -6,13 +6,21 @@ import type {
   AccountListsApiResponse,
   AccountRatedMovieListApiResponse,
   AccountWatchlistMoviesApiResponse,
+  AccountFavoriteMoviesApiResponse,
+  AccountQueryArgsDefault,
+  AccountQueryArgsWithParams,
+  AccountAddToWatchlistQueryArgs,
+  AccountAddFavoriteQueryArgs,
 } from "./types";
 
 const tmdbApiKey = "api_key=684e3f73d1ca0e692a3016c028aabf72";
 
 export const accountApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getAccountDetails: builder.query({
+    getAccountDetails: builder.query<
+      AccountDetailsApiResponse,
+      AccountQueryArgsDefault
+    >({
       query: ({ session_id, account_id }) =>
         `/account/${
           account_id ? account_id : "account_id"
@@ -20,46 +28,113 @@ export const accountApi = baseApi.injectEndpoints({
       transformResponse: (response: AccountDetailsApiResponse) => response,
     }),
 
-    getAccountLists: builder.query({
+    getAccountLists: builder.query<
+      AccountListsApiResponse,
+      AccountQueryArgsDefault
+    >({
       query: ({ session_id, account_id }) =>
         `/account/${
           account_id ? account_id : "account_id"
         }/lists?page=1&session_id=${session_id}&${tmdbApiKey}`,
       transformResponse: (response: AccountListsApiResponse) => response,
-      providesTags: ["Lists"],
+      providesTags: (response) =>
+        response
+          ? [
+              ...response.results.map(({ id }) => ({
+                type: "Lists" as const,
+                id,
+              })),
+              { type: "Lists", id: "LIST" },
+            ]
+          : [{ type: "Lists", id: "LIST" }],
     }),
 
-    getAccountRatedMovies: builder.query({
+    getAccountRatedMovies: builder.query<
+      AccountRatedMovieListApiResponse,
+      AccountQueryArgsWithParams
+    >({
       query: ({ session_id, account_id, params }) =>
         `/account/${
           account_id ? account_id : "account_id"
         }/rated/movies?session_id=${session_id}&${tmdbApiKey}&page=1&${params}`,
       transformResponse: (response: AccountRatedMovieListApiResponse) =>
         response,
-      providesTags: ["Rates", "Watchlist"],
+      providesTags: (response) =>
+        response
+          ? [
+              ...response.results.map(({ id }) => ({
+                type: "Rates" as const,
+                id,
+              })),
+              ...response.results.map(({ id }) => ({
+                type: "Watchlist" as const,
+                id,
+              })),
+              { type: "Rates", id: "LIST" },
+              { type: "Watchlist", id: "LIST" },
+            ]
+          : [
+              { type: "Rates", id: "LIST" },
+              { type: "Watchlist", id: "LIST" },
+            ],
     }),
 
-    getAccountWatchlistMovies: builder.query({
+    getAccountWatchlistMovies: builder.query<
+      AccountWatchlistMoviesApiResponse,
+      AccountQueryArgsWithParams
+    >({
       query: ({ session_id, account_id, params }) =>
         `/account/${
           account_id ? account_id : "account_id"
         }/watchlist/movies?session_id=${session_id}&${tmdbApiKey}&page=1&${params}`,
       transformResponse: (response: AccountWatchlistMoviesApiResponse) =>
         response,
-      providesTags: ["Watchlist", "Rates"],
+      providesTags: (response) =>
+        response
+          ? [
+              ...response.results.map(({ id }) => ({
+                type: "Rates" as const,
+                id,
+              })),
+              ...response.results.map(({ id }) => ({
+                type: "Watchlist" as const,
+                id,
+              })),
+              { type: "Rates", id: "LIST" },
+              { type: "Watchlist", id: "LIST" },
+            ]
+          : [
+              { type: "Rates", id: "LIST" },
+              { type: "Watchlist", id: "LIST" },
+            ],
     }),
 
-    getAccountFavoriteMovies: builder.query({
+    getAccountFavoriteMovies: builder.query<
+      AccountFavoriteMoviesApiResponse,
+      AccountQueryArgsWithParams
+    >({
       query: ({ session_id, account_id, params }) =>
         `/account/${
           account_id ? account_id : "account_id"
         }/favorite/movies?session_id=${session_id}&${tmdbApiKey}&page=1&${params}`,
-      transformResponse: (response: AccountWatchlistMoviesApiResponse) =>
+      transformResponse: (response: AccountFavoriteMoviesApiResponse) =>
         response,
-      providesTags: ["Favorite"],
+      providesTags: (response) =>
+        response
+          ? [
+              ...response.results.map(({ id }) => ({
+                type: "Favorite" as const,
+                id,
+              })),
+              { type: "Favorite", id: "LIST" },
+            ]
+          : [{ type: "Favorite", id: "LIST" }],
     }),
 
-    postAddToWatchlist: builder.mutation({
+    postAddToWatchlist: builder.mutation<
+      AccountAddToWatchlistApiResponse,
+      AccountAddToWatchlistQueryArgs
+    >({
       query: ({ session_id, account_id, media_type, media_id, watchlist }) => ({
         url: `/account/${
           account_id ? account_id : "account_id"
@@ -77,12 +152,17 @@ export const accountApi = baseApi.injectEndpoints({
       async onQueryStarted(props, { dispatch, queryFulfilled }) {
         await queryFulfilled;
         setTimeout(() => {
-          dispatch(baseApi.util.invalidateTags(["Watchlist"]));
+          dispatch(
+            baseApi.util.invalidateTags([{ type: "Watchlist", id: "LIST" }])
+          );
         }, 500);
       },
     }),
 
-    postAddToFavorite: builder.mutation({
+    postAddToFavorite: builder.mutation<
+      AccountAddToFavoriteApiResponse,
+      AccountAddFavoriteQueryArgs
+    >({
       query: ({ session_id, account_id, media_type, media_id, favorite }) => ({
         url: `/account/${
           account_id ? account_id : "account_id"
@@ -100,7 +180,7 @@ export const accountApi = baseApi.injectEndpoints({
       async onQueryStarted(props, { dispatch, queryFulfilled }) {
         await queryFulfilled;
         setTimeout(() => {
-          dispatch(baseApi.util.invalidateTags(["Favorite"]));
+          dispatch(baseApi.util.invalidateTags([{ type: "Favorite", id: "LIST" }]));
         }, 500);
       },
     }),

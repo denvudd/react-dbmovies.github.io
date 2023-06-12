@@ -13,4 +13,9 @@ export type { MovieImagesApiResponse } from "./MovieImagesType";
 export type { MovieKeywordApiResponse } from "./MovieKeywordsType";
 export type { MovieRecsApiResponse } from "./MovieRecsType";
 export type { MovieReleaseDatesApiResponse } from "./MovieReleaseDates";
-export type { MovieVideosApiResponse } from "./MovieVideosType";
+export type { MovieVideosApiResponse, Video } from "./MovieVideosType";
+
+// Query Arguments
+export type { ListQueryArgsDefault } from "../../lists/types/ListQueryArgs";
+export type { AddMovieRatingQueryArgs } from "./AddMovieRatingType";
+export type { DeleteMovieRatingQueryArgs } from "./DeleteMovieRatingType";

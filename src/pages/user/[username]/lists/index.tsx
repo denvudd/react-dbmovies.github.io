@@ -15,9 +15,11 @@ const UserLists: React.FC = () => {
   React.useEffect(() => {
     const storedSessionId = localStorage.getItem("session_id");
 
-    getAccountDetails({ session_id: storedSessionId }, true).then(() =>
-      setSessionId(storedSessionId)
-    );
+    if (storedSessionId) {
+      getAccountDetails({ session_id: storedSessionId }, true).then(() =>
+        setSessionId(storedSessionId)
+      );
+    }
   }, []);
 
   return (

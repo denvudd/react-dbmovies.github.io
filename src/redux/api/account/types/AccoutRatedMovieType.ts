@@ -10,3 +10,4 @@ export interface AccountRatedMovieListApiResponse {
 export interface ListRatedItem extends ListMovie {
   rating: number;
 }
+

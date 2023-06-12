@@ -12,3 +12,8 @@ export interface ListDetailsApiResponse {
   poster_path: string;
 }
 
+export interface ListDetailsQueryArgs {
+  id: number;
+  params?: string;
+}
+

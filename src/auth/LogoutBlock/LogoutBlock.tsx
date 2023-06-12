@@ -2,7 +2,7 @@ import React from "react";
 import Head from "next/head";
 import DetailLayout from "@/layouts/DetailsLayout";
 import { useDeleteSessionMutation } from "@/redux/api/authentication/slice";
-import { useLocalStorageState } from 'ahooks';
+import { useLocalStorageState } from "ahooks";
 import LogoutOutlined from "@ant-design/icons/lib/icons/LogoutOutlined";
 import ButtonTMDB from "@/components/UI/ButtonTMDB/ButtonTMDB";
 import { useRouter } from "next/router";
@@ -16,14 +16,16 @@ export const LogoutBlock = () => {
 
   const handleClickSubmit = async () => {
     try {
-      deleteSession({ session_id: sessionId })
-        .unwrap()
-        .then((data) => {
-          if (data.success) {
-            localStorage.removeItem("session_id");
-            router.reload();
-          }
-        });
+      if (sessionId) {
+        deleteSession(sessionId)
+          .unwrap()
+          .then((data) => {
+            if (data.success) {
+              localStorage.removeItem("session_id");
+              router.reload();
+            }
+          });
+      }
     } catch (error) {
       console.error("Error:", error);
     }

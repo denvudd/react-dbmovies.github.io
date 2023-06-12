@@ -21,7 +21,7 @@ const MovieDetailsCast: React.FC<MovieDetailsCastProps> = ({ id }) => {
         <List
           itemLayout="horizontal"
           className={"scroller"}
-          dataSource={cast?.slice(0, 9)}
+          dataSource={cast?.cast.slice(0, 9)}
           grid={{
             gutter: 5,
           }}

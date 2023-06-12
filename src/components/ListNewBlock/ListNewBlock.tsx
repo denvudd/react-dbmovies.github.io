@@ -19,7 +19,7 @@ import {
 } from "antd";
 import Link from "next/link";
 import OptionElement from "../UI/OptionElement/OptionElement";
-import LoadingOutlined  from "@ant-design/icons/lib/icons/LoadingOutlined";
+import LoadingOutlined from "@ant-design/icons/lib/icons/LoadingOutlined";
 import WideMovieCard from "../UI/WideMovieCard/WideMovieCard";
 
 import styles from "./ListNewBlock.module.scss";
@@ -61,23 +61,20 @@ const ListNewBlock = () => {
   const [messageApi, contextMessageHolder] = message.useMessage();
 
   const onClickFinishStep1 = (values: any) => {
-    createList({
-      session_id: sessionId,
-      name: values.name,
-      description: values.description,
-    })
-      .unwrap()
-      .then((data) => setNewList({ ...values, id: data.list_id }));
+    if (sessionId) {
+      createList({
+        session_id: sessionId,
+        name: values.name,
+        description: values.description,
+      })
+        .unwrap()
+        .then((data) => setNewList({ ...values, id: data.list_id }));
+    }
 
     onClickNext();
   };
 
   const onClickFinishStep2 = (values: any) => {
-    createList({
-      session_id: sessionId,
-      name: values.name,
-      description: values.description,
-    });
     onClickNext();
   };
 
@@ -99,82 +96,84 @@ const ListNewBlock = () => {
         (element) => element.id.toString() === selectedValues.value
       );
 
-      addMovieToList({
-        session_id: sessionId,
-        list_id: newList?.id,
-        media_id: filteredOptions[0].id, // because is always only 1 element by id in array
-      })
-        .unwrap()
-        .then((data) => {
-          if (data.success) {
-            // if prevSelectedElements exists, add the new elements to the array else it doesn't exist, simply add them
-            setSelectedElements((prevSelectedElements) => [
-              ...(prevSelectedElements || []),
-              ...filteredOptions,
-            ]);
-            messageApi.success(
-              `"${filteredOptions[0].title}" був успішно доданий до списку #${newList?.id}!`,
-              3
-            );
-          } else {
-            messageApi.error(`${data.status_message}`, 3);
-          }
+      if (sessionId && newList) {
+        addMovieToList({
+          session_id: sessionId,
+          list_id: newList?.id,
+          media_id: filteredOptions[0].id, // because is always only 1 element by id in array
         })
-        .catch((error) => {
-          if (error && error.data.status_code === 8) {
-            messageApi.error(
-              `Сталась помилка! Елемент "${filteredOptions[0].title}" вже існує в списку #${newList?.id}`,
-              5
-            );
-          } else {
-            messageApi.error(
-              `Сталась помилка! Код помилки: ${error.data.status_code}`,
-              5
-            );
-          }
-        });
+          .unwrap()
+          .then((data) => {
+            if (data.success) {
+              // if prevSelectedElements exists, add the new elements to the array else it doesn't exist, simply add them
+              setSelectedElements((prevSelectedElements) => [
+                ...(prevSelectedElements || []),
+                ...filteredOptions,
+              ]);
+              messageApi.success(
+                `"${filteredOptions[0].title}" був успішно доданий до списку #${newList?.id}!`,
+                3
+              );
+            } else {
+              messageApi.error(`${data.status_message}`, 3);
+            }
+          })
+          .catch((error) => {
+            if (error && error.data.status_code === 8) {
+              messageApi.error(
+                `Сталась помилка! Елемент "${filteredOptions[0].title}" вже існує в списку #${newList?.id}`,
+                5
+              );
+            } else {
+              messageApi.error(
+                `Сталась помилка! Код помилки: ${error.data.status_code}`,
+                5
+              );
+            }
+          });
+      }
     },
     [elementsOptions]
   );
 
   const onClickElementDelete = React.useCallback(
     (movieId: number, title: string) => {
-      removeMovieFromList({
-        session_id: sessionId,
-        list_id: newList?.id,
-        media_id: movieId, // because is always only 1 element by id in array
-      })
-        .unwrap()
-        .then((data) => {
-          if (data.success) {
-            if (selectedElements !== undefined) {
+      if (sessionId && newList) {
+        removeMovieFromList({
+          session_id: sessionId,
+          list_id: newList.id,
+          media_id: movieId, // because is always only 1 element by id in array
+        })
+          .unwrap()
+          .then((data) => {
+            if (data.success && selectedElements !== undefined) {
               const filteredOptions = selectedElements.filter(
                 (movie) => movie.id !== movieId
               );
 
               setSelectedElements(filteredOptions);
+              messageApi.success(
+                `"${title}" був успішно видалений зі списку #${newList?.id}!`,
+                3
+              );
+            } else {
+              messageApi.success(`${data.status_message}`, 3);
             }
-            messageApi.success(
-              `"${title}" був успішно видалений зі списку #${newList?.id}!`,
-              3
-            );
-          } else {
-            messageApi.success(`${data.status_message}`, 3);
-          }
-        })
-        .catch((error) => {
-          if (error && error.data.status_code === 21) {
-            messageApi.error(
-              `Сталась помилка! Елемента "${title}" не існує в списку #${newList?.id}`,
-              5
-            );
-          } else {
-            messageApi.error(
-              `Сталась помилка! Код помилки: ${error.data.status_code}`,
-              5
-            );
-          }
-        });
+          })
+          .catch((error) => {
+            if (error && error.data.status_code === 21) {
+              messageApi.error(
+                `Сталась помилка! Елемента "${title}" не існує в списку #${newList?.id}`,
+                5
+              );
+            } else {
+              messageApi.error(
+                `Сталась помилка! Код помилки: ${error.data.status_code}`,
+                5
+              );
+            }
+          });
+      }
     },
     [selectedElements]
   );
@@ -330,7 +329,9 @@ const ListNewBlock = () => {
                           : "https://placehold.co/150x225/png/?text=Not+Found"
                       }
                       isShowDelete
-                      onClickElementDelete={(id, title) => {onClickElementDelete(id, title)}}
+                      onClickElementDelete={(id, title) => {
+                        onClickElementDelete(id, title);
+                      }}
                     />
                   ))}
                 </>

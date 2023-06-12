@@ -49,7 +49,7 @@ const AdditionalSortMenu: React.FC<AdditionalSortMenuProps> = React.memo(
     const { data: genres, isLoading: isGenresLoading } =
       useGetMovieListGenreQuery("&language=uk-UA");
     const { data: languages, isLoading: isLanguagesLoading } =
-      useGetConfigurationLanguagesQuery({});
+      useGetConfigurationLanguagesQuery(null);
     const [fetchKeywords, { isLoading: isKeywordsLoading }] =
       useLazyGetSearchKeywordsQuery();
     const [additionalSortData, setAdditionalSortData] =

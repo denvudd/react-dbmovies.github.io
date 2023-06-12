@@ -17,11 +17,13 @@ const Header: React.FC = () => {
   ] = useLazyGetAccountDetailsQuery();
 
   React.useEffect(() => {
-    const session_id = localStorage.getItem("session_id");
+    const sessionId = localStorage.getItem("session_id");
 
-    getAccountDetails({ session_id }, true)
-      .unwrap()
-      .then((data) => console.log(data));
+    if (sessionId) {
+      getAccountDetails({ session_id: sessionId }, true)
+        .unwrap()
+        .then((data) => console.log(data));
+    }
   }, []);
 
   const leftMenuItems: MenuProps["items"] = [

@@ -33,7 +33,7 @@ const WatchlistMovieCard: React.FC<WatchlistMovieCardProps> = ({
 }) => {
   const [isFetch, setIsFetch] = React.useState(false);
   const [isRateSubmit, setIsRateSubmit] = React.useState(false);
-  const [listId, setListId] = React.useState<string>("");
+  const [listId, setListId] = React.useState<number>(0);
   const [rate, setRate] = React.useState<number>(1);
   const [
     fetchAccountLists,
@@ -62,7 +62,7 @@ const WatchlistMovieCard: React.FC<WatchlistMovieCardProps> = ({
         session_id: sessionId,
         media_type: "movie",
         media_id: movieId,
-        watchlist: false,
+        favorite: false,
       })
         .unwrap()
         .then((data) => {
@@ -95,7 +95,7 @@ const WatchlistMovieCard: React.FC<WatchlistMovieCardProps> = ({
     if (sessionId !== "") {
       const onChangeList = (value: string) => {
         if (value !== "" && value) {
-          setListId(value);
+          setListId(Number(value));
           listModal.update({
             okText: "Підтвердити",
             okButtonProps: { disabled: false },
