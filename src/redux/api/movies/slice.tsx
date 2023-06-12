@@ -1,15 +1,17 @@
-import { ListMoviesApiResponse } from "./types/ListMovieType";
-import { MovieDetailsApiResponse } from "./types/MovieDetailsType";
-import { MovieReleaseDatesApiResponse } from "./types/MovieReleaseDates";
-import { MovieCreditsApiResponse } from "./types/MovieCreditsType";
-import { MovieImagesApiResponse } from "./types/MovieImagesType";
-import { MovieVideosApiResponse } from "./types/MovieVideosType";
-import { MovieRecsApiResponse } from "./types/MovieRecsType";
-import { MovieKeywordApiResponse } from "./types/MovieKeywordsType";
 import { baseApi } from "../baseApi/slice";
-import { AddMovieRatingApiResponse } from "./types/AddMovieRatingType";
-import { MovieAccountStatesApiResponse } from "./types/MovieAccountStatesType";
-import { DeleteMovieRatingApiResponse } from "./types/DeleteMovieRatingType";
+import type {
+  ListMoviesApiResponse,
+  MovieDetailsApiResponse,
+  MovieAccountStatesApiResponse,
+  MovieCreditsApiResponse,
+  MovieReleaseDatesApiResponse,
+  MovieImagesApiResponse,
+  MovieVideosApiResponse,
+  MovieRecsApiResponse,
+  MovieKeywordApiResponse,
+  AddMovieRatingApiResponse,
+  DeleteMovieRatingApiResponse,
+} from "./types";
 
 const tmdbApiKey = "api_key=684e3f73d1ca0e692a3016c028aabf72";
 

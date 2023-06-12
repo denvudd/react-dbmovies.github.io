@@ -8,13 +8,13 @@ import { useDebounce } from "@/hooks/useDebounce";
 
 import type { RangePickerProps } from "antd/es/date-picker";
 import { AdditionalSortDataState } from "../FilterMenu";
-import { Keyword } from "@/redux/api/search/types/SearchKeywordType";
 
 import dayjs from "dayjs";
 import "dayjs/locale/uk.js";
 import locale from "antd/lib/date-picker/locale/uk_UA";
 
 import styles from "./AdditionalSortMenu.module.scss";
+import type { Keyword } from "@/redux/api/search/types";
 
 interface AdditionalSortMenuProps {
   onAdditionalSortChange: (additionalSortBy: AdditionalSortDataState) => void;

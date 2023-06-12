@@ -17,13 +17,13 @@ import {
   Steps,
   message,
 } from "antd";
-import { ListMovie } from "@/redux/api/movies/types/ListMovieType";
 import Link from "next/link";
 import OptionElement from "../UI/OptionElement/OptionElement";
 import LoadingOutlined  from "@ant-design/icons/lib/icons/LoadingOutlined";
 import WideMovieCard from "../UI/WideMovieCard/WideMovieCard";
 
 import styles from "./ListNewBlock.module.scss";
+import type { ListMovie } from "@/redux/api/movies/types";
 interface NewList {
   name: string;
   description: string;

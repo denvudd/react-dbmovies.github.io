@@ -1,3 +1,3 @@
 import { ListAddMovieApiResponse } from "./ListAddMovieType";
 
-export type ListDelteApiResponse = ListAddMovieApiResponse;
+export type ListDeleteApiResponse = ListAddMovieApiResponse;

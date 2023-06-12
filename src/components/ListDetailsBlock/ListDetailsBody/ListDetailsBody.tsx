@@ -1,5 +1,5 @@
 import React from "react";
-import { ListMovie } from "@/redux/api/movies/types/ListMovieType";
+import type { ListMovie } from "@/redux/api/movies/types";
 import { calcAverageInObject } from "@/utils/calcAverageInObject";
 import ListMovieCard from "@/components/UI/ListMovieCard/ListMovieCard";
 

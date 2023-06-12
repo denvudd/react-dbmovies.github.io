@@ -1,7 +1,9 @@
-import { AuthTokenApiResponse } from "./types/AuthTokenType";
-import { AuthSessionApiResponse } from "./types/AuthSessionType";
 import { baseApi } from "../baseApi/slice";
-import { AuthDeleteSessionApiResponse } from "./types/AuthDeleteSessionType";
+import type {
+  AuthTokenApiResponse,
+  AuthSessionApiResponse,
+  AuthDeleteSessionApiResponse,
+} from "./types";
 
 const tmdbApiKey = "api_key=684e3f73d1ca0e692a3016c028aabf72";
 

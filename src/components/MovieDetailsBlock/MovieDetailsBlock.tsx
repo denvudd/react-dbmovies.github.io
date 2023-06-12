@@ -1,7 +1,7 @@
 import React from "react";
 import MovieDetailsHead from "./MovieDetailsHead/MovieDetailsHead";
 import MovieDetailsMedia from "./MovieDetailsMedia/MovieDetailsMedia";
-import { MovieDetails } from "@/redux/api/movies/types/MovieDetailsType";
+import type { MovieDetails } from "@/redux/api/movies/types";
 
 type MovieDetailsBlockProps = {
   id: number;

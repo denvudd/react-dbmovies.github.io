@@ -11,7 +11,7 @@ import { useSelector } from "react-redux";
 import React from "react";
 import { selectParams } from "@/redux/params/selectors";
 import { isSortParamsEmpty } from "@/utils/isSortParamsEmpty";
-import { ListMoviesApiResponse } from "@/redux/api/movies/types/ListMovieType";
+import type { ListMoviesApiResponse } from "@/redux/api/movies/types";
 
 interface MovieCard {
   id: number;

@@ -1,6 +1,6 @@
 import React from "react";
 import ButtonTMDB from "@/components/UI/ButtonTMDB/ButtonTMDB";
-import { Collection } from "@/redux/api/movies/types/MovieDetailsType";
+import type { Collection } from "@/redux/api/movies/types";
 import styles from "./MovieDetailsCollection.module.scss";
 
 interface MovieDetailsCollectionProps {

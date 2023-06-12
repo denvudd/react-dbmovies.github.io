@@ -1,10 +1,12 @@
-import { ListDetailsApiResponse } from "./types/ListDetailsType";
-import { ListCreateApiResponse } from "./types/ListCreateType";
 import { baseApi } from "../baseApi/slice";
-import { ListAddMovieApiResponse } from "./types/ListAddMovieType";
-import { ListClearApiResponse } from "./types/ListClearType";
-import { ListDelteApiResponse } from "./types/ListDeleteType";
-import { ListRemoveMovieApiResponse } from "./types/ListRemoveMovieType";
+import type {
+  ListDetailsApiResponse,
+  ListCreateApiResponse,
+  ListAddMovieApiResponse,
+  ListRemoveMovieApiResponse,
+  ListClearApiResponse,
+  ListDeleteApiResponse,
+} from "./types";
 
 const tmdbApiKey = "api_key=684e3f73d1ca0e692a3016c028aabf72";
 
@@ -61,7 +63,7 @@ export const listsApi = baseApi.injectEndpoints({
         url: `/list/${list_id}?session_id=${session_id}&${tmdbApiKey}`,
         method: "DELETE",
       }),
-      transformResponse: (response: ListDelteApiResponse) => response,
+      transformResponse: (response: ListDeleteApiResponse) => response,
       invalidatesTags: ["Lists"],
     }),
   }),

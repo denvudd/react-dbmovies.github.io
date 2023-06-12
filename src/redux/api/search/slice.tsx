@@ -1,7 +1,9 @@
-import { SearchKeywordApiResponse } from "./types/SearchKeywordType";
 import { baseApi } from "../baseApi/slice";
-import { SearchMultiApiResponse } from "./types/SearchMultiType";
-import { SearchMovieApiResponse } from "./types/SearchMovieType";
+import type {
+  SearchMultiApiResponse,
+  SearchMovieApiResponse,
+  SearchKeywordApiResponse,
+} from "./types";
 
 const tmdbApiKey = "api_key=684e3f73d1ca0e692a3016c028aabf72";
 

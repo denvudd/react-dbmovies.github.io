@@ -1,5 +1,5 @@
 import { baseApi } from "../baseApi/slice";
-import { TrendingAllApiResponse } from "./types/TrendingAllType";
+import type { TrendingAllApiResponse } from "./types/TrendingAllType";
 
 const tmdbApiKey = "api_key=684e3f73d1ca0e692a3016c028aabf72";
 

@@ -3,13 +3,9 @@ import SortMenu from "./SortMenu/SortMenu";
 import AdditionalSortMenu from "./AdditionalSortMenu/AdditionalSortMenu";
 import { setParams } from "@/redux/params/slice";
 import { useAppDispatch } from "@/redux/store";
-import {
-  AdditionalSortData,
-  SortData,
-  SortValue,
-} from "@/redux/params/types/types";
 import styles from "./FilterMenu.module.scss";
 import { isSortParamsEmpty } from "@/utils/isSortParamsEmpty";
+import { AdditionalSortData, SortData, SortValue } from "@/redux/params/types/types";
 
 export interface AdditionalSortDataState {
   additionalSortData: AdditionalSortData;
