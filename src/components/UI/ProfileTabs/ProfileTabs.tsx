@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
-import styles from "./ProfileTabs.module.scss";
 
+import styles from "./ProfileTabs.module.scss";
 interface Tab {
   label: string;
   link: string;

@@ -1,13 +1,12 @@
 import React from "react";
 import { useLazyGetAccountFavoriteMoviesQuery } from "@/redux/api/account/slice";
+
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin, Select } from "antd";
-import WatchlistMovieCard from "../ProfileWatchlistBlock/WatchlitMovieCard/WatchlistMovieCard";
 import ProfileTabs from "../UI/ProfileTabs/ProfileTabs";
-
-import styles from './ProfileFavoriteBlock.module.scss';
 import ProfileFavoriteCard from "./ProfileFavoriteCard/ProfileFavoriteCard";
 
+import styles from './ProfileFavoriteBlock.module.scss';
 interface ProfileFavoriteBlockProps {
   account_id: number;
   session_id: string;

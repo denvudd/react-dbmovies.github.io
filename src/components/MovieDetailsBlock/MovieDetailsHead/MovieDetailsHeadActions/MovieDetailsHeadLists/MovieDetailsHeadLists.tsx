@@ -1,12 +1,12 @@
 import React from "react";
-import { Button, Modal, Select, message } from "antd";
-import UnorderedListOutlined from "@ant-design/icons/lib/icons/UnorderedListOutlined";
-import styles from "../MovieDetailsHeadActions.module.scss";
-
 import { useLazyGetAccountListsQuery } from "@/redux/api/account/slice";
 import { usePostAddMovieToListMutation } from "@/redux/api/lists/slice";
+
+import { Button, Modal, Select, message } from "antd";
+import UnorderedListOutlined from "@ant-design/icons/lib/icons/UnorderedListOutlined";
 import Link from "next/link";
 
+import styles from "../MovieDetailsHeadActions.module.scss";
 interface MovieDetailsHeadListsProps {
   id: number;
   sessionId: string | null;
@@ -21,7 +21,7 @@ const MovieDetailsHeadLists: React.FC<MovieDetailsHeadListsProps> = ({
   const [addMovieToList, { data: movieList, isLoading }] =
     usePostAddMovieToListMutation();
   const [fetchAccountLists] = useLazyGetAccountListsQuery();
-  const [listId, setListId] = React.useState<string>("");
+  const [listId, setListId] = React.useState<number>(0);
   const [isListSubmit, setIsListSubmit] = React.useState(false);
 
   const [messageApi, contextMessageHolder] = message.useMessage();
@@ -35,7 +35,7 @@ const MovieDetailsHeadLists: React.FC<MovieDetailsHeadListsProps> = ({
 
       const onChangeList = (value: string) => {
         if (value !== "" && value) {
-          setListId(value);
+          setListId(Number(value));
           listModal.update({
             okText: "Підтвердити",
             okButtonProps: { disabled: false },

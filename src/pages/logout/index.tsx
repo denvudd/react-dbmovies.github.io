@@ -1,4 +1,5 @@
 import React from "react";
+
 import Head from "next/head";
 import LogoutBlock from "@/auth/LogoutBlock/LogoutBlock";
 import { withAuth } from "@/auth/withAuth";

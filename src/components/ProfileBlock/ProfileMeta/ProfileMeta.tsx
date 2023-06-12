@@ -1,7 +1,6 @@
 import React from "react";
-
-import styles from "./ProfileMeta.module.scss";
 import ProfileTabs from "@/components/UI/ProfileTabs/ProfileTabs";
+import styles from "./ProfileMeta.module.scss";
 interface ProfileMetaProps {
   accountId: number;
   sessionId: string;

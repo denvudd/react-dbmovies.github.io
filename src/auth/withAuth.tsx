@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useRouter } from "next/router";
 
 export const withAuth = <P extends object>(
@@ -8,7 +8,7 @@ export const withAuth = <P extends object>(
     const router = useRouter();
     console.log(router.pathname);
 
-    useEffect(() => {
+    React.useEffect(() => {
       const token = localStorage.getItem("session_id");
 
       if (!token) {

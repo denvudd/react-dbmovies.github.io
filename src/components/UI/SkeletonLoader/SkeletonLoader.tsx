@@ -1,7 +1,6 @@
 import React from "react";
 import ContentLoader from "react-content-loader";
 import styles from './SkeletonLoader.module.scss';
-
 interface SkeletonLoaderProps {
   count: number;
   gutter: number

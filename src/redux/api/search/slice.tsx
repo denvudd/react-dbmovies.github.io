@@ -1,13 +1,19 @@
-import { SearchKeywordApiResponse } from "./types/SearchKeywordType";
 import { baseApi } from "../baseApi/slice";
-import { SearchMultiApiResponse } from "./types/SearchMultiType";
-import { SearchMovieApiResponse } from "./types/SearchMovieType";
+import type {
+  SearchMultiApiResponse,
+  SearchMovieApiResponse,
+  SearchKeywordApiResponse,
+  SearchQueryArgsDefault,
+} from "./types";
 
 const tmdbApiKey = "api_key=684e3f73d1ca0e692a3016c028aabf72";
 
 export const searchApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getSearchMulti: builder.query({
+    getSearchMulti: builder.query<
+      SearchMultiApiResponse,
+      SearchQueryArgsDefault
+    >({
       query: ({ query, params }) =>
         `/search/multi?${tmdbApiKey}&${params ? params : ""}&query=${
           query ? query : ""
@@ -15,7 +21,10 @@ export const searchApi = baseApi.injectEndpoints({
       transformResponse: (response: SearchMultiApiResponse) => response,
     }),
 
-    getSearchMovie: builder.query({
+    getSearchMovie: builder.query<
+      SearchMovieApiResponse,
+      SearchQueryArgsDefault
+    >({
       query: ({ query, params }) =>
         `/search/movie?${tmdbApiKey}&${params ? params : ""}&query=${
           query ? query : ""
@@ -23,7 +32,10 @@ export const searchApi = baseApi.injectEndpoints({
       transformResponse: (response: SearchMovieApiResponse) => response,
     }),
 
-    getSearchKeywords: builder.query({
+    getSearchKeywords: builder.query<
+      SearchKeywordApiResponse["results"],
+      string
+    >({
       query: (query) =>
         `/search/keyword?${tmdbApiKey}&query=${query ? query : ""}`,
       transformResponse: (response: SearchKeywordApiResponse) =>

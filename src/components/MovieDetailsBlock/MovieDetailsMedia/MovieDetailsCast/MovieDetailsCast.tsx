@@ -1,9 +1,10 @@
 import React from "react";
+import { useGetMovieCreditsCastQuery } from "@/redux/api/movies/slice";
+
 import CastCard from "@/components/UI/CastCard/CastCard";
 import { Typography, List, Button } from "antd";
-import { useGetMovieCreditsCastQuery } from "@/redux/api/movies/slice";
-import styles from "./MovieDetailsCast.module.scss";
 
+import styles from "./MovieDetailsCast.module.scss";
 interface MovieDetailsCastProps {
   id: number;
 }
@@ -21,7 +22,7 @@ const MovieDetailsCast: React.FC<MovieDetailsCastProps> = ({ id }) => {
         <List
           itemLayout="horizontal"
           className={"scroller"}
-          dataSource={cast?.slice(0, 9)}
+          dataSource={cast?.cast.slice(0, 9)}
           grid={{
             gutter: 5,
           }}

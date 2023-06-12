@@ -38,7 +38,9 @@
 }
 
 .tooltip {
-  margin-right: 20px;
+  &Wrapper {
+    margin-right: 20px;
+  }
 
   button {
     background: #001529;

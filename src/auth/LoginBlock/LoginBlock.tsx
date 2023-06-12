@@ -1,15 +1,16 @@
 import React from "react";
-import Head from "next/head";
-import DetailLayout from "@/layouts/DetailsLayout";
-import ButtonTMDB from "@/components/UI/ButtonTMDB/ButtonTMDB";
+import { useRouter } from "next/router";
 import {
   useLazyGetAuthTokenQuery,
   usePostCreateSessionMutation,
 } from "@/redux/api/authentication/slice";
-import { useRouter } from "next/router";
+
+import Head from "next/head";
+import DetailLayout from "@/layouts/DetailsLayout";
+import ButtonTMDB from "@/components/UI/ButtonTMDB/ButtonTMDB";
+import LoginOutlined from "@ant-design/icons/lib/icons/LoginOutlined";
 
 import styles from "./LoginBlock.module.scss";
-import LoginOutlined from "@ant-design/icons/lib/icons/LoginOutlined";
 
 export const LoginBlock = () => {
   const [getAuthToken] = useLazyGetAuthTokenQuery();
@@ -19,7 +20,7 @@ export const LoginBlock = () => {
 
   const handleButtonClick = async () => {
     try {
-      getAuthToken({})
+      getAuthToken(null)
         .unwrap()
         .then((data) => {
           if (data.request_token) {
@@ -34,7 +35,7 @@ export const LoginBlock = () => {
   React.useEffect(() => {
     if (request_token && approved) {
       try {
-        createSession({ request_token })
+        createSession(request_token[0])
           .unwrap()
           .then((data) => {
             if (data.success) {

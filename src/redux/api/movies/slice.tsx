@@ -1,15 +1,21 @@
-import { ListMoviesApiResponse } from "./types/ListMovieType";
-import { MovieDetailsApiResponse } from "./types/MovieDetailsType";
-import { MovieReleaseDatesApiResponse } from "./types/MovieReleaseDates";
-import { MovieCreditsApiResponse } from "./types/MovieCreditsType";
-import { MovieImagesApiResponse } from "./types/MovieImagesType";
-import { MovieVideosApiResponse } from "./types/MovieVideosType";
-import { MovieRecsApiResponse } from "./types/MovieRecsType";
-import { MovieKeywordApiResponse } from "./types/MovieKeywordsType";
 import { baseApi } from "../baseApi/slice";
-import { AddMovieRatingApiResponse } from "./types/AddMovieRatingType";
-import { MovieAccountStatesApiResponse } from "./types/MovieAccountStatesType";
-import { DeleteMovieRatingApiResponse } from "./types/DeleteMovieRatingType";
+import type {
+  ListMoviesApiResponse,
+  MovieDetailsApiResponse,
+  MovieAccountStatesApiResponse,
+  MovieCreditsApiResponse,
+  MovieReleaseDatesApiResponse,
+  MovieImagesApiResponse,
+  MovieVideosApiResponse,
+  Video,
+  MovieRecsApiResponse,
+  MovieKeywordApiResponse,
+  AddMovieRatingApiResponse,
+  DeleteMovieRatingApiResponse,
+  ListQueryArgsDefault,
+  AddMovieRatingQueryArgs,
+  DeleteMovieRatingQueryArgs,
+} from "./types";
 
 const tmdbApiKey = "api_key=684e3f73d1ca0e692a3016c028aabf72";
 
@@ -21,7 +27,10 @@ export const moviesApi = baseApi.injectEndpoints({
       transformResponse: (response: ListMoviesApiResponse) => response,
     }),
 
-    getMovieDetails: builder.query({
+    getMovieDetails: builder.query<
+      MovieDetailsApiResponse,
+      ListQueryArgsDefault
+    >({
       query: ({ id, params }) =>
         `/movie/${id}?${tmdbApiKey}&${params ? params : ""}`,
       transformResponse: (response: MovieDetailsApiResponse) => response,
@@ -36,19 +45,16 @@ export const moviesApi = baseApi.injectEndpoints({
       providesTags: ["Watchlist", "Rates", "Favorite"],
     }),
 
-    getMovieGenre: builder.query({
-      query: ({ id, params }) =>
-        `/movie/${id}?${tmdbApiKey}&${params ? params : ""}`,
-      transformResponse: (response: MovieDetailsApiResponse) => response,
-    }),
-
-    getMovieCreditsCast: builder.query({
+    getMovieCreditsCast: builder.query<
+      MovieCreditsApiResponse,
+      ListQueryArgsDefault
+    >({
       query: ({ id, params }) =>
         `/movie/${id}/credits?${tmdbApiKey}&${params ? params : ""}`,
-      transformResponse: (response: MovieCreditsApiResponse) => response.cast,
+      transformResponse: (response: MovieCreditsApiResponse) => response,
     }),
 
-    getMovieReleaseDates: builder.query({
+    getMovieReleaseDates: builder.query<string | undefined, number>({
       query: (id) => `/movie/${id}/release_dates?${tmdbApiKey}`,
       transformResponse: (response: MovieReleaseDatesApiResponse) => {
         const certificates = response.results;
@@ -69,18 +75,21 @@ export const moviesApi = baseApi.injectEndpoints({
       },
     }),
 
-    getMovieImages: builder.query({
-      query: ({ id, params }) =>
-        `/movie/${id}/images?${tmdbApiKey}&${params ? params : ""}`,
-      transformResponse: (response: MovieImagesApiResponse) => response,
-    }),
+    getMovieImages: builder.query<MovieImagesApiResponse, ListQueryArgsDefault>(
+      {
+        query: ({ id, params }) =>
+          `/movie/${id}/images?${tmdbApiKey}&${params ? params : ""}`,
+        transformResponse: (response: MovieImagesApiResponse) => response,
+      }
+    ),
 
-    getMovieVideos: builder.query({
+    getMovieVideos: builder.query<Video[] | undefined, ListQueryArgsDefault>({
       query: ({ id, params }) =>
         `/movie/${id}/videos?${tmdbApiKey}&${params ? params : ""}`,
       transformResponse: (response: MovieVideosApiResponse) => {
         const videos = response.results;
 
+        // get only youtube videos else retun undefined
         if (videos) {
           const youtubeVideos = videos.filter((video) => {
             return video.site === "YouTube";
@@ -93,20 +102,29 @@ export const moviesApi = baseApi.injectEndpoints({
       },
     }),
 
-    getMovieRecs: builder.query({
+    getMovieRecs: builder.query<
+      MovieRecsApiResponse["results"],
+      ListQueryArgsDefault
+    >({
       query: ({ id, params }) =>
         `/movie/${id}/recommendations?${tmdbApiKey}&${params ? params : ""}`,
       transformResponse: (response: MovieRecsApiResponse) => response.results,
     }),
 
-    getMovieKeywords: builder.query({
+    getMovieKeywords: builder.query<
+      MovieKeywordApiResponse["keywords"],
+      ListQueryArgsDefault
+    >({
       query: ({ id, params }) =>
         `/movie/${id}/keywords?${tmdbApiKey}&${params ? params : ""}`,
       transformResponse: (response: MovieKeywordApiResponse) =>
         response.keywords,
     }),
 
-    postAddMovieRating: builder.mutation({
+    postAddMovieRating: builder.mutation<
+      AddMovieRatingApiResponse,
+      AddMovieRatingQueryArgs
+    >({
       query: ({ session_id, movie_id, rating }) => ({
         url: `/movie/${movie_id}/rating?session_id=${session_id}&${tmdbApiKey}`,
         method: "POST",
@@ -119,12 +137,20 @@ export const moviesApi = baseApi.injectEndpoints({
       async onQueryStarted(props, { dispatch, queryFulfilled }) {
         await queryFulfilled;
         setTimeout(() => {
-          dispatch(baseApi.util.invalidateTags(["Rates", "Watchlist"]));
+          dispatch(
+            baseApi.util.invalidateTags([
+              { type: "Rates", id: "LIST" },
+              { type: "Watchlist", id: "LIST" },
+            ])
+          );
         }, 500);
       },
     }),
 
-    deleteMovieRating: builder.mutation({
+    deleteMovieRating: builder.mutation<
+      DeleteMovieRatingApiResponse,
+      DeleteMovieRatingQueryArgs
+    >({
       query: ({ session_id, movie_id }) => ({
         url: `/movie/${movie_id}/rating?session_id=${session_id}&${tmdbApiKey}`,
         method: "DELETE",
@@ -134,7 +160,12 @@ export const moviesApi = baseApi.injectEndpoints({
       async onQueryStarted(props, { dispatch, queryFulfilled }) {
         await queryFulfilled;
         setTimeout(() => {
-          dispatch(baseApi.util.invalidateTags(["Rates", "Watchlist"]));
+          dispatch(
+            baseApi.util.invalidateTags([
+              { type: "Rates", id: "LIST" },
+              { type: "Watchlist", id: "LIST" },
+            ])
+          );
         }, 500);
       },
     }),

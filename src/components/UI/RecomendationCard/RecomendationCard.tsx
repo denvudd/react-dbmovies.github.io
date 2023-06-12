@@ -1,10 +1,11 @@
 import React from "react";
+
 import UnorderedListOutlined  from "@ant-design/icons/lib/icons/UnorderedListOutlined";
 import Link from "next/link";
 import RatingBar from "../RatingBar/RatingBar";
 import Image from "next/image";
-import styles from "./RecomendationCard.module.scss";
 
+import styles from "./RecomendationCard.module.scss";
 interface RecomendationCardProps {
   id: number;
   poster_path: string;

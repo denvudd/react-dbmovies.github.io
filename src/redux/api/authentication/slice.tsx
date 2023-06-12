@@ -1,18 +1,20 @@
-import { AuthTokenApiResponse } from "./types/AuthTokenType";
-import { AuthSessionApiResponse } from "./types/AuthSessionType";
 import { baseApi } from "../baseApi/slice";
-import { AuthDeleteSessionApiResponse } from "./types/AuthDeleteSessionType";
+import type {
+  AuthTokenApiResponse,
+  AuthSessionApiResponse,
+  AuthDeleteSessionApiResponse,
+} from "./types";
 
 const tmdbApiKey = "api_key=684e3f73d1ca0e692a3016c028aabf72";
 
 export const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getAuthToken: builder.query({
+    getAuthToken: builder.query<AuthTokenApiResponse, null>({
       query: () => `/authentication/token/new?${tmdbApiKey}`,
       transformResponse: (response: AuthTokenApiResponse) => response,
     }),
 
-    postCreateSession: builder.mutation({
+    postCreateSession: builder.mutation<AuthSessionApiResponse, string>({
       query: (request_token) => ({
         url: `/authentication/session/new?${tmdbApiKey}`,
         method: "POST",
@@ -21,7 +23,7 @@ export const authApi = baseApi.injectEndpoints({
       transformResponse: (response: AuthSessionApiResponse) => response,
     }),
 
-    deleteSession: builder.mutation({
+    deleteSession: builder.mutation<AuthDeleteSessionApiResponse, string>({
       query: (session_id) => ({
         url: `/authentication/session?${tmdbApiKey}`,
         method: "DELETE",

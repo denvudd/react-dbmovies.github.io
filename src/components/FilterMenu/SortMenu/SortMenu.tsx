@@ -1,8 +1,8 @@
 import React from "react";
 import { MenuProps, Select, Menu } from "antd";
-import styles from "./SortMenu.module.scss";
 import { SortValue } from "@/redux/params/types/types";
 
+import styles from "./SortMenu.module.scss";
 interface SortMenuProps {
   onSortChange: (sortBy: SortValue) => void;
 }

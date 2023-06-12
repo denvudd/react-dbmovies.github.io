@@ -1,18 +1,18 @@
+import React from "react";
+import { useLazyGetMoviesQuery } from "@/redux/api/movies/slice";
+import { useLazyGetMovieDiscoverQuery } from "@/redux/api/discover/slice";
+import { useSelector } from "react-redux";
+
 import Head from "next/head";
 import { Pagination, Typography } from "antd";
 import MovieCard from "@/components/UI/MovieCard/MovieCard";
-import { useLazyGetMoviesQuery } from "@/redux/api/movies/slice";
-import { useLazyGetMovieDiscoverQuery } from "@/redux/api/discover/slice";
-import ListLayout from "@/layouts/ListLayout";
 import MovieList from "@/components/UI/MovieList/MovieList";
 import SkeletonLoader from "@/components/UI/SkeletonLoader/SkeletonLoader";
 import FilterMenu from "@/components/FilterMenu/FilterMenu";
-import { useSelector } from "react-redux";
-import React from "react";
+import ListLayout from "@/layouts/ListLayout";
 import { selectParams } from "@/redux/params/selectors";
 import { isSortParamsEmpty } from "@/utils/isSortParamsEmpty";
-import { ListMoviesApiResponse } from "@/redux/api/movies/types/ListMovieType";
-
+import type { ListMoviesApiResponse } from "@/redux/api/movies/types";
 interface MovieCard {
   id: number;
   title: string;

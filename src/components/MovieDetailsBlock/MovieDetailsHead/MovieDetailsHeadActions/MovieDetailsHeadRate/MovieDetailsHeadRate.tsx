@@ -1,13 +1,12 @@
 import React from "react";
-import { Modal, Rate, message } from "antd";
-import { StarFilled } from "@ant-design/icons";
 import { usePostAddMovieRatingMutation } from "@/redux/api/movies/slice";
 
-import styles from "../MovieDetailsHeadActions.module.scss";
+import { Modal, Rate, message } from "antd";
+import StarFilled from "@ant-design/icons/lib/icons/StarFilled";
 import classNames from "classnames";
-
 import type { MovieAccountStatesApiResponse } from "@/redux/api/movies/types/MovieAccountStatesType";
 
+import styles from "../MovieDetailsHeadActions.module.scss";
 interface MovieDetailsHeadRateProps {
   id: number;
   sessionId: string | null;

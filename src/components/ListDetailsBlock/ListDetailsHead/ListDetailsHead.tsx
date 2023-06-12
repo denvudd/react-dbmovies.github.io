@@ -1,15 +1,15 @@
 import React from "react";
-import { useGetAccountDetailsQuery } from "@/redux/api/account/slice";
+import { useLazyGetAccountDetailsQuery } from "@/redux/api/account/slice";
 import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
-import { Button, Popover, message, Modal } from "antd";
-import Link from "next/link";
-import { useRouter } from "next/router";
-
 import {
   useDeleteListMutation,
   usePostClearListMutation,
 } from "@/redux/api/lists/slice";
-import ExclamationCircleFilled  from "@ant-design/icons/lib/icons/ExclamationCircleFilled";
+import { useRouter } from "next/router";
+
+import { Button, Popover, message, Modal } from "antd";
+import Link from "next/link";
+import ExclamationCircleFilled from "@ant-design/icons/lib/icons/ExclamationCircleFilled";
 
 import styles from "./ListDetailsHead.module.scss";
 interface ListDetailsHeadProps {
@@ -34,8 +34,10 @@ const ListDetailsHead: React.FC<ListDetailsHeadProps> = ({
   const router = useRouter();
   const [sessionId, setSessionId] = React.useState<string | null>("");
 
-  const { data: accountDetails, isLoading: isAccountUsernameLoading } =
-    useGetAccountDetailsQuery({ session_id: sessionId });
+  const [
+    getAccountDetails,
+    { data: accountDetails, isLoading: isAccountUsernameLoading },
+  ] = useLazyGetAccountDetailsQuery();
   const [deleteList] = useDeleteListMutation();
   const [clearList] = usePostClearListMutation();
 
@@ -53,24 +55,26 @@ const ListDetailsHead: React.FC<ListDetailsHeadProps> = ({
   };
 
   const showDeleteConfirm = () => {
-    confirm({
-      title: "Видалити список?",
-      icon: <ExclamationCircleFilled />,
-      content: (
-        <p>
-          Ви впевенні що хочете видалити список "{name}"? Повернути видалені
-          дані буде неможливо.
-        </p>
-      ),
-      okText: "Так",
-      okType: "danger",
-      cancelText: "Ні",
-      onOk() {
-        deleteList({ session_id: sessionId, list_id: id });
-        router.push(`/user/${accountDetails?.username}`);
-      },
-      closable: true,
-    });
+    if (sessionId) {
+      confirm({
+        title: "Видалити список?",
+        icon: <ExclamationCircleFilled />,
+        content: (
+          <p>
+            Ви впевенні що хочете видалити список "{name}"? Повернути видалені
+            дані буде неможливо.
+          </p>
+        ),
+        okText: "Так",
+        okType: "danger",
+        cancelText: "Ні",
+        onOk() {
+          deleteList({ session_id: sessionId, list_id: id });
+          router.push(`/user/${accountDetails?.username}`);
+        },
+        closable: true,
+      });
+    }
   };
 
   const showClearConfirm = () => {
@@ -89,14 +93,19 @@ const ListDetailsHead: React.FC<ListDetailsHeadProps> = ({
   };
 
   React.useEffect(() => {
-    setSessionId(localStorage.getItem("session_id"));
+    const storedSessionId = localStorage.getItem("session_id");
+    setSessionId(storedSessionId);
+
+    if (storedSessionId) {
+      getAccountDetails({ session_id: storedSessionId });
+    }
   }, []);
 
   React.useEffect(() => {
-    if (isClearConfirm) {
+    if (isClearConfirm && sessionId) {
       clearList({
         session_id: sessionId,
-        list_id: id,
+        list_id: Number(id),
         confirm: isClearConfirm,
       });
     }

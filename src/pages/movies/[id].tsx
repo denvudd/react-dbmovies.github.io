@@ -1,13 +1,13 @@
 import React from "react";
-import DetailLayout from "@/layouts/DetailsLayout";
-import MovieDetailsBlock from "@/components/MovieDetailsBlock/MovieDetailsBlock";
 import {
   getMovieDetails,
   getRunningQueriesThunk,
 } from "@/redux/api/movies/slice";
+
+import DetailLayout from "@/layouts/DetailsLayout";
+import MovieDetailsBlock from "@/components/MovieDetailsBlock/MovieDetailsBlock";
 import { wrapper } from "@/redux/store";
 import { MovieDetails } from "@/redux/api/movies/types/MovieDetailsType";
-
 interface MovieDetailsPageProps {
   id: number;
   data: MovieDetails;
@@ -19,12 +19,12 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
     if (typeof id === "string") {
       await store.dispatch(
-        getMovieDetails.initiate({ id, params: "language=uk-UA&page=1" })
+        getMovieDetails.initiate({ id: Number(id), params: "language=uk-UA&page=1" })
       );
     }
 
     const { data } = getMovieDetails.select({
-      id,
+      id: Number(id),
       params: "language=uk-UA&page=1",
     })(store.getState());
 

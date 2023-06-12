@@ -1,6 +1,5 @@
 import React from "react";
 import styles from "./MovieList.module.scss";
-
 interface MovieListProps<T> {
   gutter: number;
   dataSource: T[];

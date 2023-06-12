@@ -1,6 +1,6 @@
 import React from "react";
-import styles from "./OptionElement.module.scss";
 import Image from "next/image";
+import styles from "./OptionElement.module.scss";
 
 interface OptionElementProps {
   index: number;

@@ -4,12 +4,11 @@ import {
   usePostAddToFavoriteMutation,
 } from "@/redux/api/account/slice";
 import { usePostAddMovieToListMutation } from "@/redux/api/lists/slice";
-import { message, Modal, Select, Button } from "antd";
-import Link from "next/link";
-
-import WideMovieCard from "@/components/UI/WideMovieCard/WideMovieCard";
 import { usePostAddMovieRatingMutation } from "@/redux/api/movies/slice";
 
+import { message, Modal, Select, Button } from "antd";
+import Link from "next/link";
+import WideMovieCard from "@/components/UI/WideMovieCard/WideMovieCard";
 interface WatchlistMovieCardProps {
   id: number;
   priorityIndex?: number;
@@ -33,7 +32,7 @@ const WatchlistMovieCard: React.FC<WatchlistMovieCardProps> = ({
 }) => {
   const [isFetch, setIsFetch] = React.useState(false);
   const [isRateSubmit, setIsRateSubmit] = React.useState(false);
-  const [listId, setListId] = React.useState<string>("");
+  const [listId, setListId] = React.useState<number>(0);
   const [rate, setRate] = React.useState<number>(1);
   const [
     fetchAccountLists,
@@ -62,7 +61,7 @@ const WatchlistMovieCard: React.FC<WatchlistMovieCardProps> = ({
         session_id: sessionId,
         media_type: "movie",
         media_id: movieId,
-        watchlist: false,
+        favorite: false,
       })
         .unwrap()
         .then((data) => {
@@ -95,7 +94,7 @@ const WatchlistMovieCard: React.FC<WatchlistMovieCardProps> = ({
     if (sessionId !== "") {
       const onChangeList = (value: string) => {
         if (value !== "" && value) {
-          setListId(value);
+          setListId(Number(value));
           listModal.update({
             okText: "Підтвердити",
             okButtonProps: { disabled: false },

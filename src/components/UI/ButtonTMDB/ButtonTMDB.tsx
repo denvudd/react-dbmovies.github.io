@@ -1,6 +1,7 @@
 import React from "react";
-import styles from "./ButtonTMDB.module.scss";
 import classNames from "classnames";
+
+import styles from "./ButtonTMDB.module.scss";
 
 type ButtonType = "primary" | "secondary" | "success" | "failure";
 interface ButtonPrimaryProps {

@@ -1,9 +1,10 @@
 import React from "react";
-import { withAuth } from "@/auth/withAuth";
 import { useLazyGetAccountDetailsQuery } from "@/redux/api/account/slice";
+
 import ProfileHead from "@/components/ProfileBlock/ProfileHead/ProfileHead";
 import ProfileRatedBlock from "@/components/ProfileRatedBlock/ProfileRatedBlock";
 import DetailLayout from "@/layouts/DetailsLayout";
+import { withAuth } from "@/auth/withAuth";
 
 const ProfileRatedPage = () => {
   const [sessionId, setSessionId] = React.useState<string | null>(null);
@@ -15,9 +16,11 @@ const ProfileRatedPage = () => {
   React.useEffect(() => {
     const storedSessionId = localStorage.getItem("session_id");
 
-    getAccountDetails({ session_id: storedSessionId }, true).then(() =>
-      setSessionId(storedSessionId)
-    );
+    if (storedSessionId) {
+      getAccountDetails({ session_id: storedSessionId }, true).then(() =>
+        setSessionId(storedSessionId)
+      );
+    }
   }, []);
   return (
     <>

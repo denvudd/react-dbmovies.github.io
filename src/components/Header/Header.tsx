@@ -1,8 +1,9 @@
 import React from "react";
+import { useLazyGetAccountDetailsQuery } from "@/redux/api/account/slice";
+
 import { Layout, Menu, MenuProps } from "antd";
 import Link from "next/link";
 import UserOutlined from "@ant-design/icons/lib/icons/UserOutlined";
-import { useLazyGetAccountDetailsQuery } from "@/redux/api/account/slice";
 import PlusOutlined from "@ant-design/icons/lib/icons/PlusOutlined";
 import dynamic from "next/dynamic";
 
@@ -17,11 +18,13 @@ const Header: React.FC = () => {
   ] = useLazyGetAccountDetailsQuery();
 
   React.useEffect(() => {
-    const session_id = localStorage.getItem("session_id");
+    const sessionId = localStorage.getItem("session_id");
 
-    getAccountDetails({ session_id }, true)
-      .unwrap()
-      .then((data) => console.log(data));
+    if (sessionId) {
+      getAccountDetails({ session_id: sessionId }, true)
+        .unwrap()
+        .then((data) => console.log(data));
+    }
   }, []);
 
   const leftMenuItems: MenuProps["items"] = [

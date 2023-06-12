@@ -1,14 +1,14 @@
 import React from "react";
-import Image from "next/image";
 import {
   useLazyGetMovieImagesQuery,
   useLazyGetMovieVideosQuery,
 } from "@/redux/api/movies/slice";
+
+import Image from "next/image";
 import { TabsProps, Tabs, Skeleton, List } from "antd";
 import VideoCard from "@/components/UI/VideoCard/VideoCard";
 
 import styles from "./MovieDetailsScreens.module.scss";
-
 interface MovieDetailsScreensProps {
   id: number;
 }
