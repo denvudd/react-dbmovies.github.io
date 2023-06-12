@@ -1,9 +1,10 @@
 import React from "react";
-import { formatFirstLetterToUppercase } from "@/utils/formatFirstLetterToUppercase";
+
 import Link from "next/link";
-import styles from "./ProfileListGrid.module.scss";
+import { formatFirstLetterToUppercase } from "@/utils/formatFirstLetterToUppercase";
 import type { ListItem } from "@/redux/api/account/types";
 
+import styles from "./ProfileListGrid.module.scss";
 interface UserListGridProps {
   lists: ListItem[];
 }

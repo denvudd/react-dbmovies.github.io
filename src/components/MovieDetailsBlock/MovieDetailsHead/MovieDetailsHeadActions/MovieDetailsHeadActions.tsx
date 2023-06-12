@@ -1,12 +1,13 @@
 import React from "react";
+import { useLazyGetMovieAccoutStatesQuery } from "@/redux/api/movies/slice";
+
+import MovieDetailsHeadRate from "./MovieDetailsHeadRate/MovieDetailsHeadRate";
+import MovieDetailsHeadWatchlist from "./MovieDetailsHeadWatchlist/MovieDetailsHeadWatchlist";
+import MovieDetailsHeadFavorite from "./MovieDetailsHeadFavorite/MovieDetailsHeadFavorite";
+import MovieDetailsHeadLists from "./MovieDetailsHeadLists/MovieDetailsHeadLists";
 import RatingBar from "@/components/UI/RatingBar/RatingBar";
 import CaretRightFilled from "@ant-design/icons/lib/icons/CaretRightFilled";
-import UnorderedListOutlined from "@ant-design/icons/lib/icons/UnorderedListOutlined";
-import HeartFilled from "@ant-design/icons/lib/icons/HeartFilled";
-import PushpinFilled from "@ant-design/icons/lib/icons/PushpinFilled";
-import StarFilled from "@ant-design/icons/lib/icons/StarFilled";
 import { Popover } from "antd";
-import classNames from "classnames";
 
 interface MovieDetailsHeadActionsProps {
   id: number;
@@ -15,11 +16,6 @@ interface MovieDetailsHeadActionsProps {
 }
 
 import styles from "./MovieDetailsHeadActions.module.scss";
-import { useLazyGetMovieAccoutStatesQuery } from "@/redux/api/movies/slice";
-import MovieDetailsHeadRate from "./MovieDetailsHeadRate/MovieDetailsHeadRate";
-import MovieDetailsHeadWatchlist from "./MovieDetailsHeadWatchlist/MovieDetailsHeadWatchlist";
-import MovieDetailsHeadFavorite from "./MovieDetailsHeadFavorite/MovieDetailsHeadFavorite";
-import MovieDetailsHeadLists from "./MovieDetailsHeadLists/MovieDetailsHeadLists";
 
 const MovieDetailsHeadActions: React.FC<MovieDetailsHeadActionsProps> = ({
   id,
@@ -59,7 +55,13 @@ const MovieDetailsHeadActions: React.FC<MovieDetailsHeadActionsProps> = ({
           }
           placement="bottom"
         >
-          <MovieDetailsHeadLists id={id} title={title} sessionId={sessionId} />
+          <span className={styles.tooltipWrapper}>
+            <MovieDetailsHeadLists
+              id={id}
+              title={title}
+              sessionId={sessionId}
+            />
+          </span>
         </Popover>
         <Popover
           content={
@@ -74,12 +76,14 @@ const MovieDetailsHeadActions: React.FC<MovieDetailsHeadActionsProps> = ({
           }
           placement="bottom"
         >
-          <MovieDetailsHeadFavorite
-            id={id}
-            title={title}
-            sessionId={sessionId}
-            favorite={accountStates ? accountStates.favorite : false}
-          />
+          <span className={styles.tooltipWrapper}>
+            <MovieDetailsHeadFavorite
+              id={id}
+              title={title}
+              sessionId={sessionId}
+              favorite={accountStates ? accountStates.favorite : false}
+            />
+          </span>
         </Popover>
         <Popover
           content={
@@ -96,12 +100,14 @@ const MovieDetailsHeadActions: React.FC<MovieDetailsHeadActionsProps> = ({
           }
           placement="bottom"
         >
-          <MovieDetailsHeadWatchlist
-            id={id}
-            title={title}
-            sessionId={sessionId}
-            watchlist={accountStates ? accountStates.watchlist : false}
-          />
+          <span className={styles.tooltipWrapper}>
+            <MovieDetailsHeadWatchlist
+              id={id}
+              title={title}
+              sessionId={sessionId}
+              watchlist={accountStates ? accountStates.watchlist : false}
+            />
+          </span>
         </Popover>
         <Popover
           content={
@@ -115,12 +121,14 @@ const MovieDetailsHeadActions: React.FC<MovieDetailsHeadActionsProps> = ({
           }
           placement="bottom"
         >
-          <MovieDetailsHeadRate
-            id={id}
-            title={title}
-            sessionId={sessionId}
-            rated={accountStates ? accountStates.rated : false}
-          />
+          <span className={styles.tooltipWrapper}>
+            <MovieDetailsHeadRate
+              id={id}
+              title={title}
+              sessionId={sessionId}
+              rated={accountStates ? accountStates.rated : false}
+            />
+          </span>
         </Popover>
         <li className={styles.video}>
           <a href="">

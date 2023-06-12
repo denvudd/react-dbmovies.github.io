@@ -1,11 +1,11 @@
 import React from "react";
 import { useLazyGetAccountListsQuery } from "@/redux/api/account/slice";
 import { usePostAddMovieToListMutation } from "@/redux/api/lists/slice";
+import { useDeleteMovieRatingMutation } from "@/redux/api/movies/slice";
+
 import Link from "next/link";
 import { Button, Modal, Select, message } from "antd";
 import WideMovieCard from "../../UI/WideMovieCard/WideMovieCard";
-import { useDeleteMovieRatingMutation } from "@/redux/api/movies/slice";
-
 interface RatedMovieCardProps {
   id: number;
   priorityIndex?: number;

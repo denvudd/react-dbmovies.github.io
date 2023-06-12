@@ -1,6 +1,5 @@
 import React from "react";
 import { Layout } from "antd";
-
 interface Props {
   children: React.ReactNode;
 }

@@ -1,17 +1,17 @@
 import React from "react";
 import { useGetMovieReleaseDatesQuery } from "@/redux/api/movies/slice";
-import EyeOutlined from "@ant-design/icons/lib/icons/EyeOutlined";
 
+import MovieDetailsHeadActions from "./MovieDetailsHeadActions/MovieDetailsHeadActions";
 import { Image as ANTDImage } from "antd";
 import Image from "next/image";
-import type { Genre } from "@/redux/api/genres/types/MovieListGenreType";
-import { formatTime } from "@/utils/formatTime";
+import EyeOutlined from "@ant-design/icons/lib/icons/EyeOutlined";
 import { FastAverageColor } from "fast-average-color";
+import { formatTime } from "@/utils/formatTime";
+import { createRgbaString } from "@/utils/createRgbaString";
 import type { FastAverageColorResult } from "fast-average-color";
+import type { Genre } from "@/redux/api/genres/types/MovieListGenreType";
 
 import styles from "./MovieDetailsHead.module.scss";
-import { createRgbaString } from "@/utils/createRgbaString";
-import MovieDetailsHeadActions from "./MovieDetailsHeadActions/MovieDetailsHeadActions";
 interface MovieDetailsHeadProps {
   id: number;
   poster_path: string | null;

@@ -1,7 +1,9 @@
 import React from "react";
 import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
+
 import { Popover, message } from "antd";
-import { AccountDetailsApiResponse } from "@/redux/api/account/types/AccountDetailsType";
+import type { AccountDetailsApiResponse } from "@/redux/api/account/types";
+
 import styles from "./ProfileHead.module.scss";
 
 type ProfileHeadProps = AccountDetailsApiResponse;

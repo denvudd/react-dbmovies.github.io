@@ -1,4 +1,5 @@
 import React from "react";
+
 import { Card, Typography } from "antd";
 import Image from "next/image";
 import Link from "next/link";
@@ -6,7 +7,6 @@ import RatingBar from "../RatingBar/RatingBar";
 import { formatReleaseDate } from "@/utils/formatReleaseDate";
 
 import styles from "./MovieCard.module.scss";
-
 interface MovieCardProps {
   id: number;
   index: number;

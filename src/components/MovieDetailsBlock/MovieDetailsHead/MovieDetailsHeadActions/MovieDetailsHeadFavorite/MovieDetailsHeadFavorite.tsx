@@ -1,11 +1,11 @@
 import React from "react";
+import { usePostAddToFavoriteMutation } from "@/redux/api/account/slice";
+
 import { message } from "antd";
-import styles from "../MovieDetailsHeadActions.module.scss";
+import HeartFilled from "@ant-design/icons/lib/icons/HeartFilled";
 import classNames from "classnames";
 
-import { usePostAddToFavoriteMutation } from "@/redux/api/account/slice";
-import HeartFilled from "@ant-design/icons/lib/icons/HeartFilled";
-
+import styles from "../MovieDetailsHeadActions.module.scss";
 interface MovieDetailsHeadFavoriteProps {
   id: number;
   sessionId: string | null;

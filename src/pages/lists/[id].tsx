@@ -1,6 +1,8 @@
 import React from "react";
+
 import { useGetListDetailsQuery } from "@/redux/api/lists/slice";
-import { GetServerSidePropsContext } from "next";
+
+import type { GetServerSidePropsContext } from "next";
 import DetailLayout from "@/layouts/DetailsLayout";
 import ListDetailsHead from "@/components/ListDetailsBlock/ListDetailsHead/ListDetailsHead";
 import ListDetailsBody from "@/components/ListDetailsBlock/ListDetailsBody/ListDetailsBody";

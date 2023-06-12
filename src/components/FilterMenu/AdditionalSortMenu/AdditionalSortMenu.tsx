@@ -1,21 +1,20 @@
 import React from "react";
-import { Menu, MenuProps, DatePicker, Select, Slider, Spin } from "antd";
-import { default as LoadingOutlined } from "@ant-design/icons/lib/icons/LoadingOutlined";
 import { useGetMovieListGenreQuery } from "@/redux/api/genres/slice";
 import { useGetConfigurationLanguagesQuery } from "@/redux/api/configuration/slice";
 import { useLazyGetSearchKeywordsQuery } from "@/redux/api/search/slice";
 import { useDebounce } from "@/hooks/useDebounce";
 
-import type { RangePickerProps } from "antd/es/date-picker";
+import { Menu, MenuProps, DatePicker, Select, Slider, Spin } from "antd";
 import { AdditionalSortDataState } from "../FilterMenu";
-
+import LoadingOutlined  from "@ant-design/icons/lib/icons/LoadingOutlined";
 import dayjs from "dayjs";
 import "dayjs/locale/uk.js";
 import locale from "antd/lib/date-picker/locale/uk_UA";
 
-import styles from "./AdditionalSortMenu.module.scss";
+import type { RangePickerProps } from "antd/es/date-picker";
 import type { Keyword } from "@/redux/api/search/types";
 
+import styles from "./AdditionalSortMenu.module.scss";
 interface AdditionalSortMenuProps {
   onAdditionalSortChange: (additionalSortBy: AdditionalSortDataState) => void;
 }

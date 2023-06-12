@@ -1,12 +1,12 @@
 import React from "react";
-import { Button, Modal, Select, message } from "antd";
-import UnorderedListOutlined from "@ant-design/icons/lib/icons/UnorderedListOutlined";
-import styles from "../MovieDetailsHeadActions.module.scss";
-
 import { useLazyGetAccountListsQuery } from "@/redux/api/account/slice";
 import { usePostAddMovieToListMutation } from "@/redux/api/lists/slice";
+
+import { Button, Modal, Select, message } from "antd";
+import UnorderedListOutlined from "@ant-design/icons/lib/icons/UnorderedListOutlined";
 import Link from "next/link";
 
+import styles from "../MovieDetailsHeadActions.module.scss";
 interface MovieDetailsHeadListsProps {
   id: number;
   sessionId: string | null;

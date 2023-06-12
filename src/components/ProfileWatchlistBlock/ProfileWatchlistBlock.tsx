@@ -1,12 +1,12 @@
 import React from "react";
 import { useLazyGetAccountWatchlistMoviesQuery } from "@/redux/api/account/slice";
+
 import ProfileTabs from "../UI/ProfileTabs/ProfileTabs";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin, Select } from "antd";
 import WatchlistMovieCard from "./WatchlitMovieCard/WatchlistMovieCard";
 
 import styles from './ProfileWatchlistBlock.module.scss'
-
 interface ProfileWatchlistBlockProps {
   account_id: number;
   session_id: string;

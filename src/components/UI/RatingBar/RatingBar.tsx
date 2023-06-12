@@ -1,7 +1,9 @@
 import React from "react";
+
 import { Progress } from "antd";
-import styles from "./RatingBar.module.scss";
 import { formatRating } from "@/utils/formatRating";
+
+import styles from "./RatingBar.module.scss";
 
 interface RatingBarProps {
   rating: number;

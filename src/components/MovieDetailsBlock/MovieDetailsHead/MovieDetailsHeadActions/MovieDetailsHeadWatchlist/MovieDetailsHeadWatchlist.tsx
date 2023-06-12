@@ -1,11 +1,11 @@
 import React from "react";
-import { message } from "antd";
-import PushpinFilled from "@ant-design/icons/lib/icons/PushpinFilled";
-import styles from "../MovieDetailsHeadActions.module.scss";
-import classNames from "classnames";
-
 import { usePostAddToWatchlistMutation } from "@/redux/api/account/slice";
 
+import { message } from "antd";
+import PushpinFilled from "@ant-design/icons/lib/icons/PushpinFilled";
+import classNames from "classnames";
+
+import styles from "../MovieDetailsHeadActions.module.scss";
 interface MovieDetailsHeadWatchlistProps {
   id: number;
   sessionId: string | null;

@@ -6,6 +6,7 @@ import {
 } from "@/redux/api/lists/slice";
 import { useLazyGetMovieDiscoverQuery } from "@/redux/api/discover/slice";
 import { useDebounce } from "@/hooks/useDebounce";
+
 import {
   Button,
   Checkbox,
@@ -21,9 +22,9 @@ import Link from "next/link";
 import OptionElement from "../UI/OptionElement/OptionElement";
 import LoadingOutlined from "@ant-design/icons/lib/icons/LoadingOutlined";
 import WideMovieCard from "../UI/WideMovieCard/WideMovieCard";
+import type { ListMovie } from "@/redux/api/movies/types";
 
 import styles from "./ListNewBlock.module.scss";
-import type { ListMovie } from "@/redux/api/movies/types";
 interface NewList {
   name: string;
   description: string;

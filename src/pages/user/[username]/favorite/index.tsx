@@ -1,6 +1,7 @@
 import React from "react";
-import { withAuth } from "@/auth/withAuth";
 import { useLazyGetAccountDetailsQuery } from "@/redux/api/account/slice";
+
+import { withAuth } from "@/auth/withAuth";
 import ProfileHead from "@/components/ProfileBlock/ProfileHead/ProfileHead";
 import ProfileFavoriteBlock from "@/components/ProfileFavoriteBlock/ProfileFavoriteBlock";
 import DetailLayout from "@/layouts/DetailsLayout";

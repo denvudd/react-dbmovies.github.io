@@ -1,15 +1,16 @@
 import React from "react";
-import Head from "next/head";
-import DetailLayout from "@/layouts/DetailsLayout";
-import ButtonTMDB from "@/components/UI/ButtonTMDB/ButtonTMDB";
+import { useRouter } from "next/router";
 import {
   useLazyGetAuthTokenQuery,
   usePostCreateSessionMutation,
 } from "@/redux/api/authentication/slice";
-import { useRouter } from "next/router";
+
+import Head from "next/head";
+import DetailLayout from "@/layouts/DetailsLayout";
+import ButtonTMDB from "@/components/UI/ButtonTMDB/ButtonTMDB";
+import LoginOutlined from "@ant-design/icons/lib/icons/LoginOutlined";
 
 import styles from "./LoginBlock.module.scss";
-import LoginOutlined from "@ant-design/icons/lib/icons/LoginOutlined";
 
 export const LoginBlock = () => {
   const [getAuthToken] = useLazyGetAuthTokenQuery();

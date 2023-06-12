@@ -1,5 +1,6 @@
 import React from "react";
 import { useGetMovieRecsQuery } from "@/redux/api/movies/slice";
+
 import { List, Skeleton } from "antd";
 import RecomendationCard from "@/components/UI/RecomendationCard/RecomendationCard";
 

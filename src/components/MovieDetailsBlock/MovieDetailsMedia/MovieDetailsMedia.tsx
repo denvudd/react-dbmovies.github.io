@@ -1,10 +1,11 @@
 import React from "react";
+import { useInViewport } from "ahooks";
+
 import { Layout, Skeleton } from "antd";
 import MovieDetailsCast from "./MovieDetailsCast/MovieDetailsCast";
 import MovieDetailsScreens from "./MovieDetailsScreens/MovieDetailsScreens";
 import SiderMedia from "./SiderMedia/SiderMedia";
 import dynamic from "next/dynamic";
-import { useInViewport } from "ahooks";
 import type { Collection } from "@/redux/api/movies/types/MovieDetailsType";
 
 import styles from "./MovieDetailsMedia.module.scss";

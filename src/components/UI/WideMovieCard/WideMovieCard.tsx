@@ -1,4 +1,5 @@
 import React from "react";
+
 import Link from "next/link";
 import Image from "next/image";
 import RatingBar from "../RatingBar/RatingBar";
@@ -8,7 +9,6 @@ import UnorderedListOutlined from "@ant-design/icons/lib/icons/UnorderedListOutl
 import { formatReleaseDate } from "@/utils/formatReleaseDate";
 
 import styles from "./WideMovieCard.module.scss";
-
 interface WideMovieCardProps {
   id: number;
   priorityIndex?: number,

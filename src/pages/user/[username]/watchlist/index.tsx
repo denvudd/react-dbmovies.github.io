@@ -1,9 +1,10 @@
 import React from "react";
-import { withAuth } from "@/auth/withAuth";
 import { useLazyGetAccountDetailsQuery } from "@/redux/api/account/slice";
+
 import ProfileHead from "@/components/ProfileBlock/ProfileHead/ProfileHead";
 import ProfileWatchlistBlock from "@/components/ProfileWatchlistBlock/ProfileWatchlistBlock";
 import DetailLayout from "@/layouts/DetailsLayout";
+import { withAuth } from "@/auth/withAuth";
 
 const ProfileRatedPage = () => {
   const [sessionId, setSessionId] = React.useState<string | null>(null);

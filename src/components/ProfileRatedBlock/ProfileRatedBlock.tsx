@@ -1,5 +1,6 @@
 import React from "react";
 import { useLazyGetAccountRatedMoviesQuery } from "@/redux/api/account/slice";
+
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin, Select } from "antd";
 import RatedMovieCard from "./RatedMovieCard/RatedMovieCard";

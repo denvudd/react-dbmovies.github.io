@@ -1,9 +1,10 @@
 import React from "react";
+
 import Link from "next/link";
 import Image from "next/image";
-import type { ListMovie } from "@/redux/api/movies/types";
 import RatingBar from "../RatingBar/RatingBar";
 import { truncateString } from "@/utils/truncateString";
+import type { ListMovie } from "@/redux/api/movies/types";
 
 import styles from "./ListMovieCard.module.scss";
 interface ListMovieCardProps {

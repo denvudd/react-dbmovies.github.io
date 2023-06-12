@@ -1,20 +1,24 @@
 import React from "react";
-import CloseOutlined from "@ant-design/icons/lib/icons/CloseOutlined";
-import SearchOutlined from "@ant-design/icons/lib/icons/SearchOutlined";
-import RiseOutlined from "@ant-design/icons/lib/icons/RiseOutlined";
-import { Select } from "antd";
+import ReactDOM from "react-dom";
+
 import { useLazyGetSearchMultiQuery } from "@/redux/api/search/slice";
 import { useLazyGetTrendingAllQuery } from "@/redux/api/trending/slice";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useClickAway } from "ahooks";
-import ReactDOM from "react-dom";
+
+import CloseOutlined from "@ant-design/icons/lib/icons/CloseOutlined";
+import SearchOutlined from "@ant-design/icons/lib/icons/SearchOutlined";
+import RiseOutlined from "@ant-design/icons/lib/icons/RiseOutlined";
+import { Select } from "antd";
+import Link from "next/link";
+
 import type {
   SearchMovie,
   SearchPerson,
   SearchTV,
 } from "@/redux/api/search/types/SearchMultiType";
+
 import styles from "./SearchBar.module.scss";
-import Link from "next/link";
 
 const SearchBar: React.FC = () => {
   const [searchMulti, { data: searchData, isLoading: isSearchDataLoading }] =

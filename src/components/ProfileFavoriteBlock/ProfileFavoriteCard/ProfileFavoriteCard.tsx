@@ -4,12 +4,11 @@ import {
   usePostAddToFavoriteMutation,
 } from "@/redux/api/account/slice";
 import { usePostAddMovieToListMutation } from "@/redux/api/lists/slice";
-import { message, Modal, Select, Button } from "antd";
-import Link from "next/link";
-
-import WideMovieCard from "@/components/UI/WideMovieCard/WideMovieCard";
 import { usePostAddMovieRatingMutation } from "@/redux/api/movies/slice";
 
+import { message, Modal, Select, Button } from "antd";
+import Link from "next/link";
+import WideMovieCard from "@/components/UI/WideMovieCard/WideMovieCard";
 interface WatchlistMovieCardProps {
   id: number;
   priorityIndex?: number;
