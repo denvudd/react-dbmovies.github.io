@@ -1,8 +1,6 @@
 import React from "react";
 import { Layout, Menu, MenuProps } from "antd";
 import Link from "next/link";
-import UserOutlined from "@ant-design/icons/lib/icons/UserOutlined";
-import SearchOutlined from "@ant-design/icons/lib/icons/SearchOutlined";
 import { useLazyGetAccountDetailsQuery } from "@/redux/api/account/slice";
 
 import styles from "./Header.module.scss";
@@ -129,7 +127,6 @@ const Header: React.FC = () => {
       key: "account",
       label: (
         <Link href={`/login`} className={styles.link}>
-          <UserOutlined style={{ fontSize: "1.3em" }} />
         </Link>
       ),
       children: [
@@ -186,7 +183,6 @@ const Header: React.FC = () => {
       key: "movies",
       label: (
         <Link href={`/movies/popularMovies`} className={styles.link}>
-          <SearchOutlined style={{ fontSize: "1.3em" }} />
         </Link>
       ),
     },

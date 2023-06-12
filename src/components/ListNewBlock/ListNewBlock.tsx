@@ -23,7 +23,6 @@ import Link from "next/link";
 import Image from "next/image";
 import RatingBar from "../UI/RatingBar/RatingBar";
 import OptionElement from "../UI/OptionElement/OptionElement";
-import { LoadingOutlined, CloseOutlined } from "@ant-design/icons";
 import { formatReleaseDate } from "@/utils/formatReleaseDate";
 
 import styles from "./ListNewBlock.module.scss";
@@ -283,11 +282,8 @@ const ListNewBlock = () => {
                 notFoundContent={
                   isSearchMovieFetching ? (
                     <div className={styles.selectLoading}>
-                      <Spin
-                        indicator={
-                          <LoadingOutlined style={{ fontSize: 30 }} spin />
-                        }
-                      />
+                      
+                      
                     </div>
                   ) : null
                 }

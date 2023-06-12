@@ -10,7 +10,6 @@ import {
   useDeleteListMutation,
   usePostClearListMutation,
 } from "@/redux/api/lists/slice";
-import { ExclamationCircleFilled } from "@ant-design/icons";
 
 interface ListDetailsHeadProps {
   name: string;
@@ -55,7 +54,7 @@ const ListDetailsHead: React.FC<ListDetailsHeadProps> = ({
   const showDeleteConfirm = () => {
     confirm({
       title: "Видалити список?",
-      icon: <ExclamationCircleFilled />,
+      icon: <div></div>,
       content: (
         <p>
           Ви впевенні що хочете видалити список "{name}"? Повернути видалені
@@ -76,7 +75,7 @@ const ListDetailsHead: React.FC<ListDetailsHeadProps> = ({
   const showClearConfirm = () => {
     confirm({
       title: "Очистити список?",
-      icon: <ExclamationCircleFilled />,
+      icon: <div></div>,
       content: <p>Ви впевнені що хочете очистити список "{name}"?</p>,
       okText: "Так",
       okType: "danger",

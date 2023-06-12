@@ -3,7 +3,6 @@ import Link from "next/link";
 import Image from "next/image";
 import RatingBar from "../RatingBar/RatingBar";
 import { Button, Rate, Typography } from "antd";
-import { CloseOutlined, UnorderedListOutlined } from "@ant-design/icons";
 import { formatReleaseDate } from "@/utils/formatReleaseDate";
 
 import styles from "./WideMovieCard.module.scss";
@@ -107,7 +106,6 @@ const WideMovieCard: React.FC<WideMovieCardProps> = ({
                         ? onClickAddMovieToList
                         : undefined
                     }
-                    icon={<UnorderedListOutlined />}
                   ></Button>
                   Додати до списку
                 </li>
@@ -122,7 +120,6 @@ const WideMovieCard: React.FC<WideMovieCardProps> = ({
           onClick={() => onClickElementDelete(id, title)}
           className={styles.cardDeleteIcon}
         >
-          <CloseOutlined />
         </button>
       )}
     </div>
