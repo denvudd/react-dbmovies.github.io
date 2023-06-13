@@ -1,5 +1,12 @@
 import React from "react";
-import { Typography, Space, Popover } from "antd";
+import Typography from "antd/es/typography";
+import Space  from "antd/es/space";
+import Popover from "antd/es/popover";
+import {
+  FacebookFilled,
+  TwitterSquareFilled,
+  InstagramFilled,
+} from "@ant-design/icons";
 import styles from "./SideMedia.module.scss";
 import { useGetMovieKeywordsQuery } from "@/redux/api/movies/slice";
 import { formatBudget } from "@/utils/formatBudget";
@@ -41,6 +48,7 @@ const SiderMedia: React.FC<SliderMediaProps> = ({
               placement="bottom"
             >
               <Typography.Link>
+                <FacebookFilled style={{ fontSize: "1.9em", color: "#000" }} />
               </Typography.Link>
             </Popover>
             <Popover
@@ -48,7 +56,9 @@ const SiderMedia: React.FC<SliderMediaProps> = ({
               placement="bottom"
             >
               <Typography.Link>
-
+                <TwitterSquareFilled
+                  style={{ fontSize: "1.9em", color: "#000" }}
+                />
               </Typography.Link>
             </Popover>
             <Popover
@@ -56,7 +66,7 @@ const SiderMedia: React.FC<SliderMediaProps> = ({
               placement="bottom"
             >
               <Typography.Link>
-
+                <InstagramFilled style={{ fontSize: "1.9em", color: "#000" }} />
               </Typography.Link>
             </Popover>
           </Space>

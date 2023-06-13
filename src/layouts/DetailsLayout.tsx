@@ -1,6 +1,5 @@
 import React from "react";
-import { Layout } from "antd";
-
+import Layout  from "antd/es/layout/index";
 interface Props {
   children: React.ReactNode;
 }

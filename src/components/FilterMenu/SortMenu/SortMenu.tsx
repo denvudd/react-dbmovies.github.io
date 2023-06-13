@@ -1,5 +1,7 @@
 import React from "react";
-import { MenuProps, Select, Menu } from "antd";
+import Menu from "antd/es/menu";
+import { MenuProps } from "antd/es/menu";
+import Select from "antd/es/select";
 import styles from "./SortMenu.module.scss";
 import { SortValue } from "@/redux/params/types/types";
 

@@ -6,16 +6,22 @@ import {
 import { usePostAddMovieToListMutation } from "@/redux/api/lists/slice";
 import { useLazyGetAccountListsQuery } from "@/redux/api/account/slice";
 import { formatTime } from "@/utils/formatTime";
-import RatingBar from "@/components/UI/RatingBar/RatingBar";
 import {
-  Image as ANTDImage,
-  Popover,
-  Modal,
-  Select,
-  message,
-  Button,
-  Rate,
-} from "antd";
+  CaretRightFilled,
+  UnorderedListOutlined,
+  HeartFilled,
+  PushpinFilled,
+  StarFilled,
+  EyeOutlined,
+} from "@ant-design/icons";
+import RatingBar from "@/components/UI/RatingBar/RatingBar";
+import Popover from "antd/es/popover";
+import Modal from "antd/es/modal";
+import Select from "antd/es/select";
+import message from "antd/es/message";
+import Button from "antd/es/button";
+import Rate from "antd/es/rate";
+import { Image as ANTDImage } from "antd";
 import Image from "next/image";
 import { Genre } from "@/redux/api/genres/types/MovieListGenreType";
 import Link from "next/link";
@@ -111,6 +117,7 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
                 </Button>
               </div>
             ),
+            icon: <UnorderedListOutlined />,
             onOk() {
               setIsListSubmit(true);
             },
@@ -161,6 +168,7 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
             onOk() {
               setIsRateSubmit(true);
             },
+            icon: <StarFilled />,
             onCancel() {},
             okText: "Оберіть оцінку",
             okButtonProps: {
@@ -280,6 +288,7 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
                     </>
                   )}
                   <div className={styles.previewText}>
+                    <EyeOutlined />
                     <span>Попередній перегляд</span>
                   </div>
                 </div>
@@ -335,7 +344,7 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
                       <li className={styles.tooltip}>
                         <button onClick={onClickAddMovieToList}>
                           <span>
-
+                            <UnorderedListOutlined />
                           </span>
                         </button>
                       </li>
@@ -347,6 +356,7 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
                       <li className={styles.tooltip}>
                         <button>
                           <span>
+                            <HeartFilled />
                           </span>
                         </button>
                       </li>
@@ -358,6 +368,7 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
                       <li className={styles.tooltip}>
                         <button>
                           <span>
+                            <PushpinFilled />
                           </span>
                         </button>
                       </li>
@@ -366,6 +377,7 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
                       <li className={styles.tooltip}>
                         <button onClick={onClickRateMovie}>
                           <span>
+                            <StarFilled />
                           </span>
                         </button>
                       </li>
@@ -373,6 +385,7 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
                     <li className={styles.video}>
                       <a href="">
                         <span>
+                          <CaretRightFilled />
                         </span>{" "}
                         Дивитись трейлер
                       </a>

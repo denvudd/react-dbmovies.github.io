@@ -1,5 +1,6 @@
 import React from "react";
-import { Card, Typography } from "antd";
+import Card from "antd/es/card";
+import Typography from "antd/es/typography";
 import Link from "next/link";
 import Image from "next/image";
 import styles from './CardCard.module.scss'

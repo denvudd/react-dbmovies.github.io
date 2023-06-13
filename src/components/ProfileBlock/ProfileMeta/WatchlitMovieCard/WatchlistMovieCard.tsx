@@ -4,7 +4,10 @@ import {
   usePostAddToWatchlistMutation,
 } from "@/redux/api/account/slice";
 import { usePostAddMovieToListMutation } from "@/redux/api/lists/slice";
-import { message, Modal, Select, Button } from "antd";
+import message from "antd/es/message";
+import Modal from "antd/es/modal";
+import Select from "antd/es/select";
+import Button from "antd/es/button";
 import Link from "next/link";
 
 import styles from "./WatchlistMovieCard.module.scss";

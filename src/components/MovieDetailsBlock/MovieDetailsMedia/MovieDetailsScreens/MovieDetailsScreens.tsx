@@ -4,7 +4,10 @@ import {
   useLazyGetMovieImagesQuery,
   useLazyGetMovieVideosQuery,
 } from "@/redux/api/movies/slice";
-import { TabsProps, Tabs, Skeleton, List } from "antd";
+import Tabs from "antd/es/tabs";
+import { TabsProps } from "antd/es/tabs";
+import Skeleton from "antd/es/skeleton";
+import List from "antd/es/list";
 import VideoCard from "@/components/UI/VideoCard/VideoCard";
 
 import styles from "./MovieDetailsScreens.module.scss";

@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./MovieDetailsMedia.module.scss";
-import { Layout } from "antd";
+import Layout from "antd/es/layout";
 
 import MovieDetailsCast from "./MovieDetailsCast/MovieDetailsCast";
 import MovieDetailsScreens from "./MovieDetailsScreens/MovieDetailsScreens";

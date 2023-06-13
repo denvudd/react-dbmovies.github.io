@@ -1,5 +1,6 @@
 import React from "react";
-import { Modal } from "antd";
+import Modal from "antd/es/modal";
+import { CaretRightFilled } from "@ant-design/icons";
 import YouTube from "react-youtube";
 import styles from "./VideoCard.module.scss";
 
@@ -30,6 +31,7 @@ const VideoCard: React.FC<VideoCardProps> = ({ videoKey }) => {
           <button onClick={showModal} className={styles.playTrailer}>
             <div className={styles.button}>
               <span>
+                <CaretRightFilled size={30} />
               </span>
             </div>
           </button>

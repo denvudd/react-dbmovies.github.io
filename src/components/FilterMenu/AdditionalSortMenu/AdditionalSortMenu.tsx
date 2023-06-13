@@ -1,5 +1,11 @@
 import React from "react";
-import { Menu, MenuProps, DatePicker, Select, Slider, Spin } from "antd";
+import Menu from "antd/es/menu";
+import { MenuProps } from "antd/es/menu";
+import DatePicker from "antd/es/date-picker";
+import Select from "antd/es/select";
+import Slider from "antd/es/slider";
+import Spin from "antd/es/spin";
+import { LoadingOutlined } from "@ant-design/icons";
 import { useGetMovieListGenreQuery } from "@/redux/api/genres/slice";
 import { useGetConfigurationLanguagesQuery } from "@/redux/api/configuration/slice";
 import { useLazyGetSearchKeywordsQuery } from "@/redux/api/search/slice";
@@ -246,7 +252,11 @@ const AdditionalSortMenu: React.FC<AdditionalSortMenuProps> = React.memo(
                   <ul className={styles.genresList}>
                     {isGenresLoading && (
                       <div className={styles.loadingWrapper}>
-                        
+                        <Spin
+                          indicator={
+                            <LoadingOutlined style={{ fontSize: 24 }} spin />
+                          }
+                        />
                       </div>
                     )}
                     {!isGenresLoading &&

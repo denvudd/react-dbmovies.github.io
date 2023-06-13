@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { Typography } from "antd";
+import Typography from "antd/es/typography";
 
 export const Home = () => {
   return (
