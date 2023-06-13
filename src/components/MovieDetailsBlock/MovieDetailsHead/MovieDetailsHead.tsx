@@ -15,13 +15,15 @@ import {
   EyeOutlined,
 } from "@ant-design/icons";
 import RatingBar from "@/components/UI/RatingBar/RatingBar";
-import Popover from "antd/es/popover";
-import Modal from "antd/es/modal";
-import Select from "antd/es/select";
-import message from "antd/es/message";
-import Button from "antd/es/button";
-import Rate from "antd/es/rate";
-import { Image as ANTDImage } from "antd";
+import {
+  Image as ANTDImage,
+  Popover,
+  Modal,
+  Select,
+  message,
+  Button,
+  Rate,
+} from "antd";
 import Image from "next/image";
 import { Genre } from "@/redux/api/genres/types/MovieListGenreType";
 import Link from "next/link";

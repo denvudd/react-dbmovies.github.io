@@ -1,5 +1,5 @@
 import React from "react";
-import Modal from "antd/es/modal";
+import { Modal } from "antd";
 import { CaretRightFilled } from "@ant-design/icons";
 import YouTube from "react-youtube";
 import styles from "./VideoCard.module.scss";

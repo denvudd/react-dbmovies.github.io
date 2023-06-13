@@ -1,5 +1,6 @@
 import React from "react";
-import Layout  from "antd/es/layout/index";
+import { Layout } from "antd";
+
 interface Props {
   children: {
     sidebar: React.ReactNode;

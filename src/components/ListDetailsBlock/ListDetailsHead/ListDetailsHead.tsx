@@ -1,10 +1,7 @@
 import React from "react";
 import { useGetAccountDetailsQuery } from "@/redux/api/account/slice";
 import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
-import Button from "antd/es/button";
-import Popover from "antd/es/popover";
-import message from "antd/es/message";
-import Modal from "antd/es/modal";
+import { Button, Popover, message, Modal } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/router";
 

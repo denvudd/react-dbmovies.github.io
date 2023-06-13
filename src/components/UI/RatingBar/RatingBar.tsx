@@ -1,5 +1,5 @@
 import React from "react";
-import Progress from "antd/es/progress";
+import { Progress } from "antd";
 import styles from "./RatingBar.module.scss";
 import { formatRating } from "@/utils/formatRating";
 

@@ -2,9 +2,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import RatingBar from "../RatingBar/RatingBar";
-import Button from "antd/es/button";
-import Rate from "antd/es/rate";
-import Typography from "antd/es/typography";
+import { Button, Rate, Typography } from "antd";
 import { CloseOutlined, UnorderedListOutlined } from "@ant-design/icons";
 import { formatReleaseDate } from "@/utils/formatReleaseDate";
 

@@ -6,19 +6,25 @@ import {
 } from "@/redux/api/lists/slice";
 import { useLazyGetMovieDiscoverQuery } from "@/redux/api/discover/slice";
 import { useDebounce } from "@/hooks/useDebounce";
-import Button from "antd/es/button";
-import Checkbox from "antd/es/checkbox";
-import Form from "antd/es/form";
-import Input from "antd/es/input";
-import Result from "antd/es/result";
-import Select from "antd/es/select";
-import Spin from "antd/es/spin";
-import Steps from "antd/es/steps";
-import message from "antd/es/message";
+import {
+  Button,
+  Checkbox,
+  Form,
+  Input,
+  Result,
+  Select,
+  Spin,
+  Steps,
+  Typography,
+  message,
+} from "antd";
 import { ListMovie } from "@/redux/api/movies/types/ListMovieType";
 import Link from "next/link";
+import Image from "next/image";
+import RatingBar from "../UI/RatingBar/RatingBar";
 import OptionElement from "../UI/OptionElement/OptionElement";
-import { LoadingOutlined } from "@ant-design/icons";
+import { LoadingOutlined, CloseOutlined } from "@ant-design/icons";
+import { formatReleaseDate } from "@/utils/formatReleaseDate";
 
 import styles from "./ListNewBlock.module.scss";
 import WideMovieCard from "../UI/WideMovieCard/WideMovieCard";
@@ -328,9 +334,7 @@ const ListNewBlock = () => {
                           : "https://placehold.co/150x225/png/?text=Not+Found"
                       }
                       isShowDelete
-                      onClickElementDelete={(id, title) => {
-                        onClickElementDelete(id, title);
-                      }}
+                      onClickElementDelete={(id, title) => {onClickElementDelete(id, title)}}
                     />
                   ))}
                 </>

@@ -1,10 +1,5 @@
 import React from "react";
-import Menu from "antd/es/menu";
-import { MenuProps } from "antd/es/menu";
-import DatePicker from "antd/es/date-picker";
-import Select from "antd/es/select";
-import Slider from "antd/es/slider";
-import Spin from "antd/es/spin";
+import { Menu, MenuProps, DatePicker, Select, Slider, Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { useGetMovieListGenreQuery } from "@/redux/api/genres/slice";
 import { useGetConfigurationLanguagesQuery } from "@/redux/api/configuration/slice";

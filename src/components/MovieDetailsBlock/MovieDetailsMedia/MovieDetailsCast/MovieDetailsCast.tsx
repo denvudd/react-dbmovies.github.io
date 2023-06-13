@@ -1,8 +1,6 @@
 import React from "react";
 import CastCard from "@/components/UI/CastCard/CastCard";
-import Typography from "antd/es/typography";
-import List from "antd/es/list";
-import Button from "antd/es/button";
+import { Typography, List, Button } from "antd";
 import styles from "./MovieDetailsCast.module.scss";
 import { useGetMovieCreditsCastQuery } from "@/redux/api/movies/slice";
 

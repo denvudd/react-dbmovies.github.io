@@ -1,7 +1,5 @@
 import React from "react";
-import Typography from "antd/es/typography";
-import Space  from "antd/es/space";
-import Popover from "antd/es/popover";
+import { Typography, Space, Popover } from "antd";
 import {
   FacebookFilled,
   TwitterSquareFilled,

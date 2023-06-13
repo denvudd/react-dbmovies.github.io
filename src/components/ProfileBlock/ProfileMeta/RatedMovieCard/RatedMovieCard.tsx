@@ -2,10 +2,7 @@ import React from "react";
 import { useLazyGetAccountListsQuery } from "@/redux/api/account/slice";
 import { usePostAddMovieToListMutation } from "@/redux/api/lists/slice";
 import Link from "next/link";
-import Button from "antd/es/button";
-import Modal from "antd/es/modal";
-import Select from "antd/es/select";
-import message from "antd/es/message";
+import { Button, Modal, Select, message } from "antd";
 import WideMovieCard from "../../../UI/WideMovieCard/WideMovieCard";
 
 import styles from "./RatedMovieCard.module.scss";

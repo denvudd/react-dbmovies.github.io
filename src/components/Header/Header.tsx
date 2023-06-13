@@ -1,7 +1,5 @@
 import React from "react";
-import Layout from "antd/es/layout";
-import Menu from "antd/es/menu";
-import { MenuProps } from "antd/es/menu";
+import { Layout, Menu, MenuProps } from "antd";
 import Link from "next/link";
 import UserOutlined from "@ant-design/icons/lib/icons/UserOutlined";
 import SearchOutlined from "@ant-design/icons/lib/icons/SearchOutlined";

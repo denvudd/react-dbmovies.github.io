@@ -1,6 +1,5 @@
 import Head from "next/head";
-import Pagination from "antd/es/pagination";
-import Typography from "antd/es/typography";
+import { Pagination, Typography } from "antd";
 import MovieCard from "@/components/UI/MovieCard/MovieCard";
 import { useLazyGetMoviesQuery } from "@/redux/api/movies/slice";
 import { useLazyGetMovieDiscoverQuery } from "@/redux/api/discover/slice";

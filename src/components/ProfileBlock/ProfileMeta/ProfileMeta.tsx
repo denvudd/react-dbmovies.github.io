@@ -4,11 +4,7 @@ import {
   useLazyGetAccountRatedMoviesQuery,
   useLazyGetAccountWatchlistMoviesQuery,
 } from "@/redux/api/account/slice";
-import Button from "antd/es/button";
-import Select from "antd/es/select";
-import Tabs from "antd/es/tabs";
-import { TabsProps } from "antd/es/tabs";
-import Spin from "antd/es/spin";
+import { Button, Select, Tabs, TabsProps, Spin, Modal } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import ProfileListGrid from "./ProfileListGrid/ProfileListGrid";
