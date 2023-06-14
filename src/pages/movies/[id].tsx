@@ -1,13 +1,9 @@
 import React from "react";
-import {
-  getMovieDetails,
-  getRunningQueriesThunk,
-} from "@/redux/api/movies/slice";
 
 import DetailLayout from "@/layouts/DetailsLayout";
 import MovieDetailsBlock from "@/components/MovieDetailsBlock/MovieDetailsBlock";
-import { wrapper } from "@/redux/store";
-import { MovieDetails } from "@/redux/api/movies/types/MovieDetailsType";
+import type { GetServerSideProps } from "next/types";
+import type { MovieDetails } from "@/redux/api/movies/types";
 
 /* 
   The long cold start issue fix
@@ -19,37 +15,24 @@ import { MovieDetails } from "@/redux/api/movies/types/MovieDetailsType";
   #1 https://nextjs.org/docs/pages/building-your-application/data-fetching/get-server-side-props#getserversideprops-with-edge-api-routes
 */
 export const config = {
-  runtime: 'experimental-edge', 
+  runtime: 'experimental-edge', // warn: using an experimental edge runtime, the API might change
 }
 interface MovieDetailsPageProps {
   id: number;
   data: MovieDetails;
 }
 
-export const getServerSideProps = wrapper.getServerSideProps(
-  (store) => async (context) => {
-    const { id } = context.query;
+export const getServerSideProps: GetServerSideProps<{
+  data: MovieDetails;
+}> = async (context) => {
+  const { id } = context.query;
+  const res = await fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=684e3f73d1ca0e692a3016c028aabf72&language=uk-UA`);
+  const data = await res.json();
+  return { props: { data } };
+};
 
-    if (typeof id === "string") {
-      await store.dispatch(
-        getMovieDetails.initiate({ id: Number(id), params: "language=uk-UA&page=1" })
-      );
-    }
-
-    const { data } = getMovieDetails.select({
-      id: Number(id),
-      params: "language=uk-UA&page=1",
-    })(store.getState());
-
-    await Promise.all(store.dispatch(getRunningQueriesThunk()));
-
-    return {
-      props: { id, data },
-    };
-  }
-);
-
-const MovideDetailsPage: React.FC<MovieDetailsPageProps> = ({ id, data }) => {
+const MovideDetailsPage: React.FC<MovieDetailsPageProps> = ({ data }) => {
+  const { id } = data;
   return (
     <>
       <DetailLayout>
