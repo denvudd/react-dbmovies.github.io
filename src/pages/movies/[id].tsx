@@ -8,6 +8,10 @@ import {
 import { wrapper } from "@/redux/store";
 import { MovieDetails } from "@/redux/api/movies/types/MovieDetailsType";
 
+export const config = {
+  runtime: 'experimental-edge', 
+}
+
 interface MovieDetailsPageProps {
   id: number;
   data: MovieDetails;
