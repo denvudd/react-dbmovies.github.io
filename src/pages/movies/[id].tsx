@@ -8,6 +8,19 @@ import DetailLayout from "@/layouts/DetailsLayout";
 import MovieDetailsBlock from "@/components/MovieDetailsBlock/MovieDetailsBlock";
 import { wrapper } from "@/redux/store";
 import { MovieDetails } from "@/redux/api/movies/types/MovieDetailsType";
+
+/* 
+  The long cold start issue fix
+  Relative issues: 
+  #1 https://github.com/denvudd/react-dbmovies.github.io/issues/2
+  #2 https://github.com/vercel/next.js/discussions/50783#discussioncomment-6139352
+  #3 https://github.com/vercel/vercel/discussions/7961
+  Documentation links:
+  #1 https://nextjs.org/docs/pages/building-your-application/data-fetching/get-server-side-props#getserversideprops-with-edge-api-routes
+*/
+export const config = {
+  runtime: 'experimental-edge', 
+}
 interface MovieDetailsPageProps {
   id: number;
   data: MovieDetails;
