@@ -1,4 +1,5 @@
 import React from "react";
+import { useSessionId } from "@/hooks/useSessionId";
 import { useLazyGetAccountDetailsQuery } from "@/redux/api/account/slice";
 import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import {
@@ -32,7 +33,7 @@ const ListDetailsHead: React.FC<ListDetailsHeadProps> = ({
   isEmpty,
 }) => {
   const router = useRouter();
-  const [sessionId, setSessionId] = React.useState<string | null>("");
+  const sessionId = useSessionId();
 
   const [
     getAccountDetails,
@@ -93,11 +94,8 @@ const ListDetailsHead: React.FC<ListDetailsHeadProps> = ({
   };
 
   React.useEffect(() => {
-    const storedSessionId = localStorage.getItem("session_id");
-    setSessionId(storedSessionId);
-
-    if (storedSessionId) {
-      getAccountDetails({ session_id: storedSessionId });
+    if (sessionId) {
+      getAccountDetails({ session_id: sessionId });
     }
   }, []);
 

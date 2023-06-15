@@ -1,10 +1,8 @@
 import React from "react";
-import { useLazyGetAccountListsQuery } from "@/redux/api/account/slice";
-import { usePostAddMovieToListMutation } from "@/redux/api/lists/slice";
 import { useDeleteMovieRatingMutation } from "@/redux/api/movies/slice";
+import { useAddMovieToList } from "@/hooks/useAddMovieAction";
 
-import Link from "next/link";
-import { Button, Modal, Select, message } from "antd";
+import { message } from "antd";
 import WideMovieCard from "../../UI/WideMovieCard/WideMovieCard";
 interface RatedMovieCardProps {
   id: number;
@@ -29,19 +27,13 @@ const RatedMovieCard: React.FC<RatedMovieCardProps> = ({
   overview,
   rating,
 }) => {
-  const [isFetch, setIsFetch] = React.useState(false);
-  const [listId, setListId] = React.useState<number>(0);
-  const [
-    fetchAccountLists,
-    { data: accountLists, isLoading: isAccountListsLoading },
-  ] = useLazyGetAccountListsQuery();
-  const [addMovieToList, { data: movieList, isLoading }] =
-    usePostAddMovieToListMutation();
+  const [messageApi, contextMessageHolder] = message.useMessage();
+  const {
+    onClickAddMovieToList,
+    addMovieListModalHolder,
+  } = useAddMovieToList(sessionId, id, title, messageApi);
   const [deleteMovieRating, { data: deleteMovieRatingResults }] =
     useDeleteMovieRatingMutation();
-
-  const [messageApi, contextMessageHolder] = message.useMessage();
-  const [modal, contextModalHolder] = Modal.useModal();
 
   const onClickElementDelete = () => {
     deleteMovieRating({ session_id: sessionId, movie_id: id })
@@ -62,104 +54,6 @@ const RatedMovieCard: React.FC<RatedMovieCardProps> = ({
         }
       });
   };
-
-  const onClickAddMovieToList = () => {
-    const listModal = modal.info({
-      title: `Додати "${title}" до списку?`,
-    });
-
-    if (sessionId !== "") {
-      const onChangeList = (value: string) => {
-        if (value !== "" && value) {
-          setListId(Number(value));
-          listModal.update({
-            okText: "Підтвердити",
-            okButtonProps: { disabled: false },
-          });
-        }
-      };
-
-      fetchAccountLists({ session_id: sessionId }, true)
-        .unwrap()
-        .then((data) => {
-          listModal.update({
-            title: `Додати "${title}" до списку?`,
-            content: (
-              <div>
-                <p className="list-label">Додати до існуючих списків:</p>
-                <Select
-                  style={{ width: "100%" }}
-                  placeholder={"Оберіть список"}
-                  onChange={onChangeList}
-                  loading={isAccountListsLoading}
-                  options={
-                    !isAccountListsLoading &&
-                    data.results &&
-                    data.results.length !== 0
-                      ? data.results.map((list) => ({
-                          value: list.id,
-                          label: list.name,
-                        }))
-                      : undefined
-                  }
-                  notFoundContent={"Не знайдено жодного списка"}
-                />
-                <p className="list-label">Або:</p>
-                <Button type="primary">
-                  <Link href={`/lists/new`}>Створити новий список</Link>
-                </Button>
-              </div>
-            ),
-            onOk() {
-              setIsFetch(true);
-            },
-            onCancel() {},
-            okText: "Оберіть список",
-            okButtonProps: {
-              disabled: true,
-              title: "Оберіть список щоб продовжити",
-            },
-            closable: true,
-          });
-        });
-    }
-  };
-
-  React.useEffect(() => {
-    if (isFetch) {
-      Modal.destroyAll();
-      if (isFetch && sessionId) {
-        addMovieToList({
-          session_id: sessionId,
-          list_id: listId,
-          media_id: id,
-        })
-          .unwrap()
-          .then((data) => {
-            if (data.success) {
-              messageApi.success(
-                ` "${title}" був успішно доданий до списку #${listId}!`,
-                3
-              );
-            } else {
-              messageApi.success(`${data.status_message}`, 3);
-            }
-          })
-          .catch((error) => {
-            if (error && error.data.status_code === 8) {
-              messageApi.error(
-                `Сталась помилка. Елемент "${title}" вже існує в списку #${listId}`,
-                3
-              );
-            }
-            console.log(error);
-          })
-          .finally(() => setIsFetch(false));
-      }
-    } else {
-      return;
-    }
-  }, [isFetch]);
 
   return (
     <div>
@@ -183,8 +77,8 @@ const RatedMovieCard: React.FC<RatedMovieCardProps> = ({
         onClickElementDelete={onClickElementDelete}
         onClickAddMovieToList={onClickAddMovieToList}
       />
+      {addMovieListModalHolder}
       {contextMessageHolder}
-      {contextModalHolder}
     </div>
   );
 };

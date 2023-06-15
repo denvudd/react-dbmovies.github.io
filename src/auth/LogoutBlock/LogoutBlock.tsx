@@ -1,6 +1,7 @@
 import React from "react";
 import { useRouter } from "next/router";
 import { useDeleteSessionMutation } from "@/redux/api/authentication/slice";
+import { useSessionId } from "@/hooks/useSessionId";
 
 import Head from "next/head";
 import DetailLayout from "@/layouts/DetailsLayout";
@@ -11,7 +12,7 @@ import styles from "./LogoutBlock.module.scss";
 
 export const LogoutBlock = () => {
   const [deleteSession] = useDeleteSessionMutation();
-  const [sessionId, setSessionId] = React.useState<string | null>(null);
+  const sessionId = useSessionId();
   const router = useRouter();
 
   const handleClickSubmit = async () => {
@@ -34,10 +35,6 @@ export const LogoutBlock = () => {
   const handleClickCancel = () => {
     router.push("/");
   };
-
-  React.useEffect(() => {
-    setSessionId(localStorage.getItem("session_id"));
-  }, []);
 
   return (
     <>

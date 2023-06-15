@@ -1,36 +1,36 @@
 import React from "react";
 import { useLazyGetMovieAccoutStatesQuery } from "@/redux/api/movies/slice";
+import { useSessionId } from "@/hooks/useSessionId";
+import { useAddMovieToList } from "@/hooks/useAddMovieAction";
 
 import MovieDetailsHeadRate from "./MovieDetailsHeadRate/MovieDetailsHeadRate";
 import MovieDetailsHeadWatchlist from "./MovieDetailsHeadWatchlist/MovieDetailsHeadWatchlist";
 import MovieDetailsHeadFavorite from "./MovieDetailsHeadFavorite/MovieDetailsHeadFavorite";
-import MovieDetailsHeadLists from "./MovieDetailsHeadLists/MovieDetailsHeadLists";
+import UnorderedListOutlined from "@ant-design/icons/lib/icons/UnorderedListOutlined";
 import RatingBar from "@/components/UI/RatingBar/RatingBar";
 import CaretRightFilled from "@ant-design/icons/lib/icons/CaretRightFilled";
-import { Popover } from "antd";
+import { Tooltip, message } from "antd";
 
+import styles from "./MovieDetailsHeadActions.module.scss";
 interface MovieDetailsHeadActionsProps {
   id: number;
   vote_average: number;
   title: string;
 }
 
-import styles from "./MovieDetailsHeadActions.module.scss";
-
 const MovieDetailsHeadActions: React.FC<MovieDetailsHeadActionsProps> = ({
   id,
   vote_average,
   title,
 }) => {
-  const [
-    getAccountStates,
-    { data: accountStates, isLoading: isAccountStatesLoading },
-  ] = useLazyGetMovieAccoutStatesQuery();
-  const [sessionId, setSessionId] = React.useState<string | null>(null);
-
-  React.useEffect(() => {
-    setSessionId(localStorage.getItem("session_id"));
-  }, [id]);
+  const [messageApi, contextMessageHolder] = message.useMessage();
+  const [getAccountStates, { data: accountStates }] =
+    useLazyGetMovieAccoutStatesQuery();
+  const sessionId = useSessionId();
+  const {
+    onClickAddMovieToList,
+    addMovieListModalHolder,
+  } = useAddMovieToList(sessionId, id, title, messageApi);
 
   React.useEffect(() => {
     if (sessionId) {
@@ -45,27 +45,31 @@ const MovieDetailsHeadActions: React.FC<MovieDetailsHeadActionsProps> = ({
           <RatingBar rating={vote_average} size={55} />
           <span>Рейтинг</span>
         </li>
-        <Popover
-          content={
-            <span>
+        <Tooltip
+          title={
+            <span className={styles.tooltip}>
               {!sessionId &&
                 "Увійдіть, щоби створювати та керувати власними списками"}
               {sessionId && `Додати до списку`}
             </span>
           }
+          color={"#fff"}
           placement="bottom"
+          zIndex={90}
         >
           <span className={styles.tooltipWrapper}>
-            <MovieDetailsHeadLists
-              id={id}
-              title={title}
-              sessionId={sessionId}
-            />
+            <li className={styles.tooltip}>
+              <button onClick={onClickAddMovieToList}>
+                <span>
+                  <UnorderedListOutlined />
+                </span>
+              </button>
+            </li>
           </span>
-        </Popover>
-        <Popover
-          content={
-            <span>
+        </Tooltip>
+        <Tooltip
+          title={
+            <span className={styles.tooltip}>
               {!sessionId &&
                 "Увійдіть, щоб додати цей фільм до списку вподобань"}
               {accountStates?.favorite && sessionId && `Додано в обране`}
@@ -74,6 +78,7 @@ const MovieDetailsHeadActions: React.FC<MovieDetailsHeadActionsProps> = ({
                 "Додати в обране"}
             </span>
           }
+          color={"#fff"}
           placement="bottom"
         >
           <span className={styles.tooltipWrapper}>
@@ -84,10 +89,10 @@ const MovieDetailsHeadActions: React.FC<MovieDetailsHeadActionsProps> = ({
               favorite={accountStates ? accountStates.favorite : false}
             />
           </span>
-        </Popover>
-        <Popover
-          content={
-            <span>
+        </Tooltip>
+        <Tooltip
+          title={
+            <span className={styles.tooltip}>
               {!sessionId &&
                 "Увійдіть, щоб додати цей фільм до списку перегляду"}
               {accountStates?.watchlist &&
@@ -98,6 +103,7 @@ const MovieDetailsHeadActions: React.FC<MovieDetailsHeadActionsProps> = ({
                 "Додати до списку відстежень"}
             </span>
           }
+          color={"#fff"}
           placement="bottom"
         >
           <span className={styles.tooltipWrapper}>
@@ -108,10 +114,10 @@ const MovieDetailsHeadActions: React.FC<MovieDetailsHeadActionsProps> = ({
               watchlist={accountStates ? accountStates.watchlist : false}
             />
           </span>
-        </Popover>
-        <Popover
-          content={
-            <span>
+        </Tooltip>
+        <Tooltip
+          title={
+            <span className={styles.tooltip}>
               {!sessionId && "Увійдіть, щоб оцінити цей фільм"}
               {accountStates?.rated &&
                 sessionId &&
@@ -119,6 +125,7 @@ const MovieDetailsHeadActions: React.FC<MovieDetailsHeadActionsProps> = ({
               {accountStates?.rated === false && sessionId && "Оцінити!"}
             </span>
           }
+          color={"#fff"}
           placement="bottom"
         >
           <span className={styles.tooltipWrapper}>
@@ -129,7 +136,7 @@ const MovieDetailsHeadActions: React.FC<MovieDetailsHeadActionsProps> = ({
               rated={accountStates ? accountStates.rated : false}
             />
           </span>
-        </Popover>
+        </Tooltip>
         <li className={styles.video}>
           <a href="">
             <span>
@@ -139,6 +146,8 @@ const MovieDetailsHeadActions: React.FC<MovieDetailsHeadActionsProps> = ({
           </a>
         </li>
       </ul>
+      {contextMessageHolder}
+      {addMovieListModalHolder}
     </>
   );
 };

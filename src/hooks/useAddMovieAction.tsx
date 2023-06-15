@@ -2,32 +2,25 @@ import React from "react";
 import { useLazyGetAccountListsQuery } from "@/redux/api/account/slice";
 import { usePostAddMovieToListMutation } from "@/redux/api/lists/slice";
 
-import { Button, Modal, Select, message } from "antd";
-import UnorderedListOutlined from "@ant-design/icons/lib/icons/UnorderedListOutlined";
+import { UnorderedListOutlined } from "@ant-design/icons";
+import { Select, Button, Modal } from "antd";
 import Link from "next/link";
+import type { MessageInstance } from "antd/es/message/interface";
 
-import styles from "../MovieDetailsHeadActions.module.scss";
-interface MovieDetailsHeadListsProps {
-  id: number;
-  sessionId: string | null;
-  title: string;
-}
-
-const MovieDetailsHeadLists: React.FC<MovieDetailsHeadListsProps> = ({
-  id,
-  sessionId,
-  title,
-}) => {
-  const [addMovieToList, { data: movieList, isLoading }] =
+export const useAddMovieToList = (
+  sessionId: string | null,
+  id: number,
+  title: string,
+  messageApi: MessageInstance // for using common message api and context message holder
+) => {
+  const [addMovieToList, { isLoading }] =
     usePostAddMovieToListMutation();
   const [fetchAccountLists] = useLazyGetAccountListsQuery();
   const [listId, setListId] = React.useState<number>(0);
   const [isListSubmit, setIsListSubmit] = React.useState(false);
+  const [modal, addMovieListModalHolder] = Modal.useModal();
 
-  const [messageApi, contextMessageHolder] = message.useMessage();
-  const [modal, contextModalHolder] = Modal.useModal();
-
-  const onClickAddMovieToList = React.useCallback(() => {
+  const onClickAddMovieToList = () => {
     if (sessionId) {
       const listModal = modal.info({
         title: `Додати "${title}" до списку?`,
@@ -89,7 +82,7 @@ const MovieDetailsHeadLists: React.FC<MovieDetailsHeadListsProps> = ({
     if (!sessionId) {
       return;
     }
-  }, [sessionId]);
+  };
 
   React.useEffect(() => {
     if (isListSubmit) {
@@ -131,19 +124,9 @@ const MovieDetailsHeadLists: React.FC<MovieDetailsHeadListsProps> = ({
     }
   }, [isListSubmit]);
 
-  return (
-    <>
-      <li className={styles.tooltip}>
-        <button onClick={onClickAddMovieToList}>
-          <span>
-            <UnorderedListOutlined />
-          </span>
-        </button>
-      </li>
-      {contextMessageHolder}
-      {contextModalHolder}
-    </>
-  );
+  return {
+    onClickAddMovieToList,
+    isLoading,
+    addMovieListModalHolder,
+  };
 };
-
-export default MovieDetailsHeadLists;

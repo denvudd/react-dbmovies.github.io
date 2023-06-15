@@ -24,7 +24,7 @@ export const LoginBlock = () => {
         .unwrap()
         .then((data) => {
           if (data.request_token) {
-            window.location.href = `https://www.themoviedb.org/authenticate/${data.request_token}?redirect_to=http://localhost:3000/login`;
+            window.location.href = `https://www.themoviedb.org/authenticate/${data.request_token}?redirect_to=https://react-dbmovies.vercel.app/`;
           }
         });
     } catch (error) {

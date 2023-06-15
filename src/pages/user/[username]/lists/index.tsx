@@ -1,27 +1,24 @@
 import React from "react";
-import { useLazyGetAccountDetailsQuery } from "@/redux/api/account/slice";
 
+import { useLazyGetAccountDetailsQuery } from "@/redux/api/account/slice";
+import { useSessionId } from "@/hooks/useSessionId";
 import DetailLayout from "@/layouts/DetailsLayout";
 import ProfileHead from "@/components/ProfileBlock/ProfileHead/ProfileHead";
 import ProfileListsBlock from "@/components/ProfileListsBlock/ProfileListsBlock";
 import { withAuth } from "@/auth/withAuth";
 
 const UserLists: React.FC = () => {
-  const [sessionId, setSessionId] = React.useState<string | null>(null);
+  const sessionId = useSessionId();
   const [
     getAccountDetails,
     { data: accountDetails, isLoading: isAccountDetailsLoading },
   ] = useLazyGetAccountDetailsQuery();
 
   React.useEffect(() => {
-    const storedSessionId = localStorage.getItem("session_id");
-
-    if (storedSessionId) {
-      getAccountDetails({ session_id: storedSessionId }, true).then(() =>
-        setSessionId(storedSessionId)
-      );
+    if (sessionId) {
+      getAccountDetails({ session_id: sessionId }, true);
     }
-  }, []);
+  }, [sessionId]);
 
   return (
     <>

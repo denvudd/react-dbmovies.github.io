@@ -1,27 +1,25 @@
 import React from "react";
-import { useLazyGetAccountDetailsQuery } from "@/redux/api/account/slice";
 
+import { useLazyGetAccountDetailsQuery } from "@/redux/api/account/slice";
+import { useSessionId } from "@/hooks/useSessionId";
 import { withAuth } from "@/auth/withAuth";
 import ProfileHead from "@/components/ProfileBlock/ProfileHead/ProfileHead";
 import ProfileFavoriteBlock from "@/components/ProfileFavoriteBlock/ProfileFavoriteBlock";
 import DetailLayout from "@/layouts/DetailsLayout";
 
 const ProfileRatedPage = () => {
-  const [sessionId, setSessionId] = React.useState<string | null>(null);
+  const sessionId = useSessionId();
   const [
     getAccountDetails,
     { data: accountDetails, isLoading: isAccountDetailsLoading },
   ] = useLazyGetAccountDetailsQuery();
 
   React.useEffect(() => {
-    const storedSessionId = localStorage.getItem("session_id");
-
-    if (storedSessionId) {
-      getAccountDetails({ session_id: storedSessionId }, true).then(() =>
-        setSessionId(storedSessionId)
-      );
+    if (sessionId) {
+      getAccountDetails({ session_id: sessionId }, true);
     }
-  }, []);
+  }, [sessionId]);
+
   return (
     <>
       <DetailLayout>

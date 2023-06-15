@@ -6,6 +6,7 @@ import {
 } from "@/redux/api/lists/slice";
 import { useLazyGetMovieDiscoverQuery } from "@/redux/api/discover/slice";
 import { useDebounce } from "@/hooks/useDebounce";
+import { useSessionId } from "@/hooks/useSessionId";
 
 import {
   Button,
@@ -49,8 +50,8 @@ const ListNewBlock = () => {
       isLoading: isRemoveMovieFromListLoading,
     },
   ] = usePostRemoveMovieFromListMutation();
+  const sessionId = useSessionId();
 
-  const [sessionId, setSessionId] = React.useState<string | null>("");
   const [newList, setNewList] = React.useState<NewList | null>(null);
   const [inputText, setInputText] = React.useState<string>("");
   const [selectedElements, setSelectedElements] = React.useState<ListMovie[]>();
@@ -178,10 +179,6 @@ const ListNewBlock = () => {
     },
     [selectedElements]
   );
-
-  React.useEffect(() => {
-    setSessionId(localStorage.getItem("session_id"));
-  }, []);
 
   React.useEffect(() => {
     // if search is not empty

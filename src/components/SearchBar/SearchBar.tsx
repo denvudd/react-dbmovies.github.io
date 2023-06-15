@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-
 import { useLazyGetSearchMultiQuery } from "@/redux/api/search/slice";
 import { useLazyGetTrendingAllQuery } from "@/redux/api/trending/slice";
 import { useDebounce } from "@/hooks/useDebounce";
@@ -11,7 +10,6 @@ import SearchOutlined from "@ant-design/icons/lib/icons/SearchOutlined";
 import RiseOutlined from "@ant-design/icons/lib/icons/RiseOutlined";
 import { Select } from "antd";
 import Link from "next/link";
-
 import type {
   SearchMovie,
   SearchPerson,

@@ -1,40 +1,16 @@
 import React from "react";
-
 import { useGetListDetailsQuery } from "@/redux/api/lists/slice";
+import { useRouter } from "next/router";
 
-import type { GetServerSidePropsContext } from "next";
 import DetailLayout from "@/layouts/DetailsLayout";
 import ListDetailsHead from "@/components/ListDetailsBlock/ListDetailsHead/ListDetailsHead";
 import ListDetailsBody from "@/components/ListDetailsBlock/ListDetailsBody/ListDetailsBody";
 
-/* 
-  The long cold start issue fix
-  Relative issues: 
-  #1 https://github.com/denvudd/react-dbmovies.github.io/issues/2
-  #2 https://github.com/vercel/next.js/discussions/50783#discussioncomment-6139352
-  #3 https://github.com/vercel/vercel/discussions/7961
-  Documentation links:
-  #1 https://nextjs.org/docs/pages/building-your-application/data-fetching/get-server-side-props#getserversideprops-with-edge-api-routes
-*/
-export const config = {
-  runtime: 'experimental-edge', // warn: using an experimental edge runtime, the API might change
-}
+const ListDetailsPage: React.FC = () => {
+  const router = useRouter();
 
-interface ListDetailsPageProps {
-  id: number;
-}
-
-export const getServerSideProps = async (
-  context: GetServerSidePropsContext
-) => {
-  const { id } = context.query;
-
-  return { props: { id } };
-};
-
-const ListDetailsPage: React.FC<ListDetailsPageProps> = ({ id }) => {
   const { data: list, isLoading: isListsLoading } = useGetListDetailsQuery({
-    id,
+    id: Number(router.query.id),
     params: "&language=uk-UA",
   });
 

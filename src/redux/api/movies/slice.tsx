@@ -42,7 +42,11 @@ export const moviesApi = baseApi.injectEndpoints({
           session_id ? session_id : ""
         }`,
       transformResponse: (response: MovieAccountStatesApiResponse) => response,
-      providesTags: ["Watchlist", "Rates", "Favorite"],
+      providesTags: [
+        { type: "Rates", id: "LIST" },
+        { type: "Watchlist", id: "LIST" },
+        { type: "Favorite", id: "LIST" },
+      ],
     }),
 
     getMovieCreditsCast: builder.query<

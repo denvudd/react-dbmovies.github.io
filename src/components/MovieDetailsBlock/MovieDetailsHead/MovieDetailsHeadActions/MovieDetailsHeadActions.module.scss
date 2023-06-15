@@ -38,6 +38,8 @@
 }
 
 .tooltip {
+  color: $primaryColorContrast;
+
   &Wrapper {
     margin-right: 20px;
   }
