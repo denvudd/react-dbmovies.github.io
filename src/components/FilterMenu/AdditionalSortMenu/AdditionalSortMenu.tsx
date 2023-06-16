@@ -6,8 +6,7 @@ import { useDebounce } from "@/hooks/useDebounce";
 
 import { Menu, MenuProps, DatePicker, Select, Slider, Spin } from "antd";
 import { AdditionalSortDataState } from "../FilterMenu";
-import LoadingOutlined  from "@ant-design/icons/lib/icons/LoadingOutlined";
-import dayjs from "dayjs";
+import LoadingOutlined from "@ant-design/icons/lib/icons/LoadingOutlined";
 import "dayjs/locale/uk.js";
 import locale from "antd/lib/date-picker/locale/uk_UA";
 
@@ -15,6 +14,8 @@ import type { RangePickerProps } from "antd/es/date-picker";
 import type { Keyword } from "@/redux/api/search/types";
 
 import styles from "./AdditionalSortMenu.module.scss";
+import { getSpecificYear } from "@/utils/getSpecificYear";
+import { getLastSpecificDays } from "@/utils/getLastSpecificDays";
 interface AdditionalSortMenuProps {
   onAdditionalSortChange: (additionalSortBy: AdditionalSortDataState) => void;
 }
@@ -213,19 +214,54 @@ const AdditionalSortMenu: React.FC<AdditionalSortMenuProps> = React.memo(
                     presets={[
                       {
                         label: "Останні 7 днів",
-                        value: [dayjs().add(-7, "d"), dayjs()],
+                        value: getLastSpecificDays(-7),
                       },
                       {
                         label: "Останні 14 днів",
-                        value: [dayjs().add(-14, "d"), dayjs()],
+                        value: getLastSpecificDays(-14),
                       },
                       {
                         label: "Останній 30 днів",
-                        value: [dayjs().add(-30, "d"), dayjs()],
+                        value: getLastSpecificDays(-30),
                       },
                       {
                         label: "Останній 90 днів",
-                        value: [dayjs().add(-90, "d"), dayjs()],
+                        value: getLastSpecificDays(-90),
+                      },
+                      {
+                        label: "За 2022 рік",
+                        value: [
+                          getSpecificYear(2022)[0],
+                          getSpecificYear(2022)[1],
+                        ],
+                      },
+                      {
+                        label: "За 2021 рік",
+                        value: [
+                          getSpecificYear(2021)[0],
+                          getSpecificYear(2021)[1],
+                        ],
+                      },
+                      {
+                        label: "За 2020 рік",
+                        value: [
+                          getSpecificYear(2020)[0],
+                          getSpecificYear(2020)[1],
+                        ],
+                      },
+                      {
+                        label: "За 2019 рік",
+                        value: [
+                          getSpecificYear(2019)[0],
+                          getSpecificYear(2019)[1],
+                        ],
+                      },
+                      {
+                        label: "За 2018 рік",
+                        value: [
+                          getSpecificYear(2018)[0],
+                          getSpecificYear(2018)[1],
+                        ],
                       },
                     ]}
                     locale={locale}

@@ -67,7 +67,7 @@ export const useFavoriteAction = (
   }, [isFavoriteSubmit]);
 
   return {
-    handleClick: onClickAddToFavorite,
+    onClickAddToFavorite,
     favoriteMessageContext: contextMessageHolder,
   };
 };

@@ -26,8 +26,11 @@ const ProfileRatedBlock: React.FC<ProfileRatedBlockProps> = ({
       isFetching: isRatedMoviesFetching,
     },
   ] = useLazyGetAccountRatedMoviesQuery();
-  const [ratesSortBy, setRatesSortBy] = React.useState<"asc" | "desc">("desc");
+  const [ratesSortBy, setRatesSortBy] = React.useState<"asc" | "desc">("asc");
   const ratesSortByRef = React.useRef<"asc" | "desc">(ratesSortBy);
+
+  console.log(isRatedMoviesFetching);
+  
 
   const onRatesSortChange = (value: string) => {
     if (value === "asc" || value === "desc") {
@@ -40,7 +43,7 @@ const ProfileRatedBlock: React.FC<ProfileRatedBlockProps> = ({
       {
         session_id: session_id,
         account_id: account_id,
-        params: `language=uk-UA&sort_by=created_at.desc`,
+        params: `language=uk-UA&sort_by=created_at.asc`,
       },
       true
     );
@@ -95,11 +98,11 @@ const ProfileRatedBlock: React.FC<ProfileRatedBlockProps> = ({
                     <div className={styles.sortGroup}>
                       <span className={styles.sortableSortTitle}>Порядок:</span>
                       <Select
-                        defaultValue={"desc"}
+                        defaultValue={"asc"}
                         style={{ width: "100%" }}
                         options={[
-                          { value: "desc", label: "Оцінені нещодавно" },
-                          { value: "asc", label: "Оцінені давно" },
+                          { value: "asc", label: "Оцінені нещодавно" },
+                          { value: "desc", label: "Оцінені давно" },
                         ]}
                         onChange={onRatesSortChange}
                       />

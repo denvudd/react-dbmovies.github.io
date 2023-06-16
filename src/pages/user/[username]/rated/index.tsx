@@ -5,6 +5,7 @@ import { useSessionId } from "@/hooks/useSessionId";
 import ProfileHead from "@/components/ProfileBlock/ProfileHead/ProfileHead";
 import ProfileRatedBlock from "@/components/ProfileRatedBlock/ProfileRatedBlock";
 import DetailLayout from "@/layouts/DetailsLayout";
+import Head from "next/head";
 import { withAuth } from "@/auth/withAuth";
 
 const ProfileRatedPage = () => {
@@ -22,6 +23,9 @@ const ProfileRatedPage = () => {
 
   return (
     <>
+      <Head>
+        <title>Мої оцінки — The Movie Database (TMDB)</title>
+      </Head>
       <DetailLayout>
         {!isAccountDetailsLoading && accountDetails && (
           <ProfileHead {...accountDetails} />

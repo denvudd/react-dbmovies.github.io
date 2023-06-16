@@ -87,6 +87,7 @@ export const listsApi = baseApi.injectEndpoints({
 
 export const {
   useGetListDetailsQuery,
+  useLazyGetListDetailsQuery,
   usePostCreateListMutation,
   usePostClearListMutation,
   usePostAddMovieToListMutation,

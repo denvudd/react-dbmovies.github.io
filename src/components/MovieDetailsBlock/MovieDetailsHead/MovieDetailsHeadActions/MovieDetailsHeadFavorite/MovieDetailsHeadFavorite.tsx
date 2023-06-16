@@ -18,7 +18,7 @@ const MovieDetailsHeadFavorite: React.FC<MovieDetailsHeadFavoriteProps> = ({
   favorite,
   title,
 }) => {
-  const { handleClick: onClickAddToFavorite, favoriteMessageContext } =
+  const { onClickAddToFavorite, favoriteMessageContext } =
     useFavoriteAction(sessionId, "movie", id, favorite, title);
 
   return (

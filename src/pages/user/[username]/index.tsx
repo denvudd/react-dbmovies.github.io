@@ -1,10 +1,11 @@
 import React from "react";
-
 import { useLazyGetAccountDetailsQuery } from "@/redux/api/account/slice";
 import { useSessionId } from "@/hooks/useSessionId";
+
 import DetailLayout from "@/layouts/DetailsLayout";
 import ProfileHead from "@/components/ProfileBlock/ProfileHead/ProfileHead";
 import ProfileMeta from "@/components/ProfileBlock/ProfileMeta/ProfileMeta";
+import Head from "next/head";
 import { withAuth } from "@/auth/withAuth";
 
 const UserPage: React.FC = () => {
@@ -22,6 +23,9 @@ const UserPage: React.FC = () => {
 
   return (
     <>
+      <Head>
+        <title>Мій профіль — The Movie Database (TMDB)</title>
+      </Head>
       <DetailLayout>
         {!isAccountDetailsLoading && accountDetails && (
           <ProfileHead {...accountDetails} />
