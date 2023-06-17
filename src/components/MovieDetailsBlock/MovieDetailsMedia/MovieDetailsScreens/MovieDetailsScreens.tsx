@@ -7,6 +7,7 @@ import {
 import Image from "next/image";
 import { TabsProps, Tabs, Skeleton, List } from "antd";
 import VideoCard from "@/components/UI/VideoCard/VideoCard";
+import { generateShimmer } from "@/utils/generateShimmer";
 
 import styles from "./MovieDetailsScreens.module.scss";
 interface MovieDetailsScreensProps {
@@ -17,14 +18,16 @@ enum TabValues {
   POSTERS = "posters",
   BACKDROPS = "backdrops",
   VIDEOS = "videos",
-};
+}
 
 const MovieDetailsScreens: React.FC<MovieDetailsScreensProps> = ({ id }) => {
   const [getImages, { data: images, isLoading: isImagesLoading }] =
     useLazyGetMovieImagesQuery();
   const [getVideos, { data: videos, isLoading: isVideosLoading }] =
     useLazyGetMovieVideosQuery();
-  const [tabKey, setTabKey] = React.useState<TabValues | string>(TabValues.VIDEOS);
+  const [tabKey, setTabKey] = React.useState<TabValues | string>(
+    TabValues.VIDEOS
+  );
 
   const handleTabChange = (key: string) => {
     setTabKey(key);
@@ -128,6 +131,13 @@ const MovieDetailsScreens: React.FC<MovieDetailsScreensProps> = ({ id }) => {
                       height={300}
                       src={`https://image.tmdb.org/t/p/w533_and_h300_bestv2/${image.file_path}`}
                       alt="Backdrop"
+                      placeholder="blur"
+                      blurDataURL={`data:image/svg+xml;base64,${generateShimmer(
+                        138,
+                        175,
+                        80,
+                        60
+                      )}`}
                     ></Image>
                   </List.Item>
                 )}
@@ -142,7 +152,7 @@ const MovieDetailsScreens: React.FC<MovieDetailsScreensProps> = ({ id }) => {
       label: `Постери`,
       children: (
         <div>
-          {isVideosLoading && (
+          {isImagesLoading && (
             <>
               {[...new Array(6)].map((_, i) => (
                 <Skeleton.Image
@@ -174,6 +184,13 @@ const MovieDetailsScreens: React.FC<MovieDetailsScreensProps> = ({ id }) => {
                     height={330}
                     src={`https://image.tmdb.org/t/p/w220_and_h330_face/${image.file_path}`}
                     alt="Backdrop"
+                    placeholder="blur"
+                    blurDataURL={`data:image/svg+xml;base64,${generateShimmer(
+                      138,
+                      175,
+                      80,
+                      60
+                    )}`}
                   ></Image>
                 </List.Item>
               )}

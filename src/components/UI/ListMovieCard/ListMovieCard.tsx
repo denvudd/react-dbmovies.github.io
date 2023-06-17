@@ -3,6 +3,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import RatingBar from "../RatingBar/RatingBar";
+import { generateShimmer } from "@/utils/generateShimmer";
 import { truncateString } from "@/utils/truncateString";
 import type { ListMovie } from "@/redux/api/movies/types";
 
@@ -27,6 +28,11 @@ const ListMovieCard: React.FC<ListMovieCardProps> = ({ movie, index }) => {
               width={185}
               height={278}
               alt={`${movie.title}`}
+              placeholder="blur"
+              blurDataURL={`data:image/svg+xml;base64,${generateShimmer(
+                138,
+                175,
+              )}`}
             />
           </Link>
         </div>

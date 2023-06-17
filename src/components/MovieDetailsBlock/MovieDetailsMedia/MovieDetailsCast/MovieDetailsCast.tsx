@@ -26,13 +26,14 @@ const MovieDetailsCast: React.FC<MovieDetailsCastProps> = ({ id }) => {
           grid={{
             gutter: 5,
           }}
+          loading={isLoading}
           renderItem={(cast) => (
             <List.Item key={cast.id}>
               <CastCard
                 id={cast.id}
                 name={cast.name}
                 character={cast.character}
-                profile_path={
+                imgUrl={
                   cast.profile_path
                     ? `https://image.tmdb.org/t/p/w138_and_h175_face${cast.profile_path}`
                     : "https://placehold.co/138x175/png/?text=Not+Found"

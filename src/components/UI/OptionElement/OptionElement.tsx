@@ -1,5 +1,8 @@
 import React from "react";
+
 import Image from "next/image";
+import { generateShimmer } from "@/utils/generateShimmer";
+
 import styles from "./OptionElement.module.scss";
 
 interface OptionElementProps {
@@ -25,6 +28,11 @@ const OptionElement: React.FC<OptionElementProps> = ({
             src={poster_path}
             alt={title}
             priority={index < 5}
+            placeholder="blur"
+            blurDataURL={`data:image/svg+xml;base64,${generateShimmer(
+              138,
+              175
+            )}`}
           />
         </div>
         <div className={styles.details}>

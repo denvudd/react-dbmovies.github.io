@@ -4,14 +4,15 @@ import Link from "next/link";
 import Image from "next/image";
 import RatingBar from "../RatingBar/RatingBar";
 import { Button, Rate, Typography } from "antd";
-import CloseOutlined from '@ant-design/icons/lib/icons/CloseOutlined'
+import CloseOutlined from "@ant-design/icons/lib/icons/CloseOutlined";
 import UnorderedListOutlined from "@ant-design/icons/lib/icons/UnorderedListOutlined";
 import { formatReleaseDate } from "@/utils/formatReleaseDate";
+import { generateShimmer } from "@/utils/generateShimmer";
 
 import styles from "./WideMovieCard.module.scss";
 interface WideMovieCardProps {
   id: number;
-  priorityIndex?: number,
+  priorityIndex?: number;
   title: string;
   vote_average: number;
   release_date: string;
@@ -46,7 +47,7 @@ const WideMovieCard: React.FC<WideMovieCardProps> = ({
   isShowDelete,
   onClickElementDelete,
   onClickAddMovieToList,
-  onChangeMovieRate
+  onChangeMovieRate,
 }) => {
   return (
     <div key={id} className={styles.card}>
@@ -59,6 +60,11 @@ const WideMovieCard: React.FC<WideMovieCardProps> = ({
               alt={`${title}`}
               src={poster_path}
               priority={priorityIndex ? priorityIndex < 3 : undefined}
+              placeholder="blur"
+              blurDataURL={`data:image/svg+xml;base64,${generateShimmer(
+                138,
+                175
+              )}`}
             />
           </Link>
         </div>

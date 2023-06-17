@@ -1,9 +1,10 @@
 import React from "react";
 
-import UnorderedListOutlined  from "@ant-design/icons/lib/icons/UnorderedListOutlined";
+import UnorderedListOutlined from "@ant-design/icons/lib/icons/UnorderedListOutlined";
 import Link from "next/link";
 import RatingBar from "../RatingBar/RatingBar";
 import Image from "next/image";
+import { generateShimmer } from "@/utils/generateShimmer";
 
 import styles from "./RecomendationCard.module.scss";
 interface RecomendationCardProps {
@@ -25,15 +26,34 @@ const RecomendationCard: React.FC<RecomendationCardProps> = ({
     <div className={styles.card}>
       <div className={styles.imageContent}>
         <Link href={`${id}`}>
-          <Image loading="lazy" priority={false} width={250} height={141} src={poster_path} alt="" className={styles.image} />
+          <Image
+            loading="lazy"
+            priority={false}
+            width={250}
+            height={141}
+            src={poster_path}
+            alt=""
+            className={styles.image}
+            placeholder="blur"
+            blurDataURL={`data:image/svg+xml;base64,${generateShimmer(
+              138,
+              175
+            )}`}
+          />
           <div className={styles.info}>
             <div className={styles.release}>
-              <span><UnorderedListOutlined/></span>
-              {release_date ? `Дата виходу: ${release_date}` : "Даних не знайдено"}
+              <span>
+                <UnorderedListOutlined />
+              </span>
+              {release_date
+                ? `Дата виходу: ${release_date}`
+                : "Даних не знайдено"}
             </div>
           </div>
         </Link>
-        <div className={styles.rating}><RatingBar rating={vote_average} size={30}/></div>
+        <div className={styles.rating}>
+          <RatingBar rating={vote_average} size={30} />
+        </div>
       </div>
       <div className={styles.meta}>
         <Link href={`${id}`} className={styles.title}>

@@ -71,7 +71,7 @@ const ListDetailsHead: React.FC<ListDetailsHeadProps> = ({
         cancelText: "Ні",
         onOk() {
           deleteList({ session_id: sessionId, list_id: id });
-          router.push(`/user/${accountDetails?.username}`);
+          router.push(`/user/${accountDetails?.username}/lists`);
         },
         closable: true,
       });
@@ -97,7 +97,7 @@ const ListDetailsHead: React.FC<ListDetailsHeadProps> = ({
     if (sessionId) {
       getAccountDetails({ session_id: sessionId });
     }
-  }, []);
+  }, [sessionId]);
 
   React.useEffect(() => {
     if (isClearConfirm && sessionId) {
@@ -105,7 +105,9 @@ const ListDetailsHead: React.FC<ListDetailsHeadProps> = ({
         session_id: sessionId,
         list_id: Number(id),
         confirm: isClearConfirm,
-      });
+      })
+        .unwrap()
+        .then(() => router.reload());
     }
   }, [isClearConfirm]);
 
@@ -145,7 +147,8 @@ const ListDetailsHead: React.FC<ListDetailsHeadProps> = ({
                 </p>
               </li>
               {!isAccountUsernameLoading &&
-                listUsername === accountDetails?.username && (
+                accountDetails &&
+                listUsername === accountDetails.username && (
                   <>
                     <li>
                       <Button onClick={showDeleteConfirm} size="large">
@@ -158,6 +161,7 @@ const ListDetailsHead: React.FC<ListDetailsHeadProps> = ({
                         disabled={isEmpty}
                         title={isEmpty ? "У списку немає елементів" : undefined}
                         onClick={showClearConfirm}
+                        className={styles.buttonClear}
                       >
                         Очистити
                       </Button>

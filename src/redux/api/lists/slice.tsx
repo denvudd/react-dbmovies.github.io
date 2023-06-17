@@ -23,6 +23,7 @@ export const listsApi = baseApi.injectEndpoints({
         query: ({ id, params }) =>
           `/list/${id}?${tmdbApiKey}&${params ? params : ""}`,
         transformResponse: (response: ListDetailsApiResponse) => response,
+        providesTags: [{ type: "Lists", id: "LIST" }],
       }
     ),
 

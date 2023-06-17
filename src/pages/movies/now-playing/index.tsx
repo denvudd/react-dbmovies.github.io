@@ -26,9 +26,9 @@ export const Home = () => {
   const params = useSelector(selectParams);
   const [currentPageDefault, setCurrentPageDefault] = React.useState(1);
   const [currentPageSort, setCurrentPageSort] = React.useState(1);
-  const [getDefaultMovies, { isLoading: isDefaultMoviesLoading }] =
+  const [getDefaultMovies, { isFetching: isDefaultMoviesFetching }] =
     useLazyGetMoviesQuery();
-  const [getSortMovies, { isLoading: isSortMoviesLoading }] =
+  const [getSortMovies, { isFetching: isSortMoviesFetching }] =
     useLazyGetMovieDiscoverQuery();
   const [data, setData] = React.useState<ListMoviesApiResponse | undefined>(
     undefined
@@ -138,11 +138,11 @@ export const Home = () => {
               <Typography.Title className="list-title" level={2}>
                 Фільми, що зараз у кіно
               </Typography.Title>
-              {(isDefaultMoviesLoading || isSortMoviesLoading) && !data && (
+              {(isDefaultMoviesFetching || isSortMoviesFetching) && (
                 <SkeletonLoader count={10} gutter={16} />
               )}
-              {!isDefaultMoviesLoading &&
-                !isSortMoviesLoading &&
+              {!isDefaultMoviesFetching &&
+                !isSortMoviesFetching &&
                 data &&
                 data.results.length !== 0 && (
                   <>

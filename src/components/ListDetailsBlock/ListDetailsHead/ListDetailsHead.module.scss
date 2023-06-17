@@ -86,3 +86,10 @@
     margin-bottom: 16px;
   }
 }
+
+.buttonClear {
+  &:disabled {
+    color: $primaryColor;
+    opacity: 0.65;
+  }
+}

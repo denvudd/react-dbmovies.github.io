@@ -99,9 +99,6 @@ const SiderMedia: React.FC<SliderMediaProps> = ({
                     </li>
                   ))
                 : null}
-              <li>
-                <a href="">hero</a>
-              </li>
             </ul>
           </div>
         </div>

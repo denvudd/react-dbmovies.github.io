@@ -3,9 +3,11 @@ import React from "react";
 import DetailLayout from "@/layouts/DetailsLayout";
 import ListDetailsHead from "@/components/ListDetailsBlock/ListDetailsHead/ListDetailsHead";
 import ListDetailsBody from "@/components/ListDetailsBlock/ListDetailsBody/ListDetailsBody";
+import ErrorPrivate from "@/components/UI/ErrorPrivate/ErrorPrivate";
 import Head from "next/head";
 import type { GetServerSideProps } from "next/types";
 import type { ListDetailsApiResponse } from "@/redux/api/lists/types";
+import type { ApiError } from "@/redux/api/baseApi/types/ErrorType";
 
 /* 
   The long cold start issue fix
@@ -22,36 +24,43 @@ export const config = {
 }
 
 interface ListDetailsPageProps {
-  list: ListDetailsApiResponse;
+  id: string | string[] | undefined;
+  list: ListDetailsApiResponse | ApiError;
 }
 
-export const getServerSideProps: GetServerSideProps<{
-  list: ListDetailsApiResponse;
-}> = async (context) => {
+export const getServerSideProps: GetServerSideProps<
+  ListDetailsPageProps
+> = async (context) => {
   const { id } = context.query;
   const res = await fetch(
     `https://api.themoviedb.org/3/list/${id}?api_key=684e3f73d1ca0e692a3016c028aabf72&&language=uk-UA`
   );
-  const list: ListDetailsApiResponse = await res.json();
-  return { props: { list } };
+  const list: ListDetailsApiResponse | ApiError = await res.json();
+  return { props: { id: id, list } };
 };
 
-const ListDetailsPage: React.FC<ListDetailsPageProps> = ({ list }) => {
+const ListDetailsPage: React.FC<ListDetailsPageProps> = ({ id, list }) => {
+  const isError = "status_code" in list;
+  const isPrivateList = isError && list.status_code === 34;
   return (
     <>
       <Head>
-        <title>{list.name} — The Movie Database (TMDB)</title>
+        <title>
+          {!isError && !isPrivateList ? list.name : "Приватний ресурс"} — The
+          Movie Database (TMDB)
+        </title>
         <meta
           property="og:url"
-          content={`https://react-dbmovies.vercel.app/lists/${list.id}`}
+          content={`https://react-dbmovies.vercel.app/lists/${id}`}
         />
         <link
           rel="canonical"
-          href={`https://react-dbmovies.vercel.app/lists/${list.id}`}
+          href={`https://react-dbmovies.vercel.app/lists/${id}`}
         />
       </Head>
       <DetailLayout>
-        {list && (
+        {isError && isPrivateList && <ErrorPrivate />}
+        {!isError && !isPrivateList && (
           <ListDetailsHead
             id={list.id}
             listUsername={list.created_by}
@@ -59,10 +68,10 @@ const ListDetailsPage: React.FC<ListDetailsPageProps> = ({ list }) => {
             created_by={list.created_by}
             description={list.description}
             iso_639_1={list.iso_639_1}
-            isEmpty={list.items.length === 0}
+            isEmpty={list.items?.length === 0 ? true : false}
           />
         )}
-        {list && (
+        {!isError && !isPrivateList && (
           <ListDetailsBody
             items={list.items}
             item_count={list.item_count}
