@@ -9,6 +9,7 @@ import dynamic from "next/dynamic";
 import type { Collection } from "@/redux/api/movies/types/MovieDetailsType";
 
 import styles from "./MovieDetailsMedia.module.scss";
+import MovieDetailsSocial from "./MovieDetailsSocial/MovieDetailsSocial";
 
 const MovieDetailsCollection = dynamic(
   () => import("./MovieDetailsCollection/MovieDetailsCollection"),
@@ -73,6 +74,7 @@ const MovieDetailsMedia: React.FC<MovieDetailsMediaProps> = ({
       <div className="app-container content-with-aside">
         <div className="media-content">
           <MovieDetailsCast id={id} />
+          <MovieDetailsSocial id={id} />
           <MovieDetailsScreens id={id} />
           <div className={styles.observer} ref={collectionRef}></div>
           {isCollectionLoaded && collectionData && (

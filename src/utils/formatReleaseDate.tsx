@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import "dayjs/locale/uk"; // Подключаем локаль "uk"
+import "dayjs/locale/uk"; 
 
 export const formatReleaseDate = (
   release: string,

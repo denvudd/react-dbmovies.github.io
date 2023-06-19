@@ -1,4 +1,6 @@
 import { baseApi } from "../baseApi/slice";
+
+// API Responses Types
 import type {
   ListMoviesApiResponse,
   MovieDetailsApiResponse,
@@ -7,15 +9,21 @@ import type {
   MovieReleaseDatesApiResponse,
   MovieImagesApiResponse,
   MovieVideosApiResponse,
-  Video,
+  MovieReviewsApiResponse,
   MovieRecsApiResponse,
   MovieKeywordApiResponse,
   AddMovieRatingApiResponse,
   DeleteMovieRatingApiResponse,
+} from "./types";
+// Query Args Types
+import type {
   ListQueryArgsDefault,
   AddMovieRatingQueryArgs,
   DeleteMovieRatingQueryArgs,
+  MovieReviewsQueryArgs,
 } from "./types";
+// Utility types
+import type { Video } from "./types";
 
 const tmdbApiKey = "api_key=684e3f73d1ca0e692a3016c028aabf72";
 
@@ -115,6 +123,16 @@ export const moviesApi = baseApi.injectEndpoints({
       transformResponse: (response: MovieRecsApiResponse) => response.results,
     }),
 
+    getMovieReviews: builder.query<
+      MovieReviewsApiResponse,
+      MovieReviewsQueryArgs
+    >({
+      query: ({ id, params }) =>
+        `/movie/${id}/reviews?${tmdbApiKey}&${params ? params : ""}`,
+      transformResponse: (response: MovieReviewsApiResponse) =>
+        response,
+    }),
+
     getMovieKeywords: builder.query<
       MovieKeywordApiResponse["keywords"],
       ListQueryArgsDefault
@@ -184,6 +202,7 @@ export const {
   useGetMovieCreditsCastQuery,
   useGetMovieRecsQuery,
   useGetMovieKeywordsQuery,
+  useGetMovieReviewsQuery,
   usePostAddMovieRatingMutation,
   useDeleteMovieRatingMutation,
   useLazyGetMovieAccoutStatesQuery,

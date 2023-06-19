@@ -1,0 +1,99 @@
+@import '@/styles/variables';
+
+.card {
+  width: 100%;
+  padding: 20px;
+  border: 1px solid $lightGrey;
+  border-radius: $imageBorderRadius;
+}
+
+.head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.info {
+  a {
+    color: $primaryColorContrast;
+  }
+
+  .title {
+    display: flex;
+
+    h3 {
+      margin-right: 0;
+      font-size: 1.3em;
+    }
+
+    .starIcon {
+      margin-right: 5px;
+      svg {
+        font-size: 0.9em;
+      }
+    }
+  }
+
+  .meta {
+    font-weight: 300;
+    font-size: 0.9em;
+
+    span {
+      font-weight: 500;
+    }
+  }
+}
+
+.rating {
+  padding: 1px 8px;
+  margin-left: 14px;
+  font-size: 0.9em;
+  display: inline-flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  background-color: #000;
+  border: 2px solid #fff;
+  border-color: #000;
+  border-radius: $imageBorderRadius;
+  color: #fff;
+}
+
+
+.avatar {
+  width: 64px;
+  margin-right: 20px;
+
+  a {
+    display: block;
+
+    img {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      display: block;
+    }
+
+    span {
+      width: 64px;
+      height: 64px;
+      font-size: 28px;
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      text-transform: uppercase;
+    }
+  }
+}
+
+.teaser {
+  padding-left: 84px;
+  padding-top: 20px;
+
+  p {
+    font-size: 1em;
+  }
+}

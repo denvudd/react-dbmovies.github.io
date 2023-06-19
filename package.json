@@ -28,6 +28,7 @@
     "react": "18.2.0",
     "react-content-loader": "^6.2.1",
     "react-dom": "18.2.0",
+    "react-markdown": "^8.0.7",
     "react-redux": "^8.0.5",
     "react-youtube": "^10.1.0",
     "sass": "^1.62.1",
@@ -35,6 +36,7 @@
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^13.4.4",
+    "@types/dompurify": "^3.0.2",
     "@types/lodash.debounce": "^4.0.7",
     "@types/numeral": "^2.0.2",
     "cross-env": "^7.0.3"

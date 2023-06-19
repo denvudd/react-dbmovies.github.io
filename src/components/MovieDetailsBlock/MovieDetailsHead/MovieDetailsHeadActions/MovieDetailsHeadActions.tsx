@@ -43,7 +43,7 @@ const MovieDetailsHeadActions: React.FC<MovieDetailsHeadActionsProps> = ({
       <ul className={styles.headerActions + " auto"}>
         <li className={styles.chart}>
           <RatingBar rating={vote_average} size={55} />
-          <span>Рейтинг</span>
+          <span>Оцінка користувачів</span>
         </li>
         <Tooltip
           title={
