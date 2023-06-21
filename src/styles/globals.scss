@@ -87,6 +87,11 @@ button {
     margin-right: 50px;
     color: $primaryColorContrast;
   }
+
+  &-details {
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
 }
 
 .scroller {

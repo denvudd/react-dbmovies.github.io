@@ -1,8 +1,12 @@
 @import '@/styles/variables';
 
 .container {
-  
   background-color: transparent;
+}
+
+.facts {
+  display: flex;
+  flex-direction: column;
 }
 
 .info {

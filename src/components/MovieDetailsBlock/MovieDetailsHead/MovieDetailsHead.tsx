@@ -8,6 +8,7 @@ import EyeOutlined from "@ant-design/icons/lib/icons/EyeOutlined";
 import { FastAverageColor } from "fast-average-color";
 import { formatTime } from "@/utils/formatTime";
 import { createRgbaString } from "@/utils/createRgbaString";
+import { generateShimmer } from "@/utils/generateShimmer";
 import type { FastAverageColorResult } from "fast-average-color";
 import type { Genre } from "@/redux/api/genres/types/MovieListGenreType";
 
@@ -47,12 +48,12 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
   const releaseYear = release_date?.split("-")[0]; // by first "-"
 
   React.useEffect(() => {
-    // get dominant color by backdrop
+    // get dominant color by poster
     const fac = new FastAverageColor();
-    if (backdrop_path) {
+    if (poster_path) {
       fac
         .getColorAsync(
-          `https://image.tmdb.org/t/p/w220_and_h330_face${backdrop_path}`,
+          `https://image.tmdb.org/t/p/w220_and_h330_face${poster_path}`,
           { algorithm: "dominant", crossOrigin: "anonymous" }
         )
         .then((result: FastAverageColorResult) => {
@@ -105,6 +106,11 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
                         priority
                         alt={`${title}`}
                         onClick={() => setIsGalleryVisible(true)}
+                        placeholder="blur"
+                        blurDataURL={`data:image/svg+xml;base64,${generateShimmer(
+                          300,
+                          400
+                        )}`}
                       />
                       <ANTDImage
                         width={200}

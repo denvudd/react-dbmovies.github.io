@@ -2,7 +2,12 @@ export type { AddMovieRatingApiResponse } from "./AddMovieRatingType";
 export type { DeleteMovieRatingApiResponse } from "./DeleteMovieRatingType";
 export type { ListMoviesApiResponse, ListMovie } from "./ListMovieType";
 export type { MovieAccountStatesApiResponse } from "./MovieAccountStatesType";
+export type {
+  MovieAltTitlesApiResponse,
+  MovieAltTitle,
+} from "./MovieAltTitlesType";
 export type { MovieCreditsApiResponse } from "./MovieCreditsType";
+export type { MovieExternalIDsApiResponse } from "./MovieExternalIDsType";
 export type {
   MovieDetailsApiResponse,
   MovieDetails,

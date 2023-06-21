@@ -56,92 +56,32 @@ const MovieDetailsScreens: React.FC<MovieDetailsScreensProps> = ({ id }) => {
       label: `Відеоролики`,
       children: (
         <div>
-          {isImagesLoading && (
-            <>
-              {[...new Array(6)].map((_, i) => (
-                <Skeleton.Image
-                  key={i}
-                  style={{ width: "533px", height: "300px" }}
-                />
-              ))}
-            </>
-          )}
           {
             <div className="scroller-wrapper">
-              <List
-                itemLayout="horizontal"
-                className={"scroller"}
-                dataSource={videos?.slice(0, 3)}
-                grid={{
-                  gutter: 0,
-                }}
-                locale={{
-                  emptyText: (
-                    <p className="empty-text--default">
-                      Нам не вдалося знайти медіа по цьому запиту 😕
-                    </p>
-                  ),
-                }}
-                renderItem={(video) => (
-                  <List.Item key={video.id}>
-                    <VideoCard videoKey={video.key} />
-                  </List.Item>
-                )}
-              ></List>
-            </div>
-          }
-        </div>
-      ),
-    },
-    {
-      key: TabValues.POSTERS,
-      label: `Світлини`,
-      children: (
-        <div>
-          {isImagesLoading && (
-            <>
-              {[...new Array(6)].map((_, i) => (
-                <Skeleton.Image
-                  key={i}
-                  style={{ width: "533px", height: "300px" }}
-                />
-              ))}
-            </>
-          )}
-          {
-            <div className="scroller-wrapper">
-              <List
-                itemLayout="horizontal"
-                className={"scroller"}
-                dataSource={images?.backdrops?.slice(0, 6)}
-                grid={{
-                  gutter: 0,
-                }}
-                locale={{
-                  emptyText: (
-                    <p className="empty-text--default">
-                      Нам не вдалося знайти медіа по цьому запиту 😕
-                    </p>
-                  ),
-                }}
-                renderItem={(image) => (
-                  <List.Item key={image.file_path.substring(0, 1)}>
-                    <Image
-                      width={533}
-                      height={300}
-                      src={`https://image.tmdb.org/t/p/w533_and_h300_bestv2/${image.file_path}`}
-                      alt="Backdrop"
-                      placeholder="blur"
-                      blurDataURL={`data:image/svg+xml;base64,${generateShimmer(
-                        138,
-                        175,
-                        80,
-                        60
-                      )}`}
-                    ></Image>
-                  </List.Item>
-                )}
-              ></List>
+              {isVideosLoading && (
+                <div className={styles.skeletonWrapper + " scroller"}>
+                  {[...new Array(6)].map((_, i) => (
+                    <Skeleton.Image
+                      key={i}
+                      style={{ width: "533px", height: "300px" }}
+                    />
+                  ))}
+                </div>
+              )}
+              {!isVideosLoading && videos && (
+                <div className={styles.list + " scroller"}>
+                  {videos.map((video) => (
+                    <div className={styles.item}>
+                      <VideoCard videoKey={video.key} />
+                    </div>
+                  ))}
+                </div>
+              )}
+              {!isVideosLoading && !videos && (
+                <p className="empty-text--default">
+                  Нам не вдалося знайти медіа по цьому запиту 😕
+                </p>
+              )}
             </div>
           }
         </div>
@@ -149,53 +89,95 @@ const MovieDetailsScreens: React.FC<MovieDetailsScreensProps> = ({ id }) => {
     },
     {
       key: TabValues.BACKDROPS,
+      label: `Світлини`,
+      children: (
+        <div>
+          {
+            <div className="scroller-wrapper">
+              {isImagesLoading && (
+                <div className={styles.skeletonWrapper + " scroller"}>
+                  {[...new Array(6)].map((_, i) => (
+                    <Skeleton.Image
+                      key={i}
+                      style={{ width: "533px", height: "300px" }}
+                    />
+                  ))}
+                </div>
+              )}
+              {!isImagesLoading && images && (
+                <div className={styles.list + " scroller"}>
+                  {images.backdrops.slice(0, 6).map((image) => (
+                    <div className={styles.item}>
+                      <Image
+                        width={533}
+                        height={300}
+                        src={`https://image.tmdb.org/t/p/w533_and_h300_bestv2/${image.file_path}`}
+                        alt="Backdrop"
+                        placeholder="blur"
+                        blurDataURL={`data:image/svg+xml;base64,${generateShimmer(
+                          533,
+                          300,
+                          80,
+                          60
+                        )}`}
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+              {!isImagesLoading && !images && (
+                <p className="empty-text--default">
+                  Нам не вдалося знайти медіа по цьому запиту 😕
+                </p>
+              )}
+            </div>
+          }
+        </div>
+      ),
+    },
+    {
+      key: TabValues.POSTERS,
       label: `Постери`,
       children: (
         <div>
-          {isImagesLoading && (
-            <>
-              {[...new Array(6)].map((_, i) => (
-                <Skeleton.Image
-                  key={i}
-                  style={{ width: "200px", height: "330px" }}
-                />
-              ))}
-            </>
-          )}
-          {
-            <List
-              itemLayout="horizontal"
-              className={"scroller"}
-              dataSource={images?.posters?.slice(0, 6)}
-              grid={{
-                gutter: 0,
-              }}
-              locale={{
-                emptyText: (
-                  <p className="empty-text--default">
-                    Нам не вдалося знайти медіа по цьому запиту 😕
-                  </p>
-                ),
-              }}
-              renderItem={(image) => (
-                <List.Item key={image.file_path.substring(0, 1)}>
-                  <Image
-                    width={220}
-                    height={330}
-                    src={`https://image.tmdb.org/t/p/w220_and_h330_face/${image.file_path}`}
-                    alt="Backdrop"
-                    placeholder="blur"
-                    blurDataURL={`data:image/svg+xml;base64,${generateShimmer(
-                      138,
-                      175,
-                      80,
-                      60
-                    )}`}
-                  ></Image>
-                </List.Item>
-              )}
-            ></List>
-          }
+          <div className="scroller-wrapper">
+            {isImagesLoading && (
+              <div className={styles.skeletonWrapper + " scroller"}>
+                {[...new Array(6)].map((_, i) => (
+                  <Skeleton.Image
+                    key={i}
+                    style={{ width: "533px", height: "300px" }}
+                  />
+                ))}
+              </div>
+            )}
+            {!isImagesLoading && images && (
+              <div className={styles.list + " scroller"}>
+                {images.posters.slice(0, 6).map((image) => (
+                  <div className={styles.item}>
+                    <Image
+                      width={220}
+                      height={330}
+                      src={`https://image.tmdb.org/t/p/w220_and_h330_face/${image.file_path}`}
+                      alt="Backdrop"
+                      placeholder="blur"
+                      blurDataURL={`data:image/svg+xml;base64,${generateShimmer(
+                        220,
+                        330,
+                        80,
+                        60
+                      )}`}
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
+            {!isImagesLoading && !images && (
+              <p className="empty-text--default">
+                Нам не вдалося знайти медіа по цьому запиту 😕
+              </p>
+            )}
+          </div>
         </div>
       ),
     },

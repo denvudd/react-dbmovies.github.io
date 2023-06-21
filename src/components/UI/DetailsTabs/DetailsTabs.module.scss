@@ -1,0 +1,33 @@
+@import '@/styles/variables';
+
+.head {
+  background-color: #fff;
+  color: $primaryColorContrast;
+}
+
+.inner {
+  width: 100%;
+  height: 46px;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  font-weight: 400;
+}
+
+.dropdownRoot {
+  &>ul {
+    &>li {
+      padding-left: 1.5rem !important;
+      padding-right: 1.5rem !important;
+
+      >div {
+        padding-left: 0px !important;
+      }
+
+      &.ant-dropdown-menu-submenu {
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+    }
+  }
+}

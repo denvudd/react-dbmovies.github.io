@@ -1,0 +1,55 @@
+@import '@/styles/variables';
+
+.wrapper {
+  width: 100%;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.inner {
+  color: $primaryColor;
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  padding-left: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: center;
+  gap: 20px;
+}
+
+.poster {
+  min-width: 58px;
+  width: 58px;
+  height: 87px;
+
+  img {
+    display: block;
+    border-radius: 4px;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.title {
+  font-size: 2.2rem;
+
+  a {
+    color: $primaryColor;
+    font-weight: 700;
+  }
+
+  span {
+    opacity: 0.8;
+    font-weight: 400;
+  }
+}
+
+.back {
+  font-weight: 600;
+  font-size: 1.3em;
+  color: $primaryColor;
+  opacity: 0.65;
+}

@@ -1,7 +1,10 @@
 import React from "react";
-import { useGetMovieKeywordsQuery } from "@/redux/api/movies/slice";
+import {
+  useGetMovieExternalIdsQuery,
+  useGetMovieKeywordsQuery,
+} from "@/redux/api/movies/slice";
 
-import { Typography, Space, Popover } from "antd";
+import { Typography, Space, Tooltip } from "antd";
 import FacebookFilled from "@ant-design/icons/lib/icons/FacebookFilled";
 import TwitterSquareFilled from "@ant-design/icons/lib/icons/TwitterSquareFilled";
 import InstagramFilled from "@ant-design/icons/lib/icons/InstagramFilled";
@@ -34,38 +37,58 @@ const SiderMedia: React.FC<SliderMediaProps> = ({
 }) => {
   const { data: keywords, isLoading: isKeywordsLoading } =
     useGetMovieKeywordsQuery({ id });
+  const { data: social, isLoading: isSocialLoading } =
+    useGetMovieExternalIdsQuery(id);
 
   return (
     <div className={styles.container}>
       <div className={styles.column}>
         <div className={styles.facts}>
           <Space size={10} className={styles.socialLinks}>
-            <Popover
-              content={<span>Відвідайте Facebook</span>}
-              placement="bottom"
-            >
-              <Typography.Link>
-                <FacebookFilled style={{ fontSize: "1.9em", color: "#000" }} />
-              </Typography.Link>
-            </Popover>
-            <Popover
-              content={<span>Відвідайте Twitter</span>}
-              placement="bottom"
-            >
-              <Typography.Link>
-                <TwitterSquareFilled
-                  style={{ fontSize: "1.9em", color: "#000" }}
-                />
-              </Typography.Link>
-            </Popover>
-            <Popover
-              content={<span>Відвідайте Instagram</span>}
-              placement="bottom"
-            >
-              <Typography.Link>
-                <InstagramFilled style={{ fontSize: "1.9em", color: "#000" }} />
-              </Typography.Link>
-            </Popover>
+            {social && !isSocialLoading && social.facebook_id && (
+              <Tooltip
+                title={<span>Відвідайте Facebook</span>}
+                placement="bottom"
+                zIndex={90}
+              >
+                <Typography.Link
+                  href={`https://www.facebook.com/${social.facebook_id}`}
+                >
+                  <FacebookFilled
+                    style={{ fontSize: "1.9em", color: "#000" }}
+                  />
+                </Typography.Link>
+              </Tooltip>
+            )}
+
+            {social && !isSocialLoading && social.twitter_id && (
+              <Tooltip
+                title={<span>Відвідайте Twitter</span>}
+                placement="bottom"
+                zIndex={90}
+              >
+                <Typography.Link
+                  href={`https://twitter.com/${social.twitter_id}`}
+                >
+                  <TwitterSquareFilled
+                    style={{ fontSize: "1.9em", color: "#000" }}
+                  />
+                </Typography.Link>
+              </Tooltip>
+            )}
+            {social && !isSocialLoading && social.instagram_id && (
+              <Tooltip
+                title={<span>Відвідайте Instagram</span>}
+                placement="bottom"
+                zIndex={90}
+              >
+                <Typography.Link href={`https://www.instagram.com/${social.instagram_id}`}>
+                  <InstagramFilled
+                    style={{ fontSize: "1.9em", color: "#000" }}
+                  />
+                </Typography.Link>
+              </Tooltip>
+            )}
           </Space>
           <Space className={styles.info} size={8} direction="vertical">
             <Typography.Paragraph className={styles.infoBlock}>

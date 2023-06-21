@@ -6,13 +6,14 @@ interface Props {
     sidebar: React.ReactNode;
     mainContent: React.ReactNode;
   };
+  siderTheme?: "light" | "dark";
 }
 
-const ListLayout: React.FC<Props> = ({ children }) => {
+const ListLayout: React.FC<Props> = ({ children, siderTheme = "dark" }) => {
   const { Content, Sider } = Layout;
   return (
     <Layout hasSider>
-      <Sider width={260}>{children.sidebar}</Sider>
+      <Sider theme={siderTheme} width={260}>{children.sidebar}</Sider>
       <Content style={{ minHeight: "100vh" }}>
         <div className="app-container">{children.mainContent}</div>
       </Content>

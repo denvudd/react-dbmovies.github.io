@@ -6,6 +6,7 @@ import type {
   MovieDetailsApiResponse,
   MovieAccountStatesApiResponse,
   MovieCreditsApiResponse,
+  MovieExternalIDsApiResponse,
   MovieReleaseDatesApiResponse,
   MovieImagesApiResponse,
   MovieVideosApiResponse,
@@ -64,6 +65,11 @@ export const moviesApi = baseApi.injectEndpoints({
       query: ({ id, params }) =>
         `/movie/${id}/credits?${tmdbApiKey}&${params ? params : ""}`,
       transformResponse: (response: MovieCreditsApiResponse) => response,
+    }),
+
+    getMovieExternalIds: builder.query<MovieExternalIDsApiResponse, number>({
+      query: (id) => `/movie/${id}/external_ids?${tmdbApiKey}`,
+      transformResponse: (response: MovieExternalIDsApiResponse) => response,
     }),
 
     getMovieReleaseDates: builder.query<string | undefined, number>({
@@ -129,8 +135,7 @@ export const moviesApi = baseApi.injectEndpoints({
     >({
       query: ({ id, params }) =>
         `/movie/${id}/reviews?${tmdbApiKey}&${params ? params : ""}`,
-      transformResponse: (response: MovieReviewsApiResponse) =>
-        response,
+      transformResponse: (response: MovieReviewsApiResponse) => response,
     }),
 
     getMovieKeywords: builder.query<
@@ -200,6 +205,7 @@ export const {
   useGetMovieDetailsQuery,
   useGetMovieReleaseDatesQuery,
   useGetMovieCreditsCastQuery,
+  useGetMovieExternalIdsQuery,
   useGetMovieRecsQuery,
   useGetMovieKeywordsQuery,
   useGetMovieReviewsQuery,

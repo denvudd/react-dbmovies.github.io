@@ -5,6 +5,7 @@ import MovieDetailsBlock from "@/components/MovieDetailsBlock/MovieDetailsBlock"
 import Head from "next/head";
 import type { GetServerSideProps } from "next/types";
 import type { MovieDetails } from "@/redux/api/movies/types";
+import DetailsTabs from "@/components/UI/DetailsTabs/DetailsTabs";
 
 /* 
   The long cold start issue fix
@@ -16,9 +17,9 @@ import type { MovieDetails } from "@/redux/api/movies/types";
   #1 https://nextjs.org/docs/pages/building-your-application/data-fetching/get-server-side-props#getserversideprops-with-edge-api-routes
   !! Doesn't work in dev mode !!
 */
-// export const config = {
-//   runtime: 'experimental-edge', // warn: using an experimental edge runtime, the API might change
-// }
+export const config = {
+  runtime: 'experimental-edge', // warn: using an experimental edge runtime, the API might change
+}
 
 interface MovieDetailsPageProps {
   data: MovieDetails;
@@ -53,6 +54,7 @@ const MovideDetailsPage: React.FC<MovieDetailsPageProps> = ({ data }) => {
         </title>
         <meta name="description" content={description}></meta>
       </Head>
+      <DetailsTabs id={data.id}/>
       <DetailLayout>
         {data && <MovieDetailsBlock id={id} data={data} />}
       </DetailLayout>
