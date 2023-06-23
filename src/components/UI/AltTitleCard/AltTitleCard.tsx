@@ -29,7 +29,7 @@ const AltTitleCard: React.FC<AltTitleCardProps> = ({ title }) => {
       </thead>
       <tbody>
         {title.titles.map((title) => (
-          <tr>
+          <tr key={title.name}>
             <td>{title.name}</td>
             <td>{title.type}</td>
           </tr>

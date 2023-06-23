@@ -1,18 +1,17 @@
 import React from "react";
 
 import Head from "next/head";
-import MovieTitleBlock from "@/components/MovieTitlesBlock/MovieTitleBlock";
-import AltTitleSider from "@/components/UI/AltTitlesSider/AltTitleSider";
 import DetailsBanner from "@/components/UI/DetailsBanner/DetailsBanner";
 import DetailsTabs from "@/components/UI/DetailsTabs/DetailsTabs";
-import ListLayout from "@/layouts/ListLayout";
 import { FastAverageColor, FastAverageColorResult } from "fast-average-color";
 import type {
-  MovieAltTitlesApiResponse,
+  MovieCreditsApiResponse,
   MovieDetails,
 } from "@/redux/api/movies/types";
 import type { GetServerSideProps } from "next/types";
 import { createRgbaString } from "@/utils/createRgbaString";
+import DetailLayout from "@/layouts/DetailsLayout";
+import MovieCastBlock from "@/components/MovieCastBlock/MovieCastBlock";
 import { ApiError } from "@/redux/api/baseApi/types/ErrorType";
 
 /* 
@@ -29,17 +28,17 @@ export const config = {
   runtime: 'experimental-edge', // warn: using an experimental edge runtime, the API might change
 }
 
-type MovieTitlesPageApiResponse = MovieDetails & {
-  alternative_titles: MovieAltTitlesApiResponse;
+type MovieCastPageApiResponse = MovieDetails & {
+  credits: MovieCreditsApiResponse;
 };
 
-export interface MovieTitlesPageProps {
-  data: MovieTitlesTransformedData;
+export interface MovieCastPageProps {
+  data: MovieCastTransformedData;
 }
 
-interface MovieTitlesTransformedData {
+interface MovieCastTransformedData {
   title: string;
-  alternative_titles: MovieAltTitlesApiResponse;
+  credits: MovieCreditsApiResponse;
   release_date: string;
   poster_path: string | null;
   overview: string | null;
@@ -47,13 +46,13 @@ interface MovieTitlesTransformedData {
 }
 
 export const getServerSideProps: GetServerSideProps<{
-  data: MovieTitlesTransformedData;
+  data: MovieCastTransformedData;
 }> = async (context) => {
   const { id } = context.query;
   const res = await fetch(
-    `https://api.themoviedb.org/3/movie/${id}?append_to_response=alternative_titles&language=uk-UA&api_key=684e3f73d1ca0e692a3016c028aabf72`
+    `https://api.themoviedb.org/3/movie/${id}?append_to_response=credits&language=uk-UA&api_key=684e3f73d1ca0e692a3016c028aabf72`
   );
-  const response: MovieTitlesPageApiResponse | ApiError = await res.json();
+  const response: MovieCastPageApiResponse | ApiError = await res.json();
 
   if ("status_code" in response && response.status_code === 34) {
     return {
@@ -67,21 +66,22 @@ export const getServerSideProps: GetServerSideProps<{
   if ("id" in response && response.id) {
     const {
       title,
-      alternative_titles,
       release_date,
       id: movieId,
       poster_path,
       overview,
+      credits,
     } = response;
 
-    const transformedData: MovieTitlesTransformedData = {
+    const transformedData: MovieCastTransformedData = {
       title,
-      alternative_titles,
+      credits,
       release_date,
       poster_path,
       overview,
       id: movieId,
     };
+
     return { props: { data: transformedData } };
   } else {
     return {
@@ -93,9 +93,8 @@ export const getServerSideProps: GetServerSideProps<{
   }
 };
 
-const MovieTitlesPage: React.FC<MovieTitlesPageProps> = ({ data }) => {
-  const { poster_path, title, overview, alternative_titles, release_date, id } =
-    data;
+const MovieCastPage: React.FC<MovieCastPageProps> = ({ data }) => {
+  const { title, credits, release_date, poster_path, overview, id } = data;
   const [backdropColor, setBackdropColor] = React.useState<number[] | null>(
     null
   );
@@ -104,10 +103,10 @@ const MovieTitlesPage: React.FC<MovieTitlesPageProps> = ({ data }) => {
   React.useEffect(() => {
     // get dominant color by poster
     const fac = new FastAverageColor();
-    if (poster_path) {
+    if (data.poster_path) {
       fac
         .getColorAsync(
-          `https://image.tmdb.org/t/p/w58_and_h87_face/${poster_path}`,
+          `https://image.tmdb.org/t/p/w58_and_h87_face/${data.poster_path}`,
           {
             algorithm: "dominant",
             crossOrigin: "anonymous",
@@ -124,7 +123,7 @@ const MovieTitlesPage: React.FC<MovieTitlesPageProps> = ({ data }) => {
   }, [data.id]);
 
   const averageColor =
-    backdropColor && poster_path && !isBackdropLight
+    backdropColor && data.poster_path && !isBackdropLight
       ? {
           backgroundColor: `${createRgbaString(backdropColor, "1")}`,
         }
@@ -143,38 +142,27 @@ const MovieTitlesPage: React.FC<MovieTitlesPageProps> = ({ data }) => {
         </title>
         <meta
           name="description"
-          content={data ? (overview as string) : undefined}
+          content={data ? (data.overview as string) : undefined}
         ></meta>
       </Head>
-      <DetailsTabs id={id} title={`Поділитися ${data.title}`} />
+      <DetailsTabs id={data.id} title={`Поділитися ${data.title}`} />
       <DetailsBanner
-        title={title}
-        releaseDate={release_date}
+        title={data.title}
+        releaseDate={data.release_date}
         posterPath={
-          poster_path
-            ? `https://image.tmdb.org/t/p/w58_and_h87_face/${poster_path}`
+          data.poster_path
+            ? `https://image.tmdb.org/t/p/w58_and_h87_face/${data.poster_path}`
             : "https://placehold.co/58x/png/?text=Not+Found"
         }
         averageColor={averageColor}
       />
       <div className="app-container content-with-aside panel-details">
-        <ListLayout siderTheme="light">
-          {{
-            sidebar: (
-              <AltTitleSider
-                totalCount={alternative_titles.titles.length}
-                countries={alternative_titles.titles}
-                averageColor={averageColor}
-              />
-            ),
-            mainContent: (
-              <MovieTitleBlock countries={alternative_titles.titles} />
-            ),
-          }}
-        </ListLayout>
+        <DetailLayout>
+          <MovieCastBlock cast={credits.cast} crew={credits.crew} />
+        </DetailLayout>
       </div>
     </>
   );
 };
 
-export default MovieTitlesPage;
+export default MovieCastPage;

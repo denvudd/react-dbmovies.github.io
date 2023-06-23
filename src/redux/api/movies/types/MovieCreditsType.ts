@@ -22,7 +22,7 @@ interface CastMember extends MoviePerson {
   order: number;
 }
 
-interface CrewMember extends MoviePerson {
+export interface CrewMember extends MoviePerson {
   credit_id: string;
   department: string;
   job: string;

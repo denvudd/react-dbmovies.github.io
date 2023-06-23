@@ -6,7 +6,7 @@ export type {
   MovieAltTitlesApiResponse,
   MovieAltTitle,
 } from "./MovieAltTitlesType";
-export type { MovieCreditsApiResponse } from "./MovieCreditsType";
+export type { MovieCreditsApiResponse, CrewMember } from "./MovieCreditsType";
 export type { MovieExternalIDsApiResponse } from "./MovieExternalIDsType";
 export type {
   MovieDetailsApiResponse,

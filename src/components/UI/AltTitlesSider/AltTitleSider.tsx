@@ -1,6 +1,7 @@
 import React from "react";
 
 import { whereAlpha2 } from "iso-3166-1";
+import { v4 as uuidv4 } from 'uuid';
 import type { MovieAltTitle } from "@/redux/api/movies/types";
 
 import styles from "./AltTitleSider.module.scss";
@@ -10,13 +11,13 @@ interface AltTitleSiderProps {
   countries: MovieAltTitle[];
   averageColor: {
     backgroundColor: string;
-  }
+  };
 }
 
 const AltTitleSider: React.FC<AltTitleSiderProps> = ({
   totalCount,
   countries,
-  averageColor
+  averageColor,
 }) => {
   const countryList = new Map<
     string,
@@ -33,7 +34,7 @@ const AltTitleSider: React.FC<AltTitleSiderProps> = ({
         count.count += 1;
       }
     } else {
-      countryList.set(iso_3166_1, {count: 1, title, type});
+      countryList.set(iso_3166_1, { count: 1, title, type });
     }
   });
 
@@ -54,7 +55,7 @@ const AltTitleSider: React.FC<AltTitleSiderProps> = ({
         <div className={styles.content}>
           <ul className={styles.countries}>
             {formattedCountryList.map((country) => (
-              <li className={styles.country}>
+              <li key={uuidv4()} className={styles.country}>
                 <a href={`#${country.iso_3166_1}`}>
                   {whereAlpha2(country.iso_3166_1)?.country}
                 </a>

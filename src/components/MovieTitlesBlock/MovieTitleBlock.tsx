@@ -1,21 +1,16 @@
 import React from "react";
 
-import type {
-  MovieAltTitlesApiResponse,
-  MovieDetails,
-} from "@/redux/api/movies/types";
+import { v4 as uuidv4 } from "uuid";
 import AltTitleCard from "../UI/AltTitleCard/AltTitleCard";
+import type { MovieAltTitle } from "@/redux/api/movies/types";
 
 import styles from "./MovieTitleBlock.module.scss";
 
 interface MovieTitleBlockProps {
-  data: MovieDetails & {
-    alternative_titles: MovieAltTitlesApiResponse;
-  };
+  countries: MovieAltTitle[];
 }
 
-const MovieTitleBlock: React.FC<MovieTitleBlockProps> = ({ data }) => {
-  const { titles: countries } = data.alternative_titles;
+const MovieTitleBlock: React.FC<MovieTitleBlockProps> = ({ countries }) => {
 
   const countryList = new Map<
     string,
@@ -34,7 +29,11 @@ const MovieTitleBlock: React.FC<MovieTitleBlockProps> = ({ data }) => {
         countryData.types.push(type);
       }
     } else {
-      countryList.set(iso_3166_1, { count: 1, titles: [{ name: title, type }], types: [type] });
+      countryList.set(iso_3166_1, {
+        count: 1,
+        titles: [{ name: title, type }],
+        types: [type],
+      });
     }
   });
 
@@ -54,7 +53,7 @@ const MovieTitleBlock: React.FC<MovieTitleBlockProps> = ({ data }) => {
         <div className="media-content">
           <div className={styles.titlesWrapper}>
             {formattedCountryList.map((title) => (
-              <AltTitleCard title={title} />
+              <AltTitleCard key={uuidv4()} title={title} />
             ))}
           </div>
         </div>

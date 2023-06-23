@@ -18,9 +18,9 @@ import type { MovieDetails } from "@/redux/api/movies/types";
   #1 https://nextjs.org/docs/pages/building-your-application/data-fetching/get-server-side-props#getserversideprops-with-edge-api-routes
   !! Doesn't work in dev mode !!
 */
-// export const config = {
-//   runtime: 'experimental-edge', // warn: using an experimental edge runtime, the API might change
-// }
+export const config = {
+  runtime: 'experimental-edge', // warn: using an experimental edge runtime, the API might change
+}
 
 interface MovieDetailsPageProps {
   data: MovieDetails;
@@ -95,7 +95,7 @@ const MovideDetailsPage: React.FC<MovieDetailsPageProps> = ({ data }) => {
           content={`https://react-dbmovies.vercel.app/movies/${id}`}
         />
       </Head>
-      <DetailsTabs id={id} />
+      <DetailsTabs id={id} title={`Поділитися ${title}`} />
       <DetailLayout>
         {data && <MovieDetailsBlock id={id} data={data} />}
       </DetailLayout>

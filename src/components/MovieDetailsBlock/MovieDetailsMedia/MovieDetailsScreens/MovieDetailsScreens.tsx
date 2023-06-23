@@ -4,8 +4,9 @@ import {
   useLazyGetMovieVideosQuery,
 } from "@/redux/api/movies/slice";
 
+import { v4 as uuidv4 } from 'uuid';
 import Image from "next/image";
-import { TabsProps, Tabs, Skeleton, List } from "antd";
+import { TabsProps, Tabs, Skeleton } from "antd";
 import VideoCard from "@/components/UI/VideoCard/VideoCard";
 import { generateShimmer } from "@/utils/generateShimmer";
 
@@ -71,7 +72,7 @@ const MovieDetailsScreens: React.FC<MovieDetailsScreensProps> = ({ id }) => {
               {!isVideosLoading && videos && (
                 <div className={styles.list + " scroller"}>
                   {videos.map((video) => (
-                    <div className={styles.item}>
+                    <div key={video.id} className={styles.item}>
                       <VideoCard videoKey={video.key} />
                     </div>
                   ))}
@@ -107,7 +108,7 @@ const MovieDetailsScreens: React.FC<MovieDetailsScreensProps> = ({ id }) => {
               {!isImagesLoading && images && (
                 <div className={styles.list + " scroller"}>
                   {images.backdrops.slice(0, 6).map((image) => (
-                    <div className={styles.item}>
+                    <div key={image.file_path} className={styles.item}>
                       <Image
                         width={533}
                         height={300}
@@ -154,7 +155,7 @@ const MovieDetailsScreens: React.FC<MovieDetailsScreensProps> = ({ id }) => {
             {!isImagesLoading && images && (
               <div className={styles.list + " scroller"}>
                 {images.posters.slice(0, 6).map((image) => (
-                  <div className={styles.item}>
+                  <div key={uuidv4()} className={styles.item}>
                     <Image
                       width={220}
                       height={330}

@@ -3,14 +3,21 @@ import React from "react";
 import { Dropdown, MenuProps, Space } from "antd";
 import Link from "next/link";
 import { CaretDownOutlined } from "@ant-design/icons";
+import ShareModal from "../ShareModal/ShareModal";
 
 import styles from "./DetailsTabs.module.scss";
 
 interface DetailsTabsProps {
   id: number;
+  title: string;
+  type?: "movie" | "tv";
 }
 
-const DetailsTabs: React.FC<DetailsTabsProps> = ({ id }) => {
+const DetailsTabs: React.FC<DetailsTabsProps> = ({
+  id,
+  title,
+  type = "movie",
+}) => {
   const reviewItems: MenuProps["items"] = [
     {
       key: "main",
@@ -18,19 +25,19 @@ const DetailsTabs: React.FC<DetailsTabsProps> = ({ id }) => {
     },
     {
       key: "titles",
-      label: <Link href={`${id}/titles`}>Альтернативні назви</Link>,
+      label: <Link href={`/movies/${id}/titles`}>Альтернативні назви</Link>,
     },
     {
       key: "cast",
-      label: <Link href={`${id}/сast`}>Актори та знімальна група</Link>,
+      label: <Link href={`/movies/${id}/cast`}>Актори та знімальна група</Link>,
     },
     {
       key: "releases",
-      label: <Link href={`${id}/releases`}>Дати виходу</Link>,
+      label: <Link href={`/movies/${id}/releases`}>Дати виходу</Link>,
     },
     {
       key: "translations",
-      label: <Link href={`${id}/translations`}>Переклади</Link>,
+      label: <Link href={`/movies/${id}/translations`}>Переклади</Link>,
     },
     { type: "divider" },
     {
@@ -74,15 +81,38 @@ const DetailsTabs: React.FC<DetailsTabsProps> = ({ id }) => {
   const shareItems: MenuProps["items"] = [
     {
       key: "share",
-      label: "Поширити посилання",
+      label: <ShareModal id={id} title={title} type={type} />,
     },
     {
       key: "facebook",
-      label: "Facebook",
+      label: (
+        <a
+          href={`https://www.facebook.com/sharer/sharer.php?u=${
+            type === "movie"
+              ? `https://react-dbmovies.vercel.app/movies/${id}`
+              : `https://react-dbmovies.vercel.app/tv/${id}`
+          }`}
+          target="_blank"
+        >
+          Facebook
+        </a>
+      ),
     },
     {
       key: "tweeter",
-      label: "Tweet",
+      label: (
+        <a
+          href={`https://twitter.com/intent/tweet?text=${title}%20@themoviedb&url=${
+            type === "movie"
+              ? `https://react-dbmovies.vercel.app/movies/${id}`
+              : `https://react-dbmovies.vercel.app/tv/${id}
+              &related=themoviedb`
+          }`}
+          target="_blank"
+        >
+          Tweet
+        </a>
+      ),
     },
   ];
 
