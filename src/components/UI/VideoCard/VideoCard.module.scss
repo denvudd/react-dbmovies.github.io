@@ -7,6 +7,11 @@
   width: 533px;
   height: 300px;
 
+  @media (max-width: 1200px) {
+    width: 430px;
+    height: 200px;
+  }
+
   &Wrapper {
     background-position: center;
     background-repeat: no-repeat;

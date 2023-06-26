@@ -2,30 +2,32 @@ import React from "react";
 
 import { whereAlpha2 } from "iso-3166-1";
 import { v4 as uuidv4 } from 'uuid';
-import type { MovieAltTitle } from "@/redux/api/movies/types";
+import type { MovieAltTitle, MovieTranslation, ReleaseDate } from "@/redux/api/movies/types";
 
-import styles from "./AltTitleSider.module.scss";
+import styles from "./DetailsSider.module.scss";
 
 interface AltTitleSiderProps {
+  title: string;
   totalCount: number;
-  countries: MovieAltTitle[];
+  items: MovieAltTitle[] | ReleaseDate[] | MovieTranslation[];
   averageColor: {
     backgroundColor: string;
   };
 }
 
 const AltTitleSider: React.FC<AltTitleSiderProps> = ({
+  title,
   totalCount,
-  countries,
+  items,
   averageColor,
 }) => {
   const countryList = new Map<
     string,
-    { count: number; title: string; type: string }
+    { count: number; }
   >();
 
-  countries.forEach((country) => {
-    const { iso_3166_1, title, type } = country;
+  items.forEach((country) => {
+    const { iso_3166_1 } = country;
 
     if (countryList.has(iso_3166_1)) {
       const count = countryList.get(iso_3166_1);
@@ -34,7 +36,7 @@ const AltTitleSider: React.FC<AltTitleSiderProps> = ({
         count.count += 1;
       }
     } else {
-      countryList.set(iso_3166_1, { count: 1, title, type });
+      countryList.set(iso_3166_1, { count: 1 });
     }
   });
 
@@ -50,7 +52,7 @@ const AltTitleSider: React.FC<AltTitleSiderProps> = ({
     <div className={styles.wrapper}>
       <div className={styles.container}>
         <h3 className={styles.head} style={averageColor}>
-          Альтернативні назви <span>{totalCount}</span>
+          {title} <span>{totalCount}</span>
         </h3>
         <div className={styles.content}>
           <ul className={styles.countries}>

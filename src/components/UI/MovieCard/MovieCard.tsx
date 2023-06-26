@@ -5,9 +5,9 @@ import Image from "next/image";
 import Link from "next/link";
 import RatingBar from "../RatingBar/RatingBar";
 import { formatReleaseDate } from "@/utils/formatReleaseDate";
+import { generateShimmer } from "@/utils/generateShimmer";
 
 import styles from "./MovieCard.module.scss";
-import { generateShimmer } from "@/utils/generateShimmer";
 interface MovieCardProps {
   id: number;
   index: number;

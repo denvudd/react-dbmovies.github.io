@@ -1,0 +1,66 @@
+@import '@/styles/variables';
+
+.card {
+  width: 100%;
+  color: $primaryColorContrast;
+
+  a {
+    color: $primaryColorContrast;
+  }
+}
+
+.table {
+  width: 100%;
+  font-size: 1em;
+  width: 100%;
+  border: 1px solid $lightGrey;
+  border-radius: $imageBorderRadius;
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  color: $primaryColorContrast;
+  width: 100%;
+
+  td {
+    border: 1px solid $lightGrey;
+    padding: 8px 10px;
+    vertical-align: top;
+  }
+
+  .rowTitle {
+    width: 100px;
+    font-weight: 600;
+  }
+}
+
+.head {
+  background-color: rgba(41, 43, 44, 0.085);
+  text-align: left;
+  vertical-align: middle;
+  padding: 8px 10px;
+}
+
+.title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h2 {
+    font-weight: 600;
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+
+    img {
+      margin-right: 6px;
+    }
+
+    span {
+      font-size: 0.9em;
+      opacity: 0.4;
+      margin-left: 3px;
+    }
+  }
+}

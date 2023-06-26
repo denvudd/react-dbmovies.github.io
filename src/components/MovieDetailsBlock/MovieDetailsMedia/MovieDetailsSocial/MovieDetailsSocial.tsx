@@ -4,8 +4,8 @@ import { useGetMovieReviewsQuery } from "@/redux/api/movies/slice";
 import ReviewCard from "@/components/UI/ReviewCard/ReviewCard";
 import classNames from "classnames";
 
-import styles from "./MovieDetailsSocial.module.scss";
 import { Button, Typography } from "antd";
+import styles from "./MovieDetailsSocial.module.scss";
 
 interface MovieDetailsSocialProps {
   id: number;
@@ -35,7 +35,7 @@ const MovieDetailsSocial: React.FC<MovieDetailsSocialProps> = ({ id }) => {
               <ReviewCard
                 key={review.id}
                 reviewResult={review}
-                textExpandanle={false}
+                textExpandanle={true}
               />
             );
           })}

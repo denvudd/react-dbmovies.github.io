@@ -1,0 +1,23 @@
+@import '@/styles/variables';
+
+.list {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.title {
+  color: $primaryColorContrast;
+  margin-bottom: 15px;
+
+  span {
+    opacity: 0.65;
+    font-weight: 500;
+  }
+}
+
+.empty {
+  color: $primaryColorContrast;
+}

@@ -72,7 +72,7 @@ export const moviesApi = baseApi.injectEndpoints({
       transformResponse: (response: MovieExternalIDsApiResponse) => response,
     }),
 
-    getMovieReleaseDates: builder.query<string | undefined, number>({
+    getMovieCertificate: builder.query<string | undefined, number>({
       query: (id) => `/movie/${id}/release_dates?${tmdbApiKey}`,
       transformResponse: (response: MovieReleaseDatesApiResponse) => {
         const certificates = response.results;
@@ -91,6 +91,11 @@ export const moviesApi = baseApi.injectEndpoints({
           return undefined;
         }
       },
+    }),
+
+    getMovieReleaseDates: builder.query<MovieReleaseDatesApiResponse, number>({
+      query: (id) => `/movie/${id}/release_dates?${tmdbApiKey}`,
+      transformResponse: (response: MovieReleaseDatesApiResponse) => response,
     }),
 
     getMovieImages: builder.query<MovieImagesApiResponse, ListQueryArgsDefault>(
@@ -203,7 +208,7 @@ export const moviesApi = baseApi.injectEndpoints({
 export const {
   useGetMoviesQuery,
   useGetMovieDetailsQuery,
-  useGetMovieReleaseDatesQuery,
+  useGetMovieCertificateQuery,
   useGetMovieCreditsCastQuery,
   useGetMovieExternalIdsQuery,
   useGetMovieRecsQuery,

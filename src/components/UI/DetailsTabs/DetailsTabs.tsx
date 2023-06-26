@@ -38,43 +38,32 @@ const DetailsTabs: React.FC<DetailsTabsProps> = ({
     {
       key: "translations",
       label: <Link href={`/movies/${id}/translations`}>Переклади</Link>,
-    },
-    { type: "divider" },
-    {
-      key: "changes",
-      label: <Link href={`${id}/changes`}>Зміни</Link>,
-    },
+    }
   ];
 
   const mediaItems: MenuProps["items"] = [
     {
       key: "backdrops",
-      label: <Link href={`/`}>Світлини</Link>,
+      label: <Link href={`/movies/${id}/backdrops`}>Світлини</Link>,
     },
     {
       key: "logos",
-      label: <Link href={`${id}/titles`}>Логотипи</Link>,
+      label: <Link href={`/movies/${id}/logos`}>Логотипи</Link>,
     },
     {
       key: "posters",
-      label: <Link href={`/`}>Постери</Link>,
+      label: <Link href={`/movies/${id}/posters`}>Постери</Link>,
     },
     {
-      key: "videosSub",
-      label: <Link href={`/`}>Відеороліки</Link>,
-      children: [
-        {
-          key: "trailers",
-          label: "Трейлери",
-        },
-      ],
+      key: "videos",
+      label: <Link href={`/movies/${id}/videos`}>Відеороліки</Link>,
     },
   ];
 
   const fandomItems: MenuProps["items"] = [
     {
       key: "reviews",
-      label: "Рецензії",
+      label: <Link href={`/movies/${id}/reviews`}>Рецензії</Link>,
     },
   ];
 

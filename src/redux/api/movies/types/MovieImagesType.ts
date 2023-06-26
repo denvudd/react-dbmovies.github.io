@@ -1,10 +1,11 @@
 export interface MovieImagesApiResponse {
   id: number;
   backdrops: Image[];
+  logos: Image[]
   posters: Image[];
 }
 
-interface Image {
+export interface Image {
   aspect_ratio: number;
   file_path: string;
   height: number;

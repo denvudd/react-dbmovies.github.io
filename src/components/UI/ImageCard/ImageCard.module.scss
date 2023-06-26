@@ -1,0 +1,106 @@
+@import '@/styles/variables';
+
+.card {
+  border: 1px solid $lightGrey;
+  border-radius: $imageBorderRadius;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  color: $primaryColorContrast;
+  width: 100%;
+}
+
+.containerImage {
+  width: 100%;
+  height: 0;
+  padding-bottom: 60%; // ~260px
+  position: relative;
+}
+
+.wrapperImage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.aspectRatioWrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.aspectRatioContent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.cardImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+
+  &Logo {
+    padding: 30px 40px;
+    background-image: url("https://www.themoviedb.org/assets/2/v4/misc/background-checker-16x16-2fcfb3b2505eb9222a9ab715c254557c868aa73dd4a7e98d76de4b70fd594eb8.png");
+  }
+}
+
+.info {
+  width: 100%;
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+
+.meta {
+  h3 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e3e3e3;
+    padding-left: 14px;
+    padding-right: 14px;
+    padding-bottom: 14px;
+    margin-bottom: 7px;
+    font-size: 1em;
+    font-weight: 400;
+    white-space: normal;
+  }
+}
+
+.content {
+  padding-left: 14px;
+  padding-right: 14px;
+
+  span {
+    color: #333;
+    margin: 16px 0 0 0;
+    display: block;
+    width: 100%;
+    font-weight: normal;
+    font-size: 0.8em;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    align-content: center;
+  }
+
+  .format {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    span {
+      margin: 0;
+      padding-left: 2px;
+      display: inline;
+      width: auto;
+      font-size: 0.9em;
+    }
+  }
+}

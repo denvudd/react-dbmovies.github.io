@@ -15,11 +15,13 @@ import styles from "./ReviewCard.module.scss";
 interface ReviewCardProps {
   reviewResult: ReviewResult;
   textExpandanle: boolean;
+  rowsToExpandle?: number;
 }
 
 const ReviewCard: React.FC<ReviewCardProps> = ({
   reviewResult,
   textExpandanle,
+  rowsToExpandle = 3,
 }) => {
   const { username, avatar_path, rating } = reviewResult.author_details;
   const { author, created_at, url, content } = reviewResult;
@@ -75,10 +77,11 @@ const ReviewCard: React.FC<ReviewCardProps> = ({
       </div>
       <div className={styles.teaser}>
         <Typography.Paragraph
-          ellipsis={{ rows: 3, expandable: textExpandanle }}
+          ellipsis={{ rows: rowsToExpandle }}
         >
           <ReactMarkdown>{content}</ReactMarkdown>
         </Typography.Paragraph>
+        {textExpandanle && <span><a href="/">Читати більше</a></span>}
       </div>
     </div>
   );

@@ -2,18 +2,20 @@ import React from "react";
 
 import Head from "next/head";
 import MovieTitleBlock from "@/components/MovieTitlesBlock/MovieTitleBlock";
-import AltTitleSider from "@/components/UI/AltTitlesSider/AltTitleSider";
+import DetailsSider from "@/components/UI/DetailsSide/DetailsSider";
 import DetailsBanner from "@/components/UI/DetailsBanner/DetailsBanner";
 import DetailsTabs from "@/components/UI/DetailsTabs/DetailsTabs";
 import ListLayout from "@/layouts/ListLayout";
-import { FastAverageColor, FastAverageColorResult } from "fast-average-color";
+import { FastAverageColor } from "fast-average-color";
+import { createRgbaString } from "@/utils/createRgbaString";
+
+import type { FastAverageColorResult } from "fast-average-color";
 import type {
   MovieAltTitlesApiResponse,
   MovieDetails,
 } from "@/redux/api/movies/types";
 import type { GetServerSideProps } from "next/types";
-import { createRgbaString } from "@/utils/createRgbaString";
-import { ApiError } from "@/redux/api/baseApi/types/ErrorType";
+import type { ApiError } from "@/redux/api/baseApi/types/ErrorType";
 
 /* 
   The long cold start issue fix
@@ -146,8 +148,9 @@ const MovieTitlesPage: React.FC<MovieTitlesPageProps> = ({ data }) => {
           content={data ? (overview as string) : undefined}
         ></meta>
       </Head>
-      <DetailsTabs id={id} title={`Поділитися ${data.title}`} />
+      <DetailsTabs id={id} title={`Поділитися ${title}`} />
       <DetailsBanner
+        id={id}
         title={title}
         releaseDate={release_date}
         posterPath={
@@ -161,9 +164,10 @@ const MovieTitlesPage: React.FC<MovieTitlesPageProps> = ({ data }) => {
         <ListLayout siderTheme="light">
           {{
             sidebar: (
-              <AltTitleSider
+              <DetailsSider
+                title={"Альтернативні назви"}
                 totalCount={alternative_titles.titles.length}
-                countries={alternative_titles.titles}
+                items={alternative_titles.titles}
                 averageColor={averageColor}
               />
             ),

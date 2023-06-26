@@ -1,5 +1,6 @@
 .listWrapper {
   display: grid;
+  justify-content: center;
   grid-template-columns: repeat(auto-fit, 260px);
 
   @media (max-width: 1700px) {

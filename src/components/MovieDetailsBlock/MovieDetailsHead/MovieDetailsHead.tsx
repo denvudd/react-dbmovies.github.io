@@ -1,12 +1,12 @@
 import React from "react";
-import { useGetMovieReleaseDatesQuery } from "@/redux/api/movies/slice";
+import { useGetMovieCertificateQuery } from "@/redux/api/movies/slice";
 
 import MovieDetailsHeadActions from "./MovieDetailsHeadActions/MovieDetailsHeadActions";
 import { Image as ANTDImage } from "antd";
 import Image from "next/image";
 import EyeOutlined from "@ant-design/icons/lib/icons/EyeOutlined";
 import { FastAverageColor } from "fast-average-color";
-import { formatTime } from "@/utils/formatTime";
+import { formatRuntime } from "@/utils/formatRuntime";
 import { createRgbaString } from "@/utils/createRgbaString";
 import { generateShimmer } from "@/utils/generateShimmer";
 import type { FastAverageColorResult } from "fast-average-color";
@@ -43,7 +43,7 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
     null
   );
   const [isBackdropLight, setIsBackdropLight] = React.useState(false);
-  const { data: certificate } = useGetMovieReleaseDatesQuery(id);
+  const { data: certificate } = useGetMovieCertificateQuery(id);
 
   const releaseYear = release_date?.split("-")[0]; // by first "-"
 
@@ -166,7 +166,7 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
                       </span>
                       {runtime && (
                         <span className={styles.runtime}>
-                          {formatTime(runtime)}
+                          {formatRuntime(runtime)}
                         </span>
                       )}
                     </div>

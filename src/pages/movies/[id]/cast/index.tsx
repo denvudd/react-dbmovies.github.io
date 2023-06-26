@@ -3,16 +3,18 @@ import React from "react";
 import Head from "next/head";
 import DetailsBanner from "@/components/UI/DetailsBanner/DetailsBanner";
 import DetailsTabs from "@/components/UI/DetailsTabs/DetailsTabs";
-import { FastAverageColor, FastAverageColorResult } from "fast-average-color";
+import { FastAverageColor } from "fast-average-color";
+import DetailLayout from "@/layouts/DetailsLayout";
+import MovieCastBlock from "@/components/MovieCastBlock/MovieCastBlock";
+import { createRgbaString } from "@/utils/createRgbaString";
+
+import type { FastAverageColorResult } from "fast-average-color";
+import type { GetServerSideProps } from "next/types";
+import type { ApiError } from "@/redux/api/baseApi/types/ErrorType";
 import type {
   MovieCreditsApiResponse,
   MovieDetails,
 } from "@/redux/api/movies/types";
-import type { GetServerSideProps } from "next/types";
-import { createRgbaString } from "@/utils/createRgbaString";
-import DetailLayout from "@/layouts/DetailsLayout";
-import MovieCastBlock from "@/components/MovieCastBlock/MovieCastBlock";
-import { ApiError } from "@/redux/api/baseApi/types/ErrorType";
 
 /* 
   The long cold start issue fix
@@ -25,8 +27,8 @@ import { ApiError } from "@/redux/api/baseApi/types/ErrorType";
   !! Doesn't work in dev mode !!
 */
 export const config = {
-  runtime: 'experimental-edge', // warn: using an experimental edge runtime, the API might change
-}
+  runtime: "experimental-edge", // warn: using an experimental edge runtime, the API might change
+};
 
 type MovieCastPageApiResponse = MovieDetails & {
   credits: MovieCreditsApiResponse;
@@ -103,7 +105,7 @@ const MovieCastPage: React.FC<MovieCastPageProps> = ({ data }) => {
   React.useEffect(() => {
     // get dominant color by poster
     const fac = new FastAverageColor();
-    if (data.poster_path) {
+    if (poster_path) {
       fac
         .getColorAsync(
           `https://image.tmdb.org/t/p/w58_and_h87_face/${data.poster_path}`,
@@ -123,7 +125,7 @@ const MovieCastPage: React.FC<MovieCastPageProps> = ({ data }) => {
   }, [data.id]);
 
   const averageColor =
-    backdropColor && data.poster_path && !isBackdropLight
+    backdropColor && poster_path && !isBackdropLight
       ? {
           backgroundColor: `${createRgbaString(backdropColor, "1")}`,
         }
@@ -142,16 +144,17 @@ const MovieCastPage: React.FC<MovieCastPageProps> = ({ data }) => {
         </title>
         <meta
           name="description"
-          content={data ? (data.overview as string) : undefined}
+          content={data ? (overview as string) : undefined}
         ></meta>
       </Head>
-      <DetailsTabs id={data.id} title={`Поділитися ${data.title}`} />
+      <DetailsTabs id={id} title={`Поділитися ${title}`} />
       <DetailsBanner
+        id={id}
         title={data.title}
         releaseDate={data.release_date}
         posterPath={
           data.poster_path
-            ? `https://image.tmdb.org/t/p/w58_and_h87_face/${data.poster_path}`
+            ? `https://image.tmdb.org/t/p/w58_and_h87_face/${poster_path}`
             : "https://placehold.co/58x/png/?text=Not+Found"
         }
         averageColor={averageColor}

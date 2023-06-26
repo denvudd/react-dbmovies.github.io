@@ -1,24 +1,34 @@
 import React from "react";
 
-import styles from "./AltTitleCard.module.scss";
+import Image from "next/image";
 import { whereAlpha2 } from "iso-3166-1";
+
+import styles from "./AltTitleCard.module.scss";
 
 interface AltTitleCardProps {
   title: {
     iso_3166_1: string;
-    count: number;
-    titles: { name: string; type: string }[]; 
+    titles: { name: string; type: string }[];
   };
 }
 
 const AltTitleCard: React.FC<AltTitleCardProps> = ({ title }) => {
+  const { iso_3166_1, titles } = title;
+  const formattedCountryName = whereAlpha2(iso_3166_1)?.country;
+
   return (
     <table className={styles.card}>
       <thead>
         <tr>
           <th colSpan={2}>
-            <h2 id={title.iso_3166_1} className={styles.title}>
-              {whereAlpha2(title.iso_3166_1)?.country}
+            <h2 id={iso_3166_1} className={styles.title}>
+              <Image
+                src={`/assets/country-flags/${iso_3166_1.toLocaleLowerCase()}.png`}
+                width={24}
+                height={18}
+                alt={`${formattedCountryName} flag`}
+              />
+              {formattedCountryName}
             </h2>
           </th>
         </tr>
@@ -28,7 +38,7 @@ const AltTitleCard: React.FC<AltTitleCardProps> = ({ title }) => {
         </tr>
       </thead>
       <tbody>
-        {title.titles.map((title) => (
+        {titles.map((title) => (
           <tr key={title.name}>
             <td>{title.name}</td>
             <td>{title.type}</td>

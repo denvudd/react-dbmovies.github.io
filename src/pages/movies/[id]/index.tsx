@@ -47,7 +47,7 @@ export const getServerSideProps: GetServerSideProps<{
   return { props: { data: data as MovieDetails } };
 };
 
-const MovideDetailsPage: React.FC<MovieDetailsPageProps> = ({ data }) => {
+const MovieDetailsPage: React.FC<MovieDetailsPageProps> = ({ data }) => {
   const { id, title, poster_path, backdrop_path, overview, release_date } =
     data;
 
@@ -103,4 +103,4 @@ const MovideDetailsPage: React.FC<MovieDetailsPageProps> = ({ data }) => {
   );
 };
 
-export default MovideDetailsPage;
+export default MovieDetailsPage;
