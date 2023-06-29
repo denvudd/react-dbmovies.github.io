@@ -28,8 +28,9 @@ import MovieReviewsBlock from "@/components/MovieReviewsBlock/MovieReviewsBlock"
   !! Doesn't work in dev mode !!
 */
 export const config = {
-  runtime: 'experimental-edge', // warn: using an experimental edge runtime, the API might change
-}
+  runtime:
+    process.env.NODE_ENV === "production" ? "experimental-edge" : "nodejs",
+};
 
 type MovieReviewsPageApiResponse = MovieDetails & {
   reviews: MovieReviewsApiResponse;

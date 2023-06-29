@@ -19,8 +19,9 @@ import type { MovieDetails } from "@/redux/api/movies/types";
   !! Doesn't work in dev mode !!
 */
 export const config = {
-  runtime: 'experimental-edge', // warn: using an experimental edge runtime, the API might change
-}
+  runtime:
+    process.env.NODE_ENV === "production" ? "experimental-edge" : "nodejs",
+};
 
 interface MovieDetailsPageProps {
   data: MovieDetails;

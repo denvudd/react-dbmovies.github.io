@@ -29,8 +29,9 @@ import type { ApiError } from "@/redux/api/baseApi/types/ErrorType";
   !! Doesn't work in dev mode !!
 */
 export const config = {
-  runtime: 'experimental-edge', // warn: using an experimental edge runtime, the API might change
-}
+  runtime:
+    process.env.NODE_ENV === "production" ? "experimental-edge" : "nodejs",
+};
 
 type MovieReleasesPageApiResponse = MovieDetails & {
   release_dates: MovieReleaseDatesApiResponse;

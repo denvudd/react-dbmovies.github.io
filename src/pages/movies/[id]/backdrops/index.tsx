@@ -6,6 +6,7 @@ import DetailsTabs from "@/components/UI/DetailsTabs/DetailsTabs";
 import { FastAverageColor } from "fast-average-color";
 import DetailLayout from "@/layouts/DetailsLayout";
 import { createRgbaString } from "@/utils/createRgbaString";
+import MovieImagesBlock from "@/components/MovieImagesBlock/MovieImagesBlock";
 
 import type { FastAverageColorResult } from "fast-average-color";
 import type { GetServerSideProps } from "next/types";
@@ -14,7 +15,7 @@ import type {
   MovieDetails,
   MovieImagesApiResponse,
 } from "@/redux/api/movies/types";
-import MovieImagesBlock from "@/components/MovieImagesBlock/MovieImagesBlock";
+
 
 /* 
   The long cold start issue fix
@@ -26,8 +27,10 @@ import MovieImagesBlock from "@/components/MovieImagesBlock/MovieImagesBlock";
   #1 https://nextjs.org/docs/pages/building-your-application/data-fetching/get-server-side-props#getserversideprops-with-edge-api-routes
   !! Doesn't work in dev mode !!
 */
+
 export const config = {
-  runtime: "experimental-edge", // warn: using an experimental edge runtime, the API might change
+  runtime:
+    process.env.NODE_ENV === "production" ? "experimental-edge" : "nodejs",
 };
 
 type MovieBackdropsPageApiResponse = MovieDetails & {
@@ -101,8 +104,6 @@ const MovieBackdropsPage: React.FC<MovieBackdropsPageProps> = ({ data }) => {
     null
   );
   const [isBackdropLight, setIsBackdropLight] = React.useState(false);
-  console.log(data);
-  
 
   React.useEffect(() => {
     // get dominant color by poster
