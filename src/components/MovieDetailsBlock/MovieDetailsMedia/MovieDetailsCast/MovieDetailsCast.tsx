@@ -2,9 +2,10 @@ import React from "react";
 import { useGetMovieCreditsCastQuery } from "@/redux/api/movies/slice";
 
 import CastCard from "@/components/UI/CastCard/CastCard";
-import { Typography, List, Button } from "antd";
+import { List, Button } from "antd";
 
 import styles from "./MovieDetailsCast.module.scss";
+import Link from "next/link";
 interface MovieDetailsCastProps {
   id: number;
 }
@@ -14,7 +15,7 @@ const MovieDetailsCast: React.FC<MovieDetailsCastProps> = ({ id }) => {
     id,
     params: "language=uk-UA&page=1",
   });
-  
+
   return (
     <section className={styles.cast + " panel"}>
       <h3>В головних ролях</h3>
@@ -44,9 +45,9 @@ const MovieDetailsCast: React.FC<MovieDetailsCastProps> = ({ id }) => {
         ></List>
       </div>
       <Button size="small" type="text" className={styles.castButton}>
-        <Typography.Link className="bold">
+        <Link href={`/movies/${id}/cast`} className="bold">
           Уся знімальна група й акторський склад
-        </Typography.Link>
+        </Link>
       </Button>
     </section>
   );

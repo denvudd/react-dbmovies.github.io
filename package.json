@@ -25,6 +25,8 @@
     "lodash.debounce": "^4.0.8",
     "next": "13.4.2",
     "numeral": "^2.0.6",
+    "postcss-flexbugs-fixes": "^5.0.2",
+    "postcss-preset-env": "^8.5.1",
     "react": "18.2.0",
     "react-content-loader": "^6.2.1",
     "react-dom": "18.2.0",
@@ -34,6 +36,18 @@
     "sass": "^1.62.1",
     "typescript": "5.0.4",
     "uuid": "^9.0.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^13.4.4",

@@ -63,7 +63,7 @@ const SearchBar: React.FC = () => {
     setIsIconClicked(false);
   };
 
-  const SearchResultTitleTypeChecker = (
+  const searchResultTitleTypeChecker = (
     element: SearchMovie | SearchTV | SearchPerson
   ) => {
     switch (element.media_type) {
@@ -78,16 +78,16 @@ const SearchBar: React.FC = () => {
     }
   };
 
-  const SearchResultLinkTypeChecker = (
+  const searchResultLinkTypeChecker = (
     element: SearchMovie | SearchTV | SearchPerson
   ) => {
     switch (element.media_type) {
       case "movie":
-        return `${element.id}`;
+        return `/movies/${element.id}`;
       case "tv":
-        return `${element.name} (${element.original_name}) в Серіалах`;
+        return `/tv/${element.id}`;
       case "person":
-        return `${element.name} в Людях`;
+        return `/person/${element.id}`;
       default:
         return "Not found";
     }
@@ -137,13 +137,13 @@ const SearchBar: React.FC = () => {
                           value={element.id.toString()}
                           className={styles.optionWrapper}
                         >
-                          <Link href={SearchResultLinkTypeChecker(element)}>
+                          <Link href={searchResultLinkTypeChecker(element)}>
                             <div className={styles.option}>
                               <span>
                                 <SearchOutlined />
                               </span>
                               <span>
-                                {SearchResultTitleTypeChecker(element)}
+                                {searchResultTitleTypeChecker(element)}
                               </span>
                             </div>
                           </Link>
@@ -155,14 +155,14 @@ const SearchBar: React.FC = () => {
                     <Select.Option
                       key={element.id}
                       value={element.id.toString()}
-                      label={SearchResultTitleTypeChecker(element)}
+                      label={searchResultTitleTypeChecker(element)}
                     >
-                      <Link href={SearchResultLinkTypeChecker(element)}>
+                      <Link href={searchResultLinkTypeChecker(element)}>
                         <div className={styles.option}>
                           <span>
                             <SearchOutlined />
                           </span>
-                          <span>{SearchResultTitleTypeChecker(element)}</span>
+                          <span>{searchResultTitleTypeChecker(element)}</span>
                         </div>
                       </Link>
                     </Select.Option>

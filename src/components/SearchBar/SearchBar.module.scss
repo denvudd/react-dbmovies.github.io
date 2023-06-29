@@ -12,7 +12,7 @@
 .bar {
   width: 100%;
   position: absolute;
-  top: 64px;
+  top: 99px; // initial 64 px + additional 35 px because of banner
   left: 0;
   border-top: 1px solid $lightGrey;
   border-bottom: 1px solid $lightGrey;

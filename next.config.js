@@ -1,14 +1,13 @@
-/** @type {import('next').NextConfig} */
-import withBundleAnalyzer from '@next/bundle-analyzer';
-
-const bundleAnalyzer = withBundleAnalyzer({
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
+const path = require("path");
 
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    remotePatterns: [{
+    remotePatterns: [
+      {
         protocol: 'https',
         hostname: 'image.tmdb.org',
       },
@@ -22,6 +21,12 @@ const nextConfig = {
       },
     ],
   },
+};
+
+module.exports = {
+  sassOptions: {
+    includePaths: [path.join(__dirname, 'styles')],
+  },
 }
 
-export default bundleAnalyzer(nextConfig);
+module.exports = withBundleAnalyzer(nextConfig)

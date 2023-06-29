@@ -3,8 +3,9 @@ import { useGetMovieReviewsQuery } from "@/redux/api/movies/slice";
 
 import ReviewCard from "@/components/UI/ReviewCard/ReviewCard";
 import classNames from "classnames";
+import Link from "next/link";
+import { Button } from "antd";
 
-import { Button, Typography } from "antd";
 import styles from "./MovieDetailsSocial.module.scss";
 
 interface MovieDetailsSocialProps {
@@ -41,10 +42,10 @@ const MovieDetailsSocial: React.FC<MovieDetailsSocialProps> = ({ id }) => {
           })}
         </div>
       </div>
-      <Button size="small" type="text">
-        <Typography.Link className="bold">
+      <Button size="small" type="text" className={styles.castButton}>
+        <Link href={`/movies/${id}/reviews`} className="bold">
           Прочитати всі рецензії
-        </Typography.Link>
+        </Link>
       </Button>
     </section>
   );

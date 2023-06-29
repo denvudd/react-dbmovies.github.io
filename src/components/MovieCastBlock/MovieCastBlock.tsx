@@ -37,7 +37,7 @@ const MovieCastBlock: React.FC<MovieCastBlockProps> = ({ cast, crew }) => {
         <div className={styles.inner}>
           <section className={styles.panel}>
             <h3>
-              Акториський склад <span>{cast.length}</span>
+              Акторський склад <span>{cast.length}</span>
             </h3>
             <ol className={styles.people}>
               {cast.map((cast) => (

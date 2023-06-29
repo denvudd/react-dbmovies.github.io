@@ -1,0 +1,22 @@
+@import '@/styles/variables';
+
+.ant-menu-dark {
+  color: #fff !important;
+
+  .ant-menu-item {
+    &-selected {
+      background: transparent !important;
+    }
+  }
+
+  &:disabled {
+    color: rgba(255, 255, 255, 0.65);
+    border-color: rgba(255, 255, 255, 0.65);
+  }
+}
+
+.ant-spin-container::after {
+  &::after {
+    background: transparent !important;
+  }
+}

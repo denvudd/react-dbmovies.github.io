@@ -1,9 +1,10 @@
 import React from "react";
 
 import Header from "../components/Header/Header";
-import Footer from "../components/Footer";
+import Footer from "../components/Footer/Footer";
 import { Layout } from "antd";
 import Head from "next/head";
+import BannerSupportUkraine from "@/components/UI/BannerSupportUkraine/BannerSupportUkraine";
 interface Props {
   children: React.ReactNode;
 }
@@ -47,8 +48,9 @@ const AppLayout: React.FC<Props> = ({ children }) => {
           href="/assets/apple-touch-icon.png"
         ></link>
       </Head>
+      <BannerSupportUkraine />
       <Header />
-      {children}
+      <Layout.Content>{children}</Layout.Content>
       <Footer />
     </Layout>
   );

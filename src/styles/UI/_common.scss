@@ -1,0 +1,140 @@
+@import '@/styles/variables';
+
+.button-primary {
+  border-color: $tmdbDarkBlue;
+  background-color: $tmdbDarkBlue;
+}
+
+.button-secondary {
+  border-color: $tmdbDarkBlue;
+  background-color: $tmdbLightBlue;
+}
+
+.button-success {
+  border-color: $tmdbDarkBlue;
+  background-color: $tmdbLogoGreen;
+}
+
+.button-failure {
+  border-color: $tmdbDarkBlue;
+  background-color: $tmdbLogoRed;
+}
+
+.accountSilver {
+  background-color: $accountSilver;
+}
+
+.accountPink {
+  background-color: $accountPink;
+}
+
+.accountPurple {
+  background-color: $accountPurple;
+}
+
+.accountGreen {
+  background-color: $accountGreen;
+}
+
+.accountTeal {
+  background-color: $accountTeal;
+}
+
+.accountLightBlue {
+  background-color: $accountLightBlue;
+}
+
+.accountBlue {
+  background-color: $accountBlue;
+}
+
+.accountOrange {
+  background-color: $accountOrange;
+}
+
+.accountYellow {
+  background-color: $accountYellow;
+}
+
+.accountRed {
+  background-color: $accountRed;
+}
+
+.scroller {
+  -webkit-overflow-scrolling: touch;
+  overflow-y: hidden;
+  overflow-x: auto;
+  padding-bottom: 10px;
+
+  &::-webkit-scrollbar {
+    background-color: transparent;
+    width: 16px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $darkerGrey;
+    border-radius: 16px;
+    border: 5px solid $primaryColor;
+  }
+
+  &::-webkit-scrollbar-button {
+    display: none;
+  }
+}
+
+.scroller {
+  div {
+    flex-flow: nowrap;
+  }
+}
+
+.scroller-wrapper {
+  position: relative;
+  top: 0;
+  left: 0;
+  margin-top: 20px;
+}
+
+.scroller-with-overflow {
+  &::after {
+    content: '';
+    width: 60px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, #fff 100%);
+    will-change: opacity;
+    pointer-events: none;
+  }
+}
+
+.panel {
+  width: 100%;
+  padding: 30px 0;
+  border-top: 1px solid $darkerGrey;
+
+  h3 {
+    font-size: 1.4em;
+    margin-right: 50px;
+    color: $primaryColorContrast;
+  }
+
+  &-details {
+    padding-top: 30px !important;
+    padding-bottom: 30px !important;
+  }
+
+  &:first-of-type {
+    border-top: 0;
+    padding-top: 0;
+  }
+}
+
+.empty-text--default {
+  color: $primaryColorContrast;
+}

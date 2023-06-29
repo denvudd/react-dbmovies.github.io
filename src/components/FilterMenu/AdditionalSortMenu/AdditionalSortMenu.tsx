@@ -221,11 +221,11 @@ const AdditionalSortMenu: React.FC<AdditionalSortMenuProps> = React.memo(
                         value: getLastSpecificDays(-14),
                       },
                       {
-                        label: "Останній 30 днів",
+                        label: "Останні 30 днів",
                         value: getLastSpecificDays(-30),
                       },
                       {
-                        label: "Останній 90 днів",
+                        label: "Останні 90 днів",
                         value: getLastSpecificDays(-90),
                       },
                       {

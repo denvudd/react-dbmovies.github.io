@@ -1,0 +1,44 @@
+@import '@/styles/variables';
+
+.app-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.content-with-aside {
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.media-content {
+  width: calc(100vw - 80px - 268px);
+  max-width: calc(1440px - 80px - 268px);
+}
+
+@media (max-width: 1200px) {
+  .app-container {
+    max-width: 1200px;
+  }
+}
+
+@media (max-width: 992px) {
+  .app-container {
+    max-width: 992px;
+  }
+}
+
+@media (max-width: 768px) {
+  .app-container {
+    max-width: 768px;
+  }
+}
+
+
+@media (max-width: 576px) {
+  .app-container {
+    max-width: 576px;
+  }
+}
