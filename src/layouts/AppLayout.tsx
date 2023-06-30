@@ -2,7 +2,7 @@ import React from "react";
 
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
-import { Layout } from "antd";
+import { FloatButton, Layout } from "antd";
 import Head from "next/head";
 import BannerSupportUkraine from "@/components/UI/BannerSupportUkraine/BannerSupportUkraine";
 interface Props {
@@ -11,7 +11,7 @@ interface Props {
 
 const AppLayout: React.FC<Props> = ({ children }) => {
   return (
-    <Layout>
+    <Layout style={{background: "#001529"}}>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta
@@ -50,7 +50,8 @@ const AppLayout: React.FC<Props> = ({ children }) => {
       </Head>
       <BannerSupportUkraine />
       <Header />
-      <Layout.Content>{children}</Layout.Content>
+      <Layout.Content className="main">{children}</Layout.Content>
+      <FloatButton.BackTop />
       <Footer />
     </Layout>
   );

@@ -31,22 +31,29 @@ const MovieDetailsSocial: React.FC<MovieDetailsSocialProps> = ({ id }) => {
       </div>
       <div className={styles.content}>
         <div className={styles.container}>
-          {reviews?.results.slice(0, 2).map((review) => {
-            return (
-              <ReviewCard
-                key={review.id}
-                reviewResult={review}
-                textExpandanle={true}
-              />
-            );
-          })}
+          {reviews &&
+            reviews.results.length !== 0 &&
+            reviews.results.slice(0, 2).map((review) => {
+              return (
+                <ReviewCard
+                  key={review.id}
+                  reviewResult={review}
+                  textExpandanle={true}
+                />
+              );
+            })}
+          {reviews && reviews.results.length === 0 && (
+            <div className="empty-text--default">Поки що немає рецензій.</div>
+          )}
         </div>
       </div>
-      <Button size="small" type="text" className={styles.castButton}>
-        <Link href={`/movies/${id}/reviews`} className="bold">
-          Прочитати всі рецензії
-        </Link>
-      </Button>
+      {reviews && reviews.results.length !== 0 && (
+        <Button size="small" type="text" className={styles.castButton}>
+          <Link href={`/movies/${id}/reviews`} className="bold">
+            Прочитати всі рецензії
+          </Link>
+        </Button>
+      )}
     </section>
   );
 };

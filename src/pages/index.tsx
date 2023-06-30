@@ -1,13 +1,16 @@
 import Head from "next/head";
-import { Typography } from "antd";
+import DetailLayout from "@/layouts/DetailsLayout";
+import HomeBlock from "@/components/HomeBlock/HomeBlock";
 
 export const Home = () => {
   return (
     <>
       <Head>
-        <title>Create Next App</title>
+        <title>The Movie Database (TMDB)</title>
       </Head>
-      <Typography.Title level={2}>Home</Typography.Title>
+      <DetailLayout>
+        <HomeBlock/>
+      </DetailLayout>
       
     </>
   );

@@ -23,7 +23,7 @@ export const LoginBlock = () => {
         .unwrap()
         .then((data) => {
           if (data.request_token) {
-            window.location.href = `https://www.themoviedb.org/authenticate/${data.request_token}?redirect_to=https://react-dbmovies.vercel.app/`;
+            window.location.href = `https://www.themoviedb.org/authenticate/${data.request_token}?redirect_to=https://react-dbmovies.vercel.app/login`;
           }
         });
     } catch (error) {
@@ -32,9 +32,11 @@ export const LoginBlock = () => {
   };
 
   React.useEffect(() => {
+    console.log(request_token);
+    
     if (request_token && approved) {
       try {
-        createSession(request_token[0])
+        createSession(request_token as string)
           .unwrap()
           .then((data) => {
             if (data.success) {

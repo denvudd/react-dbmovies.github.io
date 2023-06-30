@@ -36,6 +36,7 @@ const SearchBar: React.FC = () => {
 
   React.useEffect(() => {
     if (isBarActive) {
+      window.scrollTo(0, 0);
       getTrendingAll({ time_window: "week", params: "language=uk-UA" }, true);
     }
   }, [isBarActive]);

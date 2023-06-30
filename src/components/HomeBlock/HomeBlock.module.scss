@@ -1,0 +1,50 @@
+.hero {
+  color: #fff;
+  min-height: 300px;
+  height: calc(100vh / 2.5);
+  max-height: 360px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: relative;
+
+  &Container {
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+}
+
+.title {
+  margin-bottom: 20px;
+  width: 100%;
+
+  h2 {
+    font-size: 3em;
+    font-weight: 700;
+  }
+
+  h3 {
+    font-size: 2em;
+    font-weight: 600;
+  }
+}
+
+.card {
+  width: 150px !important;
+  min-width: 150px !important;
+}
+
+.watermark {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  font-size: 0.7em;
+  opacity: 0.40;
+
+  a {
+    color: inherit;
+    text-decoration: underline;
+  }
+}

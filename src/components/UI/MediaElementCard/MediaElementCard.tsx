@@ -7,18 +7,22 @@ import RatingBar from "../RatingBar/RatingBar";
 import { formatReleaseDate } from "@/utils/formatReleaseDate";
 import { generateShimmer } from "@/utils/generateShimmer";
 
-import styles from "./MovieCard.module.scss";
-interface MovieCardProps {
+import styles from "./MediaElementCard.module.scss";
+import classNames from "classnames";
+
+interface MediaElementCardProps {
   id: number;
-  index: number;
   title: string;
   imgUrl: string;
-  description: string;
+  description: string | null;
   voteAverage: number;
   release: string;
+  index?: number;
+  type?: "movie" | "tv";
+  size?: "small" | "default";
 }
 
-const MovieCard: React.FC<MovieCardProps> = ({
+const MediaElementCard: React.FC<MediaElementCardProps> = ({
   id,
   index,
   title,
@@ -26,6 +30,8 @@ const MovieCard: React.FC<MovieCardProps> = ({
   description,
   voteAverage,
   release,
+  type = "movie",
+  size = "default",
 }) => {
   const { Title, Paragraph } = Typography;
 
@@ -34,7 +40,7 @@ const MovieCard: React.FC<MovieCardProps> = ({
       hoverable
       size="small"
       cover={
-        <Link href={`${id}`}>
+        <Link href={`/${type === "movie" ? "movies" : "tv"}/${id}`}>
           <div className={styles.containerImage}>
             <div className={styles.wrapperImage}>
               <div className={styles.aspectRatioWrapper}>
@@ -46,8 +52,11 @@ const MovieCard: React.FC<MovieCardProps> = ({
                     height={400}
                     src={imgUrl}
                     placeholder="blur"
-                    blurDataURL={`data:image/svg+xml;base64,${generateShimmer(300, 400)}`}
-                    priority={index < 10} // first 10 images priority = true, the rest will not
+                    blurDataURL={`data:image/svg+xml;base64,${generateShimmer(
+                      300,
+                      400
+                    )}`}
+                    priority={index ? index < 10 : false} // first 10 images priority = true, the rest will not
                   />
                 </div>
               </div>
@@ -56,18 +65,32 @@ const MovieCard: React.FC<MovieCardProps> = ({
         </Link>
       }
     >
-      <p className={styles.release}>{formatReleaseDate(release)}</p>
+      <p
+        className={classNames(styles.release, {
+          [styles.releaseSmall]: size === "small",
+        })}
+      >
+        {formatReleaseDate(release)}
+      </p>
       <Link href={`${id}`}>
-        <Title className={styles.title} ellipsis={{ rows: 1 }} level={5}>
+        <Title
+          className={classNames(styles.title, {
+            [styles.titleSmall]: size === "small",
+          })}
+          ellipsis={{ rows: 1 }}
+          level={5}
+        >
           {title}
         </Title>
       </Link>
-      <Paragraph ellipsis={{ rows: 2 }}>{description}</Paragraph>
+      {size === "default" && (
+        <Paragraph ellipsis={{ rows: 2 }}>{description}</Paragraph>
+      )}
       <div className={styles.cardRating}>
-        <RatingBar rating={voteAverage} size={40} />
+        <RatingBar rating={voteAverage} size={size === "default" ? 40 : 32} />
       </div>
     </Card>
   );
 };
 
-export default MovieCard;
+export default MediaElementCard;

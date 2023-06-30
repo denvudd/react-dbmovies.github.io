@@ -72,7 +72,7 @@ const MovieDetailsScreens: React.FC<MovieDetailsScreensProps> = ({ id }) => {
               {!isVideosLoading && videos && (
                 <div className={styles.list + " scroller"}>
                   {videos.map((video) => (
-                      <VideoCard videoKey={video.key} />
+                      <VideoCard key={video.key} videoKey={video.key} />
                   ))}
                 </div>
               )}

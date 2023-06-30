@@ -18,3 +18,20 @@
 // Banners
 // Support Ukraine Banner
 @import '@/styles/libs/banners/support-ukraine';
+
+.stickyHeader {
+  position: fixed;
+  top: 0px;
+  left: 0;
+  width: 100%;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.nav-up {
+  top: -64px;
+}
+
+.main {
+  margin-top: 64px;
+  background: #fff;
+}

@@ -1,0 +1,80 @@
+@import '@/styles/variables';
+
+.footer {
+  background-image: radial-gradient(at 30% top, #031d33 0%, $tmdbDarkBlue 70%) !important;
+  padding: 0px !important;
+}
+
+.nav {
+  font-size: .9em;
+  display: flex;
+  justify-content: space-between;
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+
+.col {
+  margin-right: 40px;
+
+  &:first-of-type {
+    margin-right: 0;
+  }
+
+  &:last-of-type {
+    margin-right: 0;
+  }
+
+  h3 {
+    font-weight: bold;
+    font-size: 1.4em;
+    line-height: 1.4em;
+    text-transform: uppercase;
+    color: #fff;
+    white-space: nowrap;
+    margin: 0 0 4px 0;
+  }
+
+  ul {
+    li {
+      line-height: 1.6em;
+      max-width: 260px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: #fff;
+      margin-bottom: 4px;
+
+      a {
+        font-size: 1.2em;
+        color: #fff;
+      }
+    }
+  }
+}
+
+.logo {
+  font-size: 2.4em;
+  line-height: 1.0;
+  width: 165px;
+  height: 100px;
+  font-weight: 800;
+  color: #fff;
+  background-image: linear-gradient(90deg, #19d662, #4283af);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.user {
+  background-color: $primaryColor;
+  color: $tmdbLightBlue;
+  font-size: 1.3em;
+  font-weight: bold;
+  display: inline-block;
+  word-wrap: break-word;
+  white-space: normal;
+  border: 2px solid #fff;
+  border-radius: 5px;
+  padding: 8px 16px;
+  margin-top: 20px;
+}

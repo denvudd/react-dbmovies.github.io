@@ -8,6 +8,7 @@ import { Typography, Space, Tooltip } from "antd";
 import FacebookFilled from "@ant-design/icons/lib/icons/FacebookFilled";
 import TwitterSquareFilled from "@ant-design/icons/lib/icons/TwitterSquareFilled";
 import InstagramFilled from "@ant-design/icons/lib/icons/InstagramFilled";
+import ISO6391 from 'iso-639-1';
 import { formatBudget } from "@/utils/formatBudget";
 import { formatFirstLetterToUppercase } from "@/utils/formatFirstLetterToUppercase";
 
@@ -39,6 +40,23 @@ const SiderMedia: React.FC<SliderMediaProps> = ({
     useGetMovieKeywordsQuery({ id });
   const { data: social, isLoading: isSocialLoading } =
     useGetMovieExternalIdsQuery(id);
+
+  const checkStatus = (status: SliderMediaProps["status"]) => {
+    switch (status) {
+      case "Released":
+        return "Випущено"
+      case "Canceled":
+        return "Відмінено"
+      case "In Production":
+        return "У виробництві"
+      case "Planned":
+        return "У планах"
+      case "Post Production":
+        return "Поствиробництво"
+      case "Rumored":
+        return "За чутками"
+    }
+  }
 
   return (
     <div className={styles.container}>
@@ -97,11 +115,11 @@ const SiderMedia: React.FC<SliderMediaProps> = ({
             </Typography.Paragraph>
             <Typography.Paragraph className={styles.infoBlock}>
               <h3>Статус</h3>
-              {status}
+              {checkStatus(status)}
             </Typography.Paragraph>
             <Typography.Paragraph className={styles.infoBlock}>
               <h3>Мова оригіналу</h3>
-              {formatFirstLetterToUppercase(original_language)}
+              {ISO6391.getName(original_language)}
             </Typography.Paragraph>
             <Typography.Paragraph className={styles.infoBlock}>
               <h3>Бюджет</h3>

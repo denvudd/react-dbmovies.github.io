@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 
 import Head from "next/head";
 import { Pagination, Typography } from "antd";
-import MovieCard from "@/components/UI/MovieCard/MovieCard";
+import MediaElementCard from "@/components/UI/MediaElementCard/MediaElementCard";
 import MovieList from "@/components/UI/MovieList/MovieList";
 import SkeletonLoader from "@/components/UI/SkeletonLoader/SkeletonLoader";
 import FilterMenu from "@/components/FilterMenu/FilterMenu";
@@ -150,7 +150,7 @@ export const Home = () => {
                       gutter={16}
                       dataSource={data.results}
                       renderItem={(movie: MovieCard, index: number) => (
-                        <MovieCard
+                        <MediaElementCard
                           id={movie.id}
                           index={index}
                           key={movie.id}

@@ -4,6 +4,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  position: fixed;
+  top: 35px;
+  left: 0;
   height: 64px;
   width: 100%;
   z-index: 10;
@@ -36,8 +39,8 @@
 
 .logo {
   margin-right: 15px;
-  min-width: 185px;
-  font-weight: 700;
+  min-width: 210px;
+  font-weight: 800;
   color: #fff;
   font-size: 2em;
   background-image: linear-gradient(90deg, #19d662, #4283af);

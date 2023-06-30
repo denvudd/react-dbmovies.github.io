@@ -12,6 +12,8 @@ import styles from "./LogoutBlock.module.scss";
 export const LogoutBlock = () => {
   const [deleteSession] = useDeleteSessionMutation();
   const sessionId = useSessionId();
+  console.log(sessionId);
+  
   const router = useRouter();
 
   const handleClickSubmit = async () => {

@@ -18,7 +18,9 @@ export const authApi = baseApi.injectEndpoints({
       query: (request_token) => ({
         url: `/authentication/session/new?${tmdbApiKey}`,
         method: "POST",
-        body: request_token,
+        body: {
+          request_token: request_token,
+        },
       }),
       transformResponse: (response: AuthSessionApiResponse) => response,
     }),
@@ -27,7 +29,9 @@ export const authApi = baseApi.injectEndpoints({
       query: (session_id) => ({
         url: `/authentication/session?${tmdbApiKey}`,
         method: "DELETE",
-        body: session_id,
+        body: {
+          session_id: session_id,
+        },
       }),
       transformResponse: (response: AuthDeleteSessionApiResponse) => response,
     }),

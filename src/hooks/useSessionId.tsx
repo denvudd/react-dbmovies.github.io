@@ -5,6 +5,7 @@ export const useSessionId = () => {
 
   React.useEffect(() => {
     const storedSessionId = localStorage.getItem("session_id");
+    
     if (storedSessionId) {
       setSessionId(storedSessionId);
     } else {

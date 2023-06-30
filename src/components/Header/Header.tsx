@@ -1,13 +1,15 @@
 import React from "react";
 import { useLazyGetAccountDetailsQuery } from "@/redux/api/account/slice";
 
-import { Layout, Menu, MenuProps } from "antd";
+import { Affix, Layout, Menu, MenuProps } from "antd";
 import Link from "next/link";
 import UserOutlined from "@ant-design/icons/lib/icons/UserOutlined";
 import PlusOutlined from "@ant-design/icons/lib/icons/PlusOutlined";
 import dynamic from "next/dynamic";
 
 import styles from "./Header.module.scss";
+import { useScrollingUp } from "@/hooks/useScrollingUp";
+import classNames from "classnames";
 
 const DynamicSearchBar = dynamic(() => import("../SearchBar/SearchBar"));
 
@@ -16,6 +18,7 @@ const Header: React.FC = () => {
     getAccountDetails,
     { data: accountDetails, isLoading: isAccountDetailsLoading },
   ] = useLazyGetAccountDetailsQuery();
+  const scrolled = useScrollingUp();
 
   React.useEffect(() => {
     const sessionId = localStorage.getItem("session_id");
@@ -273,12 +276,18 @@ const Header: React.FC = () => {
   ];
 
   return (
-    <Layout.Header className={styles.header}>
+    <Layout.Header
+      className={classNames(styles.header, {
+        "stickyHeader": scrolled.scrollingUp && !scrolled.isStart,
+        "nav-up": !scrolled.scrollingUp,
+        "header-start": scrolled.isStart,
+      })}
+    >
       <div className={styles.container}>
         <div className={styles.content}>
           <div className={styles.menuWrapper}>
             <Link href={"/"} className={styles.logo}>
-              The Movie DB
+              THE MOVIE DB
             </Link>
             <div className={styles.navigation}>
               <Menu
