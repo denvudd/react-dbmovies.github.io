@@ -7,14 +7,17 @@ import { Select, Button, Modal } from "antd";
 import Link from "next/link";
 import type { MessageInstance } from "antd/es/message/interface";
 
+/**
+ * A custom React hook for adding a movie to the user's list. Returns an object with a handler function, loading state, and modal holder.
+*/
+
 export const useAddMovieToList = (
   sessionId: string | null,
   id: number,
   title: string,
   messageApi: MessageInstance // for using common message api and context message holder
 ) => {
-  const [addMovieToList, { isLoading }] =
-    usePostAddMovieToListMutation();
+  const [addMovieToList, { isLoading }] = usePostAddMovieToListMutation();
   const [fetchAccountLists] = useLazyGetAccountListsQuery();
   const [listId, setListId] = React.useState<number>(0);
   const [isListSubmit, setIsListSubmit] = React.useState(false);

@@ -18,7 +18,7 @@ const Header: React.FC = () => {
     getAccountDetails,
     { data: accountDetails, isLoading: isAccountDetailsLoading },
   ] = useLazyGetAccountDetailsQuery();
-  const scrolled = useScrollingUp();
+  const { scrollingUp, isStart } = useScrollingUp();
 
   React.useEffect(() => {
     const sessionId = localStorage.getItem("session_id");
@@ -278,9 +278,9 @@ const Header: React.FC = () => {
   return (
     <Layout.Header
       className={classNames(styles.header, {
-        "stickyHeader": scrolled.scrollingUp && !scrolled.isStart,
-        "nav-up": !scrolled.scrollingUp,
-        "header-start": scrolled.isStart,
+        stickyHeader: scrollingUp && !isStart,
+        "nav-up": !scrollingUp,
+        "header-start": isStart,
       })}
     >
       <div className={styles.container}>

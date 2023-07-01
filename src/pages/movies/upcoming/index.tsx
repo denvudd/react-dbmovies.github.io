@@ -134,10 +134,8 @@ export const Home = () => {
         {{
           sidebar: <FilterMenu />,
           mainContent: (
-            <>
-              <Typography.Title className="list-title" level={2}>
-                Очікувані фільми
-              </Typography.Title>
+            <div className="panel-details">
+              <h1 className="list-title">Очікувані фільми</h1>
               {(isDefaultMoviesFetching || isSortMoviesFetching) && (
                 <SkeletonLoader count={10} gutter={16} />
               )}
@@ -186,7 +184,7 @@ export const Home = () => {
                     </div>
                   </>
                 )}
-            </>
+            </div>
           ),
         }}
       </ListLayout>

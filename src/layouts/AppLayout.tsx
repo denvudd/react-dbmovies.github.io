@@ -11,7 +11,7 @@ interface Props {
 
 const AppLayout: React.FC<Props> = ({ children }) => {
   return (
-    <Layout style={{background: "#001529"}}>
+    <Layout className="layout-main">
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta

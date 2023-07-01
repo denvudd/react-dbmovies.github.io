@@ -68,6 +68,10 @@
       align-items: center;
       gap: 10px;
       max-width: 240px;
+
+      span {
+        color: $primaryColorContrast;
+      }
     }
   }
 

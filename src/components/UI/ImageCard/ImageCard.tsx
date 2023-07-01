@@ -8,6 +8,7 @@ import { generateShimmer } from "@/utils/generateShimmer";
 import type { Image as ImageType } from "@/redux/api/movies/types";
 
 import styles from "./ImageCard.module.scss";
+import classNames from "classnames";
 
 interface ImageCardProps {
   image: ImageType;
@@ -76,7 +77,11 @@ const ImageCard: React.FC<ImageCardProps> = ({ image, type, title }) => {
           target="_blank"
           title="Показати оригінал"
         >
-          <div className={styles.containerImage}>
+          <div
+            className={classNames(styles.containerImage, {
+              [styles.containerImagePoster]: type === "poster",
+            })}
+          >
             <div className={styles.wrapperImage}>
               <div className={styles.aspectRatioWrapper}>
                 <div className={styles.aspectRatioContent}>

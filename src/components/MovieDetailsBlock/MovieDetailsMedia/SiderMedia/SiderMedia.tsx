@@ -10,7 +10,6 @@ import TwitterSquareFilled from "@ant-design/icons/lib/icons/TwitterSquareFilled
 import InstagramFilled from "@ant-design/icons/lib/icons/InstagramFilled";
 import ISO6391 from 'iso-639-1';
 import { formatBudget } from "@/utils/formatBudget";
-import { formatFirstLetterToUppercase } from "@/utils/formatFirstLetterToUppercase";
 
 import styles from "./SideMedia.module.scss";
 interface SliderMediaProps {

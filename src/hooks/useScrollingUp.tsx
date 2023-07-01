@@ -1,5 +1,9 @@
 import React from "react";
 
+/**
+ * A custom React hook for tracking user scrolling. Returns an object with stateful boolean values.
+ */
+
 export const useScrollingUp = () => {
   const [scrollingUp, setScrollingUp] = React.useState(true);
   const [isStart, setIsStart] = React.useState(true);

@@ -8,9 +8,10 @@ import { Typography } from "antd";
 import { StarFilled } from "@ant-design/icons";
 import { formatFirstLetterToUppercase } from "@/utils/formatFirstLetterToUppercase";
 import { getRandomColorAvatar } from "@/utils/getRandomColorAvatar";
-import ReactMarkdown from 'react-markdown'
+import ReactMarkdown from "react-markdown";
 
 import styles from "./ReviewCard.module.scss";
+import Link from "next/link";
 
 interface ReviewCardProps {
   reviewResult: ReviewResult;
@@ -76,12 +77,21 @@ const ReviewCard: React.FC<ReviewCardProps> = ({
         </div>
       </div>
       <div className={styles.teaser}>
-        <Typography.Paragraph
-          ellipsis={{ rows: rowsToExpandle }}
-        >
+        {textExpandanle ? (
+          <Typography.Paragraph>
           <ReactMarkdown>{content}</ReactMarkdown>
         </Typography.Paragraph>
-        {textExpandanle && <span><a href="/">Читати більше</a></span>}
+        ) : (
+          <Typography.Paragraph ellipsis={{ rows: rowsToExpandle }}>
+            <ReactMarkdown>{content}</ReactMarkdown>
+          </Typography.Paragraph>
+        )}
+
+        {!textExpandanle && (
+          <span>
+            <Link href={url}>Читати більше</Link>
+          </span>
+        )}
       </div>
     </div>
   );

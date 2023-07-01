@@ -24,6 +24,7 @@ interface MovieDetailsHeadProps {
   tagline: string | null;
   overview: string | null;
   vote_average: number;
+  vote_count: number;
 }
 
 const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
@@ -37,6 +38,7 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
   tagline,
   overview,
   vote_average,
+  vote_count,
 }) => {
   const [isGalleryVisible, setIsGalleryVisible] = React.useState(false);
   const [backdropColor, setBackdropColor] = React.useState<number[] | null>(
@@ -172,7 +174,8 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
                     </div>
                   </div>
                   <MovieDetailsHeadActions
-                    vote_average={vote_average}
+                    voteAverage={vote_average}
+                    voteCount={vote_count}
                     title={title}
                     id={id}
                   />

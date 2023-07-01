@@ -38,7 +38,7 @@ const MovieDetailsSocial: React.FC<MovieDetailsSocialProps> = ({ id }) => {
                 <ReviewCard
                   key={review.id}
                   reviewResult={review}
-                  textExpandanle={true}
+                  textExpandanle={false}
                 />
               );
             })}

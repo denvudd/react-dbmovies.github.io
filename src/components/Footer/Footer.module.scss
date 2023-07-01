@@ -1,7 +1,7 @@
 @import '@/styles/variables';
 
 .footer {
-  background-image: radial-gradient(at 30% top, #031d33 0%, $tmdbDarkBlue 70%) !important;
+  background-color: $tmdbDarkBlue !important;
   padding: 0px !important;
 }
 

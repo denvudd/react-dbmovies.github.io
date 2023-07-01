@@ -2,6 +2,10 @@ import React from "react";
 import { usePostAddToWatchlistMutation } from "@/redux/api/account/slice";
 import { message } from "antd";
 
+/**
+ * A custom React hook for adding a element to the user watchlist. Returns an object with a handler function and message holder.
+*/
+
 export const useWatchlistAction = (
   sessionId: string | null,
   mediaType: "movie" | "tv",

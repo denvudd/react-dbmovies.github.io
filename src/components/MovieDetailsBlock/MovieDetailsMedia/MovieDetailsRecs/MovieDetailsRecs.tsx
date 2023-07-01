@@ -18,42 +18,57 @@ const MovieDetailsRecs: React.FC<MovieDetailsRecsProps> = ({ id }) => {
   return (
     <section className={styles.recs + " panel"}>
       <div className={styles.recsWaypoint}>
-        <h3 className={styles.title}>Рекомендації</h3>
         <div className="scroller-wrapper scroller-with-overflow">
           {isRecsLoading && (
-            <>
+            <div className="scroller-wrapper scroller-with-overflow">
               {[...new Array(6)].map((_, i) => (
                 <Skeleton.Image
                   key={i}
                   style={{ width: "250px", height: "141px" }}
                 />
               ))}
-            </>
+            </div>
           )}
           {recs && recs.length !== 0 && (
-            <List
-              dataSource={recs.slice(0, 10)}
-              className={"scroller"}
-              itemLayout="horizontal"
-              grid={{
-                gutter: 15,
-              }}
-              renderItem={(rec) => (
-                <List.Item>
-                  <RecomendationCard
-                    id={rec.id}
-                    release_date={rec.release_date}
-                    poster_path={
-                      rec.poster_path
-                        ? `https://image.tmdb.org/t/p/w250_and_h141_face${rec.poster_path}`
-                        : "https://placehold.co/240x141/png/?text=Not+Found"
-                    }
-                    title={rec.title}
-                    vote_average={rec.vote_average}
-                  />
-                </List.Item>
-              )}
-            ></List>
+            <>
+              <h3 className={styles.title}>Рекомендації</h3>
+              <div className="scroller-wrapper scroller-with-overflow">
+                <List
+                  dataSource={recs.slice(0, 10)}
+                  className={"scroller"}
+                  itemLayout="horizontal"
+                  grid={{
+                    gutter: 15,
+                  }}
+                  renderItem={(rec) => (
+                    <List.Item>
+                      <RecomendationCard
+                        id={rec.id}
+                        release_date={rec.release_date}
+                        poster_path={
+                          rec.poster_path
+                            ? `https://image.tmdb.org/t/p/w250_and_h141_face${rec.poster_path}`
+                            : "https://placehold.co/240x141/png/?text=Not+Found"
+                        }
+                        title={rec.title}
+                        vote_average={rec.vote_average}
+                      />
+                    </List.Item>
+                  )}
+                ></List>
+              </div>
+            </>
+          )}
+          {recs && recs.length === 0 && (
+            <>
+              <h3 className={styles.title}>Рекомендації</h3>
+              <div className="scroller-wrapper scroller-with-overflow">
+                <div className="empty-text--default">
+                  Наразі у нас немає достатньо даних для рекомендацій на базі
+                  цього елементу.
+                </div>
+              </div>
+            </>
           )}
         </div>
       </div>

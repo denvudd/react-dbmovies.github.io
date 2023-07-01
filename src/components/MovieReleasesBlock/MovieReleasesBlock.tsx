@@ -1,11 +1,11 @@
 import React from "react";
 
-import styles from "./MovieReleasesBlock.module.scss";
-import type { ReleaseDate } from "@/redux/api/movies/types";
 import ReleaseCard from "../UI/ReleaseCard/ReleaseCard";
 import { ReleaseInfo } from "@/redux/api/movies/types/MovieReleaseDates";
 import { v4 as uuidv4 } from "uuid";
+import type { ReleaseDate } from "@/redux/api/movies/types";
 
+import styles from "./MovieReleasesBlock.module.scss";
 interface MovieReleasesBlockProps {
   countries: ReleaseDate[];
 }
@@ -35,10 +35,7 @@ const MovieReleasesBlock: React.FC<MovieReleasesBlockProps> = ({
       iso_3166_1,
       releases: release_dates,
     })
-  );
-
-  console.log(formattedCountryList);
-  
+  );  
 
   return (
     <>

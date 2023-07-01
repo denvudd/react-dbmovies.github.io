@@ -47,7 +47,7 @@ const HomeBlock: React.FC = () => {
             <HomeSearch />
             <span className={styles.watermark}>
               *сайт лише копія для особистих цілей і НЕ претендує на{" "}
-              <a href="https://www.themoviedb.org/">оригінальний</a> сайт.
+              <a href="https://www.themoviedb.org/">оригінальний</a> продукт.
             </span>
           </div>
         </div>

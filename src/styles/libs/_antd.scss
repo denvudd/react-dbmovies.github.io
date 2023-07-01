@@ -21,6 +21,20 @@
   }
 }
 
+.ant-layout-header {
+  background-color: $tmdbDarkBlue !important;
+}
+
+.ant-menu {
+  background-color: $tmdbDarkBlue !important;
+}
+
+.ant-layout-sider {
+  &.ant-layout-sider-dark {
+    background-color: $tmdbDarkBlue !important;
+  }
+}
+
 // .ant-tabs-nav {
 //   &::before {
 //     border: none !important;

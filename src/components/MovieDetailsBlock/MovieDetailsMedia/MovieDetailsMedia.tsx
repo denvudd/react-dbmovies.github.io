@@ -7,9 +7,9 @@ import MovieDetailsScreens from "./MovieDetailsScreens/MovieDetailsScreens";
 import SiderMedia from "./SiderMedia/SiderMedia";
 import dynamic from "next/dynamic";
 import type { Collection } from "@/redux/api/movies/types/MovieDetailsType";
+import MovieDetailsSocial from "./MovieDetailsSocial/MovieDetailsSocial";
 
 import styles from "./MovieDetailsMedia.module.scss";
-import MovieDetailsSocial from "./MovieDetailsSocial/MovieDetailsSocial";
 
 const MovieDetailsCollection = dynamic(
   () => import("./MovieDetailsCollection/MovieDetailsCollection"),

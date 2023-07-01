@@ -21,6 +21,27 @@ body {
   }
 }
 
+.nav-up {
+  top: -64px;
+}
+
+.main {
+  margin-top: 64px;
+  background: #fff;
+}
+
+.layout-main {
+  background-color: $tmdbDarkBlue !important;
+}
+
+.stickyHeader {
+  position: fixed;
+  top: 0px;
+  left: 0;
+  width: 100%;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
 .button-primary {
   border-color: $tmdbDarkBlue;
   background-color: $tmdbDarkBlue;
@@ -157,5 +178,9 @@ body {
 }
 
 .empty-text--default {
+  color: $primaryColorContrast;
+}
+
+.pagination-total {
   color: $primaryColorContrast;
 }

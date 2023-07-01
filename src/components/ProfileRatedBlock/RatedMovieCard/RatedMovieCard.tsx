@@ -3,7 +3,7 @@ import { useDeleteMovieRatingMutation } from "@/redux/api/movies/slice";
 import { useAddMovieToList } from "@/hooks/useAddMovieAction";
 
 import { message } from "antd";
-import WideMovieCard from "../../UI/WideMovieCard/WideMovieCard";
+import WideElementCard from "../../UI/WideElementCard/WideElementCard";
 interface RatedMovieCardProps {
   id: number;
   priorityIndex?: number;
@@ -57,7 +57,7 @@ const RatedMovieCard: React.FC<RatedMovieCardProps> = ({
 
   return (
     <div>
-      <WideMovieCard
+      <WideElementCard
         id={id}
         priorityIndex={priorityIndex && priorityIndex}
         title={title}

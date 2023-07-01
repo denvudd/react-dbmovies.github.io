@@ -19,6 +19,7 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ activeTabIndex, tabs }) => {
     }
     return styles.tab;
   };
+  
   return (
     <div className={styles.tabs}>
       <div className={styles.tabsWrapper}>

@@ -34,13 +34,15 @@ const MovieImagesBlock: React.FC<MovieBackdropsBlockProps> = ({
       </h2>
       {images.length !== 0 ? (
         <MovieList
-        gutter={10}
-        dataSource={images}
-        renderItem={(image: Image) => (
-          <ImageCard title={title} image={image} type={type} />
-        )}
-      />
-      ) : <div className={styles.empty}>До цього запису не додано матеріалу.</div>}
+          gutter={10}
+          dataSource={images}
+          renderItem={(image: Image) => (
+            <ImageCard title={title} image={image} type={type} />
+          )}
+        />
+      ) : (
+        <div className={styles.empty}>До цього запису не додано матеріалу.</div>
+      )}
     </div>
   );
 };

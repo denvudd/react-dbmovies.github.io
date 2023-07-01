@@ -22,7 +22,7 @@ import {
 import Link from "next/link";
 import OptionElement from "../UI/OptionElement/OptionElement";
 import LoadingOutlined from "@ant-design/icons/lib/icons/LoadingOutlined";
-import WideMovieCard from "../UI/WideMovieCard/WideMovieCard";
+import WideElementCard from "../UI/WideElementCard/WideElementCard";
 import type { ListMovie } from "@/redux/api/movies/types";
 
 import styles from "./ListNewBlock.module.scss";
@@ -289,49 +289,59 @@ const ListNewBlock = () => {
                 value={null}
                 size="large"
               >
-                {elementsOptions.map((element, index) => (
-                  <Select.Option
-                    key={element.id}
-                    value={element.id.toString()}
-                    label={element.title}
-                  >
-                    <OptionElement
-                      index={index}
-                      title={element.title}
-                      poster_path={
-                        element.poster_path
-                          ? `https://image.tmdb.org/t/p/w45_and_h67_bestv2/${element.poster_path}`
-                          : "https://placehold.co/45x/png/?text=Not+Found"
-                      }
-                      release_date={element.release_date}
-                    />
-                  </Select.Option>
-                ))}
+                {elementsOptions.map((element, index) => {
+                  const { id, title, poster_path, release_date } = element;
+                  return (
+                    <Select.Option key={id} value={id.toString()} label={title}>
+                      <OptionElement
+                        index={index}
+                        title={title}
+                        poster_path={
+                          poster_path
+                            ? `https://image.tmdb.org/t/p/w45_and_h67_bestv2/${poster_path}`
+                            : "https://placehold.co/45x/png/?text=Not+Found"
+                        }
+                        release_date={release_date}
+                      />
+                    </Select.Option>
+                  );
+                })}
               </Select>
             </Form.Item>
             <div className={styles.cards}>
               {selectedElements && selectedElements.length !== 0 && (
                 <>
                   <h3>Додані елементи:</h3>
-                  {selectedElements.map((movie, index) => (
-                    <WideMovieCard
-                      id={movie.id}
-                      priorityIndex={index}
-                      title={movie.title}
-                      vote_average={movie.vote_average}
-                      release_date={movie.release_date}
-                      overview={movie.overview}
-                      poster_path={
-                        movie.poster_path
-                          ? `https://image.tmdb.org/t/p/w150_and_h225_bestv2${movie.poster_path}`
-                          : "https://placehold.co/150x225/png/?text=Not+Found"
-                      }
-                      isShowDelete
-                      onClickElementDelete={(id, title) => {
-                        onClickElementDelete(id, title);
-                      }}
-                    />
-                  ))}
+                  {selectedElements.map((movie, index) => {
+                    const {
+                      id,
+                      title,
+                      vote_average,
+                      release_date,
+                      overview,
+                      poster_path,
+                    } = movie;
+                    
+                    return (
+                      <WideElementCard
+                        id={id}
+                        priorityIndex={index}
+                        title={title}
+                        vote_average={vote_average}
+                        release_date={release_date}
+                        overview={overview}
+                        poster_path={
+                          poster_path
+                            ? `https://image.tmdb.org/t/p/w150_and_h225_bestv2${poster_path}`
+                            : "https://placehold.co/150x225/png/?text=Not+Found"
+                        }
+                        isShowDelete
+                        onClickElementDelete={(id, title) => {
+                          onClickElementDelete(id, title);
+                        }}
+                      />
+                    );
+                  })}
                 </>
               )}
             </div>

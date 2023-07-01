@@ -9,8 +9,9 @@ import UnorderedListOutlined from "@ant-design/icons/lib/icons/UnorderedListOutl
 import { formatReleaseDate } from "@/utils/formatReleaseDate";
 import { generateShimmer } from "@/utils/generateShimmer";
 
-import styles from "./WideMovieCard.module.scss";
-interface WideMovieCardProps {
+import styles from "./WideElementCard.module.scss";
+
+interface WideElementCardProps {
   id: number;
   priorityIndex?: number;
   title: string;
@@ -19,6 +20,7 @@ interface WideMovieCardProps {
   poster_path: string;
   overview: string;
   rating?: number;
+  type?: "movies" | "tv"
 
   isShowPanel?: boolean;
   isShowRate?: boolean;
@@ -31,7 +33,7 @@ interface WideMovieCardProps {
   onChangeMovieRate?: (...args: any) => void;
 }
 
-const WideMovieCard: React.FC<WideMovieCardProps> = ({
+const WideElementCard: React.FC<WideElementCardProps> = ({
   id,
   priorityIndex,
   title,
@@ -39,6 +41,7 @@ const WideMovieCard: React.FC<WideMovieCardProps> = ({
   release_date,
   overview,
   rating,
+  type = "movies",
   poster_path,
   isShowPanel,
   isShowAddMovie,
@@ -53,7 +56,7 @@ const WideMovieCard: React.FC<WideMovieCardProps> = ({
     <div key={id} className={styles.card}>
       <div className={styles.image}>
         <div className={styles.poster}>
-          <Link href={`/movies/${id}`}>
+          <Link href={`/${type}/${id}`}>
             <Image
               width={150}
               height={225}
@@ -75,7 +78,7 @@ const WideMovieCard: React.FC<WideMovieCardProps> = ({
             <RatingBar size={38} rating={vote_average} />
             <div className={styles.title}>
               <div>
-                <Link href={`/movies/${id}`}>
+                <Link href={`/${type}/${id}`}>
                   <h2>{title}</h2>
                 </Link>
               </div>
@@ -136,4 +139,4 @@ const WideMovieCard: React.FC<WideMovieCardProps> = ({
   );
 };
 
-export default WideMovieCard;
+export default WideElementCard;

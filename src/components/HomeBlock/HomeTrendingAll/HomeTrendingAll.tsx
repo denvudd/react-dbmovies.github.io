@@ -50,19 +50,21 @@ const HomeTrendingAll: React.FC = () => {
   }, [tabKey]);
 
   const trendingTypeChecker = (element: SearchMovie | SearchTV) => {
+    const { id, poster_path, overview, vote_average } = element;
+    
     switch (element.media_type) {
       case "movie":
         return (
           <MediaElementCard
-            id={element.id}
+            id={id}
             title={element.title}
             imgUrl={
-              element.poster_path
-                ? `https://image.tmdb.org/t/p/w220_and_h330_face/${element.poster_path}`
+              poster_path
+                ? `https://image.tmdb.org/t/p/w220_and_h330_face/${poster_path}`
                 : `https://placehold.co/260x390/png/?text=No+Image`
             }
-            description={element.overview}
-            voteAverage={element.vote_average}
+            description={overview}
+            voteAverage={vote_average}
             release={element.release_date}
             type="movie"
             size="small"
@@ -71,15 +73,15 @@ const HomeTrendingAll: React.FC = () => {
       case "tv":
         return (
           <MediaElementCard
-            id={element.id}
+            id={id}
             title={element.name}
             imgUrl={
-              element.poster_path
-                ? `https://image.tmdb.org/t/p/w220_and_h330_face/${element.poster_path}`
+              poster_path
+                ? `https://image.tmdb.org/t/p/w220_and_h330_face/${poster_path}`
                 : `https://placehold.co/260x390/png/?text=No+Image`
             }
-            description={element.overview}
-            voteAverage={element.vote_average}
+            description={overview}
+            voteAverage={vote_average}
             release={element.first_air_date}
             type="tv"
             size="small"

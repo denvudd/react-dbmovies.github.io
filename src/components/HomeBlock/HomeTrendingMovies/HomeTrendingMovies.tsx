@@ -60,7 +60,7 @@ const HomeTrendingMovies: React.FC = () => {
               itemLayout="horizontal"
               className={"scroller"}
               dataSource={trendingMovies?.results}
-              grid={{ gutter: 10 }}
+              grid={{ gutter: 20 }}
               loading={isTrendingAllFetching}
               renderItem={(element: SearchMovie) => (
                 <List.Item className={styles.card} key={element.id}>
@@ -95,7 +95,7 @@ const HomeTrendingMovies: React.FC = () => {
               itemLayout="horizontal"
               className={"scroller"}
               dataSource={trendingMovies?.results}
-              grid={{ gutter: 10 }}
+              grid={{ gutter: 20 }}
               loading={isTrendingAllFetching}
               renderItem={(element: SearchMovie) => (
                 <List.Item className={styles.card} key={element.id}>

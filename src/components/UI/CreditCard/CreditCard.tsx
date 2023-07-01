@@ -7,6 +7,7 @@ import { generateShimmer } from "@/utils/generateShimmer";
 import styles from "./CreditCard.module.scss";
 
 interface CreditCardProps {
+  id: number;
   name: string;
   poster: string | null;
   character?: string;
@@ -14,6 +15,7 @@ interface CreditCardProps {
 }
 
 const CreditCard: React.FC<CreditCardProps> = ({
+  id,
   name,
   poster,
   character,
@@ -42,7 +44,10 @@ const CreditCard: React.FC<CreditCardProps> = ({
       </Link>
       <div className={styles.text}>
         <Link href={`/`}>{name}</Link>
-        <p>{character ? character : job}</p>
+        <span>
+          {job && <p>{job}</p>}
+          {character && <p>{character}</p>}
+        </span>
       </div>
     </li>
   );

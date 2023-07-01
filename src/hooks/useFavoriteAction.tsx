@@ -2,6 +2,10 @@ import React from "react";
 import { usePostAddToFavoriteMutation } from "@/redux/api/account/slice";
 import { message } from "antd";
 
+/**
+ * A custom React hook for adding a element to the user favorite list. Returns an object with a handler function and message holder.
+*/
+
 export const useFavoriteAction = (
   sessionId: string | null,
   mediaType: "movie" | "tv",

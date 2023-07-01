@@ -3,6 +3,10 @@ import { usePostAddMovieRatingMutation } from "@/redux/api/movies/slice";
 
 import type { MessageInstance } from "antd/es/message/interface";
 
+/**
+ * A custom React hook for adding a movie user rating. Returns an object with a handler function, loading state, and data state.
+*/
+
 export const useRateMovieAction = (sessionId: string, movieId: number, title: string, messageApi: MessageInstance) => {
   const [isRateSubmit, setIsRateSubmit] = React.useState(false);
   const [rate, setRate] = React.useState(1);

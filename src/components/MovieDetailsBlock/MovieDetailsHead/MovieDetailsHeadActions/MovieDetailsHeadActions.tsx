@@ -14,23 +14,27 @@ import { Tooltip, message } from "antd";
 import styles from "./MovieDetailsHeadActions.module.scss";
 interface MovieDetailsHeadActionsProps {
   id: number;
-  vote_average: number;
+  voteAverage: number;
+  voteCount: number;
   title: string;
 }
 
 const MovieDetailsHeadActions: React.FC<MovieDetailsHeadActionsProps> = ({
   id,
-  vote_average,
+  voteAverage,
+  voteCount,
   title,
 }) => {
   const [messageApi, contextMessageHolder] = message.useMessage();
   const [getAccountStates, { data: accountStates }] =
     useLazyGetMovieAccoutStatesQuery();
   const sessionId = useSessionId();
-  const {
-    onClickAddMovieToList,
-    addMovieListModalHolder,
-  } = useAddMovieToList(sessionId, id, title, messageApi);
+  const { onClickAddMovieToList, addMovieListModalHolder } = useAddMovieToList(
+    sessionId,
+    id,
+    title,
+    messageApi
+  );
 
   React.useEffect(() => {
     if (sessionId) {
@@ -42,7 +46,21 @@ const MovieDetailsHeadActions: React.FC<MovieDetailsHeadActionsProps> = ({
     <>
       <ul className={styles.headerActions + " auto"}>
         <li className={styles.chart}>
-          <RatingBar rating={vote_average} size={55} />
+          <Tooltip
+            title={
+              <span className={styles.tooltip}>
+                {voteCount !== 0
+                  ? `Кількість оцінок: ${voteCount}`
+                  : "Ще не оціненно"}
+              </span>
+            }
+            color={"#fff"}
+            placement="bottom"
+          >
+            <div>
+              <RatingBar rating={voteAverage} size={55} />
+            </div>
+          </Tooltip>
           <span>Оцінка користувачів</span>
         </li>
         <Tooltip

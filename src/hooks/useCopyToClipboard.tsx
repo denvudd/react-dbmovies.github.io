@@ -1,12 +1,12 @@
 import React from "react";
 
-/* 
-  use-copy-to-clipboard React hook from usehooks-ts
-  link: https://usehooks-ts.com/react-hook/use-copy-to-clipboard
-*/
-
 type CopiedValue = string | null;
 type CopyFn = (text: string) => Promise<boolean>; // Return success
+
+/** 
+  * use-copy-to-clipboard React hook from usehooks-ts
+  @see https://usehooks-ts.com/react-hook/use-copy-to-clipboard
+*/
 
 export const useCopyToClipboard = (): [CopiedValue, CopyFn] => {
   const [copiedText, setCopiedText] = React.useState<CopiedValue>(null);

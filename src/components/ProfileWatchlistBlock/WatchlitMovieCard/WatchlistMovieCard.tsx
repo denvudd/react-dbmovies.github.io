@@ -4,7 +4,7 @@ import { useAddMovieToList } from "@/hooks/useAddMovieAction";
 import { useRateMovieAction } from "@/hooks/useRateMovieAction";
 
 import { message } from "antd";
-import WideMovieCard from "@/components/UI/WideMovieCard/WideMovieCard";
+import WideElementCard from "@/components/UI/WideElementCard/WideElementCard";
 interface WatchlistMovieCardProps {
   id: number;
   priorityIndex?: number;
@@ -40,7 +40,7 @@ const WatchlistMovieCard: React.FC<WatchlistMovieCardProps> = ({
 
   return (
     <div>
-      <WideMovieCard
+      <WideElementCard
         id={id}
         priorityIndex={priorityIndex && priorityIndex}
         title={title}

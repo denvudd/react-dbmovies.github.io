@@ -60,7 +60,7 @@ const HomeTrendingTV = () => {
               itemLayout="horizontal"
               className={"scroller"}
               dataSource={trendingTV?.results}
-              grid={{ gutter: 10 }}
+              grid={{ gutter: 20 }}
               loading={isTrendingAllFetching}
               renderItem={(element: SearchTV) => (
                 <List.Item className={styles.card} key={element.id}>
@@ -95,7 +95,7 @@ const HomeTrendingTV = () => {
               itemLayout="horizontal"
               className={"scroller"}
               dataSource={trendingTV?.results}
-              grid={{ gutter: 10 }}
+              grid={{ gutter: 20 }}
               loading={isTrendingAllFetching}
               renderItem={(element: SearchTV) => (
                 <List.Item className={styles.card} key={element.id}>

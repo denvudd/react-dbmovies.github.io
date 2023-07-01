@@ -1,3 +1,24 @@
+/**
+ * A function that checks if sorting parameters are empty. Returns a boolean value.
+ * @returns boolean
+ * @example
+ * const params = {
+     sortBy: "name",
+     filters: {
+       category: "",
+       price: null,
+       rating: {
+         min: "",
+         max: null
+       }
+     }
+   };
+
+   const isEmpty = isSortParamsEmpty(params);
+
+   console.log(isEmpty); // Output: false
+*/
+
 export const isSortParamsEmpty = (params: any): boolean => {
   const isParamsEmpty = Object.values(params).every((value) => {
     if (typeof value === "object" && value !== null) {

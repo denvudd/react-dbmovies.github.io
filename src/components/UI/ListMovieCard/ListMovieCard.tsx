@@ -14,15 +14,17 @@ interface ListMovieCardProps {
 }
 
 const ListMovieCard: React.FC<ListMovieCardProps> = ({ movie, index }) => {
+  const { id, poster_path, title, vote_average } = movie;
+  
   return (
     <div className={styles.wrapper}>
       <div className={styles.info}>
         <div className={styles.image}>
-          <Link href={`/movies/${movie.id}`}>
+          <Link href={`/movies/${id}`}>
             <Image
               src={
-                movie.poster_path
-                  ? `https://image.tmdb.org/t/p/w185_and_h278_multi_faces/${movie.poster_path}`
+                poster_path
+                  ? `https://image.tmdb.org/t/p/w185_and_h278_multi_faces/${poster_path}`
                   : `https://placehold.co/185x278/png/?text=No+Image`
               }
               width={185}
@@ -31,7 +33,7 @@ const ListMovieCard: React.FC<ListMovieCardProps> = ({ movie, index }) => {
               placeholder="blur"
               blurDataURL={`data:image/svg+xml;base64,${generateShimmer(
                 138,
-                175,
+                175
               )}`}
             />
           </Link>
@@ -42,14 +44,12 @@ const ListMovieCard: React.FC<ListMovieCardProps> = ({ movie, index }) => {
           </div>
           <div className={styles.meta}>
             <p className={styles.title}>
-              <Link href={`/movies/${movie.id}`}>
-                {truncateString(movie.title, 20)}
-              </Link>
+              <Link href={`/movies/${id}`}>{truncateString(title, 20)}</Link>
             </p>
           </div>
         </div>
         <div className={styles.rating}>
-          <RatingBar rating={movie.vote_average} size={33} />
+          <RatingBar rating={vote_average} size={33} />
         </div>
       </div>
     </div>

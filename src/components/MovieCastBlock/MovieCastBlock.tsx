@@ -42,6 +42,7 @@ const MovieCastBlock: React.FC<MovieCastBlockProps> = ({ cast, crew }) => {
             <ol className={styles.people}>
               {cast.map((cast) => (
                 <CreditCard
+                  id={cast.id}
                   key={cast.id}
                   name={cast.name}
                   poster={cast.profile_path}
@@ -60,6 +61,7 @@ const MovieCastBlock: React.FC<MovieCastBlockProps> = ({ cast, crew }) => {
                 <ol className={styles.people}>
                   {crewByDepartment["Writing"].map((crew) => (
                     <CreditCard
+                      id={crew.id}
                       key={uuidv4()}
                       name={crew.name}
                       poster={crew.profile_path}
@@ -75,6 +77,7 @@ const MovieCastBlock: React.FC<MovieCastBlockProps> = ({ cast, crew }) => {
                 <ol className={styles.people}>
                   {crewByDepartment["Directing"].map((crew) => (
                     <CreditCard
+                      id={crew.id}
                       key={uuidv4()}
                       name={crew.name}
                       poster={crew.profile_path}
@@ -90,6 +93,7 @@ const MovieCastBlock: React.FC<MovieCastBlockProps> = ({ cast, crew }) => {
                 <ol className={styles.people}>
                   {crewByDepartment["Camera"].map((crew) => (
                     <CreditCard
+                      id={crew.id}
                       key={uuidv4()}
                       name={crew.name}
                       poster={crew.profile_path}
@@ -105,6 +109,7 @@ const MovieCastBlock: React.FC<MovieCastBlockProps> = ({ cast, crew }) => {
                 <ol className={styles.people}>
                   {crewByDepartment["Art"].map((crew) => (
                     <CreditCard
+                      id={crew.id}
                       key={uuidv4()}
                       name={crew.name}
                       poster={crew.profile_path}
@@ -120,6 +125,7 @@ const MovieCastBlock: React.FC<MovieCastBlockProps> = ({ cast, crew }) => {
                 <ol className={styles.people}>
                   {crewByDepartment["Costume & Make-Up"].map((crew) => (
                     <CreditCard
+                      id={crew.id}
                       key={uuidv4()}
                       name={crew.name}
                       poster={crew.profile_path}
@@ -135,6 +141,7 @@ const MovieCastBlock: React.FC<MovieCastBlockProps> = ({ cast, crew }) => {
                 <ol className={styles.people}>
                   {crewByDepartment["Editing"].map((crew) => (
                     <CreditCard
+                      id={crew.id}
                       key={uuidv4()}
                       name={crew.name}
                       poster={crew.profile_path}
@@ -150,6 +157,7 @@ const MovieCastBlock: React.FC<MovieCastBlockProps> = ({ cast, crew }) => {
                 <ol className={styles.people}>
                   {crewByDepartment["Lighting"].map((crew) => (
                     <CreditCard
+                      id={crew.id}
                       key={uuidv4()}
                       name={crew.name}
                       poster={crew.profile_path}
@@ -165,6 +173,7 @@ const MovieCastBlock: React.FC<MovieCastBlockProps> = ({ cast, crew }) => {
                 <ol className={styles.people}>
                   {crewByDepartment["Production"].map((crew) => (
                     <CreditCard
+                      id={crew.id}
                       key={uuidv4()}
                       name={crew.name}
                       poster={crew.profile_path}
@@ -180,6 +189,7 @@ const MovieCastBlock: React.FC<MovieCastBlockProps> = ({ cast, crew }) => {
                 <ol className={styles.people}>
                   {crewByDepartment["Sound"].map((crew) => (
                     <CreditCard
+                      id={crew.id}
                       key={uuidv4()}
                       name={crew.name}
                       poster={crew.profile_path}
@@ -195,6 +205,7 @@ const MovieCastBlock: React.FC<MovieCastBlockProps> = ({ cast, crew }) => {
                 <ol className={styles.people}>
                   {crewByDepartment["Visual Effect"].map((crew) => (
                     <CreditCard
+                      id={crew.id}
                       key={uuidv4()}
                       name={crew.name}
                       poster={crew.profile_path}
@@ -210,6 +221,7 @@ const MovieCastBlock: React.FC<MovieCastBlockProps> = ({ cast, crew }) => {
                 <ol className={styles.people}>
                   {crewByDepartment["Crew"].map((crew) => (
                     <CreditCard
+                      id={crew.id}
                       key={uuidv4()}
                       name={crew.name}
                       poster={crew.profile_path}
