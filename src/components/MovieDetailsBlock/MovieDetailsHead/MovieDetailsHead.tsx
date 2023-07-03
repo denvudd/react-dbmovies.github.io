@@ -10,7 +10,7 @@ import { formatRuntime } from "@/utils/formatRuntime";
 import { createRgbaString } from "@/utils/createRgbaString";
 import { generateShimmer } from "@/utils/generateShimmer";
 import type { FastAverageColorResult } from "fast-average-color";
-import type { Genre } from "@/redux/api/genres/types/MovieListGenreType";
+import type { Genre } from "@/redux/api/types/common";
 
 import styles from "./MovieDetailsHead.module.scss";
 interface MovieDetailsHeadProps {

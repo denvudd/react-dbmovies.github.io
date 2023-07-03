@@ -2,10 +2,8 @@ import React from "react";
 
 import CreditCard from "../UI/CreditCard/CreditCard";
 import { v4 as uuidv4 } from "uuid";
-import type {
-  CrewMember,
-  MovieCreditsApiResponse,
-} from "@/redux/api/movies/types";
+import type { MovieCreditsApiResponse } from "@/redux/api/movies/types";
+import { CrewMember } from "@/redux/api/types/common";
 
 import styles from "./MovieCastBlock.module.scss";
 

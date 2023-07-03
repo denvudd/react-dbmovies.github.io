@@ -1,0 +1,77 @@
+@import '@/styles/variables';
+
+.headerActions {
+  margin-bottom: 20px;
+  width: 100%;
+  height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  .chart {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    height: 58px;
+    gap: 10px;
+    margin-right: 20px;
+
+    span {
+      font-weight: 700;
+      width: 90px;
+    }
+  }
+
+  .video {
+    background: transparent;
+    width: auto;
+    height: auto;
+    font-weight: 600;
+    will-change: opacity;
+    transition: linear .1s;
+
+    a {
+      font-weight: 600;
+      color: #fff;
+    }
+  }
+}
+
+.tooltip {
+  color: $primaryColorContrast;
+
+  &Wrapper {
+    margin-right: 20px;
+  }
+
+  button {
+    background: #001529;
+    color: $tmdbLightBlue;
+    box-sizing: border-box;
+    border-radius: 50%;
+    width: 46px;
+    height: 46px;
+    padding: 13px 15px;
+    outline: none;
+    cursor: pointer;
+    transition: color 0.3s;
+
+    &.rated {
+      color: $tmdbLogoOrange;
+    }
+
+    &.watchlist {
+      color: $tmdbLogoRed;
+    }
+
+    &.favorited {
+      color: $tmdbLogoPink;
+    }
+
+
+    &:hover {
+      color: #047bfa;
+    }
+  }
+}

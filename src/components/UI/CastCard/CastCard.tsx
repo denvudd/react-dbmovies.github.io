@@ -5,21 +5,17 @@ import Link from "next/link";
 import Image from "next/image";
 import { generateShimmer } from "@/utils/generateShimmer";
 
-import styles from "./CardCard.module.scss";
+import styles from "./CastCard.module.scss";
 
 interface CastCardProps {
   id: number;
   imgUrl: string;
   name: string;
   character: string;
+  mediaType: "movie" | "tv";
 }
 
-const CastCard: React.FC<CastCardProps> = ({
-  id,
-  imgUrl,
-  name,
-  character,
-}) => {
+const CastCard: React.FC<CastCardProps> = ({ id, imgUrl, name, character }) => {
   const { Title, Paragraph } = Typography;
   return (
     <div>
@@ -47,11 +43,11 @@ const CastCard: React.FC<CastCardProps> = ({
         }
       >
         <Link href={`/`}>
-          <Title level={5} className={styles.cartTitle}>
-            {name}
-          </Title>
+          <p className={styles.title}>{name}</p>
         </Link>
-        <Paragraph ellipsis={{ rows: 2 }}>{character}</Paragraph>
+        <Paragraph ellipsis={{ rows: 2 }} className={styles.character}>
+          {character}
+        </Paragraph>
       </Card>
     </div>
   );

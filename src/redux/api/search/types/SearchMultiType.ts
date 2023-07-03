@@ -1,4 +1,4 @@
-import { ListMovie } from "../../movies/types/ListMovieType";
+import { ListMovie } from "../../movies/types/MovieListType";
 import { ListTV } from "../../tv/types/TVListType";
 import { PersonList } from "../../people/types/ListPeopleType";
 export interface SearchMovie extends ListMovie {

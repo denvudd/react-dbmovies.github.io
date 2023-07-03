@@ -1,7 +1,7 @@
 import React from "react";
 
 import ReviewCard from "../UI/ReviewCard/ReviewCard";
-import type { ReviewResult } from "@/redux/api/movies/types";
+import type { ReviewResult } from "@/redux/api/types/common";
 
 import styles from "./MovieReviewsBlock.module.scss";
 

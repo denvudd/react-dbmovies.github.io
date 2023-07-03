@@ -1,5 +1,5 @@
 import React from "react";
-import { useGetMovieListGenreQuery } from "@/redux/api/genres/slice";
+import { useGetGenresListQuery } from "@/redux/api/genres/slice";
 import { useGetConfigurationLanguagesQuery } from "@/redux/api/configuration/slice";
 import { useLazyGetSearchKeywordsQuery } from "@/redux/api/search/slice";
 import { useDebounce } from "@/hooks/useDebounce";
@@ -11,17 +11,18 @@ import "dayjs/locale/uk.js";
 import locale from "antd/lib/date-picker/locale/uk_UA";
 
 import type { RangePickerProps } from "antd/es/date-picker";
-import type { Keyword } from "@/redux/api/search/types";
+import { Keyword } from "@/redux/api/types/common";
 
 import styles from "./AdditionalSortMenu.module.scss";
 import { getSpecificYear } from "@/utils/getSpecificYear";
 import { getLastSpecificDays } from "@/utils/getLastSpecificDays";
 interface AdditionalSortMenuProps {
   onAdditionalSortChange: (additionalSortBy: AdditionalSortDataState) => void;
+  mediaType: "movies" | "tv";
 }
 
 const AdditionalSortMenu: React.FC<AdditionalSortMenuProps> = React.memo(
-  ({ onAdditionalSortChange }) => {
+  ({ onAdditionalSortChange, mediaType }) => {
     const [inputText, setInputText] = React.useState<string>("");
     const [isTipVisible, setIsTipVisible] = React.useState(false);
     const [selectedKeys, setSelectedKeys] = React.useState<string[] | null>(
@@ -46,12 +47,15 @@ const AdditionalSortMenu: React.FC<AdditionalSortMenuProps> = React.memo(
       number[] | null
     >(null);
     const [keywordOptions, setKeywordOptions] = React.useState<Keyword[]>([]);
-    const { data: genres, isLoading: isGenresLoading } =
-      useGetMovieListGenreQuery("&language=uk-UA");
+    const { data: genres, isLoading: isGenresLoading } = useGetGenresListQuery({
+      mediaType: mediaType,
+      params: "&language=uk-UA",
+    });
     const { data: languages, isLoading: isLanguagesLoading } =
       useGetConfigurationLanguagesQuery(null);
     const [fetchKeywords, { isLoading: isKeywordsLoading }] =
       useLazyGetSearchKeywordsQuery();
+
     const [additionalSortData, setAdditionalSortData] =
       React.useState<AdditionalSortDataState>({
         additionalSortData: {

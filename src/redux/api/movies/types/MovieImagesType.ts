@@ -1,3 +1,4 @@
+import type { Image } from "../../types/common";
 export interface MovieImagesApiResponse {
   id: number;
   backdrops: Image[];
@@ -5,12 +6,3 @@ export interface MovieImagesApiResponse {
   posters: Image[];
 }
 
-export interface Image {
-  aspect_ratio: number;
-  file_path: string;
-  height: number;
-  iso_639_1: string | null;
-  vote_average: number;
-  vote_count: number;
-  width: number;
-}

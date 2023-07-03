@@ -4,7 +4,7 @@ import {
   useLazyGetMovieVideosQuery,
 } from "@/redux/api/movies/slice";
 
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 import Image from "next/image";
 import { TabsProps, Tabs, Skeleton } from "antd";
 import VideoCard from "@/components/UI/VideoCard/VideoCard";
@@ -22,10 +22,14 @@ enum TabValues {
 }
 
 const MovieDetailsScreens: React.FC<MovieDetailsScreensProps> = ({ id }) => {
-  const [getImages, { data: images, isLoading: isImagesLoading }] =
-    useLazyGetMovieImagesQuery();
-  const [getVideos, { data: videos, isLoading: isVideosLoading }] =
-    useLazyGetMovieVideosQuery();
+  const [
+    getImages,
+    { data: images, isLoading: isImagesLoading, isError: isImagesError },
+  ] = useLazyGetMovieImagesQuery();
+  const [
+    getVideos,
+    { data: videos, isLoading: isVideosLoading, isError: isVideosError },
+  ] = useLazyGetMovieVideosQuery();
   const [tabKey, setTabKey] = React.useState<TabValues | string>(
     TabValues.VIDEOS
   );
@@ -69,17 +73,20 @@ const MovieDetailsScreens: React.FC<MovieDetailsScreensProps> = ({ id }) => {
                   ))}
                 </div>
               )}
-              {!isVideosLoading && videos && (
+              {!isVideosLoading && videos && videos.length !== 0 && (
                 <div className={styles.list + " scroller"}>
                   {videos.map((video) => (
-                      <VideoCard key={video.key} videoKey={video.key} />
+                    <VideoCard key={video.key} videoKey={video.key} />
                   ))}
                 </div>
               )}
-              {!isVideosLoading && !videos && (
+              {!isVideosLoading && videos && videos.length === 0 && (
                 <p className="empty-text--default">
                   Нам не вдалося знайти медіа по цьому запиту 😕
                 </p>
+              )}
+              {!isVideosLoading && isVideosError && (
+                <p className="empty-text--default">Сталась помилка 😕</p>
               )}
             </div>
           }
@@ -103,7 +110,7 @@ const MovieDetailsScreens: React.FC<MovieDetailsScreensProps> = ({ id }) => {
                   ))}
                 </div>
               )}
-              {!isImagesLoading && images && (
+              {!isImagesLoading && images && images.backdrops.length !== 0 && (
                 <div className={styles.list + " scroller"}>
                   {images.backdrops.slice(0, 6).map((image) => (
                     <div key={image.file_path} className={styles.item}>
@@ -124,10 +131,13 @@ const MovieDetailsScreens: React.FC<MovieDetailsScreensProps> = ({ id }) => {
                   ))}
                 </div>
               )}
-              {!isImagesLoading && !images && (
+              {!isImagesLoading && images && images.backdrops.length === 0 && (
                 <p className="empty-text--default">
                   Нам не вдалося знайти медіа по цьому запиту 😕
                 </p>
+              )}
+              {!isImagesLoading && isImagesError && (
+                <p className="empty-text--default">Сталась помилка 😕</p>
               )}
             </div>
           }
@@ -150,7 +160,7 @@ const MovieDetailsScreens: React.FC<MovieDetailsScreensProps> = ({ id }) => {
                 ))}
               </div>
             )}
-            {!isImagesLoading && images && (
+            {!isImagesLoading && images && images.posters.length !== 0 && (
               <div className={styles.list + " scroller"}>
                 {images.posters.slice(0, 6).map((image) => (
                   <div key={uuidv4()} className={styles.item}>
@@ -171,10 +181,13 @@ const MovieDetailsScreens: React.FC<MovieDetailsScreensProps> = ({ id }) => {
                 ))}
               </div>
             )}
-            {!isImagesLoading && !images && (
+            {!isImagesLoading && images && images.posters.length === 0 && (
               <p className="empty-text--default">
                 Нам не вдалося знайти медіа по цьому запиту 😕
               </p>
+            )}
+            {!isImagesLoading && isImagesError && (
+              <p className="empty-text--default">Сталась помилка 😕</p>
             )}
           </div>
         </div>

@@ -4,7 +4,7 @@ import { useLazyGetMovieDiscoverQuery } from "@/redux/api/discover/slice";
 import { useSelector } from "react-redux";
 
 import Head from "next/head";
-import { Pagination, Typography } from "antd";
+import { Pagination } from "antd";
 import MediaElementCard from "@/components/UI/MediaElementCard/MediaElementCard";
 import MovieList from "@/components/UI/MovieList/MovieList";
 import SkeletonLoader from "@/components/UI/SkeletonLoader/SkeletonLoader";
@@ -12,7 +12,7 @@ import FilterMenu from "@/components/FilterMenu/FilterMenu";
 import ListLayout from "@/layouts/ListLayout";
 import { selectParams } from "@/redux/params/selectors";
 import { isSortParamsEmpty } from "@/utils/isSortParamsEmpty";
-import { ListMoviesApiResponse } from "@/redux/api/movies/types/ListMovieType";
+import { MovieListApiResponse } from "@/redux/api/movies/types/MovieListType";
 interface MovieCard {
   id: number;
   title: string;
@@ -30,7 +30,7 @@ export const Home = () => {
     useLazyGetMoviesQuery();
   const [getSortMovies, { isFetching: isSortMoviesFetching }] =
     useLazyGetMovieDiscoverQuery();
-  const [data, setData] = React.useState<ListMoviesApiResponse | undefined>(
+  const [data, setData] = React.useState<MovieListApiResponse | undefined>(
     undefined
   );
 
@@ -132,7 +132,7 @@ export const Home = () => {
       </Head>
       <ListLayout>
         {{
-          sidebar: <FilterMenu />,
+          sidebar: <FilterMenu mediaType="movies" />,
           mainContent: (
             <div className="panel-details">
               <h1 className="list-title">Очікувані фільми</h1>

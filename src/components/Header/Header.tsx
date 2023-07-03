@@ -67,7 +67,7 @@ const Header: React.FC = () => {
           type: "group",
         },
         {
-          key: "movies/tap-rated",
+          key: "movies/top-rated",
           label: (
             <Link href={`/movies/top-rated`} className={styles.link}>
               Рейтингові
@@ -86,38 +86,38 @@ const Header: React.FC = () => {
       ),
       children: [
         {
-          key: "tv/popularTv",
+          key: "tv/popularTV",
           label: (
-            <a className={styles.link} href="">
+            <Link href={`/tv/popularTV`} className={styles.link}>
               Популярні
-            </a>
+            </Link>
           ),
           type: "group",
         },
         {
           key: "tv/airing-today",
           label: (
-            <a className={styles.link} href="">
+            <Link href={`/tv/airing-today`} className={styles.link}>
               Сьогодні в ефірі
-            </a>
+            </Link>
           ),
           type: "group",
         },
         {
           key: "tv/on-the-air",
           label: (
-            <a className={styles.link} href="">
+            <Link href={`/tv/on-the-air`} className={styles.link}>
               Зараз на ТБ
-            </a>
+            </Link>
           ),
           type: "group",
         },
         {
           key: "tv/top-rated",
           label: (
-            <a className={styles.link} href="">
+            <Link href={`/tv/top-rated`} className={styles.link}>
               Рейтингові
-            </a>
+            </Link>
           ),
           type: "group",
         },

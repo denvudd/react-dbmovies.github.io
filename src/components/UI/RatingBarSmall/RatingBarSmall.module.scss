@@ -1,0 +1,23 @@
+@import '@/styles/variables';
+
+.rating {
+  padding: 1px 8px;
+  margin-left: 14px;
+  font-size: 0.9em;
+  display: inline-flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  background-color: #000;
+  border: 2px solid #fff;
+  border-color: #000;
+  border-radius: $imageBorderRadius;
+  color: #fff;
+}
+
+.starIcon {
+  margin-right: 5px;
+  svg {
+    font-size: 0.9em;
+  }
+}

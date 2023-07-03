@@ -11,7 +11,6 @@ export const Home = () => {
       <DetailLayout>
         <HomeBlock/>
       </DetailLayout>
-      
     </>
   );
 };

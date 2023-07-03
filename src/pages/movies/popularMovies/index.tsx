@@ -5,14 +5,14 @@ import { useSelector } from "react-redux";
 
 import { selectParams } from "@/redux/params/selectors";
 import Head from "next/head";
-import { Pagination, Typography } from "antd";
+import { Pagination } from "antd";
 import MediaElementCard from "@/components/UI/MediaElementCard/MediaElementCard";
 import MovieList from "@/components/UI/MovieList/MovieList";
 import SkeletonLoader from "@/components/UI/SkeletonLoader/SkeletonLoader";
 import FilterMenu from "@/components/FilterMenu/FilterMenu";
 import ListLayout from "@/layouts/ListLayout";
 import { isSortParamsEmpty } from "@/utils/isSortParamsEmpty";
-import { ListMoviesApiResponse } from "@/redux/api/movies/types/ListMovieType";
+import { MovieListApiResponse } from "@/redux/api/movies/types/MovieListType";
 interface MovieCard {
   id: number;
   title: string;
@@ -22,7 +22,7 @@ interface MovieCard {
   release_date: string;
 }
 
-export const Home = () => {
+export const PopularMoviesPage = () => {
   const params = useSelector(selectParams);
   const [currentPageDefault, setCurrentPageDefault] = React.useState(1);
   const [currentPageSort, setCurrentPageSort] = React.useState(1);
@@ -30,7 +30,7 @@ export const Home = () => {
     useLazyGetMoviesQuery();
   const [getSortMovies, { isFetching: isSortMoviesFetching }] =
     useLazyGetMovieDiscoverQuery();
-  const [data, setData] = React.useState<ListMoviesApiResponse | undefined>(
+  const [data, setData] = React.useState<MovieListApiResponse | undefined>(
     undefined
   );
 
@@ -132,7 +132,7 @@ export const Home = () => {
       </Head>
       <ListLayout>
         {{
-          sidebar: <FilterMenu />,
+          sidebar: <FilterMenu mediaType="movies" />,
           mainContent: (
             <div className="panel-details">
               <h1 className="list-title">Популярні фільми</h1>
@@ -192,4 +192,4 @@ export const Home = () => {
   );
 };
 
-export default Home;
+export default PopularMoviesPage;

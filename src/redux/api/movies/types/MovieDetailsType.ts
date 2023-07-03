@@ -1,3 +1,10 @@
+import {
+  ProductionCompany,
+  ProductionCountry,
+  SpokenLanguage,
+  Genre,
+} from "../../types/common";
+
 export type MovieDetailsApiResponse = MovieDetails;
 
 export interface MovieDetails {
@@ -39,26 +46,4 @@ export interface Collection {
   name: string;
   poster_path: string | null;
   backdrop_path: string | null;
-}
-
-export interface Genre {
-  id: number;
-  name: string;
-}
-
-interface ProductionCompany {
-  id: number;
-  name: string;
-  logo_path: string | null;
-  origin_country: string;
-}
-
-interface ProductionCountry {
-  iso_3166_1: string;
-  name: string;
-}
-
-interface SpokenLanguage {
-  iso_639_1: string;
-  name: string;
 }

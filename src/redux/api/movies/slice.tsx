@@ -2,7 +2,7 @@ import { baseApi } from "../baseApi/slice";
 
 // API Responses Types
 import type {
-  ListMoviesApiResponse,
+  MovieListApiResponse,
   MovieDetailsApiResponse,
   MovieAccountStatesApiResponse,
   MovieCreditsApiResponse,
@@ -15,6 +15,7 @@ import type {
   MovieKeywordApiResponse,
   AddMovieRatingApiResponse,
   DeleteMovieRatingApiResponse,
+  MovieListQueryArgs,
 } from "./types";
 // Query Args Types
 import type {
@@ -24,21 +25,21 @@ import type {
   MovieReviewsQueryArgs,
 } from "./types";
 // Utility types
-import type { Video } from "./types";
+import type { Video } from "../types/common";
 
 const tmdbApiKey = "api_key=684e3f73d1ca0e692a3016c028aabf72";
 
 export const moviesApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getMovies: builder.query({
+    getMovies: builder.query<MovieListApiResponse, MovieListQueryArgs>({
       query: ({ typeList, params }) =>
         `/movie/${typeList}?${tmdbApiKey}&${params ? params : ""}`,
-      transformResponse: (response: ListMoviesApiResponse) => response,
+      transformResponse: (response: MovieListApiResponse) => response,
     }),
 
     getMovieDetails: builder.query<
       MovieDetailsApiResponse,
-      ListQueryArgsDefault
+      { id: number; params?: string }
     >({
       query: ({ id, params }) =>
         `/movie/${id}?${tmdbApiKey}&${params ? params : ""}`,
@@ -145,10 +146,10 @@ export const moviesApi = baseApi.injectEndpoints({
 
     getMovieKeywords: builder.query<
       MovieKeywordApiResponse["keywords"],
-      ListQueryArgsDefault
+      number
     >({
-      query: ({ id, params }) =>
-        `/movie/${id}/keywords?${tmdbApiKey}&${params ? params : ""}`,
+      query: (id) =>
+        `/movie/${id}/keywords?${tmdbApiKey}`,
       transformResponse: (response: MovieKeywordApiResponse) =>
         response.keywords,
     }),

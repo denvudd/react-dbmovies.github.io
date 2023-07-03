@@ -6,14 +6,22 @@ import AdditionalSortMenu from "./AdditionalSortMenu/AdditionalSortMenu";
 
 import { setParams } from "@/redux/params/slice";
 import { isSortParamsEmpty } from "@/utils/isSortParamsEmpty";
-import { AdditionalSortData, SortData, SortValue } from "@/redux/params/types/types";
+import {
+  AdditionalSortData,
+  SortData,
+  SortValue,
+} from "@/redux/params/types/types";
 
 import styles from "./FilterMenu.module.scss";
+
+interface FilterMenuProps {
+  mediaType: "movies" | "tv";
+}
 export interface AdditionalSortDataState {
   additionalSortData: AdditionalSortData;
 }
 
-const FilterMenu: React.FC = React.memo(() => {
+const FilterMenu: React.FC<FilterMenuProps> = React.memo(({ mediaType }) => {
   const [sortData, setSortData] = React.useState<SortData>({
     sortBy: SortValue.None,
   });
@@ -77,7 +85,10 @@ const FilterMenu: React.FC = React.memo(() => {
   return (
     <div className={styles.container}>
       <SortMenu onSortChange={handleSortChange} />
-      <AdditionalSortMenu onAdditionalSortChange={handleAdditionalSortChange} />
+      <AdditionalSortMenu
+        onAdditionalSortChange={handleAdditionalSortChange}
+        mediaType={mediaType}
+      />
       <button
         disabled={isDisabled}
         className={styles.apply}

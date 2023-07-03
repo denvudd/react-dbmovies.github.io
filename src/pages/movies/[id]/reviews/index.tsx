@@ -11,8 +11,8 @@ import type { FastAverageColorResult } from "fast-average-color";
 import type {
   MovieDetails,
   MovieReviewsApiResponse,
-  ReviewResult,
 } from "@/redux/api/movies/types";
+import type { ReviewResult } from "@/redux/api/types/common";
 import type { ApiError } from "@/redux/api/baseApi/types/ErrorType";
 import DetailLayout from "@/layouts/DetailsLayout";
 import MovieReviewsBlock from "@/components/MovieReviewsBlock/MovieReviewsBlock";

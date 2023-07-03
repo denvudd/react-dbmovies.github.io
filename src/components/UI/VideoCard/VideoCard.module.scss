@@ -4,11 +4,11 @@
   border-radius: 8px;
   display: flex;
   align-items: flex-start;
-  width: 533px;
+  min-width: 500px;
   height: 300px;
 
   @media (max-width: 1200px) {
-    width: 430px;
+    min-width: 430px;
     height: 200px;
   }
 

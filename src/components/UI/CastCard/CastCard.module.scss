@@ -1,0 +1,18 @@
+@import '@/styles/variables';
+
+.card {
+  min-width: 140px;
+  max-width: 140px;
+  height: 280px;
+}
+
+.title {
+  font-weight: 700 !important;
+  font-size: 1em;
+  color: $primaryColorContrast;
+  line-height: 1.3;
+}
+
+.character {
+  font-size: 0.9em;
+}

@@ -21,3 +21,8 @@ export interface ListTV {
   vote_average: number;
   vote_count: number;
 }
+
+export interface TVListQueryArgs {
+  typeList: "popular" | "airing_today" | "on_the_air" | "top_rated";
+  params?: string;
+}

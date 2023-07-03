@@ -1,4 +1,4 @@
-import { ListMovie } from "../../movies/types/ListMovieType";
+import { ListMovie } from "../../movies/types/MovieListType";
 
 export interface AccountWatchlistMoviesApiResponse {
   page: number;

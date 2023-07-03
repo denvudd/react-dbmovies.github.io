@@ -5,7 +5,7 @@ import { InfoCircleFilled } from "@ant-design/icons";
 import { getImgFormatFromStr } from "@/utils/getImgFormatFromStr";
 import { Tooltip } from "antd";
 import { generateShimmer } from "@/utils/generateShimmer";
-import type { Image as ImageType } from "@/redux/api/movies/types";
+import type { Image as ImageType } from "@/redux/api/types/common";
 
 import styles from "./ImageCard.module.scss";
 import classNames from "classnames";

@@ -1,7 +1,7 @@
 import React from "react";
 
 import WideVideoCard from "../UI/WideVideoCard/WideVideoCard";
-import type { Video } from "@/redux/api/movies/types";
+import type { Video } from "@/redux/api/types/common";
 
 import styles from "./MovieVideosBlock.module.scss";
 

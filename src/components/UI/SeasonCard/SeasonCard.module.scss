@@ -1,0 +1,55 @@
+@import '@/styles/variables';
+
+.card {
+  border: none;
+  overflow: hidden;
+  display: flex;
+  flex-wrap: wrap;
+  color: $primaryColorContrast;
+
+  &.outlined {
+    border: 1px solid $lightGrey;
+    border-radius: $imageBorderRadius;
+  }
+}
+
+.container {
+  display: flex;
+}
+
+.poster {
+  display: block;
+  min-width: 130px;
+  width: 130px;
+  height: 195px;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.content {
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.title {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+
+  a {
+    color: $primaryColorContrast;
+  }
+}
+
+.overview {
+  margin-bottom: 8px;
+}

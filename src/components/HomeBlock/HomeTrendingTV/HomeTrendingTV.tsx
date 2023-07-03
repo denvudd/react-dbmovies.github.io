@@ -75,7 +75,7 @@ const HomeTrendingTV = () => {
                     description={element.overview}
                     voteAverage={element.vote_average}
                     release={element.first_air_date}
-                    type="movie"
+                    type="tv"
                     size="small"
                   />
                 </List.Item>

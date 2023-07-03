@@ -5,10 +5,12 @@ import {
 } from "@/redux/api/movies/slice";
 
 import { Typography, Space, Tooltip } from "antd";
-import FacebookFilled from "@ant-design/icons/lib/icons/FacebookFilled";
-import TwitterSquareFilled from "@ant-design/icons/lib/icons/TwitterSquareFilled";
-import InstagramFilled from "@ant-design/icons/lib/icons/InstagramFilled";
-import ISO6391 from 'iso-639-1';
+import {
+  FacebookFilled,
+  TwitterSquareFilled,
+  InstagramFilled,
+} from "@ant-design/icons";
+import ISO6391 from "iso-639-1";
 import { formatBudget } from "@/utils/formatBudget";
 
 import styles from "./SideMedia.module.scss";
@@ -36,26 +38,26 @@ const SiderMedia: React.FC<SliderMediaProps> = ({
   revenue,
 }) => {
   const { data: keywords, isLoading: isKeywordsLoading } =
-    useGetMovieKeywordsQuery({ id });
+    useGetMovieKeywordsQuery(id);
   const { data: social, isLoading: isSocialLoading } =
     useGetMovieExternalIdsQuery(id);
 
   const checkStatus = (status: SliderMediaProps["status"]) => {
     switch (status) {
       case "Released":
-        return "Випущено"
+        return "Випущено";
       case "Canceled":
-        return "Відмінено"
+        return "Відмінено";
       case "In Production":
-        return "У виробництві"
+        return "У виробництві";
       case "Planned":
-        return "У планах"
+        return "У планах";
       case "Post Production":
-        return "Поствиробництво"
+        return "Поствиробництво";
       case "Rumored":
-        return "За чутками"
+        return "За чутками";
     }
-  }
+  };
 
   return (
     <div className={styles.container}>
@@ -99,7 +101,9 @@ const SiderMedia: React.FC<SliderMediaProps> = ({
                 placement="bottom"
                 zIndex={90}
               >
-                <Typography.Link href={`https://www.instagram.com/${social.instagram_id}`}>
+                <Typography.Link
+                  href={`https://www.instagram.com/${social.instagram_id}`}
+                >
                   <InstagramFilled
                     style={{ fontSize: "1.9em", color: "#000" }}
                   />

@@ -1,8 +1,10 @@
-export interface MovieGenresResponseApi {
+import { Genre } from "../../types/common";
+
+export interface GenresListApiResponse {
   genres: Genre[];
 }
 
-export interface Genre {
-  id: number;
-  name: string;
+export interface GenresListQueryArgs {
+  mediaType: "movies" | "tv";
+  params?: string;
 }

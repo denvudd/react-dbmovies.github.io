@@ -1,8 +1,8 @@
 import React from "react";
 
 import ReleaseCard from "../UI/ReleaseCard/ReleaseCard";
-import { ReleaseInfo } from "@/redux/api/movies/types/MovieReleaseDates";
 import { v4 as uuidv4 } from "uuid";
+import type { ReleaseInfo } from "@/redux/api/types/common";
 import type { ReleaseDate } from "@/redux/api/movies/types";
 
 import styles from "./MovieReleasesBlock.module.scss";

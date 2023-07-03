@@ -3,7 +3,7 @@ import React from "react";
 import { YoutubeFilled, CheckCircleFilled } from "@ant-design/icons";
 import VideoCard from "../VideoCard/VideoCard";
 import { formatReleaseDate } from "@/utils/formatReleaseDate";
-import type { Video } from "@/redux/api/movies/types";
+import type { Video } from "@/redux/api/types/common";
 
 import styles from './WideVideoCard.module.scss'
 

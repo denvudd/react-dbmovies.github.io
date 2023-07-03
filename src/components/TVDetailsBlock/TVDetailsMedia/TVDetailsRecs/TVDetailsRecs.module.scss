@@ -1,0 +1,9 @@
+@import '@/styles/variables';
+
+.title {
+  color: $primaryColorContrast;
+}
+
+.skeletonWrapper {
+  display: flex;
+}

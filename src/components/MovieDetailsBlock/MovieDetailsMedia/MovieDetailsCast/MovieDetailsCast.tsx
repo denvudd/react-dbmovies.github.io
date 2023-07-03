@@ -3,9 +3,9 @@ import { useGetMovieCreditsCastQuery } from "@/redux/api/movies/slice";
 
 import CastCard from "@/components/UI/CastCard/CastCard";
 import { List, Button } from "antd";
+import Link from "next/link";
 
 import styles from "./MovieDetailsCast.module.scss";
-import Link from "next/link";
 interface MovieDetailsCastProps {
   id: number;
 }
@@ -34,6 +34,7 @@ const MovieDetailsCast: React.FC<MovieDetailsCastProps> = ({ id }) => {
                 id={cast.id}
                 name={cast.name}
                 character={cast.character}
+                mediaType="movie"
                 imgUrl={
                   cast.profile_path
                     ? `https://image.tmdb.org/t/p/w138_and_h175_face${cast.profile_path}`

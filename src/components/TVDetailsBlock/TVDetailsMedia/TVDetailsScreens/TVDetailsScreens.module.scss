@@ -1,0 +1,18 @@
+.mediaPanel {
+  [role="tablist"] {
+    &::before {
+      display: none;
+    }
+  }
+}
+
+.skeletonWrapper {
+  display: flex;
+}
+
+.list {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  flex-direction: row;
+}

@@ -1,17 +1,17 @@
 import React from "react";
 
-import type { ReviewResult } from "@/redux/api/movies/types";
 import classNames from "classnames";
 import Image from "next/image";
-import { formatReleaseDate } from "@/utils/formatReleaseDate";
+import RatingBarSmall from "../RatingBarSmall/RatingBarSmall";
+import Link from "next/link";
+import ReactMarkdown from "react-markdown";
 import { Typography } from "antd";
-import { StarFilled } from "@ant-design/icons";
+import { formatReleaseDate } from "@/utils/formatReleaseDate";
 import { formatFirstLetterToUppercase } from "@/utils/formatFirstLetterToUppercase";
 import { getRandomColorAvatar } from "@/utils/getRandomColorAvatar";
-import ReactMarkdown from "react-markdown";
+import type { ReviewResult } from "@/redux/api/types/common";
 
 import styles from "./ReviewCard.module.scss";
-import Link from "next/link";
 
 interface ReviewCardProps {
   reviewResult: ReviewResult;
@@ -60,12 +60,7 @@ const ReviewCard: React.FC<ReviewCardProps> = ({
               <a href={url}>Рецензія від {author}</a>
             </h3>
             {rating && (
-              <div className={styles.rating}>
-                <span className={styles.starIcon}>
-                  <StarFilled />
-                </span>
-                {rating}.0
-              </div>
+              <RatingBarSmall rating={rating} />
             )}
           </div>
           <h5 className={styles.meta}>

@@ -2,7 +2,7 @@ import React from "react";
 
 import ImageCard from "../UI/ImageCard/ImageCard";
 import MovieList from "../UI/MovieList/MovieList";
-import type { Image } from "@/redux/api/movies/types";
+import type { Image } from "@/redux/api/types/common";
 
 import styles from "./MovieImagesBlock.module.scss";
 

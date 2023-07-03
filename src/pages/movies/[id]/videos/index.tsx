@@ -12,10 +12,9 @@ import type { GetServerSideProps } from "next/types";
 import type { ApiError } from "@/redux/api/baseApi/types/ErrorType";
 import type {
   MovieDetails,
-  MovieVideosApiResponse,
-  Video,
+  MovieVideosApiResponse
 } from "@/redux/api/movies/types";
-import MovieImagesBlock from "@/components/MovieImagesBlock/MovieImagesBlock";
+import type { Video } from "@/redux/api/types/common";
 import MovieVideosBlock from "@/components/MovieVideosBlock/MovieVideosBlock";
 
 /* 

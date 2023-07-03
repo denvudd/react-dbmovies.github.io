@@ -1,4 +1,4 @@
-export interface ListMoviesApiResponse {
+export interface MovieListApiResponse {
   page: number;
   results: ListMovie[];
   total_results: number;
@@ -20,4 +20,9 @@ export interface ListMovie {
   vote_count: number;
   video: boolean;
   vote_average: number
+}
+
+export interface MovieListQueryArgs {
+  typeList: "popular" | "now_playing" | "top_rated" | "upcoming";
+  params?: string;
 }
