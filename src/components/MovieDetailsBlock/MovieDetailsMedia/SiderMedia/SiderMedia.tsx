@@ -72,6 +72,7 @@ const SiderMedia: React.FC<SliderMediaProps> = ({
               >
                 <Typography.Link
                   href={`https://www.facebook.com/${social.facebook_id}`}
+                  target="_blank"
                 >
                   <FacebookFilled
                     style={{ fontSize: "1.9em", color: "#000" }}
@@ -88,6 +89,7 @@ const SiderMedia: React.FC<SliderMediaProps> = ({
               >
                 <Typography.Link
                   href={`https://twitter.com/${social.twitter_id}`}
+                  target="_blank"
                 >
                   <TwitterSquareFilled
                     style={{ fontSize: "1.9em", color: "#000" }}
@@ -103,6 +105,7 @@ const SiderMedia: React.FC<SliderMediaProps> = ({
               >
                 <Typography.Link
                   href={`https://www.instagram.com/${social.instagram_id}`}
+                  target="_blank"
                 >
                   <InstagramFilled
                     style={{ fontSize: "1.9em", color: "#000" }}

@@ -1,15 +1,25 @@
 import React from "react";
 
 import { whereAlpha2 } from "iso-3166-1";
-import { v4 as uuidv4 } from 'uuid';
-import type { MovieAltTitle, MovieTranslation, ReleaseDate } from "@/redux/api/movies/types";
+import { v4 as uuidv4 } from "uuid";
+import type {
+  MovieAltTitle,
+  MovieTranslation,
+  ReleaseDate,
+} from "@/redux/api/movies/types";
+import type { TVAltTitle, TVTranslation } from "@/redux/api/tv/types";
 
 import styles from "./DetailsSider.module.scss";
 
 interface AltTitleSiderProps {
   title: string;
   totalCount: number;
-  items: MovieAltTitle[] | ReleaseDate[] | MovieTranslation[];
+  items:
+    | MovieAltTitle[]
+    | TVAltTitle[]
+    | ReleaseDate[]
+    | MovieTranslation[]
+    | TVTranslation[];
   averageColor: {
     backgroundColor: string;
   };
@@ -21,10 +31,7 @@ const AltTitleSider: React.FC<AltTitleSiderProps> = ({
   items,
   averageColor,
 }) => {
-  const countryList = new Map<
-    string,
-    { count: number; }
-  >();
+  const countryList = new Map<string, { count: number }>();
 
   items.forEach((country) => {
     const { iso_3166_1 } = country;

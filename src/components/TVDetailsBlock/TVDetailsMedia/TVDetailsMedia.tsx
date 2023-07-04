@@ -22,6 +22,7 @@ const TVDetailsRecs = dynamic(() => import("./TVDetailsRecs/TVDetailsRecs"), {
 
 interface TVDetailsMediaProps {
   id: number;
+  name: string;
   original_name: string;
   status: TVDetailsApiResponse["status"];
   original_language: string;
@@ -33,6 +34,7 @@ interface TVDetailsMediaProps {
 
 const TVDetailsMedia: React.FC<TVDetailsMediaProps> = ({
   id,
+  name,
   original_language,
   original_name,
   status,
@@ -57,7 +59,7 @@ const TVDetailsMedia: React.FC<TVDetailsMediaProps> = ({
       <div className="app-container content-with-aside">
         <div className="media-content">
           <TVDetailsCast id={id} />
-          <TVDetailsSeason id={id} lastSeason={lastSeason} />
+          <TVDetailsSeason name={name} id={id} lastSeason={lastSeason} />
           <TVDetailsSocial id={id} />
           <TVDetailsScreens id={id} />
           <div className={styles.observer} ref={collectionRef}></div>

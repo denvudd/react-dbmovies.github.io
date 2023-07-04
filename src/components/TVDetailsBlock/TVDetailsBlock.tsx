@@ -51,6 +51,7 @@ const TVDetailsBlock: React.FC<TVDetailsBlockProps> = ({ id, data }) => {
             type={type}
             original_name={original_name}
             original_language={original_language}
+            name={name}
             status={status}
             networks={networks}
             homepage={homepage}

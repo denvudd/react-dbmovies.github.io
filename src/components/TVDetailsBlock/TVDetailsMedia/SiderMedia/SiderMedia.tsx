@@ -93,6 +93,7 @@ const SiderMedia: React.FC<SliderMediaProps> = ({
               >
                 <Typography.Link
                   href={`https://www.facebook.com/${social.facebook_id}`}
+                  target="_blank"
                 >
                   <FacebookFilled
                     style={{ fontSize: "1.9em", color: "#000" }}
@@ -109,6 +110,7 @@ const SiderMedia: React.FC<SliderMediaProps> = ({
               >
                 <Typography.Link
                   href={`https://twitter.com/${social.twitter_id}`}
+                  target="_blank"
                 >
                   <TwitterSquareFilled
                     style={{ fontSize: "1.9em", color: "#000" }}
@@ -124,6 +126,7 @@ const SiderMedia: React.FC<SliderMediaProps> = ({
               >
                 <Typography.Link
                   href={`https://www.instagram.com/${social.instagram_id}`}
+                  target="_blank"
                 >
                   <InstagramFilled
                     style={{ fontSize: "1.9em", color: "#000" }}
@@ -137,7 +140,7 @@ const SiderMedia: React.FC<SliderMediaProps> = ({
                 placement="bottom"
                 zIndex={90}
               >
-                <Typography.Link href={homepage}>
+                <Typography.Link href={homepage} target="_blank">
                   <LinkOutlined style={{ fontSize: "1.9em", color: "#000" }} />
                 </Typography.Link>
               </Tooltip>
@@ -157,7 +160,10 @@ const SiderMedia: React.FC<SliderMediaProps> = ({
               <ul className={styles.networks}>
                 {networks.map((network) => (
                   <li key={network.id}>
-                    <Link href={`/network/${network.id}`} title={`${network.name}`}>
+                    <Link
+                      href={`/network/${network.id}`}
+                      title={`${network.name}`}
+                    >
                       <Image
                         src={`https://image.tmdb.org/t/p/h30/${network.logo_path}`}
                         width={50}

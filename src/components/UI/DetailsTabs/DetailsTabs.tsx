@@ -18,52 +18,86 @@ const DetailsTabs: React.FC<DetailsTabsProps> = ({
   title,
   type = "movie",
 }) => {
+  const formattedType = type === "movie" ? "movies" : "tv";
+
   const reviewItems: MenuProps["items"] = [
     {
       key: "main",
-      label: <Link href={`/movies/${id}`}>Головне</Link>,
+      label: <Link href={`/${formattedType}/${id}`}>Головне</Link>,
     },
     {
       key: "titles",
-      label: <Link href={`/movies/${id}/titles`}>Альтернативні назви</Link>,
+      label: (
+        <Link href={`/${formattedType}/${id}/titles`}>Альтернативні назви</Link>
+      ),
     },
     {
       key: "cast",
-      label: <Link href={`/movies/${id}/cast`}>Актори та знімальна група</Link>,
+      label: (
+        <Link href={`/${formattedType}/${id}/cast`}>
+          Актори та знімальна група
+        </Link>
+      ),
     },
-    {
-      key: "releases",
-      label: <Link href={`/movies/${id}/releases`}>Дати виходу</Link>,
-    },
+
+    type === "tv"
+      ? {
+          key: "episode_groups",
+          label: (
+            <Link href={`/${formattedType}/${id}/episode_groups`}>
+              Групи серій
+            </Link>
+          ),
+        }
+      : null,
+      
+    type === "tv"
+      ? {
+          key: "seasons",
+          label: <Link href={`/${formattedType}/${id}/seasons`}>Сезони</Link>,
+        }
+      : null,
+
+    type === "movie"
+      ? {
+          key: "releases",
+          label: (
+            <Link href={`/${formattedType}/${id}/releases`}>Дати виходу</Link>
+          ),
+        }
+      : null,
+
     {
       key: "translations",
-      label: <Link href={`/movies/${id}/translations`}>Переклади</Link>,
-    }
+      label: (
+        <Link href={`/${formattedType}/${id}/translations`}>Переклади</Link>
+      ),
+    },
   ];
 
   const mediaItems: MenuProps["items"] = [
     {
       key: "backdrops",
-      label: <Link href={`/movies/${id}/backdrops`}>Світлини</Link>,
+      label: <Link href={`/${formattedType}/${id}/backdrops`}>Світлини</Link>,
     },
     {
       key: "logos",
-      label: <Link href={`/movies/${id}/logos`}>Логотипи</Link>,
+      label: <Link href={`/${formattedType}/${id}/logos`}>Логотипи</Link>,
     },
     {
       key: "posters",
-      label: <Link href={`/movies/${id}/posters`}>Постери</Link>,
+      label: <Link href={`/${formattedType}/${id}/posters`}>Постери</Link>,
     },
     {
       key: "videos",
-      label: <Link href={`/movies/${id}/videos`}>Відеороліки</Link>,
+      label: <Link href={`/${formattedType}/${id}/videos`}>Відеороліки</Link>,
     },
   ];
 
   const fandomItems: MenuProps["items"] = [
     {
       key: "reviews",
-      label: <Link href={`/movies/${id}/reviews`}>Рецензії</Link>,
+      label: <Link href={`/${formattedType}/${id}/reviews`}>Рецензії</Link>,
     },
   ];
 

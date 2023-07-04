@@ -4,7 +4,7 @@ export type {
   TVDetailsApiResponse,
   Network,
   LastEpisodeToAir,
-  Season
+  Season,
 } from "./TVDetailsType";
 export type {
   AddTVRatingApiResponse,
@@ -15,10 +15,21 @@ export type {
   TVAccountStatesQueryArgs,
 } from "./TVAccountStatesType";
 export type { TVContentRatingApiResponse } from "./TVContentRatingType";
-export type { TVCreditsApiResponse } from "./TVCreditsType";
+export type { TVLastCreditsApiResponse } from "./TVLastCreditsType";
 export type { TVImagesApiResponse } from "./TVImagesType";
 export type { TVVideosApiResponse } from "./TVVideoType";
 export type { TVReviewsApiResponse } from "./TVReviewsType";
 export type { TVRecsApiResponse } from "./TVRecsType";
 export type { TVKeywordApiResponse } from "./TVKeywordsType";
 export type { TVExternalIDsApiResponse } from "./TVExternalIDsType";
+export type { TVAltTitlesApiResponse, TVAltTitle } from "./TVTitlesType";
+export type {
+  TVAggregateCreditsApiResponse,
+  AggregateCastMember,
+  AggregateCrewMember,
+} from "./TVAggregateCreditsType";
+export type {
+  TVTranslationsApiResponse,
+  TVTranslation,
+  TVTranslationData,
+} from "./TVTranslationsType";

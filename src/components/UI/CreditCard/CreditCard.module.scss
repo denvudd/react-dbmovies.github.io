@@ -39,5 +39,10 @@
   p {
     font-size: 0.9em;
     width: 100%;
+    display: inline;
+
+    span {
+      opacity: 0.5;
+    }
   }
 }

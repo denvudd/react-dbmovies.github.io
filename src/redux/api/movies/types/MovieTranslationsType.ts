@@ -15,8 +15,6 @@ export interface MovieTranslationData {
   homepage: string | null;
   overview: string | null;
   runtime: number;
-  tagline: string | null;
+  tagline: string | string[] | null;
   title: string | null;
 }
-
-

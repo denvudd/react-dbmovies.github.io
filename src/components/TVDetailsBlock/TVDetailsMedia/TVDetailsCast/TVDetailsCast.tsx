@@ -1,5 +1,5 @@
 import React from "react";
-import { useGetTVCreditsCastQuery } from "@/redux/api/tv/slice";
+import { useGetTVAggregateCreditsCastQuery } from "@/redux/api/tv/slice";
 
 import CastCard from "@/components/UI/CastCard/CastCard";
 import { List, Button } from "antd";
@@ -12,7 +12,7 @@ interface TVDetailsCastProps {
 }
 
 const TVDetailsCast: React.FC<TVDetailsCastProps> = ({ id }) => {
-  const { data: cast, isLoading } = useGetTVCreditsCastQuery({
+  const { data: cast, isLoading } = useGetTVAggregateCreditsCastQuery({
     id,
     params: "language=uk-UA&page=1",
   });
@@ -34,8 +34,8 @@ const TVDetailsCast: React.FC<TVDetailsCastProps> = ({ id }) => {
               <CastCard
                 id={cast.id}
                 name={cast.name}
-                character={cast.character}
-                mediaType="movie"
+                character={cast.roles}
+                mediaType="tv"
                 imgUrl={
                   cast.profile_path
                     ? `https://image.tmdb.org/t/p/w138_and_h175_face${cast.profile_path}`

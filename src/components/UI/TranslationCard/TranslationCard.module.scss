@@ -7,6 +7,11 @@
   a {
     color: $primaryColorContrast;
   }
+
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
 }
 
 .table {
@@ -63,4 +68,15 @@
       margin-left: 3px;
     }
   }
+}
+
+.noPad {
+  vertical-align: top;
+  border-right: none;
+  padding: 0px !important;
+}
+
+.taglines {
+  width: 100%;
+
 }

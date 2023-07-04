@@ -95,7 +95,7 @@ const MovieDetailsPage: React.FC<MovieDetailsPageProps> = ({ data }) => {
           content={`https://react-dbmovies.vercel.app/movies/${id}`}
         />
       </Head>
-      <DetailsTabs id={id} title={`Поділитися ${name}`} />
+      <DetailsTabs id={id} title={`Поділитися ${name}`} type="tv" />
       <DetailLayout>
         {data && <TVDetailsBlock id={id} data={data} />}
       </DetailLayout>

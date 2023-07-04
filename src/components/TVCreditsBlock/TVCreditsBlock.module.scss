@@ -1,0 +1,38 @@
+@import '@/styles/variables';
+
+.inner {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+}
+
+.panel {
+  width: 100%;
+
+  h3 {
+    font-size: 1.4em;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: $primaryColorContrast;
+
+    span {
+      font-weight: 400;
+      opacity: 0.65;
+    }
+  }
+}
+
+.people {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.crewWrapper {
+  margin-bottom: 30px;
+  color: $primaryColorContrast;
+
+  h4 {
+    margin-bottom: 8px;
+  }
+}

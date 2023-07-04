@@ -8,16 +8,18 @@ import { Typography } from "antd";
 import type { Season } from "@/redux/api/tv/types";
 
 import styles from "./SeasonCard.module.scss";
+import { formatReleaseDate } from "@/utils/formatReleaseDate";
 
 interface SeasonCardProps {
   seriesId: number;
+  tvName: string;
   season: Season;
-
   outlined?: boolean;
 }
 
 const SeasonCard: React.FC<SeasonCardProps> = ({
   seriesId,
+  tvName,
   season,
   outlined = false,
 }) => {
@@ -41,7 +43,9 @@ const SeasonCard: React.FC<SeasonCardProps> = ({
       <div className={styles.container}>
         <Link
           href={`/tv/${seriesId}/seasons/${season_number}`}
-          className={styles.poster}
+          className={classNames(styles.poster, {
+            [styles.posterBordered]: !outlined,
+          })}
         >
           <Image
             src={
@@ -62,18 +66,26 @@ const SeasonCard: React.FC<SeasonCardProps> = ({
                   {name}
                 </Link>
               </h2>
-              <RatingBarSmall isRounded={false} rating={vote_average} />
+              {vote_average !== 0 && <RatingBarSmall isRounded={false} rating={vote_average} />}
             </div>
             <h4 className={styles.info}>
               {air_date} | {episode_count} серій
             </h4>
           </div>
-          <Typography.Paragraph
-            ellipsis={{ rows: 3 }}
-            className={styles.overview}
-          >
-            {overview}
-          </Typography.Paragraph>
+          {overview !== "" && (
+            <Typography.Paragraph
+              ellipsis={{ rows: 3 }}
+              className={styles.overview}
+            >
+              {overview}
+            </Typography.Paragraph>
+          )}
+          {overview === "" && (
+            <p>
+              {season_number} сезон серіалу "{tvName}", прем'єра якого відбулася{" "}
+              {formatReleaseDate(air_date)}
+            </p>
+          )}
         </div>
       </div>
     </div>

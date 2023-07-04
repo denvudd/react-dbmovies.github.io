@@ -39,14 +39,14 @@ const ReviewCard: React.FC<ReviewCardProps> = ({
     <div className={styles.card}>
       <div className={styles.head}>
         <div className={styles.avatar}>
-          <a href={url}>
+          <a href={url} target="_blank">
             {avatar_path ? (
               <Image
                 width={64}
                 height={64}
                 src={checkAvatarUrl(avatar_path)}
                 alt={`${username} profile avatar`}
-              ></Image>
+              />
             ) : (
               <span className={classNames(getRandomColorAvatar())}>
                 {author.substring(0, 1)}
@@ -59,9 +59,7 @@ const ReviewCard: React.FC<ReviewCardProps> = ({
             <h3>
               <a href={url}>Рецензія від {author}</a>
             </h3>
-            {rating && (
-              <RatingBarSmall rating={rating} />
-            )}
+            {rating && <RatingBarSmall rating={rating} />}
           </div>
           <h5 className={styles.meta}>
             Написано <span>{author}</span> від{" "}
@@ -74,8 +72,8 @@ const ReviewCard: React.FC<ReviewCardProps> = ({
       <div className={styles.teaser}>
         {textExpandanle ? (
           <Typography.Paragraph>
-          <ReactMarkdown>{content}</ReactMarkdown>
-        </Typography.Paragraph>
+            <ReactMarkdown>{content}</ReactMarkdown>
+          </Typography.Paragraph>
         ) : (
           <Typography.Paragraph ellipsis={{ rows: rowsToExpandle }}>
             <ReactMarkdown>{content}</ReactMarkdown>

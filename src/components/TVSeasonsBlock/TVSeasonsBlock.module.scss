@@ -1,0 +1,56 @@
+@import '@/styles/variables';
+
+.inner {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+}
+
+.panel {
+  width: 100%;
+
+  h3 {
+    font-size: 1.4em;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: $primaryColorContrast;
+
+    span {
+      font-weight: 400;
+      opacity: 0.65;
+    }
+  }
+}
+
+.container {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+
+.seasonWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  border-bottom: 1px solid #d7d7d7;
+  padding: 20px 0;
+
+  &:last-of-type {
+    border: none;
+  }
+}
+
+.seasonPanel {
+  padding: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.season {
+  max-width: 1440px;
+  width: 100%;
+  display: flex;
+  padding: 0 40px;
+}

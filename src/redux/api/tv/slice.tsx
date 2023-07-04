@@ -5,7 +5,7 @@ import type {
   TVAccountStatesApiResponse,
   TVAccountStatesQueryArgs,
   TVContentRatingApiResponse,
-  TVCreditsApiResponse,
+  TVLastCreditsApiResponse,
   TVDetailsApiResponse,
   TVImagesApiResponse,
   TVListApiResponse,
@@ -14,7 +14,8 @@ import type {
   TVReviewsApiResponse,
   TVRecsApiResponse,
   TVKeywordApiResponse,
-  TVExternalIDsApiResponse
+  TVExternalIDsApiResponse,
+  TVAggregateCreditsApiResponse
 } from "./types";
 
 import type { Video } from "../types/common";
@@ -55,12 +56,21 @@ export const tvApi = baseApi.injectEndpoints({
     }),
 
     getTVCreditsCast: builder.query<
-      TVCreditsApiResponse,
+    TVLastCreditsApiResponse,
       { id: number; params?: string }
     >({
       query: ({ id, params }) =>
         `/tv/${id}/credits?${tmdbApiKey}&${params ? params : ""}`,
-      transformResponse: (response: TVCreditsApiResponse) => response,
+      transformResponse: (response: TVLastCreditsApiResponse) => response,
+    }),
+
+    getTVAggregateCreditsCast: builder.query<
+    TVAggregateCreditsApiResponse,
+      { id: number; params?: string }
+    >({
+      query: ({ id, params }) =>
+        `/tv/${id}/aggregate_credits?${tmdbApiKey}&${params ? params : ""}`,
+      transformResponse: (response: TVAggregateCreditsApiResponse) => response,
     }),
 
     getTVExternalIds: builder.query<TVExternalIDsApiResponse, number>({
@@ -177,6 +187,7 @@ export const {
   useGetTVQuery,
   useGetTVDetailsQuery,
   useGetTVCreditsCastQuery,
+  useGetTVAggregateCreditsCastQuery,
   useGetTVCertificateQuery,
   useGetTVRecsQuery,
   useGetTVReviewsQuery,

@@ -2,23 +2,25 @@ import React from "react";
 
 import CreditCard from "../UI/CreditCard/CreditCard";
 import { v4 as uuidv4 } from "uuid";
-import type { MovieCreditsApiResponse } from "@/redux/api/movies/types";
-import type { CrewMember } from "@/redux/api/types/common";
+import type {
+  AggregateCrewMember,
+  TVAggregateCreditsApiResponse,
+} from "@/redux/api/tv/types";
 
-import styles from "./MovieCastBlock.module.scss";
+import styles from "./TVCreditsBlock.module.scss";
 
-interface MovieCastBlockProps {
-  crew: MovieCreditsApiResponse["crew"];
-  cast: MovieCreditsApiResponse["cast"];
+interface TVCastBlockProps {
+  crew: TVAggregateCreditsApiResponse["crew"];
+  cast: TVAggregateCreditsApiResponse["cast"];
 }
 
 interface CrewByDepartment {
-  [key: string]: CrewMember[];
+  [key: string]: AggregateCrewMember[];
 }
 
-const MovieCastBlock: React.FC<MovieCastBlockProps> = ({ cast, crew }) => {
+const TVCastBlock: React.FC<TVCastBlockProps> = ({ cast, crew }) => {
   const crewByDepartment = crew.reduce(
-    (acc: CrewByDepartment, member: CrewMember) => {
+    (acc: CrewByDepartment, member: AggregateCrewMember) => {
       const { department } = member;
       if (!acc[department]) {
         acc[department] = [];
@@ -35,7 +37,7 @@ const MovieCastBlock: React.FC<MovieCastBlockProps> = ({ cast, crew }) => {
         <div className={styles.inner}>
           <section className={styles.panel}>
             <h3>
-              Акторський склад фільму <span>{cast.length}</span>
+              Акторський склад серіалу <span>{cast.length}</span>
             </h3>
             <ol className={styles.people}>
               {cast.map((cast) => (
@@ -44,14 +46,15 @@ const MovieCastBlock: React.FC<MovieCastBlockProps> = ({ cast, crew }) => {
                   key={cast.id}
                   name={cast.name}
                   poster={cast.profile_path}
-                  character={cast.character}
+                  character={cast.roles}
+                  type="tv"
                 />
               ))}
             </ol>
           </section>
           <section className={styles.panel}>
             <h3>
-              Знімальна група фільму <span>{crew.length}</span>
+              Знімальна група серіалу <span>{crew.length}</span>
             </h3>
             {crewByDepartment["Writing"] && (
               <div className={styles.crewWrapper}>
@@ -63,7 +66,8 @@ const MovieCastBlock: React.FC<MovieCastBlockProps> = ({ cast, crew }) => {
                       key={uuidv4()}
                       name={crew.name}
                       poster={crew.profile_path}
-                      job={crew.job}
+                      job={crew.jobs}
+                      type="tv"
                     />
                   ))}
                 </ol>
@@ -79,7 +83,8 @@ const MovieCastBlock: React.FC<MovieCastBlockProps> = ({ cast, crew }) => {
                       key={uuidv4()}
                       name={crew.name}
                       poster={crew.profile_path}
-                      job={crew.job}
+                      job={crew.jobs}
+                      type="tv"
                     />
                   ))}
                 </ol>
@@ -95,7 +100,8 @@ const MovieCastBlock: React.FC<MovieCastBlockProps> = ({ cast, crew }) => {
                       key={uuidv4()}
                       name={crew.name}
                       poster={crew.profile_path}
-                      job={crew.job}
+                      job={crew.jobs}
+                      type="tv"
                     />
                   ))}
                 </ol>
@@ -111,7 +117,8 @@ const MovieCastBlock: React.FC<MovieCastBlockProps> = ({ cast, crew }) => {
                       key={uuidv4()}
                       name={crew.name}
                       poster={crew.profile_path}
-                      job={crew.job}
+                      job={crew.jobs}
+                      type="tv"
                     />
                   ))}
                 </ol>
@@ -127,7 +134,8 @@ const MovieCastBlock: React.FC<MovieCastBlockProps> = ({ cast, crew }) => {
                       key={uuidv4()}
                       name={crew.name}
                       poster={crew.profile_path}
-                      job={crew.job}
+                      job={crew.jobs}
+                      type="tv"
                     />
                   ))}
                 </ol>
@@ -143,7 +151,8 @@ const MovieCastBlock: React.FC<MovieCastBlockProps> = ({ cast, crew }) => {
                       key={uuidv4()}
                       name={crew.name}
                       poster={crew.profile_path}
-                      job={crew.job}
+                      job={crew.jobs}
+                      type="tv"
                     />
                   ))}
                 </ol>
@@ -159,7 +168,8 @@ const MovieCastBlock: React.FC<MovieCastBlockProps> = ({ cast, crew }) => {
                       key={uuidv4()}
                       name={crew.name}
                       poster={crew.profile_path}
-                      job={crew.job}
+                      job={crew.jobs}
+                      type="tv"
                     />
                   ))}
                 </ol>
@@ -175,7 +185,8 @@ const MovieCastBlock: React.FC<MovieCastBlockProps> = ({ cast, crew }) => {
                       key={uuidv4()}
                       name={crew.name}
                       poster={crew.profile_path}
-                      job={crew.job}
+                      job={crew.jobs}
+                      type="tv"
                     />
                   ))}
                 </ol>
@@ -191,7 +202,8 @@ const MovieCastBlock: React.FC<MovieCastBlockProps> = ({ cast, crew }) => {
                       key={uuidv4()}
                       name={crew.name}
                       poster={crew.profile_path}
-                      job={crew.job}
+                      job={crew.jobs}
+                      type="tv"
                     />
                   ))}
                 </ol>
@@ -207,7 +219,8 @@ const MovieCastBlock: React.FC<MovieCastBlockProps> = ({ cast, crew }) => {
                       key={uuidv4()}
                       name={crew.name}
                       poster={crew.profile_path}
-                      job={crew.job}
+                      job={crew.jobs}
+                      type="tv"
                     />
                   ))}
                 </ol>
@@ -223,7 +236,8 @@ const MovieCastBlock: React.FC<MovieCastBlockProps> = ({ cast, crew }) => {
                       key={uuidv4()}
                       name={crew.name}
                       poster={crew.profile_path}
-                      job={crew.job}
+                      job={crew.jobs}
+                      type="tv"
                     />
                   ))}
                 </ol>
@@ -236,4 +250,4 @@ const MovieCastBlock: React.FC<MovieCastBlockProps> = ({ cast, crew }) => {
   );
 };
 
-export default MovieCastBlock;
+export default TVCastBlock;

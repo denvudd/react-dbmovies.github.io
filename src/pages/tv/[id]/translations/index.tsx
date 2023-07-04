@@ -4,18 +4,18 @@ import Head from "next/head";
 import DetailsSider from "@/components/UI/DetailsSide/DetailsSider";
 import DetailsBanner from "@/components/UI/DetailsBanner/DetailsBanner";
 import DetailsTabs from "@/components/UI/DetailsTabs/DetailsTabs";
+import TVTranslationsBlock from "@/components/TVTranslationsBlock/TVTranslationsBlock";
 import ListLayout from "@/layouts/ListLayout";
-import MovieTranslationsBlock from "@/components/MovieTranslationsBlock/MovieTranslationsBlock";
 import { FastAverageColor } from "fast-average-color";
 import { createRgbaString } from "@/utils/createRgbaString";
 
 import type { GetServerSideProps } from "next/types";
 import type { FastAverageColorResult } from "fast-average-color";
 import type {
-  MovieDetails,
-  MovieTranslation,
-  MovieTranslationsApiResponse,
-} from "@/redux/api/movies/types";
+  TVTranslationsApiResponse,
+  TVTranslation,
+  TVDetails,
+} from "@/redux/api/tv/types";
 import type { ApiError } from "@/redux/api/baseApi/types/ErrorType";
 
 /* 
@@ -32,32 +32,31 @@ export const config = {
   runtime: 'experimental-edge', // warn: using an experimental edge runtime, the API might change
 }
 
-type MovieTranslationsPageApiResponse = MovieDetails & {
-  translations: MovieTranslationsApiResponse;
+type TVTranslationsPageApiResponse = TVDetails & {
+  translations: TVTranslationsApiResponse;
 };
 
-export interface MovieTranslationsPageProps {
-  data: MovieTranslationsTransformedData;
+export interface TVTranslationsPageProps {
+  data: TVTranslationsTransformedData;
 }
 
-interface MovieTranslationsTransformedData {
-  translations: MovieTranslation[];
-  release_date: string;
+interface TVTranslationsTransformedData {
+  translations: TVTranslation[];
+  first_air_date: string;
   poster_path: string | null;
   overview: string | null;
   id: number;
-  title: string;
+  name: string;
 }
 
 export const getServerSideProps: GetServerSideProps<{
-  data: MovieTranslationsTransformedData;
+  data: TVTranslationsTransformedData;
 }> = async (context) => {
   const { id } = context.query;
   const res = await fetch(
-    `https://api.themoviedb.org/3/movie/${id}?append_to_response=translations&language=uk-UA&api_key=684e3f73d1ca0e692a3016c028aabf72`
+    `https://api.themoviedb.org/3/tv/${id}?append_to_response=translations&language=uk-UA&api_key=684e3f73d1ca0e692a3016c028aabf72`
   );
-  const response: MovieTranslationsPageApiResponse | ApiError =
-    await res.json();
+  const response: TVTranslationsPageApiResponse | ApiError = await res.json();
 
   if ("status_code" in response && response.status_code === 34) {
     return {
@@ -71,20 +70,20 @@ export const getServerSideProps: GetServerSideProps<{
   if ("id" in response && response.id) {
     const {
       translations,
-      release_date,
+      first_air_date,
       id: movieId,
       poster_path,
       overview,
-      title,
+      name,
     } = response;
 
-    const transformedData: MovieTranslationsTransformedData = {
+    const transformedData: TVTranslationsTransformedData = {
       translations: translations.translations,
-      release_date,
+      first_air_date,
       id: movieId,
       poster_path,
       overview,
-      title,
+      name,
     };
     return { props: { data: transformedData } };
   } else {
@@ -97,11 +96,8 @@ export const getServerSideProps: GetServerSideProps<{
   }
 };
 
-const MovieTranslationsPage: React.FC<MovieTranslationsPageProps> = ({
-  data,
-}) => {
-  const { poster_path, title, overview, translations, release_date, id } =
-    data;
+const TVTranslationsPage: React.FC<TVTranslationsPageProps> = ({ data }) => {
+  const { poster_path, name, overview, translations, first_air_date, id } = data;
   const [backdropColor, setBackdropColor] = React.useState<number[] | null>(
     null
   );
@@ -143,8 +139,8 @@ const MovieTranslationsPage: React.FC<MovieTranslationsPageProps> = ({
       <Head>
         <title>
           {data &&
-            `${title} (${
-              release_date?.split("-")[0]
+            `${name} (${
+              first_air_date?.split("-")[0]
             }) — The Movie Database (TMDB)`}
         </title>
         <meta
@@ -152,11 +148,11 @@ const MovieTranslationsPage: React.FC<MovieTranslationsPageProps> = ({
           content={data ? (overview as string) : undefined}
         ></meta>
       </Head>
-      <DetailsTabs id={id} title={`Поділитися ${title}`} />
+      <DetailsTabs id={id} title={`Поділитися ${name}`} type="tv" />
       <DetailsBanner
         id={id}
-        title={title}
-        releaseDate={release_date}
+        title={name}
+        releaseDate={first_air_date}
         posterPath={
           poster_path
             ? `https://image.tmdb.org/t/p/w58_and_h87_face/${poster_path}`
@@ -175,7 +171,7 @@ const MovieTranslationsPage: React.FC<MovieTranslationsPageProps> = ({
                 averageColor={averageColor}
               />
             ),
-            mainContent: <MovieTranslationsBlock translations={translations}/>,
+            mainContent: <TVTranslationsBlock translations={translations} />,
           }}
         </ListLayout>
       </div>
@@ -183,4 +179,4 @@ const MovieTranslationsPage: React.FC<MovieTranslationsPageProps> = ({
   );
 };
 
-export default MovieTranslationsPage;
+export default TVTranslationsPage;
