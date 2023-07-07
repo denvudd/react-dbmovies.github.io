@@ -1,0 +1,98 @@
+@import '@/styles/variables';
+
+.container {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  align-content: flex-start;
+  flex-direction: column;
+  color: $primaryColorContrast;
+}
+
+.description {
+  font-size: 1em;
+}
+
+.wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  border-bottom: 1px solid #d7d7d7;
+  padding: 20px 0;
+
+  &:last-of-type {
+    border: none;
+  }
+
+  &:hover {
+    background-color: rgba(0, 0, 0, .08);
+  }
+
+  &.wrapperHover {
+    background-color: rgba(0, 0, 0, .08);
+  }
+}
+
+.panel {
+  padding: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  h3 {
+    font-size: 1.4em;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: $primaryColorContrast;
+    text-align: left;
+    width: 100%;
+
+    span {
+      font-weight: 400;
+      opacity: 0.65;
+    }
+  }
+
+  h3.title {
+    margin-top: 30px;
+  }
+
+}
+
+.season {
+  max-width: 1440px;
+  width: 100%;
+  display: flex;
+  padding: 0 40px;
+}
+
+.sortableSort {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: baseline;
+  justify-content: flex-end;
+
+  .sortGroup {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    max-width: 240px;
+
+    span {
+      color: $primaryColorContrast;
+    }
+  }
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.inner {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+}

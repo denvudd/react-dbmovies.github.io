@@ -1,0 +1,151 @@
+@import '@/styles/variables';
+
+.inner {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  color: $primaryColorContrast;
+}
+
+.panel {
+  width: 100%;
+
+  h3 {
+    font-size: 1.4em;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: $primaryColorContrast;
+
+    span {
+      font-weight: 400;
+      opacity: 0.65;
+    }
+  }
+}
+
+.overview {
+  color: $primaryColorContrast;
+}
+
+.navigation {
+  margin-top: 30px;
+}
+
+.bar {
+  width: 100%;
+  border-top: 1px solid $lightGrey;
+  padding: 10px 20px 12px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+
+  li {
+    font-size: 0.9em;
+    display: inline-flex;
+    align-items: stretch;
+    align-content: center;
+    position: relative;
+
+    a {
+      color: #a3a3a3;
+      font-size: 1.1em;
+      font-weight: 600;
+
+
+      &:hover {
+        color: #000;
+      }
+    }
+  }
+}
+
+.info {
+  padding: 15px 20px;
+  border-top: 1px solid $lightGrey;
+  width: 100%;
+  display: flex;
+  box-sizing: border-box;
+}
+
+.crew {
+  width: 30%;
+
+  h3 {
+    font-size: 1em;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  p {
+    font-size: 0.9em;
+
+    strong {
+      font-weight: 600;
+    }
+
+    a {
+      color: $primaryColorContrast;
+    }
+  }
+}
+
+.guestStars {
+  width: 70%;
+
+  h3 {
+    font-size: 1em;
+    font-weight: 700;
+    margin-bottom: 8px;
+
+    a {
+      float: right;
+      font-size: 0.8em;
+      font-weight: 400;
+      color: $primaryColorContrast;
+    }
+  }
+}
+
+.stars {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 10px;
+
+  li {
+    width: 50%;
+  }
+}
+
+.filter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+  margin-bottom: 6px;
+}
+
+.sortableSort {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: baseline;
+  justify-content: flex-end;
+
+  .sortGroup {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    max-width: 240px;
+
+    span {
+      color: $primaryColorContrast;
+    }
+  }
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}

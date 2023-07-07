@@ -4,14 +4,19 @@ import Head from "next/head";
 import DetailsBanner from "@/components/UI/DetailsBanner/DetailsBanner";
 import DetailsTabs from "@/components/UI/DetailsTabs/DetailsTabs";
 import DetailLayout from "@/layouts/DetailsLayout";
-import TVSeasonsBlock from "@/components/TVSeasonsBlock/TVSeasonsBlock";
+import TVSeasonDetailsBlock from "@/components/TVSeasonDetailsBlock/TVSeasonDetailsBlock";
 import { FastAverageColor } from "fast-average-color";
 import { createRgbaString } from "@/utils/createRgbaString";
 
 import type { GetServerSideProps } from "next/types";
 import type { FastAverageColorResult } from "fast-average-color";
-import type { TVDetailsApiResponse, Season } from "@/redux/api/tv/types";
+import type {
+  TVDetailsApiResponse,
+  TVSeasonDetailsApiResponse,
+  Episode,
+} from "@/redux/api/tv/types";
 import type { ApiError } from "@/redux/api/baseApi/types/ErrorType";
+import Link from "next/link";
 
 /* 
   The long cold start issue fix
@@ -27,27 +32,55 @@ import type { ApiError } from "@/redux/api/baseApi/types/ErrorType";
 //   runtime: 'experimental-edge', // warn: using an experimental edge runtime, the API might change
 // }
 
-export interface TVSeasonsPageProps {
-  data: TVSeasonsTransformedData;
+interface TVSeasonDetailsTransformedApiResponse {
+  tvDetails: TVDetailsApiResponse;
+  seasonDetailsData: TVSeasonDetailsApiResponse;
 }
 
-interface TVSeasonsTransformedData {
+interface TVSeasonDetailsPageProps {
+  data: TVSeasonDetailsTratsformedData;
+}
+
+interface TVSeasonDetailsTratsformedData {
+  name: string;
+  seasonName: string;
+  overview: string | null;
+  seasonOverview: string | null;
   first_air_date: string;
   poster_path: string | null;
-  overview: string | null;
-  id: number;
-  name: string;
-  seasons: Season[];
+  seasonPoster: string | null;
+  tvId: number;
+  seasonId: string;
+  air_date: string;
+  episodes: Episode[];
+  season_number: number;
 }
 
 export const getServerSideProps: GetServerSideProps<{
-  data: TVSeasonsTransformedData;
+  data: TVSeasonDetailsTratsformedData;
 }> = async (context) => {
-  const { id } = context.query;
-  const res = await fetch(
+  const { id, season } = context.query;
+  const tvDetailsRes = await fetch(
     `https://api.themoviedb.org/3/tv/${id}?language=uk-UA&api_key=684e3f73d1ca0e692a3016c028aabf72`
   );
-  const response: TVDetailsApiResponse | ApiError = await res.json();
+  const seasonDetailsRes = await fetch(
+    `https://api.themoviedb.org/3/tv/${id}/season/${season}?language=uk-UA&api_key=684e3f73d1ca0e692a3016c028aabf72`
+  );
+
+  const [tvDetails, seasonDetails] = await Promise.all([
+    tvDetailsRes,
+    seasonDetailsRes,
+  ]);
+
+  const tvDetailsData = await tvDetails.json();
+  const seasonDetailsData = await seasonDetails.json();
+
+  const mergedData: TVSeasonDetailsTransformedApiResponse = {
+    tvDetails: tvDetailsData,
+    seasonDetailsData: seasonDetailsData,
+  };
+
+  const response: TVSeasonDetailsTransformedApiResponse | ApiError = mergedData;
 
   if ("status_code" in response && response.status_code === 34) {
     return {
@@ -58,37 +91,65 @@ export const getServerSideProps: GetServerSideProps<{
     };
   }
 
-  if ("id" in response && response.id) {
+  if ("id" in response.tvDetails && response.seasonDetailsData) {
     const {
-      seasons,
       first_air_date,
-      id: movieId,
+      id: tvId,
       poster_path,
       overview,
       name,
-    } = response;
+    } = response.tvDetails;
 
-    const transformedData: TVSeasonsTransformedData = {
-      seasons,
-      first_air_date,
-      id: movieId,
-      poster_path,
-      overview,
+    const {
+      air_date,
+      episodes,
+      name: seasonName,
+      overview: seasonOverview,
+      poster_path: seasonPoster,
+      season_number,
+      _id: seasonId,
+    } = response.seasonDetailsData;
+
+    const transformedData: TVSeasonDetailsTratsformedData = {
       name,
+      seasonName,
+      overview,
+      seasonOverview,
+      poster_path,
+      seasonPoster,
+      season_number,
+      seasonId,
+      episodes,
+      air_date,
+      tvId,
+      first_air_date,
     };
     return { props: { data: transformedData } };
   } else {
     return {
       redirect: {
         permanent: false,
-        destination: "/505",
+        destination: "/500",
       },
     };
   }
 };
 
-const TVSeasonsPage: React.FC<TVSeasonsPageProps> = ({ data }) => {
-  const { poster_path, name, overview, seasons, first_air_date, id } = data;
+const TVSeasonsPage: React.FC<TVSeasonDetailsPageProps> = ({ data }) => {
+  const {
+    name,
+    seasonName,
+    overview,
+    seasonOverview,
+    poster_path,
+    seasonPoster,
+    season_number,
+    seasonId,
+    episodes,
+    air_date,
+    tvId,
+    first_air_date,
+  } = data;
   const [backdropColor, setBackdropColor] = React.useState<number[] | null>(
     null
   );
@@ -114,10 +175,10 @@ const TVSeasonsPage: React.FC<TVSeasonsPageProps> = ({ data }) => {
           console.error("Ошибка при получении среднего цвета:", error);
         });
     }
-  }, [data.id]);
+  }, [data.tvId]);
 
   const averageColor =
-    backdropColor && poster_path 
+    backdropColor && poster_path
       ? {
           backgroundColor: `${createRgbaString(backdropColor, "1")}`,
         }
@@ -132,30 +193,32 @@ const TVSeasonsPage: React.FC<TVSeasonsPageProps> = ({ data }) => {
           {data &&
             `${name} (${
               first_air_date?.split("-")[0]
-            }) — The Movie Database (TMDB)`}
+            }) — ${seasonName} — The Movie Database (TMDB)`}
         </title>
         <meta
           name="description"
           content={data ? (overview as string) : undefined}
         ></meta>
       </Head>
-      <DetailsTabs id={id} title={`Поділитися ${name}`} type="tv" />
+      <DetailsTabs id={tvId} title={`Поділитися ${name}`} type="tv" />
       <DetailsBanner
-        id={id}
-        title={name}
-        releaseDate={first_air_date}
+        id={tvId}
+        title={`${seasonName}`}
+        releaseDate={air_date}
         posterPath={
-          poster_path
-            ? `https://image.tmdb.org/t/p/w58_and_h87_face/${poster_path}`
+          seasonPoster
+            ? `https://image.tmdb.org/t/p/w58_and_h87_face/${seasonPoster}`
             : "https://placehold.co/58x/png/?text=Not+Found"
         }
         averageColor={averageColor}
         type="tv"
         isBackdropLight={isBackdropLight}
+        customLink={<Link className="details-back-navigation" href={`/tv/${tvId}/seasons`}>← Повернутися до сезонів</Link>}
+        
       />
-      <div className="content-with-aside panel-details">
+      <div className="app-container content-with-aside panel-details">
         <DetailLayout>
-          <TVSeasonsBlock seasons={seasons} name={name} seriesId={id} />
+          <TVSeasonDetailsBlock episodes={episodes} tvId={tvId} />
         </DetailLayout>
       </div>
     </>

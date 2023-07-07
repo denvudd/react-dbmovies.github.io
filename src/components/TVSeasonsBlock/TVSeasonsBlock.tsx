@@ -1,8 +1,9 @@
 import React from "react";
 
-import styles from "./TVSeasonsBlock.module.scss";
-import { Season } from "@/redux/api/tv/types";
 import SeasonCard from "../UI/SeasonCard/SeasonCard";
+import type { Season } from "@/redux/api/tv/types";
+
+import styles from "./TVSeasonsBlock.module.scss";
 
 interface TVSeasonsBlockProps {
   seasons: Season[];

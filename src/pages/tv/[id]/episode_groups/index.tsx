@@ -4,13 +4,17 @@ import Head from "next/head";
 import DetailsBanner from "@/components/UI/DetailsBanner/DetailsBanner";
 import DetailsTabs from "@/components/UI/DetailsTabs/DetailsTabs";
 import DetailLayout from "@/layouts/DetailsLayout";
-import TVSeasonsBlock from "@/components/TVSeasonsBlock/TVSeasonsBlock";
+import TVEpisodeGroupsBlock from "@/components/TVEpisodeGroupsBlock/TVEpisodeGroupsBlock";
 import { FastAverageColor } from "fast-average-color";
 import { createRgbaString } from "@/utils/createRgbaString";
 
 import type { GetServerSideProps } from "next/types";
 import type { FastAverageColorResult } from "fast-average-color";
-import type { TVDetailsApiResponse, Season } from "@/redux/api/tv/types";
+import type {
+  EpisodeGroup,
+  TVDetails,
+  TVEpisodeGroupsApiResponse,
+} from "@/redux/api/tv/types";
 import type { ApiError } from "@/redux/api/baseApi/types/ErrorType";
 
 /* 
@@ -27,27 +31,31 @@ import type { ApiError } from "@/redux/api/baseApi/types/ErrorType";
 //   runtime: 'experimental-edge', // warn: using an experimental edge runtime, the API might change
 // }
 
-export interface TVSeasonsPageProps {
-  data: TVSeasonsTransformedData;
+type TVEpisodeGroupsPageApiResponse = TVDetails & {
+  episode_groups: TVEpisodeGroupsApiResponse;
+};
+
+interface TVEpisodeGroupsPageProps {
+  data: TVEpisodeGroupsTransformedData;
 }
 
-interface TVSeasonsTransformedData {
+interface TVEpisodeGroupsTransformedData {
   first_air_date: string;
   poster_path: string | null;
   overview: string | null;
   id: number;
   name: string;
-  seasons: Season[];
+  episode_groups: EpisodeGroup[];
 }
 
 export const getServerSideProps: GetServerSideProps<{
-  data: TVSeasonsTransformedData;
+  data: TVEpisodeGroupsTransformedData;
 }> = async (context) => {
   const { id } = context.query;
   const res = await fetch(
-    `https://api.themoviedb.org/3/tv/${id}?language=uk-UA&api_key=684e3f73d1ca0e692a3016c028aabf72`
+    `https://api.themoviedb.org/3/tv/${id}?append_to_response=episode_groups&language=uk-UA&api_key=684e3f73d1ca0e692a3016c028aabf72`
   );
-  const response: TVDetailsApiResponse | ApiError = await res.json();
+  const response: TVEpisodeGroupsPageApiResponse | ApiError = await res.json();
 
   if ("status_code" in response && response.status_code === 34) {
     return {
@@ -60,7 +68,7 @@ export const getServerSideProps: GetServerSideProps<{
 
   if ("id" in response && response.id) {
     const {
-      seasons,
+      episode_groups,
       first_air_date,
       id: movieId,
       poster_path,
@@ -68,8 +76,8 @@ export const getServerSideProps: GetServerSideProps<{
       name,
     } = response;
 
-    const transformedData: TVSeasonsTransformedData = {
-      seasons,
+    const transformedData: TVEpisodeGroupsTransformedData = {
+      episode_groups: episode_groups.results,
       first_air_date,
       id: movieId,
       poster_path,
@@ -87,8 +95,9 @@ export const getServerSideProps: GetServerSideProps<{
   }
 };
 
-const TVSeasonsPage: React.FC<TVSeasonsPageProps> = ({ data }) => {
-  const { poster_path, name, overview, seasons, first_air_date, id } = data;
+const TVSeasonsPage: React.FC<TVEpisodeGroupsPageProps> = ({ data }) => {
+  const { poster_path, name, overview, episode_groups, first_air_date, id } =
+    data;
   const [backdropColor, setBackdropColor] = React.useState<number[] | null>(
     null
   );
@@ -155,7 +164,7 @@ const TVSeasonsPage: React.FC<TVSeasonsPageProps> = ({ data }) => {
       />
       <div className="content-with-aside panel-details">
         <DetailLayout>
-          <TVSeasonsBlock seasons={seasons} name={name} seriesId={id} />
+          <TVEpisodeGroupsBlock seriesId={id} episodeGroups={episode_groups} />
         </DetailLayout>
       </div>
     </>

@@ -1,0 +1,55 @@
+@import '@/styles/variables';
+
+.inner {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+}
+
+.panel {
+  width: 100%;
+
+  h3 {
+    font-size: 1.4em;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: $primaryColorContrast;
+
+    span {
+      font-weight: 400;
+      opacity: 0.65;
+    }
+  }
+}
+
+.filter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+  margin-bottom: 6px;
+}
+
+.sortableSort {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: baseline;
+  justify-content: flex-end;
+
+  .sortGroup {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    max-width: 240px;
+
+    span {
+      color: $primaryColorContrast;
+    }
+  }
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
