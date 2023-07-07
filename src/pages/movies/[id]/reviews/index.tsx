@@ -28,8 +28,8 @@ import MovieReviewsBlock from "@/components/MovieReviewsBlock/MovieReviewsBlock"
   !! Doesn't work in dev mode !!
 */
 export const config = {
-  runtime: 'experimental-edge', // warn: using an experimental edge runtime, the API might change
-}
+  runtime: "experimental-edge", // warn: using an experimental edge runtime, the API might change
+};
 
 type MovieReviewsPageApiResponse = MovieDetails & {
   reviews: MovieReviewsApiResponse;
@@ -95,9 +95,8 @@ export const getServerSideProps: GetServerSideProps<{
   }
 };
 
-const MovieReleasesPage: React.FC<MovieReviewsPageProps> = ({ data }) => {
-  const { poster_path, title, overview, reviews, release_date, id } =
-    data;
+const MovieReviewsPage: React.FC<MovieReviewsPageProps> = ({ data }) => {
+  const { poster_path, title, overview, reviews, release_date, id } = data;
   const [backdropColor, setBackdropColor] = React.useState<number[] | null>(
     null
   );
@@ -126,7 +125,7 @@ const MovieReleasesPage: React.FC<MovieReviewsPageProps> = ({ data }) => {
   }, [data.id]);
 
   const averageColor =
-    backdropColor && poster_path && !isBackdropLight
+    backdropColor && poster_path
       ? {
           backgroundColor: `${createRgbaString(backdropColor, "1")}`,
         }
@@ -159,6 +158,7 @@ const MovieReleasesPage: React.FC<MovieReviewsPageProps> = ({ data }) => {
             : "https://placehold.co/58x/png/?text=Not+Found"
         }
         averageColor={averageColor}
+        isBackdropLight={isBackdropLight}
       />
       <div className="app-container content-with-aside panel-details">
         <DetailLayout>
@@ -169,4 +169,4 @@ const MovieReleasesPage: React.FC<MovieReviewsPageProps> = ({ data }) => {
   );
 };
 
-export default MovieReleasesPage;
+export default MovieReviewsPage;

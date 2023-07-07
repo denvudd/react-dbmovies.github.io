@@ -102,7 +102,6 @@ const MovieBackdropsPage: React.FC<MovieBackdropsPageProps> = ({ data }) => {
   );
   const [isBackdropLight, setIsBackdropLight] = React.useState(false);
   console.log(data);
-  
 
   React.useEffect(() => {
     // get dominant color by poster
@@ -127,7 +126,7 @@ const MovieBackdropsPage: React.FC<MovieBackdropsPageProps> = ({ data }) => {
   }, [data.id]);
 
   const averageColor =
-    backdropColor && poster_path && !isBackdropLight
+    backdropColor && poster_path
       ? {
           backgroundColor: `${createRgbaString(backdropColor, "1")}`,
         }
@@ -160,6 +159,7 @@ const MovieBackdropsPage: React.FC<MovieBackdropsPageProps> = ({ data }) => {
             : "https://placehold.co/58x/png/?text=Not+Found"
         }
         averageColor={averageColor}
+        isBackdropLight={isBackdropLight}
       />
       <div className="app-container content-with-aside panel-details">
         <DetailLayout>

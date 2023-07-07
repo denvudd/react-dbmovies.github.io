@@ -6,18 +6,18 @@ import type { Image } from "@/redux/api/types/common";
 
 import styles from "./MovieImagesBlock.module.scss";
 
-interface MovieBackdropsBlockProps {
+interface MovieImagesBlockProps {
   images: Image[];
   title: string;
   type: "backdrop" | "logo" | "poster";
 }
 
-const MovieImagesBlock: React.FC<MovieBackdropsBlockProps> = ({
+const MovieImagesBlock: React.FC<MovieImagesBlockProps> = ({
   images,
   title,
   type,
 }) => {
-  const getTitle = (type: MovieBackdropsBlockProps["type"]) => {
+  const getTitle = (type: MovieImagesBlockProps["type"]) => {
     switch (type) {
       case "backdrop":
         return "Світлини";

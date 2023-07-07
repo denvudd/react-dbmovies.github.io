@@ -56,7 +56,7 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
       fac
         .getColorAsync(
           `https://image.tmdb.org/t/p/w220_and_h330_face${poster_path}`,
-          { algorithm: "dominant", crossOrigin: "anonymous" }
+          { algorithm: "simple", crossOrigin: "anonymous" }
         )
         .then((result: FastAverageColorResult) => {
           setIsBackdropLight(result.isLight);
@@ -76,9 +76,9 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
       }}
     >
       <div
-        className={styles.backdrop}
+        className={!isBackdropLight ? "backdrop" : "backdrop backdrop-light"}
         style={
-          backdropColor && backdrop_path && !isBackdropLight
+          backdropColor && backdrop_path
             ? {
                 backgroundImage: `linear-gradient(to right, ${createRgbaString(
                   backdropColor,
@@ -143,7 +143,7 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
                     </h2>
                     <div className={styles.headerFacts}>
                       {certificate && (
-                        <span className={styles.certification}>
+                        <span className="head-certification">
                           {certificate}
                         </span>
                       )}

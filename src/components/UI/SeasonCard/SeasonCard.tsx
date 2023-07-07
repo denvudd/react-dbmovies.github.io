@@ -5,11 +5,11 @@ import Image from "next/image";
 import RatingBarSmall from "../RatingBarSmall/RatingBarSmall";
 import classNames from "classnames";
 import { Typography } from "antd";
+import { formatReleaseDate } from "@/utils/formatReleaseDate";
+import { generateShimmer } from "@/utils/generateShimmer";
 import type { Season } from "@/redux/api/tv/types";
 
 import styles from "./SeasonCard.module.scss";
-import { formatReleaseDate } from "@/utils/formatReleaseDate";
-
 interface SeasonCardProps {
   seriesId: number;
   tvName: string;
@@ -56,6 +56,11 @@ const SeasonCard: React.FC<SeasonCardProps> = ({
             width={130}
             height={195}
             alt={`${name} poster`}
+            placeholder="blur"
+            blurDataURL={`data:image/svg+xml;base64,${generateShimmer(
+              138,
+              175
+            )}`}
           />
         </Link>
         <div className={styles.content}>
@@ -66,10 +71,12 @@ const SeasonCard: React.FC<SeasonCardProps> = ({
                   {name}
                 </Link>
               </h2>
-              {vote_average !== 0 && <RatingBarSmall isRounded={false} rating={vote_average} />}
+              {vote_average !== 0 && (
+                <RatingBarSmall rating={vote_average} />
+              )}
             </div>
             <h4 className={styles.info}>
-              {air_date} | {episode_count} серій
+              {air_date ? air_date : "—"} | {episode_count} серій
             </h4>
           </div>
           {overview !== "" && (
@@ -82,8 +89,10 @@ const SeasonCard: React.FC<SeasonCardProps> = ({
           )}
           {overview === "" && (
             <p>
-              {season_number} сезон серіалу "{tvName}", прем'єра якого відбулася{" "}
-              {formatReleaseDate(air_date)}
+              {air_date
+                ? `${season_number} сезон серіалу "${tvName}", прем'єра якого відбулася
+              ${formatReleaseDate(air_date)}`
+                : "(Немає опису українською. Допоможіть — додайте його)"}
             </p>
           )}
         </div>

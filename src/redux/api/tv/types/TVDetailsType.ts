@@ -1,5 +1,6 @@
 import {
   Genre,
+  Network,
   ProductionCompany,
   ProductionCountry,
   SpokenLanguage,
@@ -87,11 +88,4 @@ interface Creator {
   name: string;
   gender: number;
   profile_path: string;
-}
-
-export interface Network {
-  id: number;
-  logo_path: string;
-  name: string;
-  origin_country: string;
 }

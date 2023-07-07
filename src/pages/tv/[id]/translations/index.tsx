@@ -1,7 +1,7 @@
 import React from "react";
 
 import Head from "next/head";
-import DetailsSider from "@/components/UI/DetailsSide/DetailsSider";
+import DetailsSider from "@/components/UI/DetailsSider/DetailsSider";
 import DetailsBanner from "@/components/UI/DetailsBanner/DetailsBanner";
 import DetailsTabs from "@/components/UI/DetailsTabs/DetailsTabs";
 import TVTranslationsBlock from "@/components/TVTranslationsBlock/TVTranslationsBlock";
@@ -28,9 +28,9 @@ import type { ApiError } from "@/redux/api/baseApi/types/ErrorType";
   #1 https://nextjs.org/docs/pages/building-your-application/data-fetching/get-server-side-props#getserversideprops-with-edge-api-routes
   !! Doesn't work in dev mode !!
 */
-export const config = {
-  runtime: 'experimental-edge', // warn: using an experimental edge runtime, the API might change
-}
+// export const config = {
+//   runtime: 'experimental-edge', // warn: using an experimental edge runtime, the API might change
+// }
 
 type TVTranslationsPageApiResponse = TVDetails & {
   translations: TVTranslationsApiResponse;
@@ -126,7 +126,7 @@ const TVTranslationsPage: React.FC<TVTranslationsPageProps> = ({ data }) => {
   }, [data.id]);
 
   const averageColor =
-    backdropColor && poster_path && !isBackdropLight
+    backdropColor && poster_path
       ? {
           backgroundColor: `${createRgbaString(backdropColor, "1")}`,
         }
@@ -159,6 +159,8 @@ const TVTranslationsPage: React.FC<TVTranslationsPageProps> = ({ data }) => {
             : "https://placehold.co/58x/png/?text=Not+Found"
         }
         averageColor={averageColor}
+        type="tv"
+        isBackdropLight={isBackdropLight}
       />
       <div className="app-container content-with-aside panel-details">
         <ListLayout siderTheme="light">
@@ -169,6 +171,7 @@ const TVTranslationsPage: React.FC<TVTranslationsPageProps> = ({ data }) => {
                 totalCount={translations.length}
                 items={translations}
                 averageColor={averageColor}
+                isBackdropLight={isBackdropLight}
               />
             ),
             mainContent: <TVTranslationsBlock translations={translations} />,

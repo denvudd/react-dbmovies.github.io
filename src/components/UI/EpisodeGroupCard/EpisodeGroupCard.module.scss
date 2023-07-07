@@ -1,0 +1,36 @@
+@import '@/styles/variables';
+
+.card {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  color: $primaryColorContrast;
+}
+
+.title {
+  padding-right: 8px;
+  font-size: 1.2em;
+  width: 100%;
+
+  a {
+    color: $primaryColorContrast;
+  }
+
+  span {
+    opacity: 0.5;
+    font-weight: 400;
+  }
+}
+
+.meta {
+  font-size: 1.1em;
+  font-weight: 300;
+  width: 100%;
+}
+
+.description {
+  margin-top: 10px;
+  font-size: 1em;
+  width: 100%;
+}

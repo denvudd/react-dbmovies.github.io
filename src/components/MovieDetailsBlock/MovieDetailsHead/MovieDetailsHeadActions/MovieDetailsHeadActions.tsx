@@ -61,7 +61,7 @@ const MovieDetailsHeadActions: React.FC<MovieDetailsHeadActionsProps> = ({
               <RatingBar rating={voteAverage} size={55} />
             </div>
           </Tooltip>
-          <span>Оцінка користувачів</span>
+          <span className="chart">Оцінка користувачів</span>
         </li>
         <Tooltip
           title={
@@ -156,7 +156,7 @@ const MovieDetailsHeadActions: React.FC<MovieDetailsHeadActionsProps> = ({
           </span>
         </Tooltip>
         <li className={styles.video}>
-          <a href="">
+          <a className="head-action-trailer" href="">
             <span>
               <CaretRightFilled />
             </span>{" "}

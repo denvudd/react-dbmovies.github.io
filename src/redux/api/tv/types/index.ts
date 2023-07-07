@@ -2,7 +2,6 @@ export type { TVListApiResponse, TVListQueryArgs, ListTV } from "./TVListType";
 export type {
   TVDetails,
   TVDetailsApiResponse,
-  Network,
   LastEpisodeToAir,
   Season,
 } from "./TVDetailsType";
@@ -17,7 +16,7 @@ export type {
 export type { TVContentRatingApiResponse } from "./TVContentRatingType";
 export type { TVLastCreditsApiResponse } from "./TVLastCreditsType";
 export type { TVImagesApiResponse } from "./TVImagesType";
-export type { TVVideosApiResponse } from "./TVVideoType";
+export type { TVVideosApiResponse } from "./TVVideosType";
 export type { TVReviewsApiResponse } from "./TVReviewsType";
 export type { TVRecsApiResponse } from "./TVRecsType";
 export type { TVKeywordApiResponse } from "./TVKeywordsType";
@@ -33,3 +32,17 @@ export type {
   TVTranslation,
   TVTranslationData,
 } from "./TVTranslationsType";
+export type {
+  TVEpisodeGroupsApiResponse,
+  EpisodeGroup,
+} from "./TVEpisodeGroupsType";
+export type { TVEpisodeGroupDetailsApiResponse } from "./TVEpisodeGroupDetailsType";
+export type { TVSeasonDetailsApiResponse } from "./TVSeasonDetailsType";
+export type { TVEpisodeDetailsApiResponse } from "./TVEpisodeDetails";
+export type { TVEpisodeVideosApiResponse } from "./TVEpisodeVideosType";
+export type { TVEpisodeImagesApiResponse } from "./TVEpisodeImagesType";
+export type { TVEpisodeTranslationsApiResponse } from "./TVEpisodeTranslationsType";
+export type { TVEpisodeCastApiResponse } from "./TVEpisodeCastType";
+
+// Common Types
+export type { Episode, GuestStar } from "./common";

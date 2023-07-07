@@ -23,9 +23,9 @@ import TVCastBlock from "@/components/TVCreditsBlock/TVCreditsBlock";
   #1 https://nextjs.org/docs/pages/building-your-application/data-fetching/get-server-side-props#getserversideprops-with-edge-api-routes
   !! Doesn't work in dev mode !!
 */
-export const config = {
-  runtime: "experimental-edge", // warn: using an experimental edge runtime, the API might change
-};
+// export const config = {
+//   runtime: "experimental-edge", // warn: using an experimental edge runtime, the API might change
+// };
 
 type TVCastPageApiResponse = TVDetails & {
   aggregate_credits: TVAggregateCreditsApiResponse;
@@ -122,7 +122,7 @@ const TVCastPage: React.FC<TVCastPageProps> = ({ data }) => {
   }, [data.id]);
 
   const averageColor =
-    backdropColor && poster_path && !isBackdropLight
+    backdropColor && poster_path 
       ? {
           backgroundColor: `${createRgbaString(backdropColor, "1")}`,
         }
@@ -155,6 +155,8 @@ const TVCastPage: React.FC<TVCastPageProps> = ({ data }) => {
             : "https://placehold.co/58x/png/?text=Not+Found"
         }
         averageColor={averageColor}
+        type="tv"
+        isBackdropLight={isBackdropLight}
       />
       <div className="app-container content-with-aside panel-details">
         <DetailLayout>

@@ -51,7 +51,7 @@ const AppLayout: React.FC<Props> = ({ children }) => {
       <BannerSupportUkraine />
       <Header />
       <Layout.Content className="main">{children}</Layout.Content>
-      <FloatButton.BackTop />
+      <FloatButton.BackTop tooltip="Нагору" type="primary" />
       <Footer />
     </Layout>
   );

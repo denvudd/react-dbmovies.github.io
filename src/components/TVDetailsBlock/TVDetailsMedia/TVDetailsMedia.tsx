@@ -8,7 +8,11 @@ import TVDetailsSocial from "./TVDetailsSocial/TVDetailsSocial";
 import TVDetailsSeason from "./TVDetailsSeason/TVDetailsSeason";
 import SiderMedia from "./SiderMedia/SiderMedia";
 import dynamic from "next/dynamic";
-import type { Network, Season, TVDetailsApiResponse } from "@/redux/api/tv/types";
+import type {
+  Season,
+  TVDetailsApiResponse,
+} from "@/redux/api/tv/types";
+import type { Network } from "@/redux/api/types/common";
 
 import styles from "./TVDetailsMedia.module.scss";
 

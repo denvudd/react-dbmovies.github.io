@@ -4,16 +4,23 @@ import styles from "./RatingBarSmall.module.scss";
 
 interface RatingBarSmall {
   rating: number;
-  isRounded?: boolean;
 }
 
-const RatingBarSmall: React.FC<RatingBarSmall> = ({ rating, isRounded = true }) => {
+const RatingBarSmall: React.FC<RatingBarSmall> = ({ rating }) => {
+  const formatLocalRating = (rating: number) => {
+    if (rating) {
+      return rating.toFixed(1);
+    } else {
+      return rating.toFixed(2);
+    }
+  };
+
   return (
     <div className={styles.rating}>
       <span className={styles.starIcon}>
         <StarFilled />
       </span>
-      {isRounded ? `${rating}.0` : rating}
+      {formatLocalRating(rating)}
     </div>
   );
 };

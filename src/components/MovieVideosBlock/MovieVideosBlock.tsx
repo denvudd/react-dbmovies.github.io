@@ -23,8 +23,6 @@ const MovieVideosBlock: React.FC<MovieVideosBlockProps> = ({ videos }) => {
     return acc;
   }, {});
 
-  console.log(videoByType);
-
   return (
     <>
       <h2 className={styles.title}>

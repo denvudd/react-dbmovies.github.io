@@ -6,9 +6,9 @@ import Link from "next/link";
 import RatingBar from "../RatingBar/RatingBar";
 import { formatReleaseDate } from "@/utils/formatReleaseDate";
 import { generateShimmer } from "@/utils/generateShimmer";
+import classNames from "classnames";
 
 import styles from "./MediaElementCard.module.scss";
-import classNames from "classnames";
 
 interface MediaElementCardProps {
   id: number;

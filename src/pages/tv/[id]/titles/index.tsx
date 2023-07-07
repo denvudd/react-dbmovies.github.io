@@ -2,7 +2,7 @@ import React from "react";
 
 import Head from "next/head";
 import MovieTitleBlock from "@/components/MovieTitlesBlock/MovieTitleBlock";
-import DetailsSider from "@/components/UI/DetailsSide/DetailsSider";
+import DetailsSider from "@/components/UI/DetailsSider/DetailsSider";
 import DetailsBanner from "@/components/UI/DetailsBanner/DetailsBanner";
 import DetailsTabs from "@/components/UI/DetailsTabs/DetailsTabs";
 import ListLayout from "@/layouts/ListLayout";
@@ -25,9 +25,9 @@ import TVTitleBlock from "@/components/TVTitlesBlock/TVTitlesBlock";
   #1 https://nextjs.org/docs/pages/building-your-application/data-fetching/get-server-side-props#getserversideprops-with-edge-api-routes
   !! Doesn't work in dev mode !!
 */
-export const config = {
-  runtime: 'experimental-edge', // warn: using an experimental edge runtime, the API might change
-}
+// export const config = {
+//   runtime: 'experimental-edge', // warn: using an experimental edge runtime, the API might change
+// }
 
 type TVTitlesPageApiResponse = TVDetails & {
   alternative_titles: TVAltTitlesApiResponse;
@@ -130,7 +130,7 @@ const TVTitlesPage: React.FC<MovieTitlesPageProps> = ({ data }) => {
   }, [data.id]);
 
   const averageColor =
-    backdropColor && poster_path && !isBackdropLight
+    backdropColor && poster_path 
       ? {
           backgroundColor: `${createRgbaString(backdropColor, "1")}`,
         }
@@ -163,6 +163,8 @@ const TVTitlesPage: React.FC<MovieTitlesPageProps> = ({ data }) => {
             : "https://placehold.co/58x/png/?text=Not+Found"
         }
         averageColor={averageColor}
+        type="tv"
+        isBackdropLight={isBackdropLight}
       />
       <div className="app-container content-with-aside panel-details">
         <ListLayout siderTheme="light">
@@ -173,6 +175,7 @@ const TVTitlesPage: React.FC<MovieTitlesPageProps> = ({ data }) => {
                 totalCount={alternative_titles.results.length}
                 items={alternative_titles.results}
                 averageColor={averageColor}
+                isBackdropLight={isBackdropLight}
               />
             ),
             mainContent: (

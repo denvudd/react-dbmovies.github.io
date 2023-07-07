@@ -1,0 +1,71 @@
+@import '@/styles/variables';
+
+.container {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  align-content: flex-start;
+  flex-direction: column;
+  color: $primaryColorContrast;
+}
+
+.description {
+  font-size: 1em;
+}
+
+.wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  border-bottom: 1px solid #d7d7d7;
+  padding: 20px 0;
+
+  &:last-of-type {
+    border: none;
+  }
+
+  &:hover {
+    background-color: rgba(0, 0, 0, .08);
+  }
+
+  &.wrapperHover {
+    background-color: rgba(0, 0, 0, .08);
+  }
+}
+
+.panel {
+  padding: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.season {
+  max-width: 1440px;
+  width: 100%;
+  display: flex;
+  padding: 0 40px;
+}
+
+.content {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+  .name {
+    padding-right: 8px;
+    font-size: 1.2em;
+    width: 100%;
+
+    a {
+      color: $primaryColorContrast;
+    }
+  }
+
+  .meta {
+    font-weight: 400;
+    width: 100%;
+  }
+}

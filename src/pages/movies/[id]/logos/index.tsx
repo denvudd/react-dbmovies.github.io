@@ -127,7 +127,7 @@ const MovieLogosPage: React.FC<MovieLogosPageProps> = ({ data }) => {
   }, [data.id]);
 
   const averageColor =
-    backdropColor && poster_path && !isBackdropLight
+    backdropColor && poster_path
       ? {
           backgroundColor: `${createRgbaString(backdropColor, "1")}`,
         }
@@ -160,6 +160,7 @@ const MovieLogosPage: React.FC<MovieLogosPageProps> = ({ data }) => {
             : "https://placehold.co/58x/png/?text=Not+Found"
         }
         averageColor={averageColor}
+        isBackdropLight={isBackdropLight}
       />
       <div className="app-container content-with-aside panel-details">
         <DetailLayout>

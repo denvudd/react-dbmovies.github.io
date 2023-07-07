@@ -10,6 +10,7 @@ import type {
 import type { TVAltTitle, TVTranslation } from "@/redux/api/tv/types";
 
 import styles from "./DetailsSider.module.scss";
+import classNames from "classnames";
 
 interface AltTitleSiderProps {
   title: string;
@@ -23,6 +24,7 @@ interface AltTitleSiderProps {
   averageColor: {
     backgroundColor: string;
   };
+  isBackdropLight: boolean;
 }
 
 const AltTitleSider: React.FC<AltTitleSiderProps> = ({
@@ -30,6 +32,7 @@ const AltTitleSider: React.FC<AltTitleSiderProps> = ({
   totalCount,
   items,
   averageColor,
+  isBackdropLight,
 }) => {
   const countryList = new Map<string, { count: number }>();
 
@@ -58,7 +61,12 @@ const AltTitleSider: React.FC<AltTitleSiderProps> = ({
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
-        <h3 className={styles.head} style={averageColor}>
+        <h3
+          className={classNames("details-sider-title", {
+            ["details-sider-title--light"]: isBackdropLight,
+          })}
+          style={averageColor}
+        >
           {title} <span>{totalCount}</span>
         </h3>
         <div className={styles.content}>

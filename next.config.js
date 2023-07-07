@@ -6,6 +6,7 @@ const path = require("path");
 const nextConfig = {
   reactStrictMode: true,
   images: {
+    unoptimized: true, // for development period
     remotePatterns: [
       {
         protocol: 'https',

@@ -12,7 +12,8 @@ import {
   InstagramFilled,
 } from "@ant-design/icons";
 import ISO6391 from "iso-639-1";
-import type { Network, TVDetailsApiResponse } from "@/redux/api/tv/types";
+import type { TVDetailsApiResponse } from "@/redux/api/tv/types";
+import type { Network } from "@/redux/api/types/common";
 
 import styles from "./SiderMedia.module.scss";
 import Link from "next/link";

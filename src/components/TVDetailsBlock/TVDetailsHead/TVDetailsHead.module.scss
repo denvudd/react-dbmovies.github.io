@@ -131,19 +131,6 @@
   &Facts {
     display: flex;
 
-    .certification {
-      border: 1px solid rgba(255, 255, 255, 0.6);
-      color: rgba(255, 255, 255, 0.6);
-      display: inline-flex;
-      white-space: nowrap;
-      align-items: center;
-      align-content: center;
-      padding: 0.06em 4px 0.15em 4px;
-      line-height: 1;
-      border-radius: 2px;
-      margin-right: 7px;
-    }
-
     .genres {
       position: relative;
       padding-left: 20px;

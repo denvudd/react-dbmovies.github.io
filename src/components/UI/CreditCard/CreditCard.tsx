@@ -8,6 +8,7 @@ import type {
   AggregateCrewMember,
 } from "@/redux/api/tv/types";
 import type { CastMember, CrewMember } from "@/redux/api/types/common";
+import type { CSSProperties } from "react";
 
 import styles from "./CreditCard.module.scss";
 
@@ -15,9 +16,11 @@ interface CreditCardProps {
   id: number;
   name: string;
   poster: string | null;
+
   character?: string | AggregateCastMember["roles"] | CastMember["character"];
   job?: string | AggregateCrewMember["jobs"] | CrewMember["job"];
   type?: "movie" | "tv";
+  style?: CSSProperties;
 }
 
 const CreditCard: React.FC<CreditCardProps> = ({
@@ -27,9 +30,10 @@ const CreditCard: React.FC<CreditCardProps> = ({
   character,
   job,
   type = "movie",
+  style,
 }) => {
   return (
-    <li className={styles.item}>
+    <li className={styles.item} style={style}>
       <Link href={`/`} className={styles.poster}>
         <Image
           width={66}

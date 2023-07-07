@@ -1,0 +1,38 @@
+@import '@/styles/variables';
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 30px;
+}
+
+.title {
+  color: $primaryColorContrast;
+  margin-bottom: 15px;
+
+  span {
+    opacity: 0.65;
+    font-weight: 500;
+  }
+}
+
+.empty {
+  color: $primaryColorContrast;
+}
+
+.wrapper {
+  margin-bottom: 30px;
+
+  h3 {
+    color: $primaryColorContrast;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+
+    span {
+      opacity: 0.65;
+      font-weight: 500;
+    }
+  }
+}

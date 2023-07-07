@@ -1,25 +1,25 @@
 @import '@/styles/variables';
 
-body {
-  &::-webkit-scrollbar {
-    background-color: transparent;
-    width: 10px;
-  }
+// body {
+//   &::-webkit-scrollbar {
+//     background-color: transparent;
+//     width: 10px;
+//   }
 
-  &::-webkit-scrollbar-track {
-    background-color: transparent;
-  }
+//   &::-webkit-scrollbar-track {
+//     background-color: transparent;
+//   }
 
-  &::-webkit-scrollbar-thumb {
-    background-color: #babac0;
-    border-radius: 5px;
-    border: 2px solid #fff;
-  }
+//   &::-webkit-scrollbar-thumb {
+//     background-color: #babac0;
+//     border-radius: 5px;
+//     border: 2px solid #fff;
+//   }
 
-  &::-webkit-scrollbar-button {
-    display: none;
-  }
-}
+//   &::-webkit-scrollbar-button {
+//     display: none;
+//   }
+// }
 
 .nav-up {
   top: -64px;
@@ -183,4 +183,88 @@ body {
 
 .pagination-total {
   color: $primaryColorContrast;
+}
+
+.details-back-navigation {
+  font-weight: 600;
+  font-size: 1.3em;
+  color: $primaryColor;
+  opacity: 0.65;
+}
+
+.head-certification {
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.6);
+  display: inline-flex;
+  white-space: nowrap;
+  align-items: center;
+  align-content: center;
+  padding: 0.06em 4px 0.15em 4px;
+  line-height: 1;
+  border-radius: 2px;
+  margin-right: 7px;
+}
+
+.details-banner-light {
+  h2,
+  a {
+    color: $primaryColorContrast !important;
+  }
+}
+
+.details-sider-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0;
+  font-weight: 600;
+  padding: 20px;
+  color: #fff;
+
+  span {
+    font-weight: 400;
+    opacity: 0.6;
+  }
+}
+
+.details-sider-title--light {
+  color: $primaryColorContrast !important;
+}
+
+.backdrop {
+  background-image: linear-gradient(to right, rgba(31.5, 31.5, 31.5, 1) calc((50vw - 170px) - 340px), rgba(31.5, 31.5, 31.5, 0.84) 50%, rgba(31.5, 31.5, 31.5, 0.84) 100%);
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  &.backdrop-light {
+
+    a,
+    p,
+    h2,
+    h3,
+    span {
+      color: $primaryColorContrast !important;
+    }
+
+    .head-certification {
+      border: 1px solid $primaryColorContrast;
+    }
+
+    li {
+      span {
+        color: #fff !important;
+      }
+
+      .chart {
+        color: $primaryColorContrast !important;
+      }
+
+      .head-action-trailer {
+        span {
+          color: $primaryColorContrast !important;
+        }
+      }
+    }
+  }
 }

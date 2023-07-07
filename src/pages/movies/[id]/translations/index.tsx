@@ -1,7 +1,7 @@
 import React from "react";
 
 import Head from "next/head";
-import DetailsSider from "@/components/UI/DetailsSide/DetailsSider";
+import DetailsSider from "@/components/UI/DetailsSider/DetailsSider";
 import DetailsBanner from "@/components/UI/DetailsBanner/DetailsBanner";
 import DetailsTabs from "@/components/UI/DetailsTabs/DetailsTabs";
 import ListLayout from "@/layouts/ListLayout";
@@ -130,7 +130,7 @@ const MovieTranslationsPage: React.FC<MovieTranslationsPageProps> = ({
   }, [data.id]);
 
   const averageColor =
-    backdropColor && poster_path && !isBackdropLight
+    backdropColor && poster_path
       ? {
           backgroundColor: `${createRgbaString(backdropColor, "1")}`,
         }
@@ -163,6 +163,7 @@ const MovieTranslationsPage: React.FC<MovieTranslationsPageProps> = ({
             : "https://placehold.co/58x/png/?text=Not+Found"
         }
         averageColor={averageColor}
+        isBackdropLight={isBackdropLight}
       />
       <div className="app-container content-with-aside panel-details">
         <ListLayout siderTheme="light">
@@ -173,6 +174,7 @@ const MovieTranslationsPage: React.FC<MovieTranslationsPageProps> = ({
                 totalCount={translations.length}
                 items={translations}
                 averageColor={averageColor}
+                isBackdropLight={isBackdropLight}
               />
             ),
             mainContent: <MovieTranslationsBlock translations={translations}/>,

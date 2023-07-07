@@ -23,8 +23,6 @@
 
 .poster {
   min-width: 58px;
-  width: 58px;
-  height: 87px;
 
   img {
     display: block;
@@ -46,11 +44,20 @@
     opacity: 0.8;
     font-weight: 400;
   }
-}
 
-.back {
-  font-weight: 600;
-  font-size: 1.3em;
-  color: $primaryColor;
-  opacity: 0.65;
+  .episodeCount {
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    margin-right: 10px;
+    font-weight: 400;
+
+    span {
+      background: rgba(0, 0, 0, .1);
+      border-radius: 4px;
+      padding: 4px 6px;
+      font-size: 0.9em;
+      margin: 0;
+    }
+  }
 }
