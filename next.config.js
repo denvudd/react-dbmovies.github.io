@@ -6,7 +6,7 @@ const path = require("path");
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    unoptimized: true, // for development period
+    unoptimized: true, // for development period on Vercel (link: https://vercel.com/docs/concepts/image-optimization/managing-image-optimization-costs#how-to-minimize-image-optimization-costs)
     remotePatterns: [
       {
         protocol: 'https',
