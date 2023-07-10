@@ -1,7 +1,7 @@
 import React from "react";
-
 import { useLazyGetAccountDetailsQuery } from "@/redux/api/account/slice";
 import { useSessionId } from "@/hooks/useSessionId";
+
 import ProfileHead from "@/components/ProfileBlock/ProfileHead/ProfileHead";
 import ProfileFavoriteBlock from "@/components/ProfileFavoriteBlock/ProfileFavoriteBlock";
 import DetailLayout from "@/layouts/DetailsLayout";
@@ -35,6 +35,7 @@ const ProfileRatedPage = () => {
             account_id={accountDetails.id}
             session_id={sessionId}
             accountUsername={accountDetails.username}
+            mediaType="movies"
           />
         )}
       </DetailLayout>

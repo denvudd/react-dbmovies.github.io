@@ -11,10 +11,16 @@
 .panel {
   width: 100%;
 
+  .head {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
   h3 {
     font-size: 1.4em;
     font-weight: 600;
-    margin-bottom: 20px;
     color: $primaryColorContrast;
 
     span {
@@ -148,4 +154,21 @@
   display: flex;
   flex-direction: column;
   gap: 40px;
+}
+
+.rate {
+  cursor: pointer;
+
+  &Button {
+    padding: 4px 5px;
+    background-color: rgba(0, 0, 0, 0.85);
+    border-radius: 6px;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.25s ease;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.40);
+    }
+  }
 }

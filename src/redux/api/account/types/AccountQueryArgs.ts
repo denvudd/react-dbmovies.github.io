@@ -5,4 +5,5 @@ export interface AccountQueryArgsDefault {
 
 export interface AccountQueryArgsWithParams extends AccountQueryArgsDefault {
   params?: string;
+  type: "movies" | "tv";
 }

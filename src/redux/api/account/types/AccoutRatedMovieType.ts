@@ -1,13 +1,18 @@
 import { ListMovie } from "../../movies/types/MovieListType";
+import { ListTV } from "../../tv/types";
+import { AccountQueryArgsDefault } from "./AccountQueryArgs";
 
-export interface AccountRatedMovieListApiResponse {
+export interface AccountRatedListApiResponse {
   page: number;
-  results: ListRatedItem[];
+  results: ListRatedMovie[] | ListRatedTV[];
   total_pages: number;
   total_results: number;
 }
 
-export interface ListRatedItem extends ListMovie {
+export interface ListRatedMovie extends ListMovie {
   rating: number;
 }
 
+export interface ListRatedTV extends ListTV {
+  rating: number;
+}

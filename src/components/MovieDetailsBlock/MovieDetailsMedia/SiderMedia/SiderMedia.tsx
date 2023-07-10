@@ -5,6 +5,7 @@ import {
 } from "@/redux/api/movies/slice";
 
 import { Typography, Space, Tooltip } from "antd";
+import Link from "next/link";
 import {
   FacebookFilled,
   TwitterSquareFilled,
@@ -142,7 +143,7 @@ const SiderMedia: React.FC<SliderMediaProps> = ({
               {!isKeywordsLoading && keywords && keywords.length !== 0
                 ? keywords.map((keyword, index) => (
                     <li key={index}>
-                      <a href="">{keyword.name}</a>
+                      <Link href={`/keyword/${keyword.id}/movie`}>{keyword.name}</Link>
                     </li>
                   ))
                 : null}

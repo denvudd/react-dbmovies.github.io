@@ -5,6 +5,7 @@ import { useRateMovieAction } from "@/hooks/useRateMovieAction";
 
 import { message } from "antd";
 import WideElementCard from "@/components/UI/WideElementCard/WideElementCard";
+
 interface WatchlistMovieCardProps {
   id: number;
   priorityIndex?: number;
@@ -14,6 +15,7 @@ interface WatchlistMovieCardProps {
   title: string;
   release_date: string;
   overview: string;
+  type: "movies" | "tv";
 }
 
 const WatchlistMovieCard: React.FC<WatchlistMovieCardProps> = ({
@@ -25,6 +27,7 @@ const WatchlistMovieCard: React.FC<WatchlistMovieCardProps> = ({
   title,
   release_date,
   overview,
+  type
 }) => {
   const [messageApi, contextMessageHolder] = message.useMessage();
   const { onClickAddMovieToList, addMovieListModalHolder } = useAddMovieToList(
@@ -35,7 +38,7 @@ const WatchlistMovieCard: React.FC<WatchlistMovieCardProps> = ({
   );
   const { onClickAddToFavorite, favoriteMessageContext } = useFavoriteAction(
     sessionId,
-    "movie",
+    type === "movies" ? "movie" : "tv",
     id,
     true,
     title
@@ -65,6 +68,7 @@ const WatchlistMovieCard: React.FC<WatchlistMovieCardProps> = ({
         onClickElementDelete={onClickAddToFavorite}
         onClickAddMovieToList={onClickAddMovieToList}
         onChangeMovieRate={onClickRateMovie}
+        type={type}
       />
       {contextMessageHolder}
       {addMovieListModalHolder}

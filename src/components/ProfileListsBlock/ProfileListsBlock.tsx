@@ -41,7 +41,7 @@ const ProfileListsBlock: React.FC<ProfileListsBlockProps> = ({
         ]}
       />
       <div className={styles.page}>
-        <div className="app-container">
+        <div className="app-container panel-details">
           {isListsLoading && (
             <div className={styles.loading}>
               <Spin

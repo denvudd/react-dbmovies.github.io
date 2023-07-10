@@ -14,6 +14,7 @@ interface RatedMovieCardProps {
   release_date: string;
   overview: string;
   rating: number;
+  type: "movies" | "tv";
 }
 
 const RatedMovieCard: React.FC<RatedMovieCardProps> = ({
@@ -26,6 +27,7 @@ const RatedMovieCard: React.FC<RatedMovieCardProps> = ({
   release_date,
   overview,
   rating,
+  type
 }) => {
   const [messageApi, contextMessageHolder] = message.useMessage();
   const {
@@ -76,6 +78,7 @@ const RatedMovieCard: React.FC<RatedMovieCardProps> = ({
         isShowDelete
         onClickElementDelete={onClickElementDelete}
         onClickAddMovieToList={onClickAddMovieToList}
+        type={type}
       />
       {addMovieListModalHolder}
       {contextMessageHolder}

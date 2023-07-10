@@ -1,7 +1,12 @@
 import React from "react";
+import { usePostAddTVEpisodeRatingMutation } from "@/redux/api/tv/slice";
+import { useSessionId } from "@/hooks/useSessionId";
 
 import Link from "next/link";
 import CreditCard from "../UI/CreditCard/CreditCard";
+import { Modal, Rate, Tooltip, message } from "antd";
+import RatingBarSmall from "../UI/RatingBarSmall/RatingBarSmall";
+import { StarFilled } from "@ant-design/icons";
 import type { GuestStar } from "@/redux/api/tv/types";
 import type { CrewMember } from "@/redux/api/types/common";
 
@@ -42,15 +47,123 @@ const TVEpisodeDetailsBlock: React.FC<TVEpisodeDetailsBlockProps> = ({
 }) => {
   const writter = crew.filter((crew) => crew.job === "Writer");
   const producer = crew.filter((crew) => crew.job === "Director");
+  const sessionId = useSessionId();
 
-  console.log(crew.filter((crew) => crew.job === "Writer"));
+  const [
+    rateTVEpisode,
+    { data: rateTVResult, isLoading: isRateTVResultLoading },
+  ] = usePostAddTVEpisodeRatingMutation();
+  const [rate, setRate] = React.useState<number>(1);
+  const [isRateSubmit, setIsRateSubmit] = React.useState(false);
+
+  const [messageApi, contextMessageHolder] = message.useMessage();
+  const [modal, contextModalHolder] = Modal.useModal();
+
+  const onClickRateMovie = React.useCallback(() => {
+    if (sessionId) {
+      const rateModal = Modal.info({
+        title: `Оцінити "${name}"?`,
+      });
+
+      const onChangeRate = (value: number) => {
+        if (value) {
+          setRate(value);
+          rateModal.update({
+            okText: "Підтвердити",
+            okButtonProps: { disabled: false },
+          });
+        }
+      };
+
+      rateModal.update({
+        title: `Оцінити "${name}"?`,
+        content: (
+          <div>
+            <p className="list-label">Оберіть вашу оцінку:</p>
+            <Rate
+              allowClear={false}
+              defaultValue={5}
+              count={10}
+              onChange={onChangeRate}
+            />
+          </div>
+        ),
+        onOk() {
+          setIsRateSubmit(true);
+        },
+        icon: <StarFilled />,
+        onCancel() {},
+        okText: "Оберіть оцінку",
+        okButtonProps: {
+          disabled: true,
+          title: "Оберіть оцінку щоб продовжити",
+        },
+        closable: true,
+      });
+    }
+
+    if (!sessionId) {
+      return;
+    }
+  }, [sessionId]);
+
+  React.useEffect(() => {
+    if (isRateSubmit) {
+      Modal.destroyAll();
+      if (sessionId) {
+        rateTVEpisode({
+          session_id: sessionId,
+          series_id: id,
+          episode_number,
+          season_number,
+          rating: rate,
+        })
+          .unwrap()
+          .then((data) => {
+            if (data.success && data.status_code === 12) {
+              messageApi.success(`Серія "${name}", серіалу "${tvName}" була успішно оцінена!`, 3);
+            } else {
+              messageApi.success(`${data.status_message}`, 3);
+            }
+          })
+          .catch((error) => {
+            messageApi.error(
+              `Сталась помилка! Код помилки: ${error.data.status_code}, текст помилки: ${error.data.status_message}`,
+              5
+            );
+          })
+          .finally(() => setIsRateSubmit(false));
+      }
+    }
+  }, [isRateSubmit]);
 
   return (
     <div className={styles.episode}>
       <div className="app-container">
         <div className={styles.inner}>
           <section className={styles.panel}>
-            <h3>Повний опис серії</h3>
+            <div className={styles.head}>
+              <h3>Повний опис серії</h3>
+              <Tooltip
+                title={
+                  <p>
+                    Кількість оцінок: {vote_count}.{" "}
+                    <button
+                      className={styles.rateButton}
+                      onClick={onClickRateMovie}
+                    >
+                      Оцінити?
+                    </button>
+                  </p>
+                }
+                placement="right"
+                trigger="click"
+              >
+                <span className={styles.rate}>
+                  <RatingBarSmall rating={vote_average} />
+                </span>
+              </Tooltip>
+            </div>
             <div className={styles.overview}>
               {overview
                 ? overview
@@ -163,6 +276,8 @@ const TVEpisodeDetailsBlock: React.FC<TVEpisodeDetailsBlockProps> = ({
           </section>
         </div>
       </div>
+      {contextModalHolder}
+      {contextMessageHolder}
     </div>
   );
 };

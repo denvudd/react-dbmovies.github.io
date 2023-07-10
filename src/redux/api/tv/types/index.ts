@@ -1,18 +1,11 @@
-export type { TVListApiResponse, TVListQueryArgs, ListTV } from "./TVListType";
+export type { TVListApiResponse, ListTV } from "./TVListType";
 export type {
   TVDetails,
   TVDetailsApiResponse,
   LastEpisodeToAir,
-  Season,
 } from "./TVDetailsType";
-export type {
-  AddTVRatingApiResponse,
-  AddTVRatingQueryArgs,
-} from "./AddTVRatingType";
-export type {
-  TVAccountStatesApiResponse,
-  TVAccountStatesQueryArgs,
-} from "./TVAccountStatesType";
+export type { AddTVRatingApiResponse } from "./AddTVRatingType";
+export type { TVAccountStatesApiResponse } from "./TVAccountStatesType";
 export type { TVContentRatingApiResponse } from "./TVContentRatingType";
 export type { TVLastCreditsApiResponse } from "./TVLastCreditsType";
 export type { TVImagesApiResponse } from "./TVImagesType";
@@ -45,4 +38,10 @@ export type { TVEpisodeTranslationsApiResponse } from "./TVEpisodeTranslationsTy
 export type { TVEpisodeCastApiResponse } from "./TVEpisodeCastType";
 
 // Common Types
-export type { Episode, GuestStar } from "./common";
+export type { Episode, GuestStar, Season } from "./common";
+
+// Query Arguments
+export type { AddTVEpisodeRatingQueryArgs } from "./AddTVEpisodeRatingType";
+export type { AddTVRatingQueryArgs } from "./AddTVRatingType";
+export type { TVAccountStatesQueryArgs } from "./TVAccountStatesType";
+export type { TVListQueryArgs } from "./TVListType";

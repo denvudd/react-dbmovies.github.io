@@ -5,6 +5,8 @@ import {
 } from "@/redux/api/tv/slice";
 
 import { Typography, Space, Tooltip } from "antd";
+import Link from "next/link";
+import Image from "next/image";
 import {
   LinkOutlined,
   FacebookFilled,
@@ -16,9 +18,6 @@ import type { TVDetailsApiResponse } from "@/redux/api/tv/types";
 import type { Network } from "@/redux/api/types/common";
 
 import styles from "./SiderMedia.module.scss";
-import Link from "next/link";
-import Image from "next/image";
-
 interface SliderMediaProps {
   id: number;
   original_name: string;
@@ -191,7 +190,7 @@ const SiderMedia: React.FC<SliderMediaProps> = ({
               {!isKeywordsLoading && keywords && keywords.length !== 0
                 ? keywords.map((keyword, index) => (
                     <li key={index}>
-                      <a href="">{keyword.name}</a>
+                      <Link href={`/keyword/${keyword.id}/tv`}>{keyword.name}</Link>
                     </li>
                   ))
                 : null}

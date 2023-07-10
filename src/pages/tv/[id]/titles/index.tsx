@@ -1,19 +1,18 @@
 import React from "react";
 
 import Head from "next/head";
-import MovieTitleBlock from "@/components/MovieTitlesBlock/MovieTitleBlock";
 import DetailsSider from "@/components/UI/DetailsSider/DetailsSider";
 import DetailsBanner from "@/components/UI/DetailsBanner/DetailsBanner";
 import DetailsTabs from "@/components/UI/DetailsTabs/DetailsTabs";
 import ListLayout from "@/layouts/ListLayout";
 import { FastAverageColor } from "fast-average-color";
 import { createRgbaString } from "@/utils/createRgbaString";
+import TVTitleBlock from "@/components/TVTitlesBlock/TVTitlesBlock";
 
 import type { FastAverageColorResult } from "fast-average-color";
 import type { GetServerSideProps } from "next/types";
 import type { ApiError } from "@/redux/api/baseApi/types/ErrorType";
 import type { TVDetails, TVAltTitlesApiResponse } from "@/redux/api/tv/types";
-import TVTitleBlock from "@/components/TVTitlesBlock/TVTitlesBlock";
 
 /* 
   The long cold start issue fix
@@ -25,9 +24,9 @@ import TVTitleBlock from "@/components/TVTitlesBlock/TVTitlesBlock";
   #1 https://nextjs.org/docs/pages/building-your-application/data-fetching/get-server-side-props#getserversideprops-with-edge-api-routes
   !! Doesn't work in dev mode !!
 */
-// export const config = {
-//   runtime: 'experimental-edge', // warn: using an experimental edge runtime, the API might change
-// }
+export const config = {
+  runtime: 'experimental-edge', // warn: using an experimental edge runtime, the API might change
+}
 
 type TVTitlesPageApiResponse = TVDetails & {
   alternative_titles: TVAltTitlesApiResponse;

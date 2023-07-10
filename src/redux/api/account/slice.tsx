@@ -4,7 +4,7 @@ import type {
   AccountAddToWatchlistApiResponse,
   AccountDetailsApiResponse,
   AccountListsApiResponse,
-  AccountRatedMovieListApiResponse,
+  AccountRatedListApiResponse,
   AccountWatchlistMoviesApiResponse,
   AccountFavoriteMoviesApiResponse,
   AccountQueryArgsDefault,
@@ -49,16 +49,15 @@ export const accountApi = baseApi.injectEndpoints({
           : [{ type: "Lists", id: "LIST" }],
     }),
 
-    getAccountRatedMovies: builder.query<
-      AccountRatedMovieListApiResponse,
+    getAccountRated: builder.query<
+      AccountRatedListApiResponse,
       AccountQueryArgsWithParams
     >({
-      query: ({ session_id, account_id, params }) =>
+      query: ({ session_id, account_id, params, type }) =>
         `/account/${
           account_id ? account_id : "account_id"
-        }/rated/movies?session_id=${session_id}&${tmdbApiKey}&page=1&${params}`,
-      transformResponse: (response: AccountRatedMovieListApiResponse) =>
-        response,
+        }/rated/${type}?session_id=${session_id}&${tmdbApiKey}&page=1&${params}`,
+      transformResponse: (response: AccountRatedListApiResponse) => response,
       providesTags: (response) =>
         response
           ? [
@@ -79,14 +78,14 @@ export const accountApi = baseApi.injectEndpoints({
             ],
     }),
 
-    getAccountWatchlistMovies: builder.query<
+    getAccountWatchlist: builder.query<
       AccountWatchlistMoviesApiResponse,
       AccountQueryArgsWithParams
     >({
-      query: ({ session_id, account_id, params }) =>
+      query: ({ session_id, account_id, params, type }) =>
         `/account/${
           account_id ? account_id : "account_id"
-        }/watchlist/movies?session_id=${session_id}&${tmdbApiKey}&page=1&${params}`,
+        }/watchlist/${type}?session_id=${session_id}&${tmdbApiKey}&page=1&${params}`,
       transformResponse: (response: AccountWatchlistMoviesApiResponse) =>
         response,
       providesTags: (response) =>
@@ -109,14 +108,14 @@ export const accountApi = baseApi.injectEndpoints({
             ],
     }),
 
-    getAccountFavoriteMovies: builder.query<
+    getAccountFavorite: builder.query<
       AccountFavoriteMoviesApiResponse,
       AccountQueryArgsWithParams
     >({
-      query: ({ session_id, account_id, params }) =>
+      query: ({ session_id, account_id, params, type }) =>
         `/account/${
           account_id ? account_id : "account_id"
-        }/favorite/movies?session_id=${session_id}&${tmdbApiKey}&page=1&${params}`,
+        }/favorite/${type}?session_id=${session_id}&${tmdbApiKey}&page=1&${params}`,
       transformResponse: (response: AccountFavoriteMoviesApiResponse) =>
         response,
       providesTags: (response) =>
@@ -180,7 +179,9 @@ export const accountApi = baseApi.injectEndpoints({
       async onQueryStarted(props, { dispatch, queryFulfilled }) {
         await queryFulfilled;
         setTimeout(() => {
-          dispatch(baseApi.util.invalidateTags([{ type: "Favorite", id: "LIST" }]));
+          dispatch(
+            baseApi.util.invalidateTags([{ type: "Favorite", id: "LIST" }])
+          );
         }, 500);
       },
     }),
@@ -194,7 +195,7 @@ export const {
   usePostAddToFavoriteMutation,
   useLazyGetAccountDetailsQuery,
   useLazyGetAccountListsQuery,
-  useLazyGetAccountRatedMoviesQuery,
-  useLazyGetAccountWatchlistMoviesQuery,
-  useLazyGetAccountFavoriteMoviesQuery,
+  useLazyGetAccountRatedQuery,
+  useLazyGetAccountFavoriteQuery,
+  useLazyGetAccountWatchlistQuery,
 } = accountApi;

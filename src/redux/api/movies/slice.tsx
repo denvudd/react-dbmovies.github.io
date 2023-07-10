@@ -224,5 +224,5 @@ export const {
   util: { getRunningQueriesThunk },
 } = moviesApi;
 
-// export endpoints for use in SSR
-export const { getMovieDetails } = moviesApi.endpoints;
+// // export endpoints for use in SSR
+// export const { getMovieDetails } = moviesApi.endpoints;

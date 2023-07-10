@@ -1,8 +1,6 @@
 @import '@/styles/variables';
 
 .page {
-  margin-top: 20px;
-
   &Title {
     color: $primaryColorContrast;
   }
@@ -23,10 +21,36 @@
     }
   }
 
-  &Title {
+  .titleGroup {
+    width: 100%;
     display: flex;
     align-items: baseline;
-    width: 100%;
+    gap: 20px;
+
+    .navigation {
+      display: flex;
+      gap: 20px;
+      
+      a {
+        color: $primaryColorContrast;
+      }
+
+      .navItem {
+        font-size: 1em;
+        font-weight: 500;
+        border-color: #805be7;
+
+        &Active {
+          padding-bottom: 4px;
+          border-width: 4px;
+          border-bottom-style: solid;
+        }
+      }
+    }
+  }
+
+  &Title {
+    display: flex;
     color: $primaryColorContrast;
   }
 

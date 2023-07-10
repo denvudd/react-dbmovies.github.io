@@ -5,6 +5,7 @@ import {
   ProductionCountry,
   SpokenLanguage,
 } from "../../types/common";
+import { Season } from "./common";
 
 export type TVDetailsApiResponse = TVDetails;
 
@@ -69,17 +70,6 @@ export interface LastEpisodeToAir {
   vote_count: number;
   runtime: number;
   show_id: number;
-}
-
-export interface Season {
-  air_date: string;
-  episode_count: number;
-  id: number;
-  name: string;
-  overview: string;
-  poster_path: string | null;
-  season_number: number;
-  vote_average: number;
 }
 
 interface Creator {

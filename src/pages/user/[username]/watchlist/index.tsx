@@ -35,6 +35,7 @@ const ProfileRatedPage = () => {
             account_id={accountDetails.id}
             session_id={sessionId}
             accountUsername={accountDetails.username}
+            type="movies"
           />
         )}
       </DetailLayout>

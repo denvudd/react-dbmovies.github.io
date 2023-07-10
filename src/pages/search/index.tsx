@@ -1,10 +1,11 @@
+import React from "react";
+import { useRouter } from "next/router";
+import { useLazyGetSearchMultiQuery } from "@/redux/api/search/slice";
+
 import GlobalSearchBlock from "@/components/GlobalSearchBlock/GlobalSearchBlock";
 import ResultsSider from "@/components/GlobalSearchBlock/ResultsSider/ResultsSider";
 import ListLayout from "@/layouts/ListLayout";
-import { useLazyGetSearchMultiQuery } from "@/redux/api/search/slice";
 import Head from "next/head";
-import { useRouter } from "next/router";
-import React from "react";
 
 const SearchPage = () => {
   const router = useRouter();

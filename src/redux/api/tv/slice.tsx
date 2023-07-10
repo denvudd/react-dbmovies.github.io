@@ -15,7 +15,8 @@ import type {
   TVRecsApiResponse,
   TVKeywordApiResponse,
   TVExternalIDsApiResponse,
-  TVAggregateCreditsApiResponse
+  TVAggregateCreditsApiResponse,
+  AddTVEpisodeRatingQueryArgs,
 } from "./types";
 
 import type { Video } from "../types/common";
@@ -56,7 +57,7 @@ export const tvApi = baseApi.injectEndpoints({
     }),
 
     getTVCreditsCast: builder.query<
-    TVLastCreditsApiResponse,
+      TVLastCreditsApiResponse,
       { id: number; params?: string }
     >({
       query: ({ id, params }) =>
@@ -65,7 +66,7 @@ export const tvApi = baseApi.injectEndpoints({
     }),
 
     getTVAggregateCreditsCast: builder.query<
-    TVAggregateCreditsApiResponse,
+      TVAggregateCreditsApiResponse,
       { id: number; params?: string }
     >({
       query: ({ id, params }) =>
@@ -145,14 +146,9 @@ export const tvApi = baseApi.injectEndpoints({
       transformResponse: (response: TVReviewsApiResponse) => response,
     }),
 
-    getTVKeywords: builder.query<
-      TVKeywordApiResponse["results"],
-      number
-    >({
-      query: (id) =>
-        `/tv/${id}/keywords?${tmdbApiKey}`,
-      transformResponse: (response: TVKeywordApiResponse) =>
-        response.results,
+    getTVKeywords: builder.query<TVKeywordApiResponse["results"], number>({
+      query: (id) => `/tv/${id}/keywords?${tmdbApiKey}`,
+      transformResponse: (response: TVKeywordApiResponse) => response.results,
     }),
 
     postAddTVRating: builder.mutation<
@@ -161,6 +157,38 @@ export const tvApi = baseApi.injectEndpoints({
     >({
       query: ({ session_id, series_id, rating }) => ({
         url: `/tv/${series_id}/rating?session_id=${session_id}&${tmdbApiKey}`,
+        method: "POST",
+        body: {
+          value: rating,
+        },
+      }),
+      transformResponse: (response: AddTVRatingApiResponse) => response,
+      // manual cache update because the API doesn't always manage to process the mutation in time
+      async onQueryStarted(props, { dispatch, queryFulfilled }) {
+        await queryFulfilled;
+        setTimeout(() => {
+          dispatch(
+            baseApi.util.invalidateTags([
+              { type: "Rates", id: "LIST" },
+              { type: "Watchlist", id: "LIST" },
+            ])
+          );
+        }, 500);
+      },
+    }),
+
+    postAddTVEpisodeRating: builder.mutation<
+      AddTVRatingApiResponse,
+      AddTVEpisodeRatingQueryArgs
+    >({
+      query: ({
+        session_id,
+        series_id,
+        rating,
+        episode_number,
+        season_number,
+      }) => ({
+        url: `/tv/${series_id}/season/${season_number}/episode/${episode_number}/rating?session_id=${session_id}&${tmdbApiKey}`,
         method: "POST",
         body: {
           value: rating,
@@ -198,4 +226,5 @@ export const {
   useLazyGetTVVideosQuery,
   useLazyGetTVAccoutStatesQuery,
   usePostAddTVRatingMutation,
+  usePostAddTVEpisodeRatingMutation,
 } = tvApi;

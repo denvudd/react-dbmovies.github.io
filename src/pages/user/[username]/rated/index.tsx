@@ -8,7 +8,7 @@ import DetailLayout from "@/layouts/DetailsLayout";
 import Head from "next/head";
 import { withAuth } from "@/auth/withAuth";
 
-const ProfileRatedPage = () => {
+const ProfileMovieRatedPage = () => {
   const sessionId = useSessionId();
   const [
     getAccountDetails,
@@ -35,6 +35,7 @@ const ProfileRatedPage = () => {
             account_id={accountDetails.id}
             session_id={sessionId}
             accountUsername={accountDetails.username}
+            mediaType="movies"
           />
         )}
       </DetailLayout>
@@ -42,4 +43,4 @@ const ProfileRatedPage = () => {
   );
 };
 
-export default withAuth(ProfileRatedPage);
+export default withAuth(ProfileMovieRatedPage);

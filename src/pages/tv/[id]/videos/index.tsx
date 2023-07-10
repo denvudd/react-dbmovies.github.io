@@ -5,7 +5,6 @@ import DetailsBanner from "@/components/UI/DetailsBanner/DetailsBanner";
 import DetailsTabs from "@/components/UI/DetailsTabs/DetailsTabs";
 import { FastAverageColor } from "fast-average-color";
 import DetailLayout from "@/layouts/DetailsLayout";
-import TVImagesBlock from "@/components/TVImagesBlock/TVImagesBlock";
 import { createRgbaString } from "@/utils/createRgbaString";
 
 import type { FastAverageColorResult } from "fast-average-color";
@@ -25,9 +24,9 @@ import TVVideosBlock from "@/components/TVVideosBlock/TVVideosBlock";
   #1 https://nextjs.org/docs/pages/building-your-application/data-fetching/get-server-side-props#getserversideprops-with-edge-api-routes
   !! Doesn't work in dev mode !!
 */
-// export const config = {
-//   runtime: "experimental-edge", // warn: using an experimental edge runtime, the API might change
-// };
+export const config = {
+  runtime: "experimental-edge", // warn: using an experimental edge runtime, the API might change
+};
 
 type TVVideosPageApiResponse = TVDetails & {
   videos: TVVideosApiResponse;

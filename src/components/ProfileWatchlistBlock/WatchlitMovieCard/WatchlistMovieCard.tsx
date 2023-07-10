@@ -14,6 +14,7 @@ interface WatchlistMovieCardProps {
   title: string;
   release_date: string;
   overview: string;
+  type: "movies" | "tv";
 }
 
 const WatchlistMovieCard: React.FC<WatchlistMovieCardProps> = ({
@@ -25,6 +26,7 @@ const WatchlistMovieCard: React.FC<WatchlistMovieCardProps> = ({
   title,
   release_date,
   overview,
+  type,
 }) => {
   const [messageApi, contextMessageHolder] = message.useMessage();
   const { onClickAddMovieToList, addMovieListModalHolder } = useAddMovieToList(
@@ -34,7 +36,13 @@ const WatchlistMovieCard: React.FC<WatchlistMovieCardProps> = ({
     messageApi
   );
   const { handleClick: removeFromWatchlist, watchlistMessageContext } =
-    useWatchlistAction(sessionId, "movie", id, true, title);
+    useWatchlistAction(
+      sessionId,
+      type === "movies" ? "movie" : "tv",
+      id,
+      true,
+      title
+    );
   const { onClickRateMovie, isLoading: isRateResultsLoading } =
     useRateMovieAction(sessionId, id, title, messageApi);
 
@@ -60,6 +68,7 @@ const WatchlistMovieCard: React.FC<WatchlistMovieCardProps> = ({
         onClickElementDelete={() => removeFromWatchlist()}
         onClickAddMovieToList={onClickAddMovieToList}
         onChangeMovieRate={onClickRateMovie}
+        type={type}
       />
       {contextMessageHolder}
       {addMovieListModalHolder}
