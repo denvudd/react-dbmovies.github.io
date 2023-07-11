@@ -1,7 +1,11 @@
 import { baseApi } from "../baseApi/slice";
 import type { MovieListApiResponse } from "../movies/types";
 import type { TVListApiResponse } from "../tv/types";
-import { NetworkDetailsApiResponse } from "./types/NetworkDetailsType";
+import type { NetworkDetailsApiResponse } from "./types/NetworkDetailsType";
+import type {
+  WatchProvidersApiResponse,
+  WatchProvidersQueryArgs,
+} from "./types/WatchProvidersType";
 
 const tmdbApiKey = "api_key=684e3f73d1ca0e692a3016c028aabf72";
 
@@ -26,12 +30,22 @@ export const discoverApi = baseApi.injectEndpoints({
       query: (id) => `/network/${id}?${tmdbApiKey}`,
       transformResponse: (response: NetworkDetailsApiResponse) => response,
     }),
+
+    getWatchProviders: builder.query<
+      WatchProvidersApiResponse,
+      WatchProvidersQueryArgs
+    >({
+      query: ({ language, watch_region, type }) =>
+        `/watch/providers/${type}?language=${language}&watch_region=${watch_region}&${tmdbApiKey}`,
+      transformResponse: (response: WatchProvidersApiResponse) => response,
+    }),
   }),
 });
 
 export const {
+  useGetWatchProvidersQuery,
   useLazyGetMovieDiscoverQuery,
   useLazyGetTVDiscoverQuery,
   useLazyGetKeywordDetailsQuery,
-  useLazyGetNetworkDetailsQuery
+  useLazyGetNetworkDetailsQuery,
 } = discoverApi;

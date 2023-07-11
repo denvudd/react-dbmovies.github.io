@@ -80,7 +80,7 @@ const Header: React.FC = () => {
     {
       key: "tv",
       label: (
-        <Link href={`/movies/popularMovies`} className={styles.link}>
+        <Link href={`/tv/popularTV`} className={styles.link}>
           Серіали
         </Link>
       ),
@@ -126,7 +126,7 @@ const Header: React.FC = () => {
     {
       key: "persons",
       label: (
-        <Link href={`/movies/popularMovies`} className={styles.link}>
+        <Link href={`/person/popular`} className={styles.link}>
           Персони
         </Link>
       ),

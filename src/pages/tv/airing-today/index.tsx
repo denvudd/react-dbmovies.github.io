@@ -48,6 +48,7 @@ export const AiringTodayTVPage = () => {
   React.useEffect(() => {
     window.scrollTo(0, 0);
     const { sortBy } = params.sortData;
+    const { withWatchProviders } = params.providersSortData;
     const {
       language,
       releaseDates,
@@ -86,6 +87,12 @@ export const AiringTodayTVPage = () => {
         : "",
       genres:
         genres && genres.length !== 0 ? `&with_genres=${genres.join(",")}` : "",
+      withWatchProviders:
+        withWatchProviders && withWatchProviders.length !== 0
+          ? `&with_watch_monetization_types=free|ads|buy|rent|flatrate&watch_region=UA&with_watch_providers=${withWatchProviders.join(
+              "|"
+            )}`
+          : "",
       keywords:
         keywords && keywords.length !== 0
           ? `&with_keywords=${keywords.join(",")}`
@@ -133,7 +140,7 @@ export const AiringTodayTVPage = () => {
       </Head>
       <ListLayout>
         {{
-          sidebar: <FilterMenu mediaType="tv"/>,
+          sidebar: <FilterMenu mediaType="tv" />,
           mainContent: (
             <div className="panel-details">
               <h1 className="list-title">Серіали, що сьогодні в ефірі</h1>

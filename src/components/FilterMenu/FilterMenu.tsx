@@ -10,9 +10,11 @@ import {
   AdditionalSortData,
   SortData,
   SortValue,
+  ProvidersSortData,
 } from "@/redux/params/types/types";
 
 import styles from "./FilterMenu.module.scss";
+import ProvidersSortMenu from "./ProvidersSortMenu/ProviderSortMenu";
 
 interface FilterMenuProps {
   mediaType: "movies" | "tv";
@@ -25,9 +27,10 @@ const FilterMenu: React.FC<FilterMenuProps> = React.memo(({ mediaType }) => {
   const [sortData, setSortData] = React.useState<SortData>({
     sortBy: SortValue.None,
   });
-  const dispatch = useAppDispatch();
-  const [isDisabled, setIsDisabled] = React.useState(true);
-
+  const [providersSortData, setProvidersSortData] =
+    React.useState<ProvidersSortData>({
+      withWatchProviders: null,
+    });
   const [additionalSortData, setAdditionalSortData] =
     React.useState<AdditionalSortDataState>({
       additionalSortData: {
@@ -52,11 +55,14 @@ const FilterMenu: React.FC<FilterMenuProps> = React.memo(({ mediaType }) => {
         keywords: null,
       },
     });
+  const dispatch = useAppDispatch();
+  const [isDisabled, setIsDisabled] = React.useState(true);
 
   const handleSubmit = () => {
     dispatch(
       setParams({
         sortData,
+        providersSortData,
         additionalSortData: additionalSortData.additionalSortData,
       })
     );
@@ -64,6 +70,10 @@ const FilterMenu: React.FC<FilterMenuProps> = React.memo(({ mediaType }) => {
 
   const handleSortChange = (sortBy: SortValue) => {
     setSortData({ sortBy });
+  };
+
+  const handleProvidersSortChange = (providers: string[] | null) => {
+    setProvidersSortData({ withWatchProviders: providers });
   };
 
   const handleAdditionalSortChange = (
@@ -75,16 +85,25 @@ const FilterMenu: React.FC<FilterMenuProps> = React.memo(({ mediaType }) => {
   };
 
   React.useEffect(() => {
-    if (isSortParamsEmpty(additionalSortData) && isSortParamsEmpty(sortData)) {
+    const isAllParamsEmpty =
+      isSortParamsEmpty(additionalSortData) &&
+      isSortParamsEmpty(sortData) &&
+      isSortParamsEmpty(providersSortData);
+
+    if (isAllParamsEmpty) {
       setIsDisabled(true);
     } else {
       setIsDisabled(false);
     }
-  }, [additionalSortData, sortData]);
+  }, [additionalSortData, sortData, providersSortData]);
 
   return (
     <div className={styles.container}>
       <SortMenu onSortChange={handleSortChange} />
+      <ProvidersSortMenu
+        onProvidersSortChange={handleProvidersSortChange}
+        mediaType={mediaType}
+      />
       <AdditionalSortMenu
         onAdditionalSortChange={handleAdditionalSortChange}
         mediaType={mediaType}

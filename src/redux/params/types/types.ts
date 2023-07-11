@@ -14,6 +14,10 @@ export interface SortData {
   sortBy: SortValue;
 }
 
+export interface ProvidersSortData {
+  withWatchProviders: string[] | null;
+}
+
 export interface AdditionalSortData {
   releaseDates: {
     date_gte: string | null;
@@ -39,6 +43,7 @@ export interface AdditionalSortData {
 export interface ParamsState {
   params: {
     sortData: SortData;
+    providersSortData: ProvidersSortData;
     additionalSortData: AdditionalSortData;
   };
 }

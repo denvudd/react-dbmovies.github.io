@@ -1,0 +1,57 @@
+@import '@/styles/variables';
+
+.card {
+  width: 235px;
+  color: $primaryColorContrast;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .1);
+  border: 1px solid $lightGrey;
+  border-radius: $imageBorderRadius;
+}
+
+.image {
+  width: 235px;
+  height: 235px;
+
+  a {
+    width: 100%;
+    height: 100%;
+    display: block;
+    color: $primaryColorContrast;
+
+    img {
+      width: 235px;
+      height: 235px;
+    }
+  }
+}
+
+.meta {
+  padding: 8px 10px;
+  width: 100%;
+
+  .ant-typography {
+    margin-bottom: 0 !important;
+  }
+
+  .name {
+    a {
+      font-size: 1.1em;
+      font-weight: 700;
+      color: $primaryColorContrast;
+    }
+  }
+
+  .sub {
+    font-size: .9em;
+    font-weight: 400;
+    color: rgba(0, 0, 0, .6);
+    display: block;
+    margin-top: 0;
+    margin-bottom: 0 !important;
+
+    p {
+      margin-bottom: 0.5em;
+    }
+  }
+}

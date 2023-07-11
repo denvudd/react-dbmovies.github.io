@@ -6,6 +6,9 @@ const initialState: ParamsState = {
     sortData: {
       sortBy: SortValue.None,
     },
+    providersSortData: {
+      withWatchProviders: null,
+    },
     additionalSortData: {
       releaseDates: {
         date_gte: null,

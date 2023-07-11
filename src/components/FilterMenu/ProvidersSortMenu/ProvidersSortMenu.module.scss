@@ -1,0 +1,126 @@
+@import '@/styles/variables';
+
+.menu {
+  width: 100%;
+  padding: 4px 6px 6px 6px;
+
+  h3 {
+    display: inline-flex;
+    align-items: center;
+    width: 100%;
+    font-size: 1em;
+    font-weight: 300;
+    margin-bottom: 10px;
+  }
+}
+
+.title {
+  .count {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    display: inline;
+    align-items: center;
+    padding: 7px 10px;
+    font-size: .8em;
+    font-weight: 300;
+    margin-left: 5px;
+  }
+}
+
+.providers {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  row-gap: 10px;
+  column-gap: 6px;
+}
+
+.selectedProvider {
+  width: 50px;
+  display: inline-flex;
+
+  .checkWrapper {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    position: relative;
+    top: -50px;
+    width: 50px;
+    height: 50px;
+    background: rgba(1, 180, 228, .9);
+    z-index: 2;
+    border-radius: 8px;
+    font-size: 2em;
+  }
+
+  a {
+    display: block;
+    line-height: 0;
+    width: 50px;
+    height: 50px;
+
+    img {
+      width: 50px;
+      height: 50px;
+      border-radius: $imageBorderRadius;
+    }
+  }
+}
+
+.providerItem {
+  width: 50px;
+  display: inline-flex;
+
+  &:hover {
+    .checkWrapper {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      align-content: center;
+      position: relative;
+      top: -50px;
+      width: 50px;
+      height: 50px;
+      background: rgba(1, 180, 228, .9);
+      z-index: 2;
+      border-radius: 8px;
+      font-size: 2em;
+    }
+  }
+
+  a {
+    display: block;
+    line-height: 0;
+    width: 50px;
+    height: 50px;
+
+    img {
+      width: 50px;
+      height: 50px;
+      border-radius: $imageBorderRadius;
+    }
+  }
+}
+
+.checkWrapper {
+  display: none;
+
+  span {
+    position: relative;
+    top: 0;
+    left: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1em;
+    min-height: 1em;
+    width: 1em;
+    height: 1em;
+    line-height: inherit;
+    background-position: center center;
+    background-repeat: no-repeat;
+    color: #fff;
+    stroke-width: 80;
+  }
+}

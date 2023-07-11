@@ -9,13 +9,13 @@ import { AdditionalSortDataState } from "../FilterMenu";
 import LoadingOutlined from "@ant-design/icons/lib/icons/LoadingOutlined";
 import "dayjs/locale/uk.js";
 import locale from "antd/lib/date-picker/locale/uk_UA";
-
-import type { RangePickerProps } from "antd/es/date-picker";
-import { Keyword } from "@/redux/api/types/common";
-
-import styles from "./AdditionalSortMenu.module.scss";
 import { getSpecificYear } from "@/utils/getSpecificYear";
 import { getLastSpecificDays } from "@/utils/getLastSpecificDays";
+
+import type { RangePickerProps } from "antd/es/date-picker";
+import type { Keyword } from "@/redux/api/types/common";
+
+import styles from "./AdditionalSortMenu.module.scss";
 interface AdditionalSortMenuProps {
   onAdditionalSortChange: (additionalSortBy: AdditionalSortDataState) => void;
   mediaType: "movies" | "tv";
@@ -493,7 +493,7 @@ const AdditionalSortMenu: React.FC<AdditionalSortMenuProps> = React.memo(
                     />
                     {isTipVisible && (
                       <span className={styles.keywordsWarn}>
-                        *будь ласка, оберайте варіанти із списку
+                        *будь ласка, обирайте варіанти із списку
                       </span>
                     )}
                   </>
