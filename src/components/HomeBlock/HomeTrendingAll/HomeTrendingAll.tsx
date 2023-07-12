@@ -110,7 +110,7 @@ const HomeTrendingAll: React.FC = () => {
                   {trendingTypeChecker(element)}
                 </List.Item>
               )}
-            ></List>
+            />
           </div>
         </div>
       ),

@@ -1,0 +1,22 @@
+@import '@/styles/variables';
+
+.wrapper {
+  width: 100%;
+}
+
+.container {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: 30px;
+}
+
+.leftColumn {
+  min-width: 300px;
+  width: 300px;
+}
+
+.rightColumn {
+  max-width: 920px;
+  width: calc(100vw - 80px - 300px);
+}

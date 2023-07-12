@@ -15,6 +15,7 @@ import type {
   MovieCreditsApiResponse,
   MovieDetails,
 } from "@/redux/api/movies/types";
+import type { ConfigurationJobsApiResponse } from "@/redux/api/configuration/types";
 
 /* 
   The long cold start issue fix
@@ -45,18 +46,26 @@ interface MovieCastTransformedData {
   poster_path: string | null;
   overview: string | null;
   id: number;
+  jobs: ConfigurationJobsApiResponse;
 }
 
 export const getServerSideProps: GetServerSideProps<{
   data: MovieCastTransformedData;
 }> = async (context) => {
   const { id } = context.query;
-  const res = await fetch(
+  const castRes = await fetch(
     `https://api.themoviedb.org/3/movie/${id}?append_to_response=credits&language=uk-UA&api_key=684e3f73d1ca0e692a3016c028aabf72`
   );
-  const response: MovieCastPageApiResponse | ApiError = await res.json();
+  const jobsRes = await fetch(
+    `https://api.themoviedb.org/3/configuration/jobs?api_key=684e3f73d1ca0e692a3016c028aabf72`
+  );
+  const castResponse: MovieCastPageApiResponse | ApiError = await castRes.json();
+  const jobsResponse: ConfigurationJobsApiResponse | ApiError = await jobsRes.json();
 
-  if ("status_code" in response && response.status_code === 34) {
+  const isCastError = "status_code" in castResponse && castResponse.status_code === 34;
+  const isJobsError = "status_code" in jobsResponse && jobsResponse.status_code === 34;
+
+  if (isCastError || isJobsError) {
     return {
       redirect: {
         permanent: false,
@@ -65,7 +74,7 @@ export const getServerSideProps: GetServerSideProps<{
     };
   }
 
-  if ("id" in response && response.id) {
+  if ("id" in castResponse && castResponse.id && !isJobsError) {
     const {
       title,
       release_date,
@@ -73,7 +82,8 @@ export const getServerSideProps: GetServerSideProps<{
       poster_path,
       overview,
       credits,
-    } = response;
+    } = castResponse;
+    const jobs = jobsResponse as ConfigurationJobsApiResponse;
 
     const transformedData: MovieCastTransformedData = {
       title,
@@ -82,6 +92,7 @@ export const getServerSideProps: GetServerSideProps<{
       poster_path,
       overview,
       id: movieId,
+      jobs
     };
 
     return { props: { data: transformedData } };
@@ -96,7 +107,8 @@ export const getServerSideProps: GetServerSideProps<{
 };
 
 const MovieCastPage: React.FC<MovieCastPageProps> = ({ data }) => {
-  const { title, credits, release_date, poster_path, overview, id } = data;
+  const { title, credits, release_date, poster_path, overview, id, jobs } = data;
+  
   const [backdropColor, setBackdropColor] = React.useState<number[] | null>(
     null
   );
@@ -162,7 +174,7 @@ const MovieCastPage: React.FC<MovieCastPageProps> = ({ data }) => {
       />
       <div className="app-container content-with-aside panel-details">
         <DetailLayout>
-          <MovieCastBlock cast={credits.cast} crew={credits.crew} />
+          <MovieCastBlock jobs={jobs} cast={credits.cast} crew={credits.crew} />
         </DetailLayout>
       </div>
     </>

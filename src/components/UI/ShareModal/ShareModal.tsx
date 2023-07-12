@@ -10,7 +10,7 @@ import styles from "./ShadeModal.module.scss";
 interface ShareModalProps {
   id: number;
   title: string;
-  type: "movie" | "tv";
+  type: "movie" | "tv" | "person";
 }
 
 const ShareModal: React.FC<ShareModalProps> = ({
@@ -22,11 +22,14 @@ const ShareModal: React.FC<ShareModalProps> = ({
   const inputRef = React.useRef<InputRef>(null);
   const [value, copy] = useCopyToClipboard();
   const [messageApi, contextMessageHolder] = message.useMessage();
-  const link = `${
-    type === "movie"
-      ? `https://react-dbmovies.vercel.app/movies/${id}`
-      : `https://react-dbmovies.vercel.app/tv/${id}`
-  }`;
+  let link: string;
+  if (type === "movie") {
+    link = `https://react-dbmovies.vercel.app/movies/${id}`;
+  } else if (type === "tv") {
+    link = `https://react-dbmovies.vercel.app/tv/${id}`;
+  } else {
+    link = `https://react-dbmovies.vercel.app/person/${id}`;
+  }
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -63,9 +66,7 @@ const ShareModal: React.FC<ShareModalProps> = ({
         <div className={styles.input}>
           <Input
             addonAfter={
-              <CopyOutlined
-                onClick={() => handleClickCopy(`${link}`)}
-              />
+              <CopyOutlined onClick={() => handleClickCopy(`${link}`)} />
             }
             defaultValue={link}
             ref={inputRef}

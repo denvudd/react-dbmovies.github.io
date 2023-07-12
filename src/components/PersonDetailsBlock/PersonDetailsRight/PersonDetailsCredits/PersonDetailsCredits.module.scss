@@ -1,0 +1,55 @@
+@import '@/styles/variables';
+
+.list {
+  margin-top: 30px;
+
+  &:first-of-type {
+    margin-top: 0;
+  }
+}
+
+.credits {
+  width: 100%;
+  margin: 10px 0 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .1);
+  border: 1px solid $lightGrey;
+  background-color: #fff;
+
+  tbody {
+    background-color: #fff;
+    border: 1px solid $lightGrey;
+    border-bottom: none;
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+
+  td {
+    padding: 0;
+  }
+
+  &Group {
+    width: 100%;
+    margin: 0;
+    border-collapse: separate;
+    border-bottom: 1px solid #dedede;
+    padding: 10px 0;
+
+    td {
+      padding: 8px 16px;
+    }
+
+    .year {
+      width: 64px;
+      font-weight: 400;
+      vertical-align: top;
+      text-align: center;
+    }
+
+    .title {
+      a {
+        color: #000;
+        font-weight: 600;
+      }
+    }
+  }
+}

@@ -10,7 +10,7 @@ import styles from "./DetailsTabs.module.scss";
 interface DetailsTabsProps {
   id: number;
   title: string;
-  type?: "movie" | "tv";
+  type?: "movie" | "tv" | "person";
 }
 
 const DetailsTabs: React.FC<DetailsTabsProps> = ({
@@ -18,27 +18,37 @@ const DetailsTabs: React.FC<DetailsTabsProps> = ({
   title,
   type = "movie",
 }) => {
-  const formattedType = type === "movie" ? "movies" : "tv";
+  const formattedType =
+    type === "movie" ? "movies" : type === "tv" ? "tv" : "person";
+  const isPersonTab = type === "person";
 
   const reviewItems: MenuProps["items"] = [
     {
       key: "main",
       label: <Link href={`/${formattedType}/${id}`}>Головне</Link>,
     },
-    {
-      key: "titles",
-      label: (
-        <Link href={`/${formattedType}/${id}/titles`}>Альтернативні назви</Link>
-      ),
-    },
-    {
-      key: "cast",
-      label: (
-        <Link href={`/${formattedType}/${id}/cast`}>
-          Актори та знімальна група
-        </Link>
-      ),
-    },
+
+    !isPersonTab
+      ? {
+          key: "titles",
+          label: (
+            <Link href={`/${formattedType}/${id}/titles`}>
+              Альтернативні назви
+            </Link>
+          ),
+        }
+      : null,
+
+    !isPersonTab
+      ? {
+          key: "cast",
+          label: (
+            <Link href={`/${formattedType}/${id}/cast`}>
+              Актори та знімальна група
+            </Link>
+          ),
+        }
+      : null,
 
     type === "tv"
       ? {
@@ -50,7 +60,7 @@ const DetailsTabs: React.FC<DetailsTabsProps> = ({
           ),
         }
       : null,
-      
+
     type === "tv"
       ? {
           key: "seasons",
@@ -76,22 +86,44 @@ const DetailsTabs: React.FC<DetailsTabsProps> = ({
   ];
 
   const mediaItems: MenuProps["items"] = [
-    {
-      key: "backdrops",
-      label: <Link href={`/${formattedType}/${id}/backdrops`}>Світлини</Link>,
-    },
-    {
-      key: "logos",
-      label: <Link href={`/${formattedType}/${id}/logos`}>Логотипи</Link>,
-    },
-    {
-      key: "posters",
-      label: <Link href={`/${formattedType}/${id}/posters`}>Постери</Link>,
-    },
-    {
-      key: "videos",
-      label: <Link href={`/${formattedType}/${id}/videos`}>Відеороліки</Link>,
-    },
+    !isPersonTab
+      ? {
+          key: "backdrops",
+          label: (
+            <Link href={`/${formattedType}/${id}/backdrops`}>Світлини</Link>
+          ),
+        }
+      : null,
+    !isPersonTab
+      ? {
+          key: "logos",
+          label: <Link href={`/${formattedType}/${id}/logos`}>Логотипи</Link>,
+        }
+      : null,
+    !isPersonTab
+      ? {
+          key: "posters",
+          label: <Link href={`/${formattedType}/${id}/posters`}>Постери</Link>,
+        }
+      : null,
+    !isPersonTab
+      ? {
+          key: "videos",
+          label: (
+            <Link href={`/${formattedType}/${id}/videos`}>Відеороліки</Link>
+          ),
+        }
+      : null,
+    isPersonTab
+      ? {
+          key: "profile-photo",
+          label: (
+            <Link href={`/${formattedType}/${id}/profile`}>
+              Фотографії профілю
+            </Link>
+          ),
+        }
+      : null,
   ];
 
   const fandomItems: MenuProps["items"] = [
@@ -122,7 +154,7 @@ const DetailsTabs: React.FC<DetailsTabsProps> = ({
       ),
     },
     {
-      key: "tweeter",
+      key: "twitter",
       label: (
         <a
           href={`https://twitter.com/intent/tweet?text=${title}%20@themoviedb&url=${
@@ -161,15 +193,17 @@ const DetailsTabs: React.FC<DetailsTabsProps> = ({
               <CaretDownOutlined />
             </Space>
           </Dropdown>
-          <Dropdown
-            overlayClassName={styles.dropdownRoot}
-            menu={{ items: fandomItems }}
-          >
-            <Space size={5}>
-              Фендом
-              <CaretDownOutlined />
-            </Space>
-          </Dropdown>
+          {!isPersonTab && (
+            <Dropdown
+              overlayClassName={styles.dropdownRoot}
+              menu={{ items: fandomItems }}
+            >
+              <Space size={5}>
+                Фендом
+                <CaretDownOutlined />
+              </Space>
+            </Dropdown>
+          )}
           <Dropdown
             overlayClassName={styles.dropdownRoot}
             menu={{ items: shareItems }}

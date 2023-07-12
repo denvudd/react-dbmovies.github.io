@@ -1,11 +1,11 @@
 import React from "react";
-import { useLazyGetPopularPersonsQuery } from "@/redux/api/person";
+import { useLazyGetPopularPersonsQuery } from "@/redux/api/people/slice";
 
 import ButtonTMDB from "../UI/ButtonTMDB/ButtonTMDB";
 import { List, Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import PersonCard from "../UI/PersonCard/PersonCard";
-import type { ListPerson } from "@/redux/api/person/types";
+import type { ListPerson } from "@/redux/api/people/types";
 
 import styles from "./PersonListBlock.module.scss";
 

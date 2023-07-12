@@ -2,21 +2,25 @@ import React from "react";
 
 import CreditCard from "../UI/CreditCard/CreditCard";
 import { v4 as uuidv4 } from "uuid";
+import { checkDepartmentName } from "@/utils/checkDepartmentName";
 import type { MovieCreditsApiResponse } from "@/redux/api/movies/types";
 import type { CrewMember } from "@/redux/api/types/common";
+import type { ConfigurationJobsApiResponse } from "@/redux/api/configuration/types";
 
 import styles from "./MovieCastBlock.module.scss";
-
 interface MovieCastBlockProps {
   crew: MovieCreditsApiResponse["crew"];
   cast: MovieCreditsApiResponse["cast"];
+  jobs: ConfigurationJobsApiResponse;
 }
 
 interface CrewByDepartment {
   [key: string]: CrewMember[];
 }
 
-const MovieCastBlock: React.FC<MovieCastBlockProps> = ({ cast, crew }) => {
+const MovieCastBlock: React.FC<MovieCastBlockProps> = ({ cast, crew, jobs }) => {
+  const departments = jobs.map((job) => job.department);
+
   const crewByDepartment = crew.reduce(
     (acc: CrewByDepartment, member: CrewMember) => {
       const { department } = member;
@@ -53,182 +57,29 @@ const MovieCastBlock: React.FC<MovieCastBlockProps> = ({ cast, crew }) => {
             <h3>
               Знімальна група фільму <span>{crew.length}</span>
             </h3>
-            {crewByDepartment["Writing"] && (
-              <div className={styles.crewWrapper}>
-                <h4>Сценарій</h4>
-                <ol className={styles.people}>
-                  {crewByDepartment["Writing"].map((crew) => (
-                    <CreditCard
-                      id={crew.id}
-                      key={uuidv4()}
-                      name={crew.name}
-                      poster={crew.profile_path}
-                      job={crew.job}
-                    />
-                  ))}
-                </ol>
-              </div>
-            )}
-            {crewByDepartment["Directing"] && (
-              <div className={styles.crewWrapper}>
-                <h4>Режисура</h4>
-                <ol className={styles.people}>
-                  {crewByDepartment["Directing"].map((crew) => (
-                    <CreditCard
-                      id={crew.id}
-                      key={uuidv4()}
-                      name={crew.name}
-                      poster={crew.profile_path}
-                      job={crew.job}
-                    />
-                  ))}
-                </ol>
-              </div>
-            )}
-            {crewByDepartment["Camera"] && (
-              <div className={styles.crewWrapper}>
-                <h4>Операторська робота</h4>
-                <ol className={styles.people}>
-                  {crewByDepartment["Camera"].map((crew) => (
-                    <CreditCard
-                      id={crew.id}
-                      key={uuidv4()}
-                      name={crew.name}
-                      poster={crew.profile_path}
-                      job={crew.job}
-                    />
-                  ))}
-                </ol>
-              </div>
-            )}
-            {crewByDepartment["Art"] && (
-              <div className={styles.crewWrapper}>
-                <h4>Художній відділ</h4>
-                <ol className={styles.people}>
-                  {crewByDepartment["Art"].map((crew) => (
-                    <CreditCard
-                      id={crew.id}
-                      key={uuidv4()}
-                      name={crew.name}
-                      poster={crew.profile_path}
-                      job={crew.job}
-                    />
-                  ))}
-                </ol>
-              </div>
-            )}
-            {crewByDepartment["Costume & Make-Up"] && (
-              <div className={styles.crewWrapper}>
-                <h4>Костюми та грим</h4>
-                <ol className={styles.people}>
-                  {crewByDepartment["Costume & Make-Up"].map((crew) => (
-                    <CreditCard
-                      id={crew.id}
-                      key={uuidv4()}
-                      name={crew.name}
-                      poster={crew.profile_path}
-                      job={crew.job}
-                    />
-                  ))}
-                </ol>
-              </div>
-            )}
-            {crewByDepartment["Editing"] && (
-              <div className={styles.crewWrapper}>
-                <h4>Монтаж</h4>
-                <ol className={styles.people}>
-                  {crewByDepartment["Editing"].map((crew) => (
-                    <CreditCard
-                      id={crew.id}
-                      key={uuidv4()}
-                      name={crew.name}
-                      poster={crew.profile_path}
-                      job={crew.job}
-                    />
-                  ))}
-                </ol>
-              </div>
-            )}
-            {crewByDepartment["Lighting"] && (
-              <div className={styles.crewWrapper}>
-                <h4>Освітлення</h4>
-                <ol className={styles.people}>
-                  {crewByDepartment["Lighting"].map((crew) => (
-                    <CreditCard
-                      id={crew.id}
-                      key={uuidv4()}
-                      name={crew.name}
-                      poster={crew.profile_path}
-                      job={crew.job}
-                    />
-                  ))}
-                </ol>
-              </div>
-            )}
-            {crewByDepartment["Production"] && (
-              <div className={styles.crewWrapper}>
-                <h4>Виробництво</h4>
-                <ol className={styles.people}>
-                  {crewByDepartment["Production"].map((crew) => (
-                    <CreditCard
-                      id={crew.id}
-                      key={uuidv4()}
-                      name={crew.name}
-                      poster={crew.profile_path}
-                      job={crew.job}
-                    />
-                  ))}
-                </ol>
-              </div>
-            )}
-            {crewByDepartment["Sound"] && (
-              <div className={styles.crewWrapper}>
-                <h4>Звук</h4>
-                <ol className={styles.people}>
-                  {crewByDepartment["Sound"].map((crew) => (
-                    <CreditCard
-                      id={crew.id}
-                      key={uuidv4()}
-                      name={crew.name}
-                      poster={crew.profile_path}
-                      job={crew.job}
-                    />
-                  ))}
-                </ol>
-              </div>
-            )}
-            {crewByDepartment["Visual Effect"] && (
-              <div className={styles.crewWrapper}>
-                <h4>Візуальні ефекти</h4>
-                <ol className={styles.people}>
-                  {crewByDepartment["Visual Effect"].map((crew) => (
-                    <CreditCard
-                      id={crew.id}
-                      key={uuidv4()}
-                      name={crew.name}
-                      poster={crew.profile_path}
-                      job={crew.job}
-                    />
-                  ))}
-                </ol>
-              </div>
-            )}
-            {crewByDepartment["Crew"] && (
-              <div className={styles.crewWrapper}>
-                <h4>Персонал</h4>
-                <ol className={styles.people}>
-                  {crewByDepartment["Crew"].map((crew) => (
-                    <CreditCard
-                      id={crew.id}
-                      key={uuidv4()}
-                      name={crew.name}
-                      poster={crew.profile_path}
-                      job={crew.job}
-                    />
-                  ))}
-                </ol>
-              </div>
-            )}
+            {departments &&
+              departments.length !== 0 &&
+              jobs &&
+              departments.reverse().map((department) => {
+                if (crewByDepartment[department]) {
+                  return (
+                    <div className={styles.crewWrapper}>
+                      <h4>{checkDepartmentName(department)}</h4>
+                      <ol className={styles.people}>
+                        {crewByDepartment[department].map((crew) => (
+                          <CreditCard
+                            id={crew.id}
+                            key={uuidv4()}
+                            name={crew.name}
+                            poster={crew.profile_path}
+                            job={crew.job}
+                          />
+                        ))}
+                      </ol>
+                    </div>
+                  );
+                }
+              })}
           </section>
         </div>
       </div>

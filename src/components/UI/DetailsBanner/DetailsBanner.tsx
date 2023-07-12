@@ -9,14 +9,14 @@ import styles from "./DetailsBanner.module.scss";
 interface DetailsBannerProps {
   id: number;
   title: string;
-  releaseDate: string;
+  releaseDate: string | null;
   posterPath: string;
   averageColor: {
     backgroundColor: string;
   };
   isBackdropLight: boolean;
 
-  type?: "movies" | "tv";
+  type?: "movies" | "tv" | "person";
   customLink?: ReactNode | false;
   episodeNumber?: number;
   seasonNumber?: number;
@@ -41,9 +41,11 @@ const DetailsBanner: React.FC<DetailsBannerProps> = ({
   return (
     <div className={styles.wrapper} style={averageColor}>
       <div className="app-container">
-        <div className={classNames(styles.inner, {
-          ["details-banner-light"]: isBackdropLight,
-        })}>
+        <div
+          className={classNames(styles.inner, {
+            ["details-banner-light"]: isBackdropLight,
+          })}
+        >
           <Link href={`/${type}/${id}`} className={styles.poster}>
             {imageType === "poster" && (
               <Image
@@ -55,11 +57,11 @@ const DetailsBanner: React.FC<DetailsBannerProps> = ({
             )}
             {imageType === "backdrop" && (
               <Image
-              width={160}
-              height={90}
-              src={posterPath}
-              alt={`${title} poster`}
-            />
+                width={160}
+                height={90}
+                src={posterPath}
+                alt={`${title} poster`}
+              />
             )}
           </Link>
           <div className={styles.text}>
@@ -72,7 +74,7 @@ const DetailsBanner: React.FC<DetailsBannerProps> = ({
                 </div>
               )}
               <Link href={`/${type}/${id}`}>{title}</Link>{" "}
-              <span>({releaseYear ? releaseYear : "-"})</span>
+              {releaseDate && <span>({releaseYear ? releaseYear : "-"})</span>}
             </h2>
             {customLink ? (
               customLink

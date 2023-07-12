@@ -148,8 +148,7 @@ export const moviesApi = baseApi.injectEndpoints({
       MovieKeywordApiResponse["keywords"],
       number
     >({
-      query: (id) =>
-        `/movie/${id}/keywords?${tmdbApiKey}`,
+      query: (id) => `/movie/${id}/keywords?${tmdbApiKey}`,
       transformResponse: (response: MovieKeywordApiResponse) =>
         response.keywords,
     }),

@@ -1,6 +1,6 @@
 import { ListMovie } from "../../movies/types/MovieListType";
 import { ListTV } from "../../tv/types/TVListType";
-import { PersonList } from "../../people/types/ListPeopleType";
+import { ListPerson } from "../../people/types";
 export interface SearchMovie extends ListMovie {
   media_type: "movie";
 }
@@ -9,7 +9,7 @@ export interface SearchTV extends ListTV {
   media_type: "tv";
 }
 
-export interface SearchPerson extends PersonList {
+export interface SearchPerson extends ListPerson {
   media_type: "person";
 }
 export interface SearchMultiApiResponse {

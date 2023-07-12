@@ -34,7 +34,7 @@ const CreditCard: React.FC<CreditCardProps> = ({
 }) => {
   return (
     <li className={styles.item} style={style}>
-      <Link href={`/`} className={styles.poster}>
+      <Link href={`/person/${id}`} className={styles.poster}>
         <Image
           width={66}
           height={66}
@@ -54,7 +54,7 @@ const CreditCard: React.FC<CreditCardProps> = ({
         />
       </Link>
       <div className={styles.text}>
-        <Link href={`/`}>{name}</Link>
+        <Link href={`/person/${id}`}>{name}</Link>
         <span>
           {type === "movie" && job && <p>{job as string}</p>}
           {type === "tv" &&

@@ -1,4 +1,4 @@
-export type ConfigurationApiResponse = Language[];
+export type ConfigurationLanguagesApiResponse = Language[];
 
 interface Language {
   iso_639_1: string;

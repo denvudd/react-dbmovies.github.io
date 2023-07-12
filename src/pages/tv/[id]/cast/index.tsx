@@ -6,12 +6,16 @@ import DetailsTabs from "@/components/UI/DetailsTabs/DetailsTabs";
 import { FastAverageColor } from "fast-average-color";
 import DetailLayout from "@/layouts/DetailsLayout";
 import { createRgbaString } from "@/utils/createRgbaString";
+import TVCastBlock from "@/components/TVCreditsBlock/TVCreditsBlock";
 
 import type { FastAverageColorResult } from "fast-average-color";
 import type { GetServerSideProps } from "next/types";
 import type { ApiError } from "@/redux/api/baseApi/types/ErrorType";
-import type { TVDetails, TVAggregateCreditsApiResponse } from "@/redux/api/tv/types";
-import TVCastBlock from "@/components/TVCreditsBlock/TVCreditsBlock";
+import type {
+  TVDetails,
+  TVAggregateCreditsApiResponse,
+} from "@/redux/api/tv/types";
+import type { ConfigurationJobsApiResponse } from "@/redux/api/configuration/types";
 
 /* 
   The long cold start issue fix
@@ -42,18 +46,30 @@ interface TVCastTransformedData {
   poster_path: string | null;
   overview: string | null;
   id: number;
+  jobs: ConfigurationJobsApiResponse;
 }
 
 export const getServerSideProps: GetServerSideProps<{
   data: TVCastTransformedData;
 }> = async (context) => {
   const { id } = context.query;
-  const res = await fetch(
+  const castRes = await fetch(
     `https://api.themoviedb.org/3/tv/${id}?append_to_response=aggregate_credits&language=uk-UA&api_key=684e3f73d1ca0e692a3016c028aabf72`
   );
-  const response: TVCastPageApiResponse | ApiError = await res.json();
+  const jobsRes = await fetch(
+    `https://api.themoviedb.org/3/configuration/jobs?api_key=684e3f73d1ca0e692a3016c028aabf72`
+  );
 
-  if ("status_code" in response && response.status_code === 34) {
+  const castResponse: TVCastPageApiResponse | ApiError = await castRes.json();
+  const jobsResponse: ConfigurationJobsApiResponse | ApiError =
+    await jobsRes.json();
+
+  const isCastError =
+    "status_code" in castResponse && castResponse.status_code === 34;
+  const isJobsError =
+    "status_code" in jobsResponse && jobsResponse.status_code === 34;
+
+  if (isCastError || isJobsError) {
     return {
       redirect: {
         permanent: false,
@@ -62,7 +78,7 @@ export const getServerSideProps: GetServerSideProps<{
     };
   }
 
-  if ("id" in response && response.id) {
+  if ("id" in castResponse && castResponse.id && !isJobsError) {
     const {
       name,
       first_air_date,
@@ -70,7 +86,8 @@ export const getServerSideProps: GetServerSideProps<{
       poster_path,
       overview,
       aggregate_credits,
-    } = response;
+    } = castResponse;
+    const jobs = jobsResponse as ConfigurationJobsApiResponse;
 
     const transformedData: TVCastTransformedData = {
       name,
@@ -79,6 +96,7 @@ export const getServerSideProps: GetServerSideProps<{
       poster_path,
       overview,
       id: movieId,
+      jobs,
     };
 
     return { props: { data: transformedData } };
@@ -93,7 +111,15 @@ export const getServerSideProps: GetServerSideProps<{
 };
 
 const TVCastPage: React.FC<TVCastPageProps> = ({ data }) => {
-  const { name, aggregate_credits, first_air_date, poster_path, overview, id } = data;
+  const {
+    name,
+    aggregate_credits,
+    first_air_date,
+    poster_path,
+    overview,
+    id,
+    jobs,
+  } = data;
   const [backdropColor, setBackdropColor] = React.useState<number[] | null>(
     null
   );
@@ -122,7 +148,7 @@ const TVCastPage: React.FC<TVCastPageProps> = ({ data }) => {
   }, [data.id]);
 
   const averageColor =
-    backdropColor && poster_path 
+    backdropColor && poster_path
       ? {
           backgroundColor: `${createRgbaString(backdropColor, "1")}`,
         }
@@ -160,7 +186,11 @@ const TVCastPage: React.FC<TVCastPageProps> = ({ data }) => {
       />
       <div className="app-container content-with-aside panel-details">
         <DetailLayout>
-          <TVCastBlock cast={aggregate_credits.cast} crew={aggregate_credits.crew} />
+          <TVCastBlock
+            jobs={jobs}
+            cast={aggregate_credits.cast}
+            crew={aggregate_credits.crew}
+          />
         </DetailLayout>
       </div>
     </>

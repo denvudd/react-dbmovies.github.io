@@ -1,17 +1,16 @@
-import { SearchMovie, SearchTV } from "../../search/types";
+export type PersonDetailsApiResponse = PersonDetails;
 
-export interface PersonList {
+export interface PersonDetails {
   adult: boolean;
   also_known_as: string[];
-  biography: string;
+  biography: string | null;
   birthday: string;
   deathday: string | null;
-  gender: number;
+  gender: 0 | 1 | 2 | 3;
   homepage: string | null;
   id: number;
-  imdb_id: string | null;
+  imdb_id: string;
   known_for_department: string;
-  known_for: SearchMovie[] | SearchTV[];
   name: string;
   place_of_birth: string;
   popularity: number;

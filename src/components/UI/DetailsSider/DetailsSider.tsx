@@ -2,16 +2,16 @@ import React from "react";
 
 import { whereAlpha2 } from "iso-3166-1";
 import { v4 as uuidv4 } from "uuid";
+import classNames from "classnames";
 import type {
   MovieAltTitle,
   MovieTranslation,
   ReleaseDate,
 } from "@/redux/api/movies/types";
 import type { TVAltTitle, TVTranslation } from "@/redux/api/tv/types";
+import type { PersonTranslation } from "@/redux/api/people/types";
 
 import styles from "./DetailsSider.module.scss";
-import classNames from "classnames";
-
 interface AltTitleSiderProps {
   title: string;
   totalCount: number;
@@ -20,7 +20,8 @@ interface AltTitleSiderProps {
     | TVAltTitle[]
     | ReleaseDate[]
     | MovieTranslation[]
-    | TVTranslation[];
+    | TVTranslation[]
+    | PersonTranslation[];
   averageColor: {
     backgroundColor: string;
   };
