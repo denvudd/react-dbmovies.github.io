@@ -102,6 +102,11 @@
   background-color: $accountRed;
 }
 
+.main-nav-link {
+  color: #fff;
+  font-weight: 600;
+}
+
 .scroller {
   -webkit-overflow-scrolling: touch;
   overflow-y: hidden;
@@ -179,6 +184,7 @@
 
 .empty-text--default {
   color: $primaryColorContrast;
+  padding: 5px 0px;
 }
 
 .pagination-total {
@@ -206,6 +212,7 @@
 }
 
 .details-banner-light {
+
   h2,
   a {
     color: $primaryColorContrast !important;

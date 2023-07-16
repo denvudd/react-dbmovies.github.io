@@ -1,9 +1,9 @@
 import React from "react";
 
 import DetailLayout from "@/layouts/DetailsLayout";
-import TVDetailsBlock from "@/components/TVDetailsBlock/TVDetailsBlock";
+import TVDetailsBlock from "@/components/blocks/tv/TVDetailsBlock/TVDetailsBlock";
 import Head from "next/head";
-import DetailsTabs from "@/components/UI/DetailsTabs/DetailsTabs";
+import DetailsTabs from "@/components/UI/tabs/DetailsTabs/DetailsTabs";
 import type { ApiError } from "@/redux/api/baseApi/types/ErrorType";
 import type { GetServerSideProps } from "next/types";
 import type { TVDetails } from "@/redux/api/tv/types";
@@ -22,7 +22,7 @@ export const config = {
   runtime: "experimental-edge", // warn: using an experimental edge runtime, the API might change
 };
 
-interface MovieDetailsPageProps {
+interface TVDetailsPageProps {
   data: TVDetails;
 }
 
@@ -47,7 +47,7 @@ export const getServerSideProps: GetServerSideProps<{
   return { props: { data: data as TVDetails } };
 };
 
-const MovieDetailsPage: React.FC<MovieDetailsPageProps> = ({ data }) => {
+const TVDetailsPage: React.FC<TVDetailsPageProps> = ({ data }) => {
   const { id, name, poster_path, backdrop_path, overview, first_air_date } =
     data;
 
@@ -80,7 +80,7 @@ const MovieDetailsPage: React.FC<MovieDetailsPageProps> = ({ data }) => {
         <meta property="og:locale" content="uk-UA" />
         <meta
           property="og:url"
-          content={`https://react-dbmovies.vercel.app/movies/${id}`}
+          content={`https://react-dbmovies.vercel.app/tv/${id}`}
         />
         <meta property="og:site_name" content="The Movie Database Next" />
         <meta name="twitter:card" content="photo" />
@@ -92,7 +92,7 @@ const MovieDetailsPage: React.FC<MovieDetailsPageProps> = ({ data }) => {
         <meta name="twitter:site" content="@themoviedb" />
         <meta
           name="twitter:url"
-          content={`https://react-dbmovies.vercel.app/movies/${id}`}
+          content={`https://react-dbmovies.vercel.app/tv/${id}`}
         />
       </Head>
       <DetailsTabs id={id} title={`Поділитися ${name}`} type="tv" />
@@ -103,4 +103,4 @@ const MovieDetailsPage: React.FC<MovieDetailsPageProps> = ({ data }) => {
   );
 };
 
-export default MovieDetailsPage;
+export default TVDetailsPage;

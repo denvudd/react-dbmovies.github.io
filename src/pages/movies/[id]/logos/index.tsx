@@ -1,8 +1,8 @@
 import React from "react";
 
 import Head from "next/head";
-import DetailsBanner from "@/components/UI/DetailsBanner/DetailsBanner";
-import DetailsTabs from "@/components/UI/DetailsTabs/DetailsTabs";
+import DetailsBanner from "@/components/UI/banners/DetailsBanner/DetailsBanner";
+import DetailsTabs from "@/components/UI/tabs/DetailsTabs/DetailsTabs";
 import { FastAverageColor } from "fast-average-color";
 import DetailLayout from "@/layouts/DetailsLayout";
 import { createRgbaString } from "@/utils/createRgbaString";
@@ -14,7 +14,7 @@ import type {
   MovieDetails,
   MovieImagesApiResponse,
 } from "@/redux/api/movies/types";
-import MovieImagesBlock from "@/components/MovieImagesBlock/MovieImagesBlock";
+import MovieImagesBlock from "@/components/blocks/movie/MovieImagesBlock/MovieImagesBlock";
 
 /* 
   The long cold start issue fix

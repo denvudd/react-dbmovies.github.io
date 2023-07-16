@@ -2,10 +2,10 @@ import React from "react";
 
 import Head from "next/head";
 import DetailsSider from "@/components/UI/DetailsSider/DetailsSider";
-import DetailsBanner from "@/components/UI/DetailsBanner/DetailsBanner";
-import DetailsTabs from "@/components/UI/DetailsTabs/DetailsTabs";
-import TVTranslationsBlock from "@/components/TVTranslationsBlock/TVTranslationsBlock";
+import DetailsBanner from "@/components/UI/banners/DetailsBanner/DetailsBanner";
+import DetailsTabs from "@/components/UI/tabs/DetailsTabs/DetailsTabs";
 import ListLayout from "@/layouts/ListLayout";
+import PersonTranslationBlock from "@/components/blocks/person/PersonTranslationBlock/PersonTranslationBlock";
 
 import type { GetServerSideProps } from "next/types";
 import type { ApiError } from "@/redux/api/baseApi/types/ErrorType";
@@ -14,7 +14,6 @@ import type {
   PersonTranslation,
   PersonTranslationsApiResponse,
 } from "@/redux/api/people/types";
-import PersonTranslationBlock from "@/components/PersonTranslationBlock/PersonTranslationBlock";
 
 /* 
   The long cold start issue fix
@@ -112,7 +111,7 @@ const PersonTranslationsPage: React.FC<PersonTranslationsPageProps> = ({
           content={data ? (biography as string) : undefined}
         ></meta>
       </Head>
-      <DetailsTabs id={id} title={`Поділитися ${name}`} type="tv" />
+      <DetailsTabs id={id} title={`Поділитися ${name}`} type="person" />
       <DetailsBanner
         id={id}
         title={name}

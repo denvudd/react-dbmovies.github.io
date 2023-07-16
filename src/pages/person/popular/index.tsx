@@ -1,5 +1,5 @@
 import React from "react";
-import PersonListBlock from "@/components/PersonListBlock/PersonListBlock";
+import PersonListBlock from "@/components/blocks/person/PersonListBlock/PersonListBlock";
 import DetailLayout from "@/layouts/DetailsLayout";
 
 const PersonPopularPage: React.FC = () => {

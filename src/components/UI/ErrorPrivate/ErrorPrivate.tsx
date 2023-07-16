@@ -13,7 +13,7 @@ const ErrorPrivate = () => {
           <h2 className={styles.title}>Ця сторінка приватна</h2>
         </div>
         <p className={styles.text}>
-          Схоже, ви на маєте доступу до цієї сторінки. Якщо Ви думаєте, що
+          Схоже, ви не маєте доступу до цієї сторінки. Якщо Ви думаєте, що
           сталась помилка, дайте нам знати{" "}
           <a target="_blank" href="https://www.themoviedb.org/talk">на форумі</a>.
         </p>

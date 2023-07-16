@@ -6,9 +6,9 @@ import { useSelector } from "react-redux";
 import { selectParams } from "@/redux/params/selectors";
 import Head from "next/head";
 import { Pagination } from "antd";
-import MediaElementCard from "@/components/UI/MediaElementCard/MediaElementCard";
+import MediaElementCard from "@/components/UI/cards/MediaElementCard/MediaElementCard";
 import MovieList from "@/components/UI/MovieList/MovieList";
-import SkeletonLoader from "@/components/UI/SkeletonLoader/SkeletonLoader";
+import MediaElementSkeleton from "@/components/UI/MediaElementSkeleton/MediaElementSkeleton";
 import FilterMenu from "@/components/FilterMenu/FilterMenu";
 import ListLayout from "@/layouts/ListLayout";
 import { isSortParamsEmpty } from "@/utils/isSortParamsEmpty";
@@ -144,7 +144,7 @@ export const PopularMoviesPage = () => {
             <div className="panel-details">
               <h1 className="list-title">Популярні фільми</h1>
               {(isDefaultMoviesFetching || isSortMoviesFetching) && (
-                <SkeletonLoader count={10} gutter={16} />
+                <MediaElementSkeleton count={10} gutter={16} />
               )}
               {!isDefaultMoviesFetching &&
                 !isSortMoviesFetching &&

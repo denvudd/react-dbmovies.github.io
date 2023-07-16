@@ -2,8 +2,8 @@ import React from "react";
 import { useRouter } from "next/router";
 import { useLazyGetSearchMultiQuery } from "@/redux/api/search/slice";
 
-import GlobalSearchBlock from "@/components/GlobalSearchBlock/GlobalSearchBlock";
-import ResultsSider from "@/components/GlobalSearchBlock/ResultsSider/ResultsSider";
+import GlobalSearchBlock from "@/components/blocks/GlobalSearchBlock/GlobalSearchBlock";
+import ResultsSider from "@/components/blocks/GlobalSearchBlock/ResultsSider/ResultsSider";
 import ListLayout from "@/layouts/ListLayout";
 import Head from "next/head";
 

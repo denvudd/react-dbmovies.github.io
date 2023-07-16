@@ -1,8 +1,8 @@
 import React from "react";
 
 import Head from "next/head";
-import DetailsBanner from "@/components/UI/DetailsBanner/DetailsBanner";
-import DetailsTabs from "@/components/UI/DetailsTabs/DetailsTabs";
+import DetailsBanner from "@/components/UI/banners/DetailsBanner/DetailsBanner";
+import DetailsTabs from "@/components/UI/tabs/DetailsTabs/DetailsTabs";
 import { FastAverageColor } from "fast-average-color";
 import DetailLayout from "@/layouts/DetailsLayout";
 import { createRgbaString } from "@/utils/createRgbaString";
@@ -12,7 +12,7 @@ import type { GetServerSideProps } from "next/types";
 import type { ApiError } from "@/redux/api/baseApi/types/ErrorType";
 import type { TVDetails, TVVideosApiResponse } from "@/redux/api/tv/types";
 import type { Video } from "@/redux/api/types/common";
-import TVVideosBlock from "@/components/TVVideosBlock/TVVideosBlock";
+import TVVideosBlock from "@/components/blocks/tv/TVVideosBlock/TVVideosBlock";
 
 /* 
   The long cold start issue fix

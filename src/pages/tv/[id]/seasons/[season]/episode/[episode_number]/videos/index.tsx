@@ -1,9 +1,9 @@
 import React from "react";
 
 import Head from "next/head";
-import DetailsBanner from "@/components/UI/DetailsBanner/DetailsBanner";
-import DetailsTabs from "@/components/UI/DetailsTabs/DetailsTabs";
-import TVEpisodeVideosBlock from "@/components/TVEpisodeVideosBlock/TVEpisodeVideosBlock";
+import DetailsBanner from "@/components/UI/banners/DetailsBanner/DetailsBanner";
+import DetailsTabs from "@/components/UI/tabs/DetailsTabs/DetailsTabs";
+import TVEpisodeVideosBlock from "@/components/blocks/tv/TVEpisodeVideosBlock/TVEpisodeVideosBlock";
 import DetailLayout from "@/layouts/DetailsLayout";
 import Link from "next/link";
 import { FastAverageColor } from "fast-average-color";
