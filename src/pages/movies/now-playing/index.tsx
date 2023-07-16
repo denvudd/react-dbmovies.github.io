@@ -5,9 +5,9 @@ import { useSelector } from "react-redux";
 
 import Head from "next/head";
 import { Pagination } from "antd";
-import MediaElementCard from "@/components/UI/MediaElementCard/MediaElementCard";
+import MediaElementCard from "@/components/UI/cards/MediaElementCard/MediaElementCard";
 import MovieList from "@/components/UI/MovieList/MovieList";
-import SkeletonLoader from "@/components/UI/SkeletonLoader/SkeletonLoader";
+import SkeletonLoader from "@/components/UI/MediaElementSkeleton/MediaElementSkeleton";
 import FilterMenu from "@/components/FilterMenu/FilterMenu";
 import ListLayout from "@/layouts/ListLayout";
 import { selectParams } from "@/redux/params/selectors";

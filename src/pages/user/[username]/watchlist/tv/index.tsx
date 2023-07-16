@@ -2,8 +2,8 @@ import React from "react";
 import { useLazyGetAccountDetailsQuery } from "@/redux/api/account/slice";
 import { useSessionId } from "@/hooks/useSessionId";
 
-import ProfileHead from "@/components/ProfileBlock/ProfileHead/ProfileHead";
-import ProfileWatchlistBlock from "@/components/ProfileWatchlistBlock/ProfileWatchlistBlock";
+import ProfileHead from "@/components/blocks/profile/ProfileBlock/ProfileHead/ProfileHead";
+import ProfileWatchlistBlock from "@/components/blocks/profile/ProfileWatchlistBlock/ProfileWatchlistBlock";
 import DetailLayout from "@/layouts/DetailsLayout";
 import Head from "next/head";
 import { withAuth } from "@/auth/withAuth";

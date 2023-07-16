@@ -8,10 +8,10 @@ import {
 import Head from "next/head";
 import { Dropdown, List, Spin } from "antd";
 import DetailLayout from "@/layouts/DetailsLayout";
-import WideElementCard from "@/components/UI/WideElementCard/WideElementCard";
+import WideElementCard from "@/components/UI/cards/WideElementCard/WideElementCard";
 import { DownOutlined, LoadingOutlined } from "@ant-design/icons";
 import ButtonTMDB from "@/components/UI/ButtonTMDB/ButtonTMDB";
-import ResultBanner from "@/components/UI/ResultBanner/ResultBanner";
+import ResultBanner from "@/components/UI/banners/ResultBanner/ResultBanner";
 import Link from "next/link";
 import type { ListTV } from "@/redux/api/tv/types";
 import type { MenuProps } from "antd";

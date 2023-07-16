@@ -1,9 +1,9 @@
 import React from "react";
 
 import Head from "next/head";
-import DetailsTabs from "@/components/UI/DetailsTabs/DetailsTabs";
+import DetailsTabs from "@/components/UI/tabs/DetailsTabs/DetailsTabs";
 import DetailLayout from "@/layouts/DetailsLayout";
-import TVEpisodeGroupDetailsBlock from "@/components/TVEpisodeGroupDetailsBlock/TVEpisodeGroupDetailsBlock";
+import TVEpisodeGroupDetailsBlock from "@/components/blocks/tv/TVEpisodeGroupDetailsBlock/TVEpisodeGroupDetailsBlock";
 
 import type { GetServerSideProps } from "next/types";
 import type { TVEpisodeGroupDetailsApiResponse } from "@/redux/api/tv/types";

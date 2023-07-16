@@ -1,10 +1,10 @@
 import React from "react";
 
 import Head from "next/head";
-import DetailsBanner from "@/components/UI/DetailsBanner/DetailsBanner";
-import DetailsTabs from "@/components/UI/DetailsTabs/DetailsTabs";
+import DetailsBanner from "@/components/UI/banners/DetailsBanner/DetailsBanner";
+import DetailsTabs from "@/components/UI/tabs/DetailsTabs/DetailsTabs";
 import DetailLayout from "@/layouts/DetailsLayout";
-import TVEpisodeGroupsBlock from "@/components/TVEpisodeGroupsBlock/TVEpisodeGroupsBlock";
+import TVEpisodeGroupsBlock from "@/components/blocks/tv/TVEpisodeGroupsBlock/TVEpisodeGroupsBlock";
 import { FastAverageColor } from "fast-average-color";
 import { createRgbaString } from "@/utils/createRgbaString";
 

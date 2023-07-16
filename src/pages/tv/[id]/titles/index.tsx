@@ -2,12 +2,12 @@ import React from "react";
 
 import Head from "next/head";
 import DetailsSider from "@/components/UI/DetailsSider/DetailsSider";
-import DetailsBanner from "@/components/UI/DetailsBanner/DetailsBanner";
-import DetailsTabs from "@/components/UI/DetailsTabs/DetailsTabs";
+import DetailsBanner from "@/components/UI/banners/DetailsBanner/DetailsBanner";
+import DetailsTabs from "@/components/UI/tabs/DetailsTabs/DetailsTabs";
 import ListLayout from "@/layouts/ListLayout";
 import { FastAverageColor } from "fast-average-color";
 import { createRgbaString } from "@/utils/createRgbaString";
-import TVTitleBlock from "@/components/TVTitlesBlock/TVTitlesBlock";
+import TVTitleBlock from "@/components/blocks/tv/TVTitlesBlock/TVTitlesBlock";
 
 import type { FastAverageColorResult } from "fast-average-color";
 import type { GetServerSideProps } from "next/types";

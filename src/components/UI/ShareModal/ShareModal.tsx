@@ -10,13 +10,15 @@ import styles from "./ShadeModal.module.scss";
 interface ShareModalProps {
   id: number;
   title: string;
-  type: "movie" | "tv" | "person";
+  type: "movie" | "tv" | "person" | "lists";
+  label?: string;
 }
 
 const ShareModal: React.FC<ShareModalProps> = ({
   id,
   title,
   type = "movie",
+  label = null,
 }) => {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const inputRef = React.useRef<InputRef>(null);
@@ -27,6 +29,8 @@ const ShareModal: React.FC<ShareModalProps> = ({
     link = `https://react-dbmovies.vercel.app/movies/${id}`;
   } else if (type === "tv") {
     link = `https://react-dbmovies.vercel.app/tv/${id}`;
+  } else if (type === "lists") {
+    link = `https://react-dbmovies.vercel.app/lists/${id}`;
   } else {
     link = `https://react-dbmovies.vercel.app/person/${id}`;
   }
@@ -53,7 +57,7 @@ const ShareModal: React.FC<ShareModalProps> = ({
   return (
     <>
       <div onClick={showModal}>
-        <span>Поширити посилання</span>
+        <span>{label ? label : "Поширити посилання"}</span>
       </div>
       <Modal
         title={title}

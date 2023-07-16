@@ -3,8 +3,8 @@ import { useLazyGetAccountDetailsQuery } from "@/redux/api/account/slice";
 import { useSessionId } from "@/hooks/useSessionId";
 
 import DetailLayout from "@/layouts/DetailsLayout";
-import ProfileHead from "@/components/ProfileBlock/ProfileHead/ProfileHead";
-import ProfileMeta from "@/components/ProfileBlock/ProfileMeta/ProfileMeta";
+import ProfileHead from "@/components/blocks/profile/ProfileBlock/ProfileHead/ProfileHead";
+import ProfileMeta from "@/components/blocks/profile/ProfileBlock/ProfileMeta/ProfileMeta";
 import Head from "next/head";
 import { withAuth } from "@/auth/withAuth";
 

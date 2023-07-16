@@ -1,9 +1,9 @@
 import React from "react";
 
 import DetailLayout from "@/layouts/DetailsLayout";
-import MovieDetailsBlock from "@/components/MovieDetailsBlock/MovieDetailsBlock";
+import MovieDetailsBlock from "@/components/blocks/movie/MovieDetailsBlock/MovieDetailsBlock";
 import Head from "next/head";
-import DetailsTabs from "@/components/UI/DetailsTabs/DetailsTabs";
+import DetailsTabs from "@/components/UI/tabs/DetailsTabs/DetailsTabs";
 import type { ApiError } from "@/redux/api/baseApi/types/ErrorType";
 import type { GetServerSideProps } from "next/types";
 import type { MovieDetails } from "@/redux/api/movies/types";

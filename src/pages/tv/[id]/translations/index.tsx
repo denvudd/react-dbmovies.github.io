@@ -2,9 +2,9 @@ import React from "react";
 
 import Head from "next/head";
 import DetailsSider from "@/components/UI/DetailsSider/DetailsSider";
-import DetailsBanner from "@/components/UI/DetailsBanner/DetailsBanner";
-import DetailsTabs from "@/components/UI/DetailsTabs/DetailsTabs";
-import TVTranslationsBlock from "@/components/TVTranslationsBlock/TVTranslationsBlock";
+import DetailsBanner from "@/components/UI/banners/DetailsBanner/DetailsBanner";
+import DetailsTabs from "@/components/UI/tabs/DetailsTabs/DetailsTabs";
+import TVTranslationsBlock from "@/components/blocks/tv/TVTranslationsBlock/TVTranslationsBlock";
 import ListLayout from "@/layouts/ListLayout";
 import { FastAverageColor } from "fast-average-color";
 import { createRgbaString } from "@/utils/createRgbaString";

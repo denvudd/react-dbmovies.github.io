@@ -1,15 +1,16 @@
 import React from "react";
 import { useLazyGetAccountDetailsQuery } from "@/redux/api/account/slice";
+import { useScrollingUp } from "@/hooks/useScrollingUp";
 
-import { Affix, Layout, Menu, MenuProps } from "antd";
+import { Layout, Menu, MenuProps } from "antd";
 import Link from "next/link";
 import UserOutlined from "@ant-design/icons/lib/icons/UserOutlined";
 import PlusOutlined from "@ant-design/icons/lib/icons/PlusOutlined";
 import dynamic from "next/dynamic";
+import classNames from "classnames";
+import { mainNavMenu } from "./nav/main-nav";
 
 import styles from "./Header.module.scss";
-import { useScrollingUp } from "@/hooks/useScrollingUp";
-import classNames from "classnames";
 
 const DynamicSearchBar = dynamic(() => import("../SearchBar/SearchBar"));
 
@@ -30,108 +31,7 @@ const Header: React.FC = () => {
     }
   }, []);
 
-  const leftMenuItems: MenuProps["items"] = [
-    {
-      key: "movies",
-      label: (
-        <Link href={`/movies/popularMovies`} className={styles.link}>
-          Фільми
-        </Link>
-      ),
-      children: [
-        {
-          key: "movies/popularMovies",
-          label: (
-            <Link href={`/movies/popularMovies`} className={styles.link}>
-              Популярні
-            </Link>
-          ),
-          type: "group",
-        },
-        {
-          key: "movies/now-playing",
-          label: (
-            <Link href={`/movies/now-playing`} className={styles.link}>
-              Зараз у кіно
-            </Link>
-          ),
-          type: "group",
-        },
-        {
-          key: "movies/upcoming",
-          label: (
-            <Link href={`/movies/upcoming`} className={styles.link}>
-              Очікувані
-            </Link>
-          ),
-          type: "group",
-        },
-        {
-          key: "movies/top-rated",
-          label: (
-            <Link href={`/movies/top-rated`} className={styles.link}>
-              Рейтингові
-            </Link>
-          ),
-          type: "group",
-        },
-      ],
-    },
-    {
-      key: "tv",
-      label: (
-        <Link href={`/tv/popularTV`} className={styles.link}>
-          Серіали
-        </Link>
-      ),
-      children: [
-        {
-          key: "tv/popularTV",
-          label: (
-            <Link href={`/tv/popularTV`} className={styles.link}>
-              Популярні
-            </Link>
-          ),
-          type: "group",
-        },
-        {
-          key: "tv/airing-today",
-          label: (
-            <Link href={`/tv/airing-today`} className={styles.link}>
-              Сьогодні в ефірі
-            </Link>
-          ),
-          type: "group",
-        },
-        {
-          key: "tv/on-the-air",
-          label: (
-            <Link href={`/tv/on-the-air`} className={styles.link}>
-              Зараз на ТБ
-            </Link>
-          ),
-          type: "group",
-        },
-        {
-          key: "tv/top-rated",
-          label: (
-            <Link href={`/tv/top-rated`} className={styles.link}>
-              Рейтингові
-            </Link>
-          ),
-          type: "group",
-        },
-      ],
-    },
-    {
-      key: "persons",
-      label: (
-        <Link href={`/person/popular`} className={styles.link}>
-          Персони
-        </Link>
-      ),
-    },
-  ];
+  const leftMenuItems: MenuProps["items"] = mainNavMenu;
 
   const rightMenuItems: MenuProps["items"] = [
     {

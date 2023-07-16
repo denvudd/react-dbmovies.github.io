@@ -1,8 +1,8 @@
 import React from "react";
 
 import DetailLayout from "@/layouts/DetailsLayout";
-import ListDetailsHead from "@/components/ListDetailsBlock/ListDetailsHead/ListDetailsHead";
-import ListDetailsBody from "@/components/ListDetailsBlock/ListDetailsBody/ListDetailsBody";
+import ListDetailsHead from "@/components/blocks/ListDetailsBlock/ListDetailsHead/ListDetailsHead";
+import ListDetailsBody from "@/components/blocks/ListDetailsBlock/ListDetailsBody/ListDetailsBody";
 import ErrorPrivate from "@/components/UI/ErrorPrivate/ErrorPrivate";
 import Head from "next/head";
 import type { GetServerSideProps } from "next/types";
@@ -42,12 +42,13 @@ export const getServerSideProps: GetServerSideProps<
 const ListDetailsPage: React.FC<ListDetailsPageProps> = ({ id, list }) => {
   const isError = "status_code" in list;
   const isPrivateList = isError && list.status_code === 34;
+
   return (
     <>
       <Head>
         <title>
-          {!isError && !isPrivateList ? list.name : "Приватний ресурс"} — The
-          Movie Database (TMDB)
+          {(!isError && !isPrivateList ? list.name : "Приватний ресурс") +
+            " — The Movie Database (TMDB)"}
         </title>
         <meta
           property="og:url"

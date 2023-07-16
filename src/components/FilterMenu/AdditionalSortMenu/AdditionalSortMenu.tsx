@@ -16,6 +16,9 @@ import type { RangePickerProps } from "antd/es/date-picker";
 import type { Keyword } from "@/redux/api/types/common";
 
 import styles from "./AdditionalSortMenu.module.scss";
+import { rangePicker } from "./range-picker";
+import { voteAverageMarks, voteCountMarks } from "./vote-marks";
+import { runtimeMarks } from "./runtime-marks";
 interface AdditionalSortMenuProps {
   onAdditionalSortChange: (additionalSortBy: AdditionalSortDataState) => void;
   mediaType: "movies" | "tv";
@@ -215,59 +218,7 @@ const AdditionalSortMenu: React.FC<AdditionalSortMenuProps> = React.memo(
                   <DatePicker.RangePicker
                     onChange={handleDateChange}
                     placeholder={["Початок", "Кінець"]}
-                    presets={[
-                      {
-                        label: "Останні 7 днів",
-                        value: getLastSpecificDays(-7),
-                      },
-                      {
-                        label: "Останні 14 днів",
-                        value: getLastSpecificDays(-14),
-                      },
-                      {
-                        label: "Останні 30 днів",
-                        value: getLastSpecificDays(-30),
-                      },
-                      {
-                        label: "Останні 90 днів",
-                        value: getLastSpecificDays(-90),
-                      },
-                      {
-                        label: "За 2022 рік",
-                        value: [
-                          getSpecificYear(2022)[0],
-                          getSpecificYear(2022)[1],
-                        ],
-                      },
-                      {
-                        label: "За 2021 рік",
-                        value: [
-                          getSpecificYear(2021)[0],
-                          getSpecificYear(2021)[1],
-                        ],
-                      },
-                      {
-                        label: "За 2020 рік",
-                        value: [
-                          getSpecificYear(2020)[0],
-                          getSpecificYear(2020)[1],
-                        ],
-                      },
-                      {
-                        label: "За 2019 рік",
-                        value: [
-                          getSpecificYear(2019)[0],
-                          getSpecificYear(2019)[1],
-                        ],
-                      },
-                      {
-                        label: "За 2018 рік",
-                        value: [
-                          getSpecificYear(2018)[0],
-                          getSpecificYear(2018)[1],
-                        ],
-                      },
-                    ]}
+                    presets={rangePicker}
                     locale={locale}
                   />
                 ),
@@ -367,14 +318,10 @@ const AdditionalSortMenu: React.FC<AdditionalSortMenuProps> = React.memo(
                   <Slider
                     className={styles.slider}
                     range
-                    defaultValue={[0, 10]}
-                    marks={{
-                      0: <span className={styles.mark}>0</span>,
-                      5: <span className={styles.mark}>5</span>,
-                      10: <span className={styles.mark}>10</span>,
-                    }}
-                    min={0}
-                    max={10}
+                    defaultValue={voteAverageMarks.range as [number, number]}
+                    marks={voteAverageMarks.values}
+                    min={voteAverageMarks.range[0]}
+                    max={voteAverageMarks.range[1]}
                     railStyle={{ backgroundColor: "#fff" }}
                     tooltip={{
                       formatter: (value) => <span>Оцінка {value}</span>,
@@ -398,18 +345,14 @@ const AdditionalSortMenu: React.FC<AdditionalSortMenuProps> = React.memo(
                   <Slider
                     className={styles.slider}
                     range
-                    defaultValue={[0, 500]}
-                    marks={{
-                      0: <span className={styles.mark}>0</span>,
-                      100: <span className={styles.mark}>100</span>,
-                      200: <span className={styles.mark}>200</span>,
-                      300: <span className={styles.mark}>300</span>,
-                      400: <span className={styles.mark}>400</span>,
-                      500: <span className={styles.mark}>500</span>,
-                    }}
-                    step={50}
-                    min={0}
-                    max={500}
+                    defaultValue={[
+                      voteCountMarks.range[0],
+                      voteCountMarks.range[voteCountMarks.range.length - 1],
+                    ]}
+                    marks={voteCountMarks.values}
+                    step={voteCountMarks.step}
+                    min={voteCountMarks.range[0]}
+                    max={voteCountMarks.range[voteCountMarks.range.length - 1]}
                     railStyle={{ backgroundColor: "#fff" }}
                     tooltip={{
                       formatter: (value) => <span>Голосів {value}</span>,
@@ -433,16 +376,14 @@ const AdditionalSortMenu: React.FC<AdditionalSortMenuProps> = React.memo(
                   <Slider
                     className={styles.slider}
                     range
-                    defaultValue={[0, 400]}
-                    marks={{
-                      0: <span className={styles.mark}>0</span>,
-                      120: <span className={styles.mark}>120</span>,
-                      240: <span className={styles.mark}>240</span>,
-                      360: <span className={styles.mark}>360</span>,
-                    }}
-                    step={15}
-                    min={0}
-                    max={400}
+                    defaultValue={[
+                      runtimeMarks.range[0],
+                      runtimeMarks.range[runtimeMarks.range.length - 1],
+                    ]}
+                    marks={runtimeMarks.values}
+                    step={runtimeMarks.step}
+                    min={runtimeMarks.range[0]}
+                    max={runtimeMarks.range[runtimeMarks.range.length - 1]}
                     railStyle={{ backgroundColor: "#fff" }}
                     tooltip={{
                       formatter: (value) => <span>Тривалість {value}</span>,

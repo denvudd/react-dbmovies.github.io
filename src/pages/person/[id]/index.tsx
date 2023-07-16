@@ -1,9 +1,9 @@
 import React from "react";
 
 import DetailLayout from "@/layouts/DetailsLayout";
-import PersonDetailsBlock from "@/components/PersonDetailsBlock/PersonDetailsBlock";
+import PersonDetailsBlock from "@/components/blocks/person/PersonDetailsBlock/PersonDetailsBlock";
 import Head from "next/head";
-import DetailsTabs from "@/components/UI/DetailsTabs/DetailsTabs";
+import DetailsTabs from "@/components/UI/tabs/DetailsTabs/DetailsTabs";
 import type { ApiError } from "@/redux/api/baseApi/types/ErrorType";
 import type { GetServerSideProps } from "next/types";
 import type { PersonDetails } from "@/redux/api/people/types";
@@ -18,9 +18,9 @@ import type { PersonDetails } from "@/redux/api/people/types";
   #1 https://nextjs.org/docs/pages/building-your-application/data-fetching/get-server-side-props#getserversideprops-with-edge-api-routes
   !! Doesn't work in dev mode !!
 */
-export const config = {
-  runtime: "experimental-edge", // warn: using an experimental edge runtime, the API might change
-};
+// export const config = {
+//   runtime: "experimental-edge", // warn: using an experimental edge runtime, the API might change
+// };
 
 interface PersonDetailsPageProps {
   data: PersonDetails;

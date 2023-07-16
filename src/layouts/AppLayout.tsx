@@ -1,10 +1,11 @@
 import React from "react";
+import { siteConfig } from "@/config/site";
 
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import { FloatButton, Layout } from "antd";
 import Head from "next/head";
-import BannerSupportUkraine from "@/components/UI/BannerSupportUkraine/BannerSupportUkraine";
+import BannerSupportUkraine from "@/components/UI/libs/banners/BannerSupportUkraine/BannerSupportUkraine";
 interface Props {
   children: React.ReactNode;
 }
@@ -15,21 +16,21 @@ const AppLayout: React.FC<Props> = ({ children }) => {
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta
-          name="description"
-          content="The Movie Database (TMDB) is a popular, user editable database for movies and TV shows."
+          name={"description"}
+          content={siteConfig.description}
         />
         <meta
           name="keywords"
-          content="Movies, TV Shows, Streaming, Reviews, API, Actors, Actresses, Photos, User Ratings, Synopsis, Trailers, Teasers, Credits, Cast"
+          content={siteConfig.keywords}
         />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="msapplication-TileColor" content="#032541" />
-        <meta property="og:type" content="website" />
-        <meta property="og:locale" content="uk_UA" />
-        <meta property="og:site_name" content="The Movie Database" />
-        <meta property="fb:app_id" content="141280979243998" />
-        <meta name="twitter:site" content="@themoviedb" />
+        <meta name="msapplication-TileColor" content={siteConfig.tileColor} />
+        <meta property="og:type" content={siteConfig.openGraph.type} />
+        <meta property="og:locale" content={siteConfig.openGraph.locale} />
+        <meta property="og:site_name" content={siteConfig.openGraph.siteName} />
+        <meta property="fb:app_id" content={siteConfig.fb.appId} />
+        <meta name="twitter:site" content={siteConfig.twitter.site} />
         <link
           rel="icon"
           type="image/png"
