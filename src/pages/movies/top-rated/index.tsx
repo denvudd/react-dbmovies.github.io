@@ -2,7 +2,9 @@ import React from "react";
 import { useLazyGetMoviesQuery } from "@/redux/api/movies/slice";
 import { useLazyGetMovieDiscoverQuery } from "@/redux/api/discover/slice";
 import { useSelector } from "react-redux";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
+import { selectParams } from "@/redux/params/selectors";
 import Head from "next/head";
 import { Pagination } from "antd";
 import MediaElementCard from "@/components/UI/cards/MediaElementCard/MediaElementCard";
@@ -10,9 +12,8 @@ import MovieList from "@/components/UI/MovieList/MovieList";
 import MediaElementSkeleton from "@/components/UI/MediaElementSkeleton/MediaElementSkeleton";
 import FilterMenu from "@/components/FilterMenu/FilterMenu";
 import ListLayout from "@/layouts/ListLayout";
-import { selectParams } from "@/redux/params/selectors";
 import { isSortParamsEmpty } from "@/utils/isSortParamsEmpty";
-import type { MovieListApiResponse } from "@/redux/api/movies/types";
+import type { MovieListApiResponse } from "@/redux/api/movies/types/MovieListType";
 interface MovieCard {
   id: number;
   title: string;
@@ -22,7 +23,7 @@ interface MovieCard {
   release_date: string;
 }
 
-export const Home = () => {
+export const PopularMoviesPage = () => {
   const params = useSelector(selectParams);
   const [currentPageDefault, setCurrentPageDefault] = React.useState(1);
   const [currentPageSort, setCurrentPageSort] = React.useState(1);
@@ -33,6 +34,7 @@ export const Home = () => {
   const [data, setData] = React.useState<MovieListApiResponse | undefined>(
     undefined
   );
+  const isMobile = useIsMobile();
 
   // getDefaultMovies
   const handlePageChangeDefault = (page: number) => {
@@ -61,10 +63,10 @@ export const Home = () => {
     const queryParameters = {
       language: language ? `&with_original_language=${language}` : "",
       releaseDateGte: releaseDates?.date_gte
-        ? `&release_date.gte=${releaseDates.date_gte}`
+        ? `&primary_release_date.gte=${releaseDates.date_gte}`
         : "",
       releaseDateLte: releaseDates?.date_lte
-        ? `&release_date.lte=${releaseDates.date_lte}`
+        ? `&primary_release_date.lte=${releaseDates.date_lte}`
         : "",
       voteAverageGte: voteAverage?.voteAverage_gte
         ? `&vote_average.gte=${voteAverage.voteAverage_gte}`
@@ -103,7 +105,7 @@ export const Home = () => {
     if (isSortParamsEmpty(params)) {
       getDefaultMovies(
         {
-          typeList: "top_rated",
+          typeList: "popular",
           params: `language=uk-UA&page=${currentPageDefault}`,
         },
         true
@@ -168,6 +170,7 @@ export const Home = () => {
                           description={movie.overview}
                           voteAverage={movie.vote_average}
                           release={movie.release_date}
+                          size={!isMobile ? "default" : "small"}
                         />
                       )}
                     />
@@ -199,4 +202,4 @@ export const Home = () => {
   );
 };
 
-export default Home;
+export default PopularMoviesPage;

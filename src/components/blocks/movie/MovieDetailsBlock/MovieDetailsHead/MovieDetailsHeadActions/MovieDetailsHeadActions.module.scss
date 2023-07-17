@@ -21,6 +21,10 @@
       font-weight: 700;
       width: 90px;
     }
+
+    @media (max-width: 890px) {
+      margin-right: 0;
+    }
   }
 
   .video {
@@ -36,6 +40,16 @@
       color: #fff;
     }
   }
+
+  .actions {
+    display: flex;
+  }
+
+  @media (max-width: 890px) {
+    flex-direction: column;
+    height: auto;
+    gap: 20px;
+  }
 }
 
 .tooltip {
@@ -43,6 +57,11 @@
 
   &Wrapper {
     margin-right: 20px;
+
+    @media (max-width: 890px) {
+      margin-left: 10px;
+      margin-right: 10px;
+    }
   }
 
   button {

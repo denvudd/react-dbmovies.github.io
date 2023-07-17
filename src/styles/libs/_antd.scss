@@ -1,5 +1,47 @@
 @import '@/styles/variables';
 
+.ant-tabs-extra-content {
+  @media (max-width: 576px) {
+    display: flex !important;
+    justify-content: flex-start !important;
+    width: 100% !important;
+    margin-bottom: 10px !important;
+  }
+}
+
+.ant-tabs-nav {
+  @media (max-width: 576px) {
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+
+    .ant-tabs-nav-wrap {
+      width: 100% !important;
+      overflow: visible !important;
+
+      &::after {
+        display: none !important;
+      }
+
+      &::before {
+        display: none !important;
+      }
+
+      .ant-tabs-nav-list {
+        transform: none !important;
+      }
+    }
+  }
+}
+
+.ant-layout {
+  min-width: 100% !important;
+  width: 100% !important;
+}
+
+.ant-layout-content {
+  width: 100% !important;
+}
+
 .ant-menu-dark {
   color: #fff !important;
 

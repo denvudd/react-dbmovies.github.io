@@ -71,7 +71,7 @@ const MovieDetailsMedia: React.FC<MovieDetailsMediaProps> = ({
 
   return (
     <div className={styles.media}>
-      <div className="app-container content-with-aside">
+      <div className={styles.contentWithAside + " app-container"}>
         <div className="media-content">
           <MovieDetailsCast id={id} />
           <MovieDetailsSocial id={id} />

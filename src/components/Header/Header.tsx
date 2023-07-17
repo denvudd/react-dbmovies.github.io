@@ -1,14 +1,16 @@
 import React from "react";
 import { useLazyGetAccountDetailsQuery } from "@/redux/api/account/slice";
 import { useScrollingUp } from "@/hooks/useScrollingUp";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
-import { Layout, Menu, MenuProps } from "antd";
+import { Button, Drawer, Layout, Menu, MenuProps } from "antd";
 import Link from "next/link";
 import UserOutlined from "@ant-design/icons/lib/icons/UserOutlined";
 import PlusOutlined from "@ant-design/icons/lib/icons/PlusOutlined";
 import dynamic from "next/dynamic";
 import classNames from "classnames";
 import { mainNavMenu } from "./nav/main-nav";
+import { MenuOutlined } from "@ant-design/icons";
 
 import styles from "./Header.module.scss";
 
@@ -20,6 +22,12 @@ const Header: React.FC = () => {
     { data: accountDetails, isLoading: isAccountDetailsLoading },
   ] = useLazyGetAccountDetailsQuery();
   const { scrollingUp, isStart } = useScrollingUp();
+  const [visible, setVisible] = React.useState(false);
+  const isMobile = useIsMobile();
+
+  const showDrawer = () => {
+    setVisible(!visible);
+  };
 
   React.useEffect(() => {
     const sessionId = localStorage.getItem("session_id");
@@ -71,7 +79,7 @@ const Header: React.FC = () => {
         },
       ],
     },
-    {
+    !isMobile ? {
       key: "account",
       label: (
         <Link href={`/login`} className={styles.link}>
@@ -168,7 +176,7 @@ const Header: React.FC = () => {
           type: "group",
         },
       ],
-    },
+    } : null,
     {
       key: "search",
       label: <DynamicSearchBar />,
@@ -186,8 +194,16 @@ const Header: React.FC = () => {
       <div className={styles.container}>
         <div className={styles.content}>
           <div className={styles.menuWrapper}>
+            <Button
+              className={styles.mobileMenuButton}
+              type="text"
+              onClick={showDrawer}
+              style={{ fontSize: "1.3em", color: "#fff" }}
+            >
+              <MenuOutlined />
+            </Button>
             <Link href={"/"} className={styles.logo}>
-              THE MOVIE DB
+              TMDB
             </Link>
             <div className={styles.navigation}>
               <Menu
@@ -204,7 +220,18 @@ const Header: React.FC = () => {
                 className={styles.rightMenu}
                 style={{ minWidth: 0, flex: "auto" }}
                 selectable={false}
+                triggerSubMenuAction="hover"
               />
+              <Drawer
+                title={"Brand Here"}
+                placement="left"
+                closable={true}
+                onClose={showDrawer}
+                open={visible}
+                style={{ zIndex: 99999 }}
+              >
+                12
+              </Drawer>
             </div>
           </div>
         </div>

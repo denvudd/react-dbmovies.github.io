@@ -2,6 +2,7 @@ import React from "react";
 import { useLazyGetMoviesQuery } from "@/redux/api/movies/slice";
 import { useLazyGetMovieDiscoverQuery } from "@/redux/api/discover/slice";
 import { useSelector } from "react-redux";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 import { selectParams } from "@/redux/params/selectors";
 import Head from "next/head";
@@ -12,7 +13,7 @@ import MediaElementSkeleton from "@/components/UI/MediaElementSkeleton/MediaElem
 import FilterMenu from "@/components/FilterMenu/FilterMenu";
 import ListLayout from "@/layouts/ListLayout";
 import { isSortParamsEmpty } from "@/utils/isSortParamsEmpty";
-import { MovieListApiResponse } from "@/redux/api/movies/types/MovieListType";
+import type { MovieListApiResponse } from "@/redux/api/movies/types/MovieListType";
 interface MovieCard {
   id: number;
   title: string;
@@ -33,6 +34,7 @@ export const PopularMoviesPage = () => {
   const [data, setData] = React.useState<MovieListApiResponse | undefined>(
     undefined
   );
+  const isMobile = useIsMobile();
 
   // getDefaultMovies
   const handlePageChangeDefault = (page: number) => {
@@ -168,6 +170,7 @@ export const PopularMoviesPage = () => {
                           description={movie.overview}
                           voteAverage={movie.vote_average}
                           release={movie.release_date}
+                          size={!isMobile ? "default" : "small"}
                         />
                       )}
                     />

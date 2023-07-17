@@ -12,17 +12,11 @@ interface Props {
 
 const AppLayout: React.FC<Props> = ({ children }) => {
   return (
-    <Layout className="layout-main">
+    <>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta
-          name={"description"}
-          content={siteConfig.description}
-        />
-        <meta
-          name="keywords"
-          content={siteConfig.keywords}
-        />
+        <meta name={"description"} content={siteConfig.description} />
+        <meta name="keywords" content={siteConfig.keywords} />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="msapplication-TileColor" content={siteConfig.tileColor} />
@@ -50,11 +44,15 @@ const AppLayout: React.FC<Props> = ({ children }) => {
         ></link>
       </Head>
       <BannerSupportUkraine />
-      <Header />
-      <Layout.Content className="main">{children}</Layout.Content>
+      <Layout style={{overflowX: "hidden"}}>
+        <Header />
+        <Layout.Content className="main" style={{ width: "100% !important" }}>
+          {children}
+        </Layout.Content>
+        <Footer />
+      </Layout>
       <FloatButton.BackTop tooltip="Нагору" type="primary" />
-      <Footer />
-    </Layout>
+    </>
   );
 };
 

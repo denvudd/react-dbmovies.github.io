@@ -141,37 +141,35 @@ const MovieDetailsHead: React.FC<MovieDetailsHeadProps> = ({
                       <a href="">{title} </a>
                       <span>({releaseYear ? releaseYear : "-"})</span>
                     </h2>
-                    <div className={styles.headerFacts}>
-                      {certificate && (
-                        <span className="head-certification">
-                          {certificate}
-                        </span>
-                      )}
-                      <span className={styles.release}>{release_date}</span>
-                      <span className={styles.genres}>
-                        {genres &&
-                          genres.map((genre, index, array) => {
-                            if (index + 1 !== array.length) {
-                              return (
-                                <a key={genre.id} href="">
-                                  {genre.name},{" "}
-                                </a>
-                              );
-                            } else {
-                              return (
-                                <a key={genre.id} href="">
-                                  {genre.name}
-                                </a>
-                              );
-                            }
-                          })}
+                  </div>
+                  <div className={styles.headerFacts}>
+                    {certificate && (
+                      <span className="head-certification">{certificate}</span>
+                    )}
+                    <span className={styles.release}>{release_date}</span>
+                    <span className={styles.genres}>
+                      {genres &&
+                        genres.map((genre, index, array) => {
+                          if (index + 1 !== array.length) {
+                            return (
+                              <a key={genre.id} href="">
+                                {genre.name},{" "}
+                              </a>
+                            );
+                          } else {
+                            return (
+                              <a key={genre.id} href="">
+                                {genre.name}
+                              </a>
+                            );
+                          }
+                        })}
+                    </span>
+                    {runtime && (
+                      <span className={styles.runtime}>
+                        {formatRuntime(runtime)}
                       </span>
-                      {runtime && (
-                        <span className={styles.runtime}>
-                          {formatRuntime(runtime)}
-                        </span>
-                      )}
-                    </div>
+                    )}
                   </div>
                   <MovieDetailsHeadActions
                     voteAverage={vote_average}

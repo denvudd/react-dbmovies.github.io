@@ -32,6 +32,7 @@
 
 .layout-main {
   background-color: $tmdbDarkBlue !important;
+  width: 100% !important;
 }
 
 .stickyHeader {
@@ -179,6 +180,10 @@
   &:first-of-type {
     border-top: 0;
     padding-top: 0;
+  }
+
+  @media (max-width: 890px) {
+    padding: 20px 0;
   }
 }
 

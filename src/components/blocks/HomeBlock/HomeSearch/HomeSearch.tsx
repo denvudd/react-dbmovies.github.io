@@ -1,12 +1,16 @@
 import React from "react";
+import { useRouter } from "next/router";
+import { useIsMobile } from "@/hooks/useIsMobile";
+
+import Link from "next/link";
 
 import styles from "./HomeSearch.module.scss";
-import Link from "next/link";
-import { useRouter } from "next/router";
+
 
 const HomeSearch: React.FC = () => {
   const [searchQuery, setSearchQuery] = React.useState("");
   const router = useRouter();
+  const isMobile = useIsMobile();
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);
@@ -30,7 +34,7 @@ const HomeSearch: React.FC = () => {
             className={styles.search}
             type="text"
             tabIndex={1}
-            placeholder="Пошук фільму, серіалу, персони..."
+            placeholder={!isMobile ? "Пошук фільму, серіалу, персони..." : "Пошук..."}
             onChange={handleInputChange}
             onKeyDown={handleKeyDown}
           />

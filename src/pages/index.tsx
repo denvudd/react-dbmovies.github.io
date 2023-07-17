@@ -1,6 +1,6 @@
 import Head from "next/head";
 import DetailLayout from "@/layouts/DetailsLayout";
-import HomeBlock from "@/components/blocks/HomeBlock";
+import HomeBlock from "@/components/blocks/HomeBlock/HomeBlock";
 
 export const Home = () => {
   return (

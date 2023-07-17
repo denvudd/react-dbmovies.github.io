@@ -4,6 +4,10 @@
   max-width: 1440px;
   margin: 0 auto;
   padding: 0 1.5rem;
+
+  @media (max-width: 890px) {
+    padding: 0 20px;
+  }
 }
 
 .content-with-aside {
@@ -13,9 +17,28 @@
   width: 100%;
 }
 
+.list-layout {
+  @media (max-width: 890px) {
+    display: flex;
+    flex-direction: column !important;
+    width: 100% !important;
+
+    .ant-layout-sider {
+      width: 100% !important;
+      min-width: 100% !important;
+      max-width: 100% !important;
+      flex: auto !important;
+    }
+  }
+}
+
 .media-content {
   width: calc(100vw - 80px - 268px);
   max-width: calc(1440px - 80px - 268px);
+
+  @media (max-width: 890px) {
+    width: 100%;
+  }
 }
 
 @media (max-width: 1200px) {

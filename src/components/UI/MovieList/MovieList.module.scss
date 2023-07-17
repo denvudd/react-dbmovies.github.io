@@ -30,6 +30,6 @@
 
   @media (max-width: 575px) {
     /* xs - <576px */
-    grid-template-columns: repeat(auto-fit, 230px);
+    grid-template-columns: repeat(auto-fit, 75%);
   }
 }
