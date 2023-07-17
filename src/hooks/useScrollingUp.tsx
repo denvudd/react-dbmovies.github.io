@@ -1,10 +1,15 @@
 import React from "react";
 
+export interface ScrollData {
+  scrollingUp: boolean;
+  isStart: boolean;
+}
+
 /**
  * A custom React hook for tracking user scrolling. Returns an object with stateful boolean values.
  */
 
-export const useScrollingUp = () => {
+export const useScrollingUp = (): ScrollData => {
   const [scrollingUp, setScrollingUp] = React.useState(true);
   const [isStart, setIsStart] = React.useState(true);
 
