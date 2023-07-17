@@ -51,15 +51,7 @@ const MovieDetailsPage: React.FC<PersonDetailsPageProps> = ({ data }) => {
   const {
     id,
     name,
-    also_known_as,
     biography,
-    birthday,
-    deathday,
-    gender,
-    homepage,
-    imdb_id,
-    known_for_department,
-    place_of_birth,
     profile_path,
   } = data;
 

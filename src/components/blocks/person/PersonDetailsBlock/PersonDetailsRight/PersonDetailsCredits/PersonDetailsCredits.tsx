@@ -36,6 +36,7 @@ const PersonDetailsCredits: React.FC<PersonDetailsCreditsProps> = ({
       title: string;
       release: string | null;
       type: "movie" | "tv";
+      as: string | null;
     }[]
   > = new Map();
 
@@ -67,6 +68,7 @@ const PersonDetailsCredits: React.FC<PersonDetailsCreditsProps> = ({
             title: element.title,
             release: element.release_date,
             type: "movie",
+            as: element.character ? element.character : null,
           });
         } else if (element.media_type === "tv") {
           const [year] = element.first_air_date.split("-");
@@ -80,6 +82,7 @@ const PersonDetailsCredits: React.FC<PersonDetailsCreditsProps> = ({
             title: element.name,
             release: element.first_air_date,
             type: "tv",
+            as: element.character ? element.character : null,
           });
         }
       });
@@ -104,6 +107,7 @@ const PersonDetailsCredits: React.FC<PersonDetailsCreditsProps> = ({
             title: element.title,
             release: element.release_date,
             type: "movie",
+            as: element.job ? element.job : null,
           });
         } else if (element.media_type === "tv") {
           const [year] = element.first_air_date.split("-");
@@ -117,6 +121,7 @@ const PersonDetailsCredits: React.FC<PersonDetailsCreditsProps> = ({
             title: element.name,
             release: element.first_air_date,
             type: "tv",
+            as: element.job ? element.job : null,
           });
         }
       });
@@ -129,9 +134,6 @@ const PersonDetailsCredits: React.FC<PersonDetailsCreditsProps> = ({
       return formattedCredits.sort((a, b) => Number(b.year) - Number(a.year));
     }
   };
-
-  console.log(known_for_department);
-  
 
   return (
     <>
@@ -157,6 +159,14 @@ const PersonDetailsCredits: React.FC<PersonDetailsCreditsProps> = ({
                             >
                               {title.title}
                             </Link>
+                            {title.as && (
+                              <span className={styles.creditAs}>
+                                як{" "}
+                                <span className={styles.character}>
+                                  {title.as}
+                                </span>
+                              </span>
+                            )}
                           </td>
                         </tr>
                       ))}
@@ -196,6 +206,14 @@ const PersonDetailsCredits: React.FC<PersonDetailsCreditsProps> = ({
                                     <Link href={`/${title.type}/${title.id}`}>
                                       {title.title}
                                     </Link>
+                                    {title.as && (
+                                      <span className={styles.creditAs}>
+                                        як{" "}
+                                        <span className={styles.character}>
+                                          {title.as}
+                                        </span>
+                                      </span>
+                                    )}
                                   </td>
                                 </tr>
                               ))}

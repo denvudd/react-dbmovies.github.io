@@ -4,7 +4,7 @@ import type {
   GenresListQueryArgs,
 } from "./types/MovieListGenreType";
 
-const tmdbApiKey = "api_key=684e3f73d1ca0e692a3016c028aabf72";
+const tmdbApiKey = `api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`;
 
 export const genresApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({

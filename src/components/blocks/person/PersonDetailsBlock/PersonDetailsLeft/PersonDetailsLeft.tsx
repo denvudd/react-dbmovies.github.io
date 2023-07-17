@@ -1,4 +1,5 @@
 import React from "react";
+import { useGetPersonExternalIDsQuery } from "@/redux/api/people/slice";
 
 import Image from "next/image";
 import { calculateAgeFromDate } from "@/utils/calcAgeFromDate";
@@ -7,7 +8,14 @@ import { checkDepartmentName } from "@/utils/checkDepartmentName";
 import type { PersonDetails } from "@/redux/api/people/types";
 
 import styles from "./PersonDetailsLeft.module.scss";
-
+import Link from "next/link";
+import {
+  FacebookFilled,
+  TwitterSquareFilled,
+  InstagramFilled,
+  YoutubeFilled,
+} from "@ant-design/icons";
+import { Skeleton, Space, Tooltip, Typography } from "antd";
 interface PersonDetailsLeftProps {
   id: number;
   profile_path: string | null;
@@ -31,6 +39,10 @@ const PersonDetailsLeft: React.FC<PersonDetailsLeftProps> = ({
   place_of_birth,
   name,
 }) => {
+  const { data: social, isLoading: isSocialLoading } =
+    useGetPersonExternalIDsQuery({ id });
+  const externalIds = social ? Object.entries(social) : undefined;
+
   const genderTypeChecker = (gender: PersonDetails["gender"]) => {
     switch (gender) {
       case 0:
@@ -65,6 +77,111 @@ const PersonDetailsLeft: React.FC<PersonDetailsLeftProps> = ({
       </section>
       <div className={styles.content}>
         <section className={styles.facts}>
+          {social && !isSocialLoading && (
+            <div className={styles.social}>
+              <Space size={10} className={styles.socialLinks}>
+                {social && !isSocialLoading && social.facebook_id && (
+                  <Tooltip
+                    title={<span>Відвідайте Facebook</span>}
+                    placement="bottom"
+                    zIndex={90}
+                  >
+                    <Typography.Link
+                      href={`https://www.facebook.com/${social.facebook_id}`}
+                      target="_blank"
+                      className={styles.socialLink}
+                    >
+                      <FacebookFilled
+                        style={{
+                          fontSize: "1.9em",
+                          color: "#000",
+                          marginBottom: "30px",
+                        }}
+                      />
+                    </Typography.Link>
+                  </Tooltip>
+                )}
+
+                {social && !isSocialLoading && social.twitter_id && (
+                  <Tooltip
+                    title={<span>Відвідайте Twitter</span>}
+                    placement="bottom"
+                    zIndex={90}
+                  >
+                    <Typography.Link
+                      href={`https://twitter.com/${social.twitter_id}`}
+                      target="_blank"
+                      className={styles.socialLink}
+                    >
+                      <TwitterSquareFilled
+                        style={{
+                          fontSize: "1.9em",
+                          color: "#000",
+                          marginBottom: "30px",
+                        }}
+                      />
+                    </Typography.Link>
+                  </Tooltip>
+                )}
+                {social && !isSocialLoading && social.instagram_id && (
+                  <Tooltip
+                    title={<span>Відвідайте Instagram</span>}
+                    placement="bottom"
+                    zIndex={90}
+                  >
+                    <Typography.Link
+                      href={`https://www.instagram.com/${social.instagram_id}`}
+                      target="_blank"
+                      className={styles.socialLink}
+                    >
+                      <InstagramFilled
+                        style={{
+                          fontSize: "1.9em",
+                          color: "#000",
+                          marginBottom: "30px",
+                        }}
+                      />
+                    </Typography.Link>
+                  </Tooltip>
+                )}
+                {social && !isSocialLoading && social.youtube_id && (
+                  <Tooltip
+                    title={<span>Відвідайте Youtube</span>}
+                    placement="bottom"
+                    zIndex={90}
+                  >
+                    <Typography.Link
+                      href={`https://www.youtube.com/${social.youtube_id}`}
+                      target="_blank"
+                      className={styles.socialLink}
+                    >
+                      <YoutubeFilled
+                        style={{
+                          fontSize: "1.9em",
+                          color: "#000",
+                          marginBottom: "30px",
+                        }}
+                      />
+                    </Typography.Link>
+                  </Tooltip>
+                )}
+              </Space>
+            </div>
+          )}
+          {isSocialLoading && (
+            <Space size={10} className={styles.socialLinks}>
+              {Array(3)
+                .fill(1)
+                .map((_, index) => (
+                  <div className={styles.socialLink} key={index}>
+                    <Skeleton.Avatar
+                      active={true}
+                      size="default"
+                    />
+                  </div>
+                ))}
+            </Space>
+          )}
           <h3>
             <bdi>Особиста інформація</bdi>
           </h3>

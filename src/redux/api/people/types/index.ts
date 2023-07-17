@@ -16,3 +16,4 @@ export type {
   PersonTranslationData,
 } from "./PersonTranslationsType";
 export type { PersonImagesApiResponse } from "./PersonImagesType";
+export type { PersonExternalIDsApiResponse } from "./PersonExternalIDsType";

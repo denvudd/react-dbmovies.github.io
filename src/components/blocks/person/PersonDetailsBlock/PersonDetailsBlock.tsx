@@ -24,7 +24,6 @@ const PersonDetailsBlock: React.FC<PersonDetailsBlockProps> = ({
     deathday,
     gender,
     homepage,
-    imdb_id,
     known_for_department,
     place_of_birth,
     profile_path,

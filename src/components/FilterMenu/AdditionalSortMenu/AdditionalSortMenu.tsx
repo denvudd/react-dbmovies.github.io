@@ -9,16 +9,14 @@ import { AdditionalSortDataState } from "../FilterMenu";
 import LoadingOutlined from "@ant-design/icons/lib/icons/LoadingOutlined";
 import "dayjs/locale/uk.js";
 import locale from "antd/lib/date-picker/locale/uk_UA";
-import { getSpecificYear } from "@/utils/getSpecificYear";
-import { getLastSpecificDays } from "@/utils/getLastSpecificDays";
+import { rangePicker } from "./range-picker";
+import { voteAverageMarks, voteCountMarks } from "./vote-marks";
+import { runtimeMarks } from "./runtime-marks";
 
 import type { RangePickerProps } from "antd/es/date-picker";
 import type { Keyword } from "@/redux/api/types/common";
 
 import styles from "./AdditionalSortMenu.module.scss";
-import { rangePicker } from "./range-picker";
-import { voteAverageMarks, voteCountMarks } from "./vote-marks";
-import { runtimeMarks } from "./runtime-marks";
 interface AdditionalSortMenuProps {
   onAdditionalSortChange: (additionalSortBy: AdditionalSortDataState) => void;
   mediaType: "movies" | "tv";
