@@ -9,5 +9,6 @@
 */
 
 export const formatFirstLetterToUppercase = (str: string): string => {
-  return str.charAt(0).toUpperCase() + str.slice(1)
+  const trimmedString = str.trim(); // removing leading spaces
+  return trimmedString.charAt(0).toUpperCase() + trimmedString.slice(1);
 };

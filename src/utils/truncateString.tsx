@@ -11,8 +11,12 @@
 */
 
 export function truncateString(str: string, maxLength: number): string {
-  if (str.length > maxLength) {
+
+  if (str.length > maxLength && maxLength !== 0) {
     return str.slice(0, maxLength) + "...";
+  } else if (maxLength === 0) {
+    return ""
+  } else {
+    return str;
   }
-  return str;
 }

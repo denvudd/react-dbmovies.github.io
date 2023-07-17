@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
 import "dayjs/locale/uk"; 
+import "dayjs/locale/en"; 
 
 /**
  * A function that formats the release date of a media element using the DayJS library. 

@@ -12,6 +12,6 @@ import numeral from "numeral";
    console.log(formattedBudget); // Output: "1,000,000.00"
 */
 
-export const formatBudget = (inputNumber: number, format: string): string => {
+export const formatBudget = (inputNumber: number, format: string = '0,0,0'): string => {
   return numeral(inputNumber).format(format);
 };

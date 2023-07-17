@@ -10,5 +10,5 @@
 */
 
 export const formatRating = (rating: number): number => {
-  return Math.floor((rating / 10) * 100);
+  return Math.round((rating / 10) * 100);
 };

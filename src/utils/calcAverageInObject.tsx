@@ -11,7 +11,7 @@ type IsRoundType = "to0" | "to2";
   ];
 
   const averagePrice = calcAverageInObject(products, "price", "to2");
-  console.log(averagePrice); // Output: 1.49
+  console.log(averagePrice); // Output: 1.82
 */
 
 export function calcAverageInObject<T>(
@@ -37,6 +37,6 @@ export function calcAverageInObject<T>(
     }
   }
 
-  // if ineteger
+  // if integer
   return average;
 }
