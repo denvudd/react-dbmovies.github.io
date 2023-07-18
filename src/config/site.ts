@@ -5,6 +5,7 @@ export type MenuItem = {
   label: JSX.Element;
   children?: MenuItem[];
   type?: string;
+  secondary?: boolean;
 };
 
 export const siteConfig = {
@@ -93,6 +94,131 @@ export const siteConfig = {
       key: "persons",
       label: "Персони",
       link: "/person/popular",
+    },
+  ],
+  mobileNav: [
+    {
+      key: "movies",
+      label: "Фільми",
+      link: "/movies/popularMovies",
+      children: [
+        {
+          key: "movies/popularMovies",
+          label: "Популярні",
+          link: "/movies/popularMovies",
+          secondary: true,
+          type: "group",
+        },
+        {
+          key: "movies/now-playing",
+          label: "Зараз у кіно",
+          link: "/movies/now-playing",
+          secondary: true,
+          type: "group",
+        },
+        {
+          key: "movies/upcoming",
+          label: "Очікувані",
+          link: "/movies/upcoming",
+          secondary: true,
+          type: "group",
+        },
+        {
+          key: "movies/top-rated",
+          label: "Рейтингові",
+          link: "/movies/top-rated",
+          secondary: true,
+          type: "group",
+        },
+      ],
+    },
+    {
+      key: "tv",
+      label: "Серіали",
+      link: "/tv/popularTV",
+      children: [
+        {
+          key: "tv/popularTV",
+          label: "Популярні",
+          link: "/tv/popularTV",
+          secondary: true,
+          type: "group",
+        },
+        {
+          key: "tv/airing-today",
+          label: "Сьогодні в ефірі",
+          link: "/tv/airing-today",
+          secondary: true,
+          type: "group",
+        },
+        {
+          key: "tv/on-the-air",
+          label: "Зараз на ТБ",
+          link: "/tv/on-the-air",
+          secondary: true,
+          type: "group",
+        },
+        {
+          key: "tv/top-rated",
+          label: "Рейтингові",
+          link: "/tv/top-rated",
+          secondary: true,
+          type: "group",
+        },
+      ],
+    },
+    {
+      key: "persons",
+      label: "Персони",
+      link: "/person/popular",
+    },
+    {
+      key: "bible",
+      label: "Біблія зі сприяння",
+      link: "https://www.themoviedb.org/bible?language=en-US",
+      secondary: true,
+    },
+    {
+      key: "discussions",
+      label: "Обговорення",
+      link: "https://www.themoviedb.org/discuss?language=en-US",
+      secondary: true,
+    },
+    {
+      key: "leaders",
+      label: "Таблиці лідерів",
+      link: "https://www.themoviedb.org/leaderboard?language=en-US",
+      secondary: true,
+    },
+    {
+      key: "api",
+      label: "API",
+      link: "https://www.themoviedb.org/login?to=read_me&redirect_uri=/docs",
+      secondary: true,
+    },
+    {
+      key: "support",
+      label: "Підтримка",
+      link: "https://www.themoviedb.org/talk?language=en-US",
+      secondary: true,
+    },
+    {
+      key: "about",
+      label: "Про нас",
+      link: "https://www.themoviedb.org/about?language=en-US",
+      secondary: true,
+    },
+    {
+      key: "leaders",
+      label: "Таблиці лідерів",
+      link: "https://www.themoviedb.org/leaderboard?language=en-US",
+      secondary: true,
+    },
+    {
+      key: "logout",
+      label: "Вийти",
+      link: "https://www.themoviedb.org/leaderboard?language=en-US",
+      secondary: true,
     },
   ],
   footerNav: [

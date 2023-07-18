@@ -108,6 +108,23 @@
   font-weight: 600;
 }
 
+.mobile-nav-link {
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.3em;
+
+  &.secondary-nav-link--sub {
+    font-weight: 400;
+    font-size: 1em;
+  }
+
+  &.secondary-nav-link {
+    font-weight: 600;
+    font-size: 1em;
+    color: rgba(255,255,255,.6) !important;
+  }
+}
+
 .scroller {
   -webkit-overflow-scrolling: touch;
   overflow-y: hidden;

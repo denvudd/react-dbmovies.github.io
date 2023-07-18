@@ -4,13 +4,14 @@ import { useScrollingUp } from "@/hooks/useScrollingUp";
 import { useIsMobile } from "@/hooks/useIsMobile";
 
 import { Button, Drawer, Layout, Menu, MenuProps } from "antd";
+import { MenuOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import UserOutlined from "@ant-design/icons/lib/icons/UserOutlined";
 import PlusOutlined from "@ant-design/icons/lib/icons/PlusOutlined";
 import dynamic from "next/dynamic";
 import classNames from "classnames";
 import { mainNavMenu } from "./nav/main-nav";
-import { MenuOutlined } from "@ant-design/icons";
+import { mobileNavMenu } from "./nav/mobile-nav";
 
 import styles from "./Header.module.scss";
 
@@ -40,6 +41,8 @@ const Header: React.FC = () => {
   }, []);
 
   const leftMenuItems: MenuProps["items"] = mainNavMenu;
+
+  const mobileMenuItems: MenuProps["items"] = mobileNavMenu;
 
   const rightMenuItems: MenuProps["items"] = [
     {
@@ -79,104 +82,106 @@ const Header: React.FC = () => {
         },
       ],
     },
-    !isMobile ? {
-      key: "account",
-      label: (
-        <Link href={`/login`} className={styles.link}>
-          {!isAccountDetailsLoading && accountDetails ? (
-            <img
-              src={`https://secure.gravatar.com/avatar/${accountDetails.avatar.gravatar.hash}.jpg?s=32`}
-              alt={accountDetails.username + "logo"}
-              className={styles.profileAvatarOutside}
-            />
-          ) : (
-            <UserOutlined style={{ fontSize: "1.3em" }} />
-          )}
-        </Link>
-      ),
-      children: [
-        {
-          key: "head",
-          label:
-            !isAccountDetailsLoading && accountDetails ? (
-              <Link
-                href={`/user/${accountDetails.username}`}
-                className={styles.link}
-              >
-                <div className={styles.profileHead}>
-                  <h2>{accountDetails.username}</h2>
-                  <p>Мій профіль</p>
-                </div>
-              </Link>
-            ) : (
-              <Link href={`/login`} className={styles.link}>
-                Увійти
-              </Link>
-            ),
-          type: "group",
-        },
-        {
-          key: "favorite",
+    !isMobile
+      ? {
+          key: "account",
           label: (
-            <Link
-              href={`/user/${accountDetails?.username}/favorite`}
-              className={styles.link}
-            >
-              Уподобання
+            <Link href={`/login`} className={styles.link}>
+              {!isAccountDetailsLoading && accountDetails ? (
+                <img
+                  src={`https://secure.gravatar.com/avatar/${accountDetails.avatar.gravatar.hash}.jpg?s=32`}
+                  alt={accountDetails.username + "logo"}
+                  className={styles.profileAvatarOutside}
+                />
+              ) : (
+                <UserOutlined style={{ fontSize: "1.3em" }} />
+              )}
             </Link>
           ),
-          type: "group",
-        },
-        {
-          key: "lists",
-          label: (
-            <Link
-              href={`/user/${accountDetails?.username}/lists`}
-              className={styles.link}
-            >
-              Списки
-            </Link>
-          ),
-          type: "group",
-        },
-        {
-          key: "rated",
-          label: (
-            <Link
-              href={`/user/${accountDetails?.username}/rated`}
-              className={styles.link}
-            >
-              Оцінки
-            </Link>
-          ),
-          type: "group",
-        },
-        {
-          key: "watchlist",
-          label: (
-            <Link
-              href={`/user/${accountDetails?.username}/watchlist`}
-              className={styles.link}
-            >
-              Переглянути пізніше
-            </Link>
-          ),
-          type: "group",
-        },
-        {
-          key: "logout",
-          label: !isAccountDetailsLoading && accountDetails && (
-            <Link
-              href={`/logout`}
-              className={styles.link + " " + styles.footer}
-            >
-              Вийти
-            </Link>
-          ),
-          type: "group",
-        },
-      ],
-    } : null,
+          children: [
+            {
+              key: "head",
+              label:
+                !isAccountDetailsLoading && accountDetails ? (
+                  <Link
+                    href={`/user/${accountDetails.username}`}
+                    className={styles.link}
+                  >
+                    <div className={styles.profileHead}>
+                      <h2>{accountDetails.username}</h2>
+                      <p>Мій профіль</p>
+                    </div>
+                  </Link>
+                ) : (
+                  <Link href={`/login`} className={styles.link}>
+                    Увійти
+                  </Link>
+                ),
+              type: "group",
+            },
+            {
+              key: "favorite",
+              label: (
+                <Link
+                  href={`/user/${accountDetails?.username}/favorite`}
+                  className={styles.link}
+                >
+                  Уподобання
+                </Link>
+              ),
+              type: "group",
+            },
+            {
+              key: "lists",
+              label: (
+                <Link
+                  href={`/user/${accountDetails?.username}/lists`}
+                  className={styles.link}
+                >
+                  Списки
+                </Link>
+              ),
+              type: "group",
+            },
+            {
+              key: "rated",
+              label: (
+                <Link
+                  href={`/user/${accountDetails?.username}/rated`}
+                  className={styles.link}
+                >
+                  Оцінки
+                </Link>
+              ),
+              type: "group",
+            },
+            {
+              key: "watchlist",
+              label: (
+                <Link
+                  href={`/user/${accountDetails?.username}/watchlist`}
+                  className={styles.link}
+                >
+                  Переглянути пізніше
+                </Link>
+              ),
+              type: "group",
+            },
+            {
+              key: "logout",
+              label: !isAccountDetailsLoading && accountDetails && (
+                <Link
+                  href={`/logout`}
+                  className={styles.link + " " + styles.footer}
+                >
+                  Вийти
+                </Link>
+              ),
+              type: "group",
+            },
+          ],
+        }
+      : null,
     {
       key: "search",
       label: <DynamicSearchBar />,
@@ -223,14 +228,23 @@ const Header: React.FC = () => {
                 triggerSubMenuAction="hover"
               />
               <Drawer
-                title={"Brand Here"}
+                title={<Link href={"/"} className={styles.logo}>
+                TMDB
+              </Link>}
                 placement="left"
                 closable={true}
                 onClose={showDrawer}
                 open={visible}
                 style={{ zIndex: 99999 }}
+                className={styles.mobileDrawer}
+                width={"calc(100vw - 40px)"}
               >
-                12
+                <Menu
+                  mode="inline"
+                  theme="dark"
+                  items={mobileMenuItems}
+                  style={{ minWidth: 0, flex: "auto" }}
+                />
               </Drawer>
             </div>
           </div>

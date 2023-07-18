@@ -9,6 +9,38 @@
   }
 }
 
+.ant-drawer {
+  .ant-menu-dark {
+    background: transparent !important;
+  }  
+
+  .ant-menu {
+    background: transparent !important;
+
+    
+  } 
+
+  .ant-menu-sub {
+    font-weight: 600 !important;
+  }
+}
+
+.ant-drawer-header {
+  .ant-drawer-header-title {
+    button {
+      color: #fff !important;
+    }
+
+    .ant-drawer-title {
+      color: #fff !important;
+    }
+  }
+}
+
+.ant-drawer-body {
+  padding-top: 0 !important;
+}
+
 .ant-tabs-nav {
   @media (max-width: 576px) {
     flex-direction: column !important;

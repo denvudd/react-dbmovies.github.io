@@ -30,6 +30,22 @@
   }
 }
 
+.mobileDrawer {
+  background: rgba(3, 37, 65, .9) !important;
+  backdrop-filter: blur(20px) !important;
+  color: #fff !important;
+
+  .ant-drawer-title {
+    color: #fff !important;
+    background: $tmdbDarkBlue !important;
+  }
+
+  .ant-menu {
+    background: rgba(3, 37, 65, .9) !important;
+    backdrop-filter: blur(20px) !important;
+  }
+}
+
 .container {
   width: 100%;
   display: flex;
