@@ -16,7 +16,6 @@ This is an open source The Movie Database clone build with Next.js 13. It is boo
 - [Typescript](https://www.typescriptlang.org/)
 - [RTK Query](https://redux-toolkit.js.org/rtk-query/overview)
 - [React Jest](https://jestjs.io/uk/docs/tutorial-react)
-- [Contentlayer](https://testing-library.com/docs/react-testing-library/intro/)
 - [ahooks](https://ahooks.js.org/)
 - [Day JS](https://day.js.org/)
 
@@ -25,7 +24,7 @@ This is an open source The Movie Database clone build with Next.js 13. It is boo
 ### 1. Clone the repository
 
 ```bash
-git clone https://react-dbmovies.vercel.app/
+git clone git@github.com:denvudd/react-dbmovies.github.io.git
 ```
 
 ### 2. Install dependencies
