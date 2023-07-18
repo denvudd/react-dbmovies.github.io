@@ -1,38 +1,59 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# [The Movie Database Clone](https://react-dbmovies.vercel.app/)
 
-## Getting Started
+This is an open source The Movie Database clone build with Next.js 13. It is bootstrapped with `create-next-app`.
 
-First, run the development server:
+[![The Movie Database Clone](https://i.ibb.co/DGd39Vj/Screenshot-2023-07-18-12-27-18.png)](https://react-dbmovies.vercel.app/)
+
+> **Warning**
+> This project is still in development and is not ready for production use.
+>
+> It uses new technologies (experimental-edge) which are subject to change and may break your application.
+
+## Tech Stack
+
+- [Next.js](https://nextjs.org)
+- [Ant Design 5](https://ant.design/)
+- [Typescript](https://www.typescriptlang.org/)
+- [RTK Query](https://redux-toolkit.js.org/rtk-query/overview)
+- [React Jest](https://jestjs.io/uk/docs/tutorial-react)
+- [Contentlayer](https://testing-library.com/docs/react-testing-library/intro/)
+- [ahooks](https://ahooks.js.org/)
+- [Day JS](https://day.js.org/)
+
+## Installation
+
+### 1. Clone the repository
+
+```bash
+git clone https://react-dbmovies.vercel.app/
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Run the application
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 4. Run tests
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run test
+```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## How do I deploy this?
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+Follow the deployment guides for [Vercel](https://vercel.com/docs/concepts/deployments/overview) and [Netlify](https://www.netlify.com/blog/2020/11/30/how-to-deploy-next.js-sites-to-netlify/) for more information.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## License
 
-## Learn More
+No license.
 
-To learn more about Next.js, take a look at the following resources:
+## Contributing
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Contributions are welcome! Please open an issue if you have any questions or suggestions. Your contributions will be acknowledged.
