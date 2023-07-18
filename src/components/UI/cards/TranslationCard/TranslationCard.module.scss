@@ -32,6 +32,12 @@
     border: 1px solid $lightGrey;
     padding: 8px 10px;
     vertical-align: top;
+
+    @media (max-width: 890px) {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      word-break: break-all;
+    }
   }
 
   .rowTitle {

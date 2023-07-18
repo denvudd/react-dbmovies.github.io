@@ -162,10 +162,11 @@
 
       @media (max-width: 890px) {
         width: 100%;
-        display: flex;
+        display: inline-flex;
         justify-content: center;
         align-items: center;
         flex-wrap: wrap;
+        gap: 5px;
         box-sizing: border-box;
         padding: 16px 0;
         z-index: 4;

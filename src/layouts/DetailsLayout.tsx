@@ -8,7 +8,7 @@ const DetailLayout: React.FC<Props> = ({ children }) => {
   const { Content } = Layout;
   return (
       <Layout>
-        <Content style={{minHeight: "100vh", minWidth: "100vw"}}>
+        <Content style={{minHeight: "100vh"}}>
           <div className="detail-container">{children}</div>
         </Content>
       </Layout>

@@ -12,6 +12,13 @@
   @media (max-width: 1200px) {
     height: 200px;
   }
+
+  @media (max-width: 890px) {
+    flex-direction: column;
+    width: calc(100vw - 40px);
+    height: calc((100vw - 40px)/1.78);
+    height: 100%;
+  }
 }
 
 .preview {
@@ -21,6 +28,11 @@
   @media (max-width: 1200px) {
     width: 430px;
     height: 200px;
+  }
+
+  @media (max-width: 1200px) {
+    width: 100%;
+    height: 141px;
   }
 }
 

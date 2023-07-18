@@ -12,6 +12,11 @@
     height: 200px;
   }
 
+  @media (max-width: 890px) {
+    min-width: 250px;
+    height: 141px;
+  }
+
   &Wrapper {
     background-position: center;
     background-repeat: no-repeat;
@@ -59,4 +64,3 @@
     }
   }
 }
-

@@ -175,6 +175,12 @@
   &-details {
     padding-top: 30px !important;
     padding-bottom: 30px !important;
+
+    @media (max-width: 890px) {
+      .app-container {
+        padding: 0px;
+      }
+    }
   }
 
   &:first-of-type {
@@ -184,6 +190,14 @@
 
   @media (max-width: 890px) {
     padding: 20px 0;
+  }
+}
+
+.details-tabs {
+  @media (max-width: 890px) {
+    .app-container {
+      padding: 0px;
+    }
   }
 }
 
@@ -201,6 +215,10 @@
   font-size: 1.3em;
   color: $primaryColor;
   opacity: 0.65;
+
+  @media (max-width: 890px) {
+    font-size: 1.1em;
+  }
 }
 
 .head-certification {

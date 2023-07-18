@@ -27,9 +27,9 @@ import type { ConfigurationJobsApiResponse } from "@/redux/api/configuration/typ
   #1 https://nextjs.org/docs/pages/building-your-application/data-fetching/get-server-side-props#getserversideprops-with-edge-api-routes
   !! Doesn't work in dev mode !!
 */
-export const config = {
-  runtime: "experimental-edge", // warn: using an experimental edge runtime, the API might change
-};
+// export const config = {
+//   runtime: "experimental-edge", // warn: using an experimental edge runtime, the API might change
+// };
 
 type MovieCastPageApiResponse = MovieDetails & {
   credits: MovieCreditsApiResponse;

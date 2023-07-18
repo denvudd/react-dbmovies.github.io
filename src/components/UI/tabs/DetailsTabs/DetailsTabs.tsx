@@ -172,7 +172,7 @@ const DetailsTabs: React.FC<DetailsTabsProps> = ({
   ];
 
   return (
-    <div className={styles.head}>
+    <div className={styles.head + " details-tabs"}>
       <div className="app-container">
         <div className={styles.inner}>
           <Dropdown

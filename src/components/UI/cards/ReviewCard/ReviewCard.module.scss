@@ -25,6 +25,15 @@
       margin-right: 0;
       font-size: 1.3em;
     }
+
+    @media (max-width: 890px) {
+      display: block;
+
+      h3 {
+        margin-bottom: 3px;
+        line-height: 1.2;
+      }
+    }
   }
 
   .meta {
@@ -73,5 +82,9 @@
 
   p {
     font-size: 1em;
+  }
+
+  @media (max-width: 890px) {
+    padding-left: 0;
   }
 }

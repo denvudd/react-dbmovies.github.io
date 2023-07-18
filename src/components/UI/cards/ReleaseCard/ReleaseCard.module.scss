@@ -11,7 +11,6 @@
   background-color: #fff;
   color: $primaryColorContrast;
   table-layout: fixed;
-  width: 100%;
 
   thead {
     background-color: rgba(41, 43, 44, 0.085);
@@ -21,13 +20,18 @@
     th {
       text-align: left;
       padding: 6px 10px;
+      
+      @media (max-width: 890px) {
+        overflow: scroll;
+        border-right: 1px solid $lightGrey;   
+      }
     }
 
     .colTitle {
       background: #fff;
 
       th {
-        border-bottom: 1px solid $lightGrey;
+        border-bottom: 1px solid $lightGrey;    
       }
     }
   }
@@ -37,10 +41,19 @@
     vertical-align: middle;
     border-color: inherit;
 
+    tr {
+      width: 100%;
+    }
+
     td {
       white-space: nowrap;
       width: 50%;
       padding: 6px 10px 8px 10px;
+      
+      @media (max-width: 890px) {
+        overflow: scroll;
+        border-right: 1px solid $lightGrey;   
+      }
     }
   }
 }
@@ -56,3 +69,5 @@
     margin-right: 6px;
   }
 }
+
+

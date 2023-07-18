@@ -13,6 +13,10 @@
   border-color: #000;
   border-radius: $imageBorderRadius;
   color: #fff;
+
+  @media (max-width: 890px) {
+    margin-left: 0;
+  }
 }
 
 .starIcon {

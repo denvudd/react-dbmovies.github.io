@@ -14,7 +14,6 @@
   min-height: 0;
   padding-left: 0;
   display: flex;
-  flex-wrap: wrap;
   justify-content: flex-start;
   align-items: center;
   align-content: center;
@@ -43,6 +42,10 @@
   span {
     opacity: 0.8;
     font-weight: 400;
+
+    @media (max-width: 890px) {
+      font-size: .8em;
+    }
   }
 
   .episodeCount {
@@ -59,5 +62,9 @@
       font-size: 0.9em;
       margin: 0;
     }
+  }
+
+  @media (max-width: 890px) {
+    font-size: 1.6em;
   }
 }

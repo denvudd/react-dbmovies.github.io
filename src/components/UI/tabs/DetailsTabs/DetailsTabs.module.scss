@@ -4,6 +4,10 @@
   background-color: #fff;
   color: $primaryColorContrast;
   border-bottom: 1px solid $lightGrey;
+
+  @media (max-width: 890px) {
+    height: 47px;
+  }
 }
 
 .inner {
@@ -13,6 +17,14 @@
   justify-content: center;
   gap: 40px;
   font-weight: 400;
+
+  @media (max-width: 890px) {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    gap: 20px;
+    padding-left: 20px;
+    justify-content: flex-start;
+  }
 }
 
 .dropdownRoot {
@@ -30,5 +42,9 @@
         margin: 0 !important;
       }
     }
+  }
+
+  @media (max-width: 890px) {
+    margin-right: 20px !important;
   }
 }

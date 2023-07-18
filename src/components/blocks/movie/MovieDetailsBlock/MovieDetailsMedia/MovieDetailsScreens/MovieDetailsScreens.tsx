@@ -126,6 +126,7 @@ const MovieDetailsScreens: React.FC<MovieDetailsScreensProps> = ({ id }) => {
                           height={300}
                           src={`https://image.tmdb.org/t/p/w533_and_h300_bestv2/${image.file_path}`}
                           alt="Backdrop"
+                          className={styles.backdrop}
                           placeholder="blur"
                           blurDataURL={`data:image/svg+xml;base64,${generateShimmer(
                             533,
@@ -181,6 +182,7 @@ const MovieDetailsScreens: React.FC<MovieDetailsScreensProps> = ({ id }) => {
                         src={`https://image.tmdb.org/t/p/w220_and_h330_face/${image.file_path}`}
                         alt="Backdrop"
                         placeholder="blur"
+                        className={styles.poster}
                         blurDataURL={`data:image/svg+xml;base64,${generateShimmer(
                           220,
                           330,

@@ -4,6 +4,21 @@
   min-width: 140px;
   max-width: 140px;
   height: 280px;
+
+  @media (max-width: 890px) {
+    min-width: 122px;
+    max-width: 122px;
+    height: 250px;
+
+    >.ant-card-body {
+      padding: 10px !important;
+    }
+
+    &Image {
+      width: 100%;
+      height: 100%;
+    }
+  }
 }
 
 .title {
