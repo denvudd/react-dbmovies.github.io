@@ -9,14 +9,29 @@
   display: flex;
   align-items: flex-start;
   gap: 30px;
+
+  @media (max-width: 890px) {
+    flex-direction: column;
+    gap: 15px;
+  }
 }
 
 .leftColumn {
   min-width: 300px;
   width: 300px;
+
+  @media (max-width: 890px) {
+    width: 100%;
+    min-width: auto;
+  }
 }
 
 .rightColumn {
   max-width: 920px;
   width: calc(100vw - 80px - 300px);
+
+  @media (max-width: 890px) {
+    width: 100%;
+    min-width: auto;
+  }
 }

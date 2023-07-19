@@ -41,7 +41,6 @@ const PersonDetailsLeft: React.FC<PersonDetailsLeftProps> = ({
 }) => {
   const { data: social, isLoading: isSocialLoading } =
     useGetPersonExternalIDsQuery({ id });
-  const externalIds = social ? Object.entries(social) : undefined;
 
   const genderTypeChecker = (gender: PersonDetails["gender"]) => {
     switch (gender) {
@@ -73,6 +72,11 @@ const PersonDetailsLeft: React.FC<PersonDetailsLeftProps> = ({
               priority
             />
           </div>
+        </div>
+        <div className={styles.title}>
+          <h2>
+            <Link href={`/person/${id}`}>{name}</Link>
+          </h2>
         </div>
       </section>
       <div className={styles.content}>
@@ -185,7 +189,7 @@ const PersonDetailsLeft: React.FC<PersonDetailsLeftProps> = ({
           <h3>
             <bdi>Особиста інформація</bdi>
           </h3>
-          <section>
+          <section className={styles.knownForFacts}>
             <p>
               <strong>Відомий (-а) за</strong>
               {checkDepartmentName(known_for_department)}

@@ -83,10 +83,11 @@
     }
 
     @media (max-width: 890px) {
-      width: calc(((100vw / 1.5) - 40px) / 1.5);
-      min-width: calc(((100vw / 1.5) - 40px) / 1.5);
+      width: 100%;
       height: calc((100vw / 1.5) - 40px);
       min-height: calc((100vw / 1.5) - 40px);
+      display: flex;
+      justify-content: center;
     }
   }
 
@@ -110,6 +111,7 @@
       min-width: calc(((100vw / 1.5) - 40px) / 1.5);
       height: calc((100vw / 1.5) - 40px);
       min-height: calc((100vw / 1.5) - 40px);
+      margin: 0 auto;
     }
   }
 

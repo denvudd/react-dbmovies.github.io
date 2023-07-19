@@ -1,17 +1,21 @@
 @import '@/styles/variables';
 
 .card {
-  width: 235px;
+  width: 100%;
   color: $primaryColorContrast;
   background-color: #fff;
   box-shadow: 0 2px 8px rgba(0, 0, 0, .1);
   border: 1px solid $lightGrey;
   border-radius: $imageBorderRadius;
+
+  @media (max-width: 576px) {
+    width: calc(50vw - 30px);
+  }
 }
 
 .image {
-  width: 235px;
-  height: 235px;
+  width: 100%;
+  height: 100%;
 
   a {
     width: 100%;
@@ -20,9 +24,18 @@
     color: $primaryColorContrast;
 
     img {
-      width: 235px;
-      height: 235px;
+      width: 100%;
+      height: 100%;
+      @media (max-width: 576px) {
+        width: calc(50vw - 30px);
+        height: 100%;
+      }
     }
+  }
+
+  @media (max-width: 576px) {
+    width: calc(50vw - 30px);
+    height: 100%;
   }
 }
 

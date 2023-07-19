@@ -4,10 +4,35 @@
   min-width: 300px;
   width: 300px;
   color: $primaryColorContrast;
+
+  @media (max-width: 890px) {
+    min-width: auto;
+    width: 100%;
+  }
 }
 
 .header {
   width: 100%;
+}
+
+.title {
+  width: 100%;
+  text-align: center;
+  display: none;
+
+  h2 {
+    width: 100%;
+    font-size: 2.2rem;
+
+    a {
+      font-weight: 700;
+      color: $primaryColorContrast;
+    }
+  }
+
+  @media (max-width: 890px) {
+    display: block;
+  }
 }
 
 .poster {
@@ -20,6 +45,20 @@
   left: 0;
   overflow: hidden;
   border-radius: $imageBorderRadius;
+
+  @media (max-width: 890px) {
+    margin: 0 auto;
+    min-width: 40vw;
+    width: 40vw;
+    height: 40vw;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+  }
 }
 
 .image {
@@ -74,10 +113,31 @@
     width: 100%;
     margin-bottom: 8px;
   }
+
+  .knownForFacts {
+    @media (max-width: 890px) {
+      display: flex;
+      flex-wrap: wrap;
+
+      p {
+        width: calc(50% - 20px);
+        margin-right: 10px;
+      }
+    }
+  }
+
+  @media (max-width: 890px) {
+    margin-top: 0;
+  }
 }
 
 .social {
   &Link {
     margin-bottom: 30px !important;
+  }
+
+  @media (max-width: 890px) {
+    display: flex;
+    justify-content: center;
   }
 }

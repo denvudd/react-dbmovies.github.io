@@ -20,7 +20,7 @@ interface WideElementCardProps {
   poster_path: string;
   overview: string;
   rating?: number;
-  type?: "movies" | "tv"
+  type?: "movies" | "tv";
 
   isShowPanel?: boolean;
   isShowRate?: boolean;
@@ -75,7 +75,9 @@ const WideElementCard: React.FC<WideElementCardProps> = ({
       <div className={styles.details}>
         <div className={styles.detailsMain}>
           <div className={styles.detailsHead}>
-            <RatingBar size={38} rating={vote_average} />
+            <span className={styles.rating}>
+              <RatingBar size={38} rating={vote_average} />
+            </span>
             <div className={styles.title}>
               <div>
                 <Link href={`/${type}/${id}`}>

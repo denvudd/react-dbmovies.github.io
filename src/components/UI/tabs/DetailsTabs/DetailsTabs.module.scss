@@ -23,7 +23,10 @@
     overflow-y: hidden;
     gap: 20px;
     padding-left: 20px;
-    justify-content: flex-start;
+  }
+
+  @media (max-width: 550px) {
+    padding-left: 10px;
   }
 }
 

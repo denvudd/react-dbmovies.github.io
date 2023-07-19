@@ -21,6 +21,10 @@
       color: $primaryColorContrast;
     }
   }
+
+  @media (max-width: 890px) {
+    display: none;
+  }
 }
 
 .fullWrapper {

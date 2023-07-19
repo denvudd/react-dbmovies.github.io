@@ -79,7 +79,7 @@ const PersonListBlock: React.FC<PersonListBlockProps> = ({}) => {
             loading={initLoading}
             itemLayout={"vertical"}
             loadMore={personList.results.length >= 20 ? loadMore : null}
-            grid={{ gutter: 16, xxl: 5, xl: 4, lg: 4, md: 3, sm: 2, xs: 1 }}
+            grid={{ gutter: 16, xxl: 5, xl: 4, lg: 4, md: 3, sm: 2, xs: 2 }}
             dataSource={list}
             renderItem={(person) => (
               <List.Item style={{ borderBottom: "none" }}>

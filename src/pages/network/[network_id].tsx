@@ -4,6 +4,7 @@ import {
   useLazyGetNetworkDetailsQuery,
   useLazyGetTVDiscoverQuery,
 } from "@/redux/api/discover/slice";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 import Head from "next/head";
 import { List, Space, Spin } from "antd";
@@ -22,6 +23,7 @@ import type { ListTV } from "@/redux/api/tv/types";
 
 const NetworkPage = () => {
   const router = useRouter();
+  const isMobile = useIsMobile();
   const [initLoading, setInitLoading] = React.useState(true);
   const [initPage, setInitPage] = React.useState(1);
   const [loading, setLoading] = React.useState(false);
@@ -103,7 +105,13 @@ const NetworkPage = () => {
             searchResults ? searchResults.total_results : "0"
           } серіалів`}
           extraBar={
-            <Space split={"|"} style={{marginTop: "20px", opacity: "0.7", fontSize: "1em"}} size={10}>
+            <Space
+              split={!isMobile && "|"}
+              style={{ marginTop: "20px", opacity: "0.7", fontSize: "1em", width: "100%" }}
+              size={10}
+              align={isMobile ? "center" : undefined}
+              direction={isMobile ? "vertical" : "horizontal"}
+            >
               <div>
                 <Space size={5}>
                   <span>
@@ -120,7 +128,7 @@ const NetworkPage = () => {
                   {networkDetails.headquarters}
                 </Space>
               </div>
-              <Link style={{color: "#fff"}} href={networkDetails.homepage}>
+              <Link style={{ color: "#fff" }} href={networkDetails.homepage}>
                 <Space size={5}>
                   <span>
                     <LinkOutlined />

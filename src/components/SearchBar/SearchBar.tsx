@@ -107,6 +107,7 @@ const SearchBar: React.FC = () => {
               <div className={styles.inner}>
                 <SearchOutlined style={{color: "#000"}}/>
                 <Select
+                  showSearch
                   optionFilterProp="label"
                   className={styles.input}
                   placeholder="Пошук фільму, серіалу, персони"

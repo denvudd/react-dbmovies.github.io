@@ -16,6 +16,12 @@
   min-width: calc(200px / 1.5);
   height: 200px;
   box-sizing: border-box;
+
+  @media (max-width: 576px) {
+    min-width: 94px;
+    width: 94px;
+    height: 141px;
+  }
 }
 
 .poster {
@@ -27,6 +33,12 @@
     min-width: calc(200px / 1.5);
     height: 200px;
     display: block;
+
+    @media (max-width: 576px) {
+      min-width: 94px;
+      width: 94px;
+      height: 141px;
+    }
   }
 }
 
@@ -48,6 +60,10 @@
     align-items: center;
     width: 100%;
   }
+
+  @media (max-width: 576px) {
+    padding: 14px;
+  }
 }
 
 .title {
@@ -67,6 +83,14 @@
     text-overflow: ellipsis;
     overflow: hidden;
     color: #000;
+
+    @media (max-width: 576px) {
+      font-size: 1em;
+    }
+  }
+
+  @media (max-width: 576px) {
+    margin-left: 0;
   }
 }
 
@@ -79,6 +103,10 @@
 .overview {
   margin-top: 20px;
   width: 100%;
+
+  @media (max-width: 576px) {
+    margin-top: 10px;
+  }
 }
 
 .cardDeleteIcon {
@@ -117,5 +145,11 @@
         margin-left: 10px;
       }
     }
+  }
+}
+
+.rating {
+  @media (max-width: 576px) {
+    display: none;
   }
 }
