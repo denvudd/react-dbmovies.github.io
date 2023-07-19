@@ -1,6 +1,7 @@
 import React from "react";
 import { usePostAddTVEpisodeRatingMutation } from "@/redux/api/tv/slice";
 import { useSessionId } from "@/hooks/useSessionId";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 import Link from "next/link";
 import CreditCard from "../../../UI/cards/CreditCard/CreditCard";
@@ -11,7 +12,6 @@ import type { GuestStar } from "@/redux/api/tv/types";
 import type { CrewMember } from "@/redux/api/types/common";
 
 import styles from "./TVEpisodeDetailsBlock.module.scss";
-
 interface TVEpisodeDetailsBlockProps {
   air_date: string;
   crew: CrewMember[];
@@ -48,6 +48,7 @@ const TVEpisodeDetailsBlock: React.FC<TVEpisodeDetailsBlockProps> = ({
   const writter = crew.filter((crew) => crew.job === "Writer");
   const producer = crew.filter((crew) => crew.job === "Director");
   const sessionId = useSessionId();
+  const isMobile = useIsMobile();
 
   const [
     rateTVEpisode,
@@ -156,7 +157,7 @@ const TVEpisodeDetailsBlock: React.FC<TVEpisodeDetailsBlockProps> = ({
                     </button>
                   </p>
                 }
-                placement="right"
+                placement={!isMobile ? "right" : "bottom"}
                 trigger="click"
               >
                 <span className={styles.rate}>

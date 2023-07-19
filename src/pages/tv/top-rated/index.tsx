@@ -2,6 +2,7 @@ import React from "react";
 import { useLazyGetTVDiscoverQuery } from "@/redux/api/discover/slice";
 import { useLazyGetTVQuery } from "@/redux/api/tv/slice";
 import { useSelector } from "react-redux";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 import { selectParams } from "@/redux/params/selectors";
 import Head from "next/head";
@@ -12,8 +13,7 @@ import MediaElementSkeleton from "@/components/UI/MediaElementSkeleton/MediaElem
 import FilterMenu from "@/components/FilterMenu/FilterMenu";
 import ListLayout from "@/layouts/ListLayout";
 import { isSortParamsEmpty } from "@/utils/isSortParamsEmpty";
-import { TVListApiResponse } from "@/redux/api/tv/types";
-
+import type { TVListApiResponse } from "@/redux/api/tv/types";
 interface TVCard {
   id: number;
   name: string;
@@ -34,6 +34,7 @@ export const TopRatedTVPage = () => {
   const [data, setData] = React.useState<TVListApiResponse | undefined>(
     undefined
   );
+  const isMobile = useIsMobile();
 
   // getDefaultTV
   const handlePageChangeDefault = (page: number) => {
@@ -172,6 +173,7 @@ export const TopRatedTVPage = () => {
                           voteAverage={movie.vote_average}
                           release={movie.first_air_date}
                           type="tv"
+                          size={!isMobile ? "default" : "small"}
                         />
                       )}
                     />

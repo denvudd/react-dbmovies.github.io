@@ -3,6 +3,7 @@ import { useGetGenresListQuery } from "@/redux/api/genres/slice";
 import { useGetConfigurationLanguagesQuery } from "@/redux/api/configuration/slice";
 import { useLazyGetSearchKeywordsQuery } from "@/redux/api/search/slice";
 import { useDebounce } from "@/hooks/useDebounce";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 import { Menu, MenuProps, DatePicker, Select, Slider, Spin } from "antd";
 import { AdditionalSortDataState } from "../FilterMenu";
@@ -52,6 +53,7 @@ const AdditionalSortMenu: React.FC<AdditionalSortMenuProps> = React.memo(
       mediaType: mediaType,
       params: "&language=uk-UA",
     });
+    const isMobile = useIsMobile();
     const { data: languages, isLoading: isLanguagesLoading } =
       useGetConfigurationLanguagesQuery(null);
     const [fetchKeywords, { isLoading: isKeywordsLoading }] =
@@ -445,6 +447,9 @@ const AdditionalSortMenu: React.FC<AdditionalSortMenuProps> = React.memo(
       },
     ];
 
+    console.log(isMobile);
+    
+
     return (
       <form>
         <Menu
@@ -453,8 +458,9 @@ const AdditionalSortMenu: React.FC<AdditionalSortMenuProps> = React.memo(
           theme="dark"
           items={menuItems}
           defaultSelectedKeys={["selectComponent"]}
-          defaultOpenKeys={["filters"]}
+          openKeys={!isMobile ? ["filters"] : undefined}
           className={styles.menu}
+          inlineCollapsed={isMobile}
         />
       </form>
     );

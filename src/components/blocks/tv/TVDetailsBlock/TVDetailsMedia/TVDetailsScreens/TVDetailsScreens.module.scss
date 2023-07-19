@@ -16,3 +16,19 @@
   align-items: center;
   flex-direction: row;
 }
+
+.backdrop {
+  @media (max-width: 890px) {
+    width: 290px;
+    min-width: 290px;
+    height: 181px;
+    min-height: 181px;
+  }
+}
+
+.poster {
+  @media (max-width: 890px) {
+    width: 144px;
+    height: 211px;
+  }
+}

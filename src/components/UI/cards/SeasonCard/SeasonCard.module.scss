@@ -10,6 +10,15 @@
   &.outlined {
     border: 1px solid $lightGrey;
     border-radius: $imageBorderRadius;
+
+    .overview {
+      @media (max-width: 576px) {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+    }
   }
 }
 
@@ -30,10 +39,16 @@
 
   &.posterBordered {
     border-radius: $imageBorderRadius;
-    
+
     img {
       border-radius: $imageBorderRadius;
     }
+  }
+
+  @media (max-width: 576px) {
+    width: 94px;
+    min-width: 94px;
+    height: 141px;
   }
 }
 
@@ -59,6 +74,16 @@
 
   a {
     color: $primaryColorContrast;
+  }
+
+  @media (max-width: 890px) {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 10px;
+
+    h2 {
+      margin-bottom: 5px;
+    }
   }
 }
 

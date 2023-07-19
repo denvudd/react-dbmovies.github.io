@@ -78,6 +78,10 @@
         opacity: 1;
       }
     }
+
+    @media (max-width: 890px) {
+      display: none;
+    }
   }
 }
 

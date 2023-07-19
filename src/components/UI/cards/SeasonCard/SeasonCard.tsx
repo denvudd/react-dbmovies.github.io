@@ -88,7 +88,7 @@ const SeasonCard: React.FC<SeasonCardProps> = ({
             </Typography.Paragraph>
           )}
           {overview === "" && (
-            <p>
+            <p className={styles.overview}>
               {air_date
                 ? `${season_number} сезон серіалу "${tvName}", прем'єра якого відбулася
               ${formatReleaseDate(air_date)}`

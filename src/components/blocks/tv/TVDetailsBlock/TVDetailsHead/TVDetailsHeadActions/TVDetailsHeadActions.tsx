@@ -56,76 +56,79 @@ const TVDetailsHeadActions: React.FC<TVDetailsHeadActionsProps> = ({
           </Tooltip>
           <span className="chart">Оцінка користувачів</span>
         </li>
-        <Tooltip
-          title={
-            <span className={styles.tooltip}>
-              {!sessionId &&
-                "Увійдіть, щоб додати цей фільм до списку вподобань"}
-              {accountStates?.favorite && sessionId && `Додано в обране`}
-              {accountStates?.favorite === false &&
-                sessionId &&
-                "Додати в обране"}
+        <div className={styles.actions}>
+          <Tooltip
+            title={
+              <span className={styles.tooltip}>
+                {!sessionId &&
+                  "Увійдіть, щоб додати цей фільм до списку вподобань"}
+                {accountStates?.favorite && sessionId && `Додано в обране`}
+                {accountStates?.favorite === false &&
+                  sessionId &&
+                  "Додати в обране"}
+              </span>
+            }
+            color={"#fff"}
+            placement="bottom"
+          >
+            <span className={styles.tooltipWrapper}>
+              <TVDetailsHeadFavorite
+                id={id}
+                name={name}
+                sessionId={sessionId}
+                favorite={accountStates ? accountStates.favorite : false}
+              />
             </span>
-          }
-          color={"#fff"}
-          placement="bottom"
-        >
-          <span className={styles.tooltipWrapper}>
-            <TVDetailsHeadFavorite
-              id={id}
-              name={name}
-              sessionId={sessionId}
-              favorite={accountStates ? accountStates.favorite : false}
-            />
-          </span>
-        </Tooltip>
-        <Tooltip
-          title={
-            <span className={styles.tooltip}>
-              {!sessionId &&
-                "Увійдіть, щоб додати цей фільм до списку перегляду"}
-              {accountStates?.watchlist &&
-                sessionId &&
-                `Додано до списку відстежень`}
-              {accountStates?.watchlist === false &&
-                sessionId &&
-                "Додати до списку відстежень"}
+          </Tooltip>
+          <Tooltip
+            title={
+              <span className={styles.tooltip}>
+                {!sessionId &&
+                  "Увійдіть, щоб додати цей фільм до списку перегляду"}
+                {accountStates?.watchlist &&
+                  sessionId &&
+                  `Додано до списку відстежень`}
+                {accountStates?.watchlist === false &&
+                  sessionId &&
+                  "Додати до списку відстежень"}
+              </span>
+            }
+            color={"#fff"}
+            placement="bottom"
+          >
+            <span className={styles.tooltipWrapper}>
+              <TVDetailsHeadWatchlist
+                id={id}
+                name={name}
+                sessionId={sessionId}
+                watchlist={accountStates ? accountStates.watchlist : false}
+              />
             </span>
-          }
-          color={"#fff"}
-          placement="bottom"
-        >
-          <span className={styles.tooltipWrapper}>
-            <TVDetailsHeadWatchlist
-              id={id}
-              name={name}
-              sessionId={sessionId}
-              watchlist={accountStates ? accountStates.watchlist : false}
-            />
-          </span>
-        </Tooltip>
-        <Tooltip
-          title={
-            <span className={styles.tooltip}>
-              {!sessionId && "Увійдіть, щоб оцінити цей фільм"}
-              {accountStates?.rated &&
-                sessionId &&
-                `Оцінено ${accountStates.rated.value}.0`}
-              {accountStates?.rated === false && sessionId && "Оцінити!"}
+          </Tooltip>
+          <Tooltip
+            title={
+              <span className={styles.tooltip}>
+                {!sessionId && "Увійдіть, щоб оцінити цей фільм"}
+                {accountStates?.rated &&
+                  sessionId &&
+                  `Оцінено ${accountStates.rated.value}.0`}
+                {accountStates?.rated === false && sessionId && "Оцінити!"}
+              </span>
+            }
+            color={"#fff"}
+            placement="bottom"
+          >
+            <span className={styles.tooltipWrapper}>
+              <TVDetailsHeadRate
+                id={id}
+                name={name}
+                sessionId={sessionId}
+                rated={accountStates ? accountStates.rated : false}
+              />
             </span>
-          }
-          color={"#fff"}
-          placement="bottom"
-        >
-          <span className={styles.tooltipWrapper}>
-            <TVDetailsHeadRate
-              id={id}
-              name={name}
-              sessionId={sessionId}
-              rated={accountStates ? accountStates.rated : false}
-            />
-          </span>
-        </Tooltip>
+          </Tooltip>
+        </div>
+
         <li className={styles.video}>
           <a className="head-action-trailer" href="">
             <span>

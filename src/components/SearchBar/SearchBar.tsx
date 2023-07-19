@@ -104,72 +104,74 @@ const SearchBar: React.FC = () => {
         >
           <section className={styles.search}>
             <div className={styles.searchContainer}>
-              <Select
-                showSearch
-                optionFilterProp="label"
-                className={styles.input}
-                placeholder="Пошук фільму, серіалу, персони"
-                defaultActiveFirstOption={false}
-                showArrow={true}
-                allowClear
-                filterOption={false}
-                onSearch={handleDebouncedSearchChange}
-                onSelect={handleSelect}
-                notFoundContent={null}
-                labelInValue={true}
-                size="large"
-                bordered={false}
-                listHeight={400}
-              >
-                <>
-                  {(!searchData || searchData.results.length === 0) && (
-                    <>
-                      <div className={styles.searchTitle}>
-                        <h2>
-                          <span>
-                            <RiseOutlined style={{ fontSize: "1.2em" }} />
-                          </span>
-                          У тренді
-                        </h2>
-                      </div>
-                      {trendingAll?.results.slice(0, 8).map((element) => (
-                        <Select.Option
-                          key={element.id}
-                          value={element.id.toString()}
-                          className={styles.optionWrapper}
-                        >
-                          <Link href={searchResultLinkTypeChecker(element)}>
-                            <div className={styles.option}>
-                              <span>
-                                <SearchOutlined />
-                              </span>
-                              <span>
-                                {searchResultTitleTypeChecker(element)}
-                              </span>
-                            </div>
-                          </Link>
-                        </Select.Option>
-                      ))}
-                    </>
-                  )}
-                  {searchData?.results.slice(0, 13).map((element) => (
-                    <Select.Option
-                      key={element.id}
-                      value={element.id.toString()}
-                      label={searchResultTitleTypeChecker(element)}
-                    >
-                      <Link href={searchResultLinkTypeChecker(element)}>
-                        <div className={styles.option}>
-                          <span>
-                            <SearchOutlined />
-                          </span>
-                          <span>{searchResultTitleTypeChecker(element)}</span>
+              <div className={styles.inner}>
+                <SearchOutlined style={{color: "#000"}}/>
+                <Select
+                  optionFilterProp="label"
+                  className={styles.input}
+                  placeholder="Пошук фільму, серіалу, персони"
+                  defaultActiveFirstOption={false}
+                  showArrow={true}
+                  allowClear
+                  filterOption={false}
+                  onSearch={handleDebouncedSearchChange}
+                  onSelect={handleSelect}
+                  notFoundContent={null}
+                  labelInValue={true}
+                  size="large"
+                  bordered={false}
+                  listHeight={400}
+                >
+                  <>
+                    {(!searchData || searchData.results.length === 0) && (
+                      <>
+                        <div className={styles.searchTitle}>
+                          <h2>
+                            <span>
+                              <RiseOutlined style={{ fontSize: "1.2em" }} />
+                            </span>
+                            У тренді
+                          </h2>
                         </div>
-                      </Link>
-                    </Select.Option>
-                  ))}
-                </>
-              </Select>
+                        {trendingAll?.results.slice(0, 8).map((element) => (
+                          <Select.Option
+                            key={element.id}
+                            value={element.id.toString()}
+                            className={styles.optionWrapper}
+                          >
+                            <Link href={searchResultLinkTypeChecker(element)}>
+                              <div className={styles.option}>
+                                <span>
+                                  <SearchOutlined />
+                                </span>
+                                <span>
+                                  {searchResultTitleTypeChecker(element)}
+                                </span>
+                              </div>
+                            </Link>
+                          </Select.Option>
+                        ))}
+                      </>
+                    )}
+                    {searchData?.results.slice(0, 13).map((element) => (
+                      <Select.Option
+                        key={element.id}
+                        value={element.id.toString()}
+                        label={searchResultTitleTypeChecker(element)}
+                      >
+                        <Link href={searchResultLinkTypeChecker(element)}>
+                          <div className={styles.option}>
+                            <span>
+                              <SearchOutlined />
+                            </span>
+                            <span>{searchResultTitleTypeChecker(element)}</span>
+                          </div>
+                        </Link>
+                      </Select.Option>
+                    ))}
+                  </>
+                </Select>
+              </div>
             </div>
           </section>
         </div>,

@@ -28,6 +28,10 @@
 .main {
   margin-top: 64px;
   background: #fff;
+
+  @media (max-width: 890px) {
+    margin-top: 0;
+  }
 }
 
 .layout-main {
@@ -221,10 +225,6 @@
 .empty-text--default {
   color: $primaryColorContrast;
   padding: 5px 0px;
-}
-
-.pagination-total {
-  color: $primaryColorContrast;
 }
 
 .details-back-navigation {

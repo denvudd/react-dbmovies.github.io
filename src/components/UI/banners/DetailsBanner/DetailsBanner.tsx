@@ -46,7 +46,10 @@ const DetailsBanner: React.FC<DetailsBannerProps> = ({
             ["details-banner-light"]: isBackdropLight,
           })}
         >
-          <Link href={`/${type}/${id}`} className={styles.poster}>
+          <Link
+            href={`/${type}/${id}`}
+            className={imageType === "poster" ? styles.poster : styles.backdrop}
+          >
             {imageType === "poster" && (
               <Image
                 width={58}
@@ -61,6 +64,7 @@ const DetailsBanner: React.FC<DetailsBannerProps> = ({
                 height={90}
                 src={posterPath}
                 alt={`${title} poster`}
+                className={styles.backdrop}
               />
             )}
           </Link>

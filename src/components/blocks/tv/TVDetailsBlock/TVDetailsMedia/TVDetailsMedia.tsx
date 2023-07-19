@@ -60,7 +60,7 @@ const TVDetailsMedia: React.FC<TVDetailsMediaProps> = ({
 
   return (
     <div className={styles.media}>
-      <div className="app-container content-with-aside">
+      <div className={styles.contentWithAside + " app-container"}>
         <div className="media-content">
           <TVDetailsCast id={id} />
           <TVDetailsSeason name={name} id={id} lastSeason={lastSeason} />

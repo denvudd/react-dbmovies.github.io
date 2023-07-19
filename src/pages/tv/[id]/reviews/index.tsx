@@ -10,9 +10,6 @@ import DetailLayout from "@/layouts/DetailsLayout";
 
 import type { GetServerSideProps } from "next/types";
 import type { FastAverageColorResult } from "fast-average-color";
-import type {
-  MovieDetails,
-} from "@/redux/api/movies/types";
 import type { ReviewResult } from "@/redux/api/types/common";
 import type { ApiError } from "@/redux/api/baseApi/types/ErrorType";
 import type { TVDetails, TVReviewsApiResponse } from "@/redux/api/tv/types";

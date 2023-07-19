@@ -4,6 +4,10 @@
   width: 100%;
   display: flex;
   align-items: flex-start;
+
+  @media (max-width: 890px) {
+    flex-direction: column;
+  }
 }
 
 .panel {
@@ -18,6 +22,14 @@
     span {
       font-weight: 400;
       opacity: 0.65;
+    }
+  }
+
+  @media (max-width: 890px) {
+    margin-bottom: 20px;
+
+    &:last-of-type {
+      margin-bottom: 0;
     }
   }
 }

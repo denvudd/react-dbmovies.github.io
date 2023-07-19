@@ -14,6 +14,12 @@
 
   @media (max-width: 890px) {
     padding-inline: 40px !important;
+    position: relative;
+    top: 0;
+  }
+
+  @media (max-width: 576px) {
+    padding-inline: 20px !important;
   }
 }
 
@@ -136,7 +142,11 @@
   }
 
   @media (max-width: 576px) {
-    min-width: 90px !important;
+    min-width: 0px !important;
+    
+    li {
+      padding-inline: 5px !important;
+    }
   }
 }
 
@@ -161,6 +171,12 @@
 .link {
   color: #fff;
   font-weight: 600;
+
+  &Profile {
+    @media (max-width: 890px) {
+      pointer-events: none; // for mobile versions
+    }
+  }
 }
 
 .profileHead {

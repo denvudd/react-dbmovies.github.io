@@ -37,7 +37,6 @@ const EpisodeCard: React.FC<EpisodeCardProps> = ({
   overview,
   runtime,
   seasonNumber,
-  showId,
   poster,
   voteAverage,
   voteCount,
@@ -71,7 +70,7 @@ const EpisodeCard: React.FC<EpisodeCardProps> = ({
               <div className={styles.title}>
                 <span>{index + 1}</span>
                 <Tooltip title={`Кількість оцінок: ${voteCount}`}>
-                  <div>
+                  <div className={styles.rating}>
                     <RatingBarSmall rating={voteAverage} />
                   </div>
                 </Tooltip>

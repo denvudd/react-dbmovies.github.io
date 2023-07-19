@@ -63,6 +63,15 @@
         color: #000;
       }
     }
+
+    @media (max-width: 890px) {
+      flex: 1 0 auto;
+      margin-right: 10px;
+    }
+  }
+
+  @media (max-width: 890px) {
+    overflow-x: scroll;
   }
 }
 
@@ -72,6 +81,10 @@
   width: 100%;
   display: flex;
   box-sizing: border-box;
+
+  @media (max-width: 890px) {
+    flex-direction: column;
+  }
 }
 
 .crew {
@@ -94,6 +107,12 @@
       color: $primaryColorContrast;
     }
   }
+
+  @media (max-width: 890px) {
+    order: 1;
+    width: 100%;
+    margin-top: 20px;
+  }
 }
 
 .guestStars {
@@ -109,7 +128,22 @@
       font-size: 0.8em;
       font-weight: 400;
       color: $primaryColorContrast;
+
+      @media (max-width: 890px) {
+        float: none;
+        display: block;
+        width: 100%;
+        margin-top: 3px;
+      }
     }
+
+    @media (max-width: 890px) {
+      margin-bottom: 14px;
+    }
+  }
+
+  @media (max-width: 890px) {
+    width: 100%;
   }
 }
 
@@ -121,6 +155,10 @@
 
   li {
     width: 50%;
+
+    @media (max-width: 890px) {
+      width: 100%;
+    }
   }
 }
 
@@ -170,5 +208,9 @@
     &:hover {
       background-color: rgba(0, 0, 0, 0.40);
     }
+  }
+
+  @media (max-width: 890px) {
+    margin-left: 14px;
   }
 }

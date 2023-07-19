@@ -39,7 +39,7 @@ const TVEpisodeCastBlock: React.FC<MovieCastBlockProps> = ({
   );
 
   return (
-    <div className={styles.cast}>
+    <div>
       <div className="app-container">
         <div className={styles.inner}>
           <section className={styles.panel}>

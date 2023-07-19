@@ -30,6 +30,11 @@
   }
 }
 
+.inner {
+  display: flex;
+  width: 100%;
+}
+
 .search {
   width: 100%;
   background-color: #fff;
@@ -47,6 +52,10 @@
     max-width: 1440px;
     width: 100%;
     padding: 0 40px;
+
+    @media (max-width: 890px) {
+      padding: 0 20px;
+    }
   }
 }
 
@@ -59,7 +68,6 @@
   font-size: 100%;
   color: #acacac;
   text-indent: 0;
-  padding-left: 30px;
 }
 
 .option {

@@ -8,11 +8,11 @@
 
 .panel {
   width: 100%;
+  margin-bottom: 20px;
 
   h3 {
     font-size: 1.4em;
     font-weight: 600;
-    margin-bottom: 20px;
     color: $primaryColorContrast;
 
     span {
@@ -44,6 +44,12 @@
 
     span {
       color: $primaryColorContrast;
+    }
+  }
+
+  &Title {
+    @media (max-width: 890px) {
+      display: none;
     }
   }
 }
