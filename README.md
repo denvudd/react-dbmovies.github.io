@@ -1,6 +1,7 @@
 # [The Movie Database Clone](https://react-dbmovies.vercel.app/)
 
 This is an open source The Movie Database clone build with Next.js 13. It is bootstrapped with `create-next-app`.
+You can track changes, ideas, and notes on the [Trello](https://trello.com/invite/b/ztbVNEGv/ATTI04a5536d308e638e84ae0c22761445552681CB37/tmdb-nextjs-project-by-denvudd)Trello board of the project.
 
 [![The Movie Database Clone](https://i.ibb.co/DGd39Vj/Screenshot-2023-07-18-12-27-18.png)](https://react-dbmovies.vercel.app/)
 
@@ -33,13 +34,15 @@ git clone git@github.com:denvudd/react-dbmovies.github.io.git
 npm install
 ```
 
-### 3. Run the application
+### 3. Create .env file for your TMDB Api Key
+
+### 4. Run the application
 
 ```bash
 npm run dev
 ```
 
-### 4. Run tests
+### 5. Run tests
 
 ```bash
 npm run test
