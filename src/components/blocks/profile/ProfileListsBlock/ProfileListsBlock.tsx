@@ -4,7 +4,7 @@ import { useLazyGetAccountListsQuery } from "@/redux/api/account/slice";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin, Button} from "antd";
 import Link from "next/link";
-import ProfileListGrid from "../ProfileBlock/ProfileMeta/ProfileListGrid/ProfileListGrid";
+import ProfileListGrid from "./ProfileListGrid/ProfileListGrid";
 import ProfileTabs from "../../../UI/tabs/ProfileTabs/ProfileTabs";
 
 import styles from "./ProfileListsBlock.module.scss";

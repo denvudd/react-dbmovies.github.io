@@ -26,11 +26,20 @@
       font-weight: 400;
       cursor: pointer;
     }
+
+    @media (max-width: 890px) {
+      display: inline;
+      font-size: 2em;
+    }
   }
 
   h4 {
     margin-bottom: 12px;
     font-weight: 500;
+
+    @media (max-width: 890px) {
+      margin-top: 8px;
+    }
   }
 
   h3 {
@@ -52,7 +61,24 @@
 
     &:last-child {
       margin-right: 0;
+
+      @media (max-width: 890px) {
+        margin-right: 20px;
+      }
     }
+
+    @media (max-width: 890px) {
+      margin-bottom: 10px;
+      flex: 1 1 auto;
+
+      button {
+        width: 100%;
+      }
+    }
+  }
+
+  @media (max-width: 890px) {
+    flex-wrap: wrap; 
   }
 }
 
@@ -75,6 +101,11 @@
     font-weight: 600;
     font-size: 1.3em;
     line-height: 1.1em;
+  }
+
+  @media (max-width: 890px) {
+    width: 100%;
+    margin-bottom: 20px;
   }
 }
 

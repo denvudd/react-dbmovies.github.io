@@ -144,7 +144,26 @@
       ul {
         margin-left: 10px;
       }
+
+      @media (max-width: 576px) {
+        width: 100%;
+
+        ul {
+          margin-left: 0 !important;
+          margin-top: 3px !important;
+        }
+      }
     }
+    
+    @media (max-width: 576px) {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 576px) {
+    margin-left: -94px;
+    margin-top: 30px;
+    width: 100%;
   }
 }
 

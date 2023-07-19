@@ -10,6 +10,13 @@
   position: relative;
   top: 0;
   left: 0;
+
+  @media (max-width: 890px) {
+    width: calc(100vw - 20px);
+    height: calc((100vw - 20px) / 1.78);
+    max-width: 100%;
+    max-height: none;
+  }
 }
 
 .details {

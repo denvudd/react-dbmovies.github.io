@@ -99,7 +99,7 @@ const WideElementCard: React.FC<WideElementCardProps> = ({
           <div className={styles.panel}>
             <ul className={styles.panelList}>
               {isShowPanel && isShowRate ? (
-                <li className={styles.option}>
+                <li className={styles.option} style={{flexWrap: "wrap"}}>
                   Ваша оцінка:
                   <Rate
                     value={rating}

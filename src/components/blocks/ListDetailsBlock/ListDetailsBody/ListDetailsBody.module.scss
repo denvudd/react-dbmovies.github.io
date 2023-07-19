@@ -2,10 +2,7 @@
 
 .info {
   background: $lightGrey;
-  padding-left: 40px;
-  padding-right: 40px;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding: 20px 40px;
 
   &List {
     width: 100%;
@@ -27,15 +24,36 @@
         font-weight: 400;
         margin-bottom: 2px;
       }
+
+      @media (max-width: 890px) {
+        display: block;
+        width: calc(50vw - 20px);
+        height: auto;
+        padding: 10px 0;
+        font-size: 1em;
+      }
+
+      @media (max-width: 576px) {
+        font-size: 0.9em;
+      }
     }
+
+    @media (max-width: 890px) {
+      flex-wrap: wrap;
+    }
+  }
+
+  @media (max-width: 890px) {
+    padding: 20px 0px;
   }
 }
 
 .results {
-  padding-left: 40px;
-  padding-right: 40px;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding: 40px 20px;
+
+  @media (max-width: 890px) {
+    padding: 40px 0px;
+  }
 }
 
 .listResults {
@@ -46,5 +64,28 @@
     width: calc((100vw - 160px) / 6);
     max-width: calc((1440px - 160px) / 6);
     margin-bottom: 20px;
+
+    @media (max-width: 1200px) {
+      margin-right: 20px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 890px) {
+      width: calc(33vw - 20px);
+      max-width: calc(33vw - 20px);
+      margin-right: 0;
+    }
+
+    @media (max-width: 576px) {
+      width: calc(50vw - 30px);
+      max-width: calc(50vw - 30px);
+      margin-right: 0;
+    }
+  }
+
+  @media (max-width: 890px) {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
   }
 }

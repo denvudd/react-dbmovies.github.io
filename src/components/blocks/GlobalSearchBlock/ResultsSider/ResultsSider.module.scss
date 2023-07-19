@@ -5,6 +5,11 @@
   width: 260px;
   display: flex;
   flex-wrap: wrap;
+
+  @media (max-width: 890px) {
+    width: 100%;
+    margin-bottom: 20px;
+  }
 }
 
 .container {
@@ -16,6 +21,10 @@
   border-radius: $imageBorderRadius;
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  @media (max-width: 890px) {
+    width: 100%;
+  }
 }
 
 .head {
@@ -65,6 +74,21 @@
       font-size: 0.8em;
       font-weight: 300;
     }
+
+    @media (max-width: 890px) {
+      width: auto;
+      padding: 0px;
+      justify-content: flex-start;
+      flex: 1 0 auto;
+    }
+  }
+
+  @media (max-width: 890px) {
+    width: 100%;
+    display: flex;
+    overflow: scroll;
+    justify-content: flex-start;
+    padding: 0;
   }
 }
 

@@ -185,7 +185,7 @@ export const siteConfig = {
       secondary: true,
     },
     {
-      key: "leaders",
+      key: "leadersTable",
       label: "Таблиці лідерів",
       link: "https://www.themoviedb.org/leaderboard?language=en-US",
       secondary: true,

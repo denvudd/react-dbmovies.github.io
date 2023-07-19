@@ -1,7 +1,6 @@
 @import '@/styles/variables';
 
 .page {
-
   &Title {
     color: $primaryColorContrast;
   }
@@ -20,6 +19,10 @@
     h2 {
       font-weight: 700;
     }
+
+    @media (max-width: 890px) {
+      flex-wrap: wrap;
+    }
   }
 
   .titleGroup {
@@ -27,14 +30,14 @@
     display: flex;
     align-items: baseline;
     gap: 20px;
+    
+    a {
+      color: $primaryColorContrast;
+    }
 
     .navigation {
       display: flex;
       gap: 20px;
-
-      a {
-        color: $primaryColorContrast;
-      }
 
       .navItem {
         font-size: 1em;
@@ -47,6 +50,10 @@
           border-bottom-style: solid;
         }
       }
+    }
+
+    @media (max-width: 890px) {
+      justify-content: space-between;
     }
   }
 
@@ -71,6 +78,16 @@
       span {
         color: $primaryColorContrast;
       }
+
+      @media (max-width: 890px) {
+        justify-content: space-between;
+        max-width: 100%;
+      }
+    }
+
+    @media (max-width: 890px) {
+      justify-content: flex-start;
+      margin-top: 15px;
     }
   }
 

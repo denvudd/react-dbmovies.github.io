@@ -48,11 +48,17 @@
 .meta {
   .title {
     margin-bottom: 0px;
-    
 
     a {
       line-height: 0px;
 
+    }
+
+    @media (max-width: 890px) {
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
   }
 }

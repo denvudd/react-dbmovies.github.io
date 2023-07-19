@@ -118,7 +118,7 @@ const ListDetailsHead: React.FC<ListDetailsHeadProps> = ({
       <section className="app-container">
         <div className={styles.content}>
           <h2>
-            Список {`"${name}"`}
+            Список {`"${name}"`}{" "}
             <Popover
               color={value !== null ? `green` : ""}
               content={

@@ -19,6 +19,10 @@
     h2 {
       font-weight: 700;
     }
+
+    @media (max-width: 890px) {
+      flex-wrap: wrap;
+    }
   }
 
   .titleGroup {
@@ -47,6 +51,10 @@
         }
       }
     }
+
+    @media (max-width: 890px) {
+      justify-content: space-between;
+    }
   }
 
   &Title {
@@ -70,6 +78,16 @@
       span {
         color: $primaryColorContrast;
       }
+
+      @media (max-width: 890px) {
+        justify-content: space-between;
+        max-width: 100%;
+      }
+    }
+
+    @media (max-width: 890px) {
+      justify-content: flex-start;
+      margin-top: 15px;
     }
   }
 
